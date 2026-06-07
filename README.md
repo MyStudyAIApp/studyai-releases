@@ -1,0 +1,1 @@
+# StudyAI ReleasesnRepositorio de actualizaciones automáticas de StudyAI.
