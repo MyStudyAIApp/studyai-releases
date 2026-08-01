@@ -1,0 +1,276 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* El icono nativo de <input type="date"> es oscuro por defecto — invisible
+   sobre nuestros fondos oscuros en todos los temas salvo "clara" (claro). */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.7;
+  cursor: pointer;
+}
+[data-theme="clara"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+
+@layer base {
+  /* ── Plantillas visuales (Ajustes → Apariencia) ──────────────────────────
+     Cada tema redefine a qué RGB apunta cada tono de "slate" (superficies/
+     texto/bordes) y "primary" (acento) — ver tailwind.config.js. "actual" es
+     el valor por defecto (sin data-theme), idéntico al diseño de siempre. */
+  :root, [data-theme="actual"] {
+    --slate-50:  248 250 252;
+    --slate-100: 241 245 249;
+    --slate-200: 226 232 240;
+    --slate-300: 203 213 225;
+    --slate-400: 148 163 184;
+    --slate-500: 100 116 139;
+    --slate-600: 71 85 105;
+    --slate-700: 51 65 85;
+    --slate-800: 30 41 59;
+    --slate-900: 15 23 42;
+    --slate-950: 2 6 23;
+
+    --primary-50:  239 246 255;
+    --primary-100: 219 234 254;
+    --primary-200: 191 219 254;
+    --primary-300: 147 197 253;
+    --primary-400: 96 165 250;
+    --primary-500: 59 130 246;
+    --primary-600: 37 99 235;
+    --primary-700: 29 78 216;
+    --primary-800: 30 64 175;
+    --primary-900: 30 58 138;
+  }
+
+  [data-theme="esmeralda"] {
+    --slate-50:  238 243 240;
+    --slate-100: 221 230 224;
+    --slate-200: 188 204 194;
+    --slate-300: 147 171 157;
+    --slate-400: 107 143 125;
+    --slate-500: 74 120 100;
+    --slate-600: 45 79 64;
+    --slate-700: 28 51 41;
+    --slate-800: 16 32 26;
+    --slate-900: 10 15 13;
+    --slate-950: 5 9 8;
+
+    --primary-50:  236 253 245;
+    --primary-100: 209 250 229;
+    --primary-200: 167 243 208;
+    --primary-300: 110 231 183;
+    --primary-400: 52 211 153;
+    --primary-500: 16 185 129;
+    --primary-600: 5 150 105;
+    --primary-700: 4 120 87;
+    --primary-800: 6 95 70;
+    --primary-900: 6 78 59;
+  }
+
+  [data-theme="clara"] {
+    --slate-50:  255 250 243;
+    --slate-100: 67 20 7;
+    --slate-200: 92 61 41;
+    --slate-300: 122 82 56;
+    --slate-400: 154 107 76;
+    --slate-500: 176 137 104;
+    --slate-600: 245 232 211;
+    --slate-700: 240 221 197;
+    --slate-800: 255 247 237;
+    --slate-900: 253 246 236;
+    --slate-950: 45 14 4;
+
+    --primary-50:  255 247 237;
+    --primary-100: 255 237 213;
+    --primary-200: 254 215 170;
+    --primary-300: 253 186 116;
+    --primary-400: 251 146 60;
+    --primary-500: 249 115 22;
+    --primary-600: 234 88 12;
+    --primary-700: 194 65 12;
+    --primary-800: 154 52 18;
+    --primary-900: 124 45 18;
+  }
+
+  [data-theme="rosa"] {
+    --slate-50:  253 242 248;
+    --slate-100: 252 231 243;
+    --slate-200: 237 206 221;
+    --slate-300: 217 168 187;
+    --slate-400: 192 125 151;
+    --slate-500: 138 63 87;
+    --slate-600: 92 35 56;
+    --slate-700: 61 23 40;
+    --slate-800: 43 15 28;
+    --slate-900: 28 10 19;
+    --slate-950: 18 7 13;
+
+    --primary-50:  253 242 248;
+    --primary-100: 252 231 243;
+    --primary-200: 251 207 232;
+    --primary-300: 249 168 212;
+    --primary-400: 244 114 182;
+    --primary-500: 236 72 153;
+    --primary-600: 219 39 119;
+    --primary-700: 190 24 93;
+    --primary-800: 157 23 77;
+    --primary-900: 131 24 67;
+  }
+
+  :root {
+    --scrollbar-thumb: rgb(var(--slate-600));
+    --scrollbar-track: rgb(var(--slate-900));
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+  *::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+
+  /* Oculta la barra de scroll a la vista (los esquemas ya se mueven
+     arrastrando con el ratón y con la rueda para zoom) sin desactivar el
+     scroll en sí -- overflow sigue funcionando, solo no se dibuja la barra. */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  /* <summary> nativo: `list-style: none` (clase `list-none`) no basta en
+     Chromium/Electron -- el triángulo por defecto es un pseudo-elemento
+     aparte (::-webkit-details-marker) y sigue dibujándose si no se oculta
+     explícitamente, descuadrando las tarjetas plegables de Ajustes. */
+  summary::-webkit-details-marker { display: none; }
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+  html { font-size: 15px; }
+
+  body {
+    @apply bg-slate-900 text-slate-100 font-sans;
+    -webkit-app-region: no-drag;
+    user-select: none;
+  }
+
+  /* Allow text selection in content areas */
+  p, h1, h2, h3, h4, h5, h6, span, li, td, th, .selectable {
+    user-select: text;
+  }
+}
+
+@layer components {
+  /* ── Cards ── */
+  .card {
+    @apply bg-slate-800 border border-slate-700 rounded-xl p-4;
+  }
+  .card-hover {
+    @apply card transition-all duration-200 hover:border-primary-500 hover:shadow-lg hover:shadow-primary-500/10 cursor-pointer;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 cursor-pointer select-none;
+  }
+  .btn-primary {
+    @apply btn bg-primary-600 hover:bg-primary-500 text-white shadow-sm;
+  }
+  .btn-secondary {
+    @apply btn bg-slate-700 hover:bg-slate-600 text-slate-100 border border-slate-600;
+  }
+  .btn-ghost {
+    @apply btn hover:bg-slate-700 text-slate-300 hover:text-slate-100;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 hover:bg-red-500 text-white;
+  }
+  .btn-sm {
+    @apply !px-3 !py-1.5 !text-xs;
+  }
+  .btn-icon {
+    @apply btn p-2 !px-2;
+  }
+
+  /* ── Inputs ── */
+  .input {
+    @apply w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100
+           placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-colors;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-blue   { @apply badge bg-primary-900/50 text-primary-300 border border-primary-700; }
+  .badge-green  { @apply badge bg-emerald-900/50 text-emerald-300 border border-emerald-700; }
+  .badge-yellow { @apply badge bg-yellow-900/50 text-yellow-300 border border-yellow-700; }
+  .badge-red    { @apply badge bg-red-900/50 text-red-300 border border-red-700; }
+  .badge-purple { @apply badge bg-purple-900/50 text-purple-300 border border-purple-700; }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    @apply w-full bg-slate-700 rounded-full overflow-hidden;
+  }
+  .progress-fill {
+    @apply h-full bg-primary-500 rounded-full transition-all duration-500;
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    @apply text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3;
+  }
+
+  /* ── Divider ── */
+  .divider { @apply border-t border-slate-700; }
+
+  /* ── Prose (rendered markdown) ── */
+  .prose-studyai {
+    @apply text-slate-200 leading-relaxed;
+  }
+  .prose-studyai h1 { @apply text-2xl font-bold text-slate-100 mb-4 mt-6; }
+  .prose-studyai h2 { @apply text-xl font-semibold text-slate-100 mb-3 mt-5 pb-1 border-b border-slate-700; }
+  .prose-studyai h3 { @apply text-lg font-semibold text-primary-300 mb-2 mt-4; }
+  .prose-studyai p  { @apply mb-3 text-slate-200; }
+  .prose-studyai ul { @apply list-disc list-inside mb-3 space-y-1 text-slate-200; }
+  .prose-studyai ol { @apply list-decimal list-inside mb-3 space-y-1 text-slate-200; }
+  .prose-studyai li { @apply text-slate-200; }
+  .prose-studyai strong { @apply font-semibold text-slate-100; }
+  .prose-studyai em    { @apply italic text-slate-300; }
+  .prose-studyai code  { @apply font-mono text-xs bg-slate-900 text-emerald-300 px-1.5 py-0.5 rounded; }
+  .prose-studyai pre   { @apply bg-slate-900 rounded-lg p-4 overflow-x-auto mb-3; }
+  .prose-studyai blockquote { @apply border-l-4 border-primary-500 pl-4 italic text-slate-300 my-3; }
+  .prose-studyai table { @apply w-full text-sm border-collapse mb-4; }
+  .prose-studyai th { @apply bg-slate-700 px-3 py-2 text-left font-semibold border border-slate-600; }
+  .prose-studyai td { @apply px-3 py-2 border border-slate-700; }
+  .prose-studyai tr:nth-child(even) { @apply bg-slate-800/50; }
+
+  /* ── Flashcard flip ── */
+  .flip-card { perspective: 1000px; }
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .flip-card-inner.flipped { transform: rotateY(180deg); }
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .flip-card-back { transform: rotateY(180deg); }
+
+  /* ── Titlebar drag region ── */
+  .titlebar-drag { -webkit-app-region: drag; }
+  .titlebar-no-drag { -webkit-app-region: no-drag; }
+}
+
+/* ── Mermaid diagram theming ── */
+.mermaid svg, .card svg {
+  max-width: 100%;
+  max-height: 65vh;
+  height: auto;
+  width: auto;
+}

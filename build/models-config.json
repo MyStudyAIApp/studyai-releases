@@ -1,0 +1,95 @@
+{
+  "_comment": "Este fichero se puede actualizar en GitHub sin recompilar la app. StudyAI lo descarga al arrancar.",
+  "_version": "2026-06-05",
+  "models": [
+    {
+      "id": "gemma3:4b",
+      "label": "Gemma 3 4B",
+      "size": "2.5 GB",
+      "tier": "PC básico",
+      "tierColor": "text-slate-400",
+      "minRam": 6,
+      "desc": "Ligero y rápido. Ideal para equipos con poca RAM. Excelente en español.",
+      "has_vision": false,
+      "recommended_for_ram": [0, 10]
+    },
+    {
+      "id": "mistral:7b",
+      "label": "Mistral 7B",
+      "size": "4.1 GB",
+      "tier": "PC básico",
+      "tierColor": "text-slate-400",
+      "minRam": 8,
+      "desc": "Sigue instrucciones con gran precisión. Perfecto para tests, flashcards y resúmenes.",
+      "has_vision": false,
+      "recommended_for_ram": [8, 12]
+    },
+    {
+      "id": "llama3.2:8b",
+      "label": "Llama 3.2 8B",
+      "size": "4.9 GB",
+      "tier": "PC normal",
+      "tierColor": "text-blue-400",
+      "minRam": 10,
+      "desc": "Equilibrado entre velocidad y calidad. Muy bueno para tareas del día a día.",
+      "has_vision": false,
+      "recommended_for_ram": [10, 14]
+    },
+    {
+      "id": "gemma3:12b",
+      "label": "Gemma 3 12B",
+      "size": "8.1 GB",
+      "tier": "PC moderno",
+      "tierColor": "text-emerald-400",
+      "minRam": 16,
+      "desc": "Excelente en español. Soporta imágenes (circuitos, células, diagramas). El más equilibrado.",
+      "has_vision": true,
+      "recommended_for_ram": [14, 20],
+      "recommended": true
+    },
+    {
+      "id": "gemma4:12b",
+      "label": "Gemma 4 12B",
+      "size": "8.1 GB",
+      "tier": "PC moderno",
+      "tierColor": "text-emerald-400",
+      "minRam": 16,
+      "desc": "Lo último de Google. Mejor razonamiento que Gemma 3. Soporta visión.",
+      "has_vision": true,
+      "recommended_for_ram": [16, 28]
+    },
+    {
+      "id": "qwen2.5:14b",
+      "label": "Qwen 2.5 14B",
+      "size": "9.0 GB",
+      "tier": "PC potente",
+      "tierColor": "text-violet-400",
+      "minRam": 20,
+      "desc": "Especializado en matemáticas, física y múltiples idiomas.",
+      "has_vision": false,
+      "recommended_for_ram": [20, 32]
+    },
+    {
+      "id": "qwen3:14b",
+      "label": "Qwen 3 14B",
+      "size": "9.3 GB",
+      "tier": "PC potente",
+      "tierColor": "text-violet-400",
+      "minRam": 20,
+      "desc": "Última generación Qwen. Razonamiento mejorado, perfecto para ciencias y matemáticas.",
+      "has_vision": false,
+      "recommended_for_ram": [20, 40]
+    },
+    {
+      "id": "llama4:scout",
+      "label": "Llama 4 Scout 17B",
+      "size": "10.0 GB",
+      "tier": "PC potente",
+      "tierColor": "text-violet-400",
+      "minRam": 24,
+      "desc": "Meta Llama 4 — multimodal de última generación con contexto muy amplio.",
+      "has_vision": true,
+      "recommended_for_ram": [24, 999]
+    }
+  ]
+}

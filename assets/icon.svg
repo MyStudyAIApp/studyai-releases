@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2e1065"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="boardTop" x1="38" y1="78" x2="218" y2="122" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c4b5fd"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="boardSide" x1="0" y1="120" x2="0" y2="144" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="capBody" x1="0" y1="140" x2="0" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Fondo redondeado oscuro -->
+  <rect width="256" height="256" rx="52" fill="url(#bg)"/>
+
+  <!-- Halo sutil de luz detrás del sombrero -->
+  <ellipse cx="128" cy="108" rx="96" ry="64" fill="#7c3aed" opacity="0.10"/>
+
+  <!-- ══ SOMBRERO DE GRADUACIÓN ══ -->
+
+  <!-- Base del gorro (cuerpo cónico redondeado, desplazada para conectar con el tablero sin hueco) -->
+  <g transform="translate(0,-18)">
+    <path d="M 90,143
+             C 87,160 88,176 94,190
+             Q 100,203 128,203
+             Q 156,203 162,190
+             C 168,176 169,160 166,143
+             Z"
+          fill="url(#capBody)"/>
+    <!-- Sombra sutil en el borde inferior, sugiere que ciñe la cabeza -->
+    <path d="M 94,190 Q 100,203 128,203 Q 156,203 162,190"
+          fill="none" stroke="#3b0764" stroke-width="7" stroke-linecap="round" opacity="0.7"/>
+    <!-- Borde superior del cilindro (donde encaja el tablero) -->
+    <ellipse cx="128" cy="143" rx="40" ry="11" fill="#6d28d9"/>
+  </g>
+
+  <!-- Tablero (rombo visto ligeramente desde arriba) -->
+  <!-- Cara lateral izquierda del tablero (sombra 3D) -->
+  <polygon points="38,100 128,136 128,144 38,108" fill="url(#boardSide)"/>
+  <!-- Cara lateral derecha del tablero -->
+  <polygon points="218,100 128,136 128,144 218,108" fill="#5b21b6"/>
+  <!-- Cara superior del tablero (la visible) -->
+  <polygon points="128,64 218,100 128,136 38,100" fill="url(#boardTop)"/>
+  <!-- Brillo en la cara superior (reflejo) -->
+  <polygon points="128,64 218,100 128,108 38,100" fill="#ddd6fe" opacity="0.30"/>
+
+  <!-- Botón central del tablero -->
+  <circle cx="128" cy="100" r="9" fill="white" opacity="0.95" filter="url(#glow)"/>
+  <circle cx="128" cy="100" r="5" fill="#a78bfa"/>
+
+  <!-- ══ BORLA / TASSEL ══ -->
+
+  <!-- Cordón: del botón central hacia la derecha y luego hacia abajo -->
+  <path d="M 136,100 L 196,100 L 196,162"
+        stroke="#fbbf24" stroke-width="5"
+        fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Nudo superior de la borla -->
+  <circle cx="196" cy="162" r="10" fill="#f59e0b"/>
+  <circle cx="196" cy="162" r="6"  fill="#fbbf24"/>
+
+  <!-- Hilos de la borla colgando -->
+  <line x1="184" y1="168" x2="180" y2="190" stroke="#f59e0b"  stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="189" y1="170" x2="186" y2="193" stroke="#fbbf24"  stroke-width="3"   stroke-linecap="round"/>
+  <line x1="195" y1="171" x2="193" y2="194" stroke="#f59e0b"  stroke-width="3"   stroke-linecap="round"/>
+  <line x1="201" y1="170" x2="202" y2="193" stroke="#fbbf24"  stroke-width="3"   stroke-linecap="round"/>
+  <line x1="207" y1="168" x2="211" y2="190" stroke="#f59e0b"  stroke-width="3.5" stroke-linecap="round"/>
+</svg>

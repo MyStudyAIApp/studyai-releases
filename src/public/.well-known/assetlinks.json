@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "eu.mystudyai.twa",
+      "sha256_cert_fingerprints": [
+        "23:19:6A:C3:C0:5A:F6:1F:9F:29:67:94:82:D4:43:F8:0D:B8:98:1E:39:D2:36:DF:AC:03:04:A5:30:CB:6B:A6"
+      ]
+    }
+  }
+]

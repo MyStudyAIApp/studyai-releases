@@ -1,0 +1,48 @@
+@media print {
+  /* visibility approach — works even inside nested overflow containers */
+  body * { visibility: hidden !important; }
+  .print-target, .print-target * { visibility: visible !important; }
+  .print-target {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: white !important;
+    z-index: 9999;
+    padding: 1cm;
+    box-sizing: border-box;
+  }
+
+  .no-print { display: none !important; }
+
+  /* Typography */
+  .print-target { color: black !important; font-family: Georgia, serif; }
+  .print-target h1 { font-size: 22pt; font-weight: bold; margin-bottom: 12pt; }
+  .print-target h2 { font-size: 16pt; font-weight: 600; margin: 14pt 0 6pt; border-bottom: 1pt solid #ccc; padding-bottom: 3pt; }
+  .print-target h3 { font-size: 13pt; font-weight: 600; margin: 10pt 0 4pt; }
+  .print-target p, .print-target li { font-size: 11pt; line-height: 1.6; margin-bottom: 5pt; }
+  .print-target ul, .print-target ol { margin-left: 16pt; }
+  .print-target table { border-collapse: collapse; width: 100%; margin-bottom: 12pt; }
+  .print-target th, .print-target td { border: 0.5pt solid #888; padding: 4pt 8pt; font-size: 10pt; }
+  .print-target th { background: #f0f0f0 !important; font-weight: 600; }
+
+  /* Override dark theme colors */
+  .print-target .card, .print-target .badge-blue, .print-target .badge-green,
+  .print-target .badge-purple, .print-target .badge-yellow {
+    background: #f8f8f8 !important;
+    color: black !important;
+    border-color: #ccc !important;
+  }
+  .print-target .text-slate-100, .print-target .text-slate-200,
+  .print-target .text-slate-300, .print-target .text-slate-400 { color: #222 !important; }
+  .print-target .text-primary-300, .print-target .text-primary-400 { color: #1d4ed8 !important; }
+  .print-target .bg-slate-800, .print-target .bg-slate-900, .print-target .bg-slate-950 {
+    background: #f5f5f5 !important;
+  }
+
+  .print-flashcard { border: 1pt solid #ccc; border-radius: 4pt; padding: 12pt; margin-bottom: 8pt; page-break-inside: avoid; }
+  .print-exam-question { margin-bottom: 16pt; page-break-inside: avoid; }
+  .page-break-before { page-break-before: always; }
+
+  @page { margin: 2cm; size: A4; }
+}
