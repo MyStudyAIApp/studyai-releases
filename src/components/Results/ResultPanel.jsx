@@ -3,7 +3,7 @@ import { useAppStore, api } from '../../store/appStore'
 import ExportPanel from '../Export/ExportPanel'
 import Spinner from '../UI/Spinner'
 import TextToSpeech from '../Audio/TextToSpeech'
-import SummaryView, { buildPrintHtml } from './SummaryView'
+import SummaryView, { buildPrintHtml, escapeHtml } from './SummaryView'
 import NumberedSchemaView from './NumberedSchemaView'
 import BracesSchemaView from './BracesSchemaView'
 import MindMapView from './MindMapView'
@@ -128,8 +128,9 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
     let html = ''
 
     if (activeAction === 'summary') {
-      html = buildPrintHtml(r, title)
+      html = buildPrintHtml(r, title)  // buildPrintHtml ya escapa docTitle internamente
     } else {
+      const safeTitle = escapeHtml(title)
       const el = printRef.current
       const inner = el ? el.innerHTML : ''
 
@@ -143,7 +144,7 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
       ].join('\n')
 
       html = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
-        <title>${title}</title>
+        <title>${safeTitle}</title>
         ${pageStyles}
         <style>
           @page { size: A4; margin: 1.5cm; }
@@ -161,7 +162,7 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
           body, body :not(.card):not(.card *) { color: #111 !important; background: white !important; border-color: #ccc !important; }
           @media print { body { padding: 1cm; } }
         </style></head>
-        <body><h1>${title}</h1>${inner}</body></html>`
+        <body><h1>${safeTitle}</h1>${inner}</body></html>`
     }
 
     const w = window.open('', '_blank', 'width=900,height=700')

@@ -1,15 +1,24 @@
 import { useRef, useState, useEffect } from 'react'
+import DOMPurify from 'dompurify'
 import mermaid, { fixSvgColors } from '../../utils/mermaidConfig'
 import { sanitizeMermaid } from '../../utils/mermaid'
 
 const COLORS = ['#f1f5f9', '#f87171', '#60a5fa', '#4ade80', '#fbbf24', '#a78bfa']
 
 // ── SVG sanitizer + responsive fix ───────────────────────────────────────────
+// El contenido viene de la pizarra del Tutor, generada por el modelo a partir
+// de un documento subido por el usuario -- un blacklist de regex se puede
+// saltar con atributos sin comillas (<image onerror=...>), por eso se usa un
+// sanitizador real basado en parser (DOMPurify), no expresiones regulares.
 function sanitizeSVG(raw) {
-  let svg = raw
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/\s+on\w+\s*=\s*["'][^"']*["']/gi, '')
-    .replace(/href\s*=\s*["']javascript:[^"']*["']/gi, '')
+  // DOMPurify ya bloquea todos los atributos on* y las URIs javascript: por
+  // defecto -- solo hace falta añadir lo que su perfil SVG no cubre: foreignObject
+  // (permite incrustar HTML arbitrario, incluidos manejadores de eventos) y
+  // use/script como capas extra de defensa.
+  let svg = DOMPurify.sanitize(raw, {
+    USE_PROFILES: { svg: true, svgFilters: true },
+    FORBID_TAGS: ['foreignObject', 'script', 'use'],
+  })
   // Force responsive — replace fixed px/number dimensions with 100%
   svg = svg.replace(/(<svg\b[^>]*?)\s+width="[^"%][^"]*"/i, '$1 width="100%"')
   svg = svg.replace(/(<svg\b[^>]*?)\s+height="[^"%][^"]*"/i, '$1 height="100%"')

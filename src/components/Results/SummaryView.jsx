@@ -183,9 +183,23 @@ function cleanMarkdown(content) {
 
 // ── Print helpers ──────────────────────────────────────────────────────────
 
+// El contenido de esta ventana de impresión viene de un resumen generado por
+// el modelo a partir de un documento subido por el usuario -- sin escapar,
+// un documento manipulado a propósito puede hacer que el resumen incluya
+// HTML/JS que se ejecuta al imprimir (se escribe con document.write en una
+// ventana que hereda el origen de la app).
+export function escapeHtml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 /** Convert inline markdown (bold, italic, code) to HTML */
 function inlineMd(text) {
-  return (text || '')
+  return escapeHtml(text)
     .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
@@ -251,11 +265,11 @@ export function buildPrintHtml(result, docTitle = '') {
   const tablesHtml = tables?.length
     ? tables.map(t => `
         <div class="section">
-          ${t.title ? `<h2>📊 ${t.title}</h2>` : ''}
+          ${t.title ? `<h2>📊 ${escapeHtml(t.title)}</h2>` : ''}
           <table>
-            ${t.headers?.length ? `<thead><tr>${t.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>` : ''}
+            ${t.headers?.length ? `<thead><tr>${t.headers.map(h => `<th>${escapeHtml(h)}</th>`).join('')}</tr></thead>` : ''}
             <tbody>${(t.rows || []).map((row, ri) =>
-              `<tr>${(Array.isArray(row) ? row : [row]).map(cell => `<td>${cell}</td>`).join('')}</tr>`
+              `<tr>${(Array.isArray(row) ? row : [row]).map(cell => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`
             ).join('')}</tbody>
           </table>
         </div>`).join('')
@@ -281,7 +295,7 @@ export function buildPrintHtml(result, docTitle = '') {
         <table>
           <thead><tr><th>Término</th><th>Definición</th></tr></thead>
           <tbody>${vocabulary.map(v =>
-            `<tr><td><strong>${v.term}</strong></td><td>${v.definition}</td></tr>`
+            `<tr><td><strong>${escapeHtml(v.term)}</strong></td><td>${escapeHtml(v.definition)}</td></tr>`
           ).join('')}</tbody>
         </table>
        </div>`
@@ -293,7 +307,7 @@ export function buildPrintHtml(result, docTitle = '') {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>${docTitle || 'Resumen'}</title>
+  <title>${escapeHtml(docTitle || 'Resumen')}</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Georgia, 'Times New Roman', serif; font-size: 11pt; line-height: 1.7;

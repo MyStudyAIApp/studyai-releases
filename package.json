@@ -27,6 +27,7 @@
     "@capacitor/preferences": "^8.0.1",
     "@dagrejs/dagre": "^3.0.0",
     "@tabler/icons-react": "^3.44.0",
+    "dompurify": "^3.4.12",
     "electron-updater": "^6.8.9",
     "framer-motion": "^12.42.2",
     "html-to-image": "^1.11.13",

@@ -768,7 +768,29 @@ ipcMain.handle('dialog:saveFile', async (_, opts) => {
   return result.canceled ? null : result.filePath
 })
 
-ipcMain.handle('shell:openExternal', (_, url) => shell.openExternal(url))
+// shell.openExternal es, en Windows, un paso directo a ShellExecute: abriría
+// ejecutables locales, rutas de red (file:, UNC, smb:) o protocolos del sistema
+// (ms-*, search-ms:) fuera del sandbox de Chromium. Como el renderer elige el
+// argumento, solo dejamos pasar enlaces web seguros (https). Cualquier otra cosa
+// se ignora y se registra; nunca se pasa la cadena original al sistema, sino la
+// URL ya normalizada por el parser, para que lo validado y lo abierto coincidan.
+const ALLOWED_EXTERNAL_PROTOCOLS = new Set(['https:'])
+
+ipcMain.handle('shell:openExternal', async (_, url) => {
+  let parsed
+  try {
+    parsed = new URL(String(url))
+  } catch {
+    console.warn('[Electron] openExternal: enlace mal formado, ignorado')
+    return false
+  }
+  if (!ALLOWED_EXTERNAL_PROTOCOLS.has(parsed.protocol)) {
+    console.warn(`[Electron] openExternal: bloqueado protocolo "${parsed.protocol}"`)
+    return false
+  }
+  await shell.openExternal(parsed.href)
+  return true
+})
 ipcMain.handle('app:getVersion', () => app.getVersion())
 ipcMain.handle('app:getPythonPort', () => PYTHON_PORT)
 ipcMain.handle('app:getLocalToken', () => LOCAL_AUTH_TOKEN)
