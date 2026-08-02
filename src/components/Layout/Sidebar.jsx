@@ -114,6 +114,36 @@ export default function Sidebar() {
         </div>
       )}
 
+      {/* Presupuesto de voz (transcripción + podcasts) -- para TODOS los planes,
+          Pro incluido, ya que las generaciones de texto son ilimitadas en Pro
+          pero la voz sigue teniendo un tope real de gasto por detrás. Nunca
+          se muestra en euros, solo el % ya calculado por el backend. */}
+      {usage?.voice_budget && (
+        <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
+          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Uso de voz este mes</p>
+          <div className="space-y-1.5">
+            {[
+              { label: '🎙️ Transcripción', pct: usage.voice_budget.transcription?.spent_pct ?? 0 },
+              { label: '🎧 Podcasts', pct: usage.voice_budget.podcast?.spent_pct ?? 0 },
+            ].map(({ label, pct }) => (
+              <div key={label}>
+                <div className="flex items-center justify-between text-[11px] mb-0.5">
+                  <span className="text-slate-400">{label}</span>
+                  <span className={pct >= 90 ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{pct}%</span>
+                </div>
+                <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1" />
+              </div>
+            ))}
+          </div>
+          {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
+            <p className="text-[11px] text-amber-400 mt-2">
+              Te estás quedando sin cupo de voz este mes.{' '}
+              <a href="mailto:soporte@mystudyai.eu" className="underline hover:text-amber-300">Escríbenos</a> para ampliarlo.
+            </p>
+          )}
+        </div>
+      )}
+
       {/* Objetivo diario de estudio */}
       <div className="px-3 py-3 border-t border-slate-800">
         <div className="hidden lg:block">
