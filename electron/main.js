@@ -516,6 +516,23 @@ async function createWindow() {
     writeBackendLog('[Renderer] responsive again')
   })
 
+  // Sin esto, Electron deja que cualquier window.open() o navegación de nivel
+  // superior herede el preload (con acceso a shell.openExternal, el token
+  // local, dialogs, etc.) -- si algún día se cuela script en el renderer, esto
+  // evita que herede ese mismo poder en una ventana nueva o al navegar fuera
+  // de la app. Los enlaces externos ya pasan por shell:openExternal (ver
+  // preload.js), nunca por window.open real.
+  mainWindow.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    const target = (() => { try { return new URL(url) } catch { return null } })()
+    const isPackagedIndex = !isDev && target?.protocol === 'file:'
+    const isDevServer = isDev && target?.origin === 'http://localhost:5173'
+    if (!isPackagedIndex && !isDevServer) {
+      event.preventDefault()
+      writeBackendLog('[Electron] Navegación bloqueada fuera de la app: ' + url)
+    }
+  })
+
   if (isDev) {
     await waitForVite()
     await mainWindow.loadURL('http://localhost:5173')
