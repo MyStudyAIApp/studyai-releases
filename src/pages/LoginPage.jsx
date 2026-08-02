@@ -518,7 +518,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-center gap-4 mt-4">
           {SOCIAL_LINKS.map(({ Icon, href, label }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-              className="text-slate-600 hover:text-primary-400 transition-colors" title={label}>
+              className="text-slate-600 hover:text-primary-400 transition-colors" title={label} aria-label={label}>
               <Icon size={17} />
             </a>
           ))}

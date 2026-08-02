@@ -366,7 +366,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-3">
             {SOCIAL_LINKS.map(({ Icon, href, label }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className="text-slate-500 hover:text-primary-400 transition-colors" title={label}>
+                className="text-slate-500 hover:text-primary-400 transition-colors" title={label} aria-label={label}>
                 <Icon size={18} />
               </a>
             ))}
