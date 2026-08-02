@@ -114,11 +114,12 @@ export default function Sidebar() {
         </div>
       )}
 
-      {/* Presupuesto de voz (transcripción + podcasts) -- para TODOS los planes,
-          Pro incluido, ya que las generaciones de texto son ilimitadas en Pro
-          pero la voz sigue teniendo un tope real de gasto por detrás. Nunca
-          se muestra en euros, solo el % ya calculado por el backend. */}
-      {usage?.voice_budget && (
+      {/* Presupuesto de voz (transcripción + podcasts) -- SOLO Pro. Un Free
+          nunca se acerca a este tope de verdad (le para antes el límite de
+          minutos, mucho más bajo), así que mostrárselo sería ruido/confusión
+          sin ningún uso real. Nunca se muestra en euros, solo el % ya
+          calculado por el backend. */}
+      {planTier === 'pro' && usage?.voice_budget && (
         <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
           <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Uso de voz este mes</p>
           <div className="space-y-1.5">
