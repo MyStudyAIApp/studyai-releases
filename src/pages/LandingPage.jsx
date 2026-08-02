@@ -328,7 +328,7 @@ export default function LandingPage() {
           </a>
           <div className="grid grid-cols-2 gap-3">
             <a
-              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.41/StudyAI-Android-1.0.41.apk"
+              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.42/StudyAI-Android-1.0.42.apk"
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-primary-500 rounded-2xl px-3 py-3 transition-all group min-w-0"
             >
               <span className="text-2xl shrink-0">🔍</span>
@@ -338,7 +338,7 @@ export default function LandingPage() {
               </div>
             </a>
             <a
-              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.41/MyStudyApp-1.0.41.apk"
+              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.42/MyStudyApp-1.0.42.apk"
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-primary-500 rounded-2xl px-3 py-3 transition-all group min-w-0"
             >
               <span className="text-2xl shrink-0">🎓</span>
