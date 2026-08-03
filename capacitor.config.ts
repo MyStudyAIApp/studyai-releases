@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.studyai.app',
+  appId: 'eu.mystudyai.scan',
   appName: 'MyStudy Scan',
   webDir: 'dist',
   server: {

@@ -1,4 +1,4 @@
-package com.studyai.app;
+package eu.mystudyai.scan;
 
 import com.getcapacitor.BridgeActivity;
 

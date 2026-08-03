@@ -449,9 +449,9 @@ export default function LoginPage() {
               />
               <span>
                 Acepto los{' '}
-                <a href="https://www.iubenda.com/condiciones-de-uso/88689564" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</a>
+                <Link to="/terminos" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
                 {' '}y la{' '}
-                <a href="https://www.iubenda.com/privacy-policy/88689564" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</a>
+                <Link to="/privacidad" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
               </span>
             </label>
           )}
@@ -510,8 +510,8 @@ export default function LoginPage() {
         </button>
 
         <div className="flex items-center justify-center gap-4 text-[11px] text-slate-600 mt-3">
-          <a href="https://www.iubenda.com/condiciones-de-uso/88689564" target="_blank" rel="noopener noreferrer" className="hover:text-slate-400">Términos</a>
-          <a href="https://www.iubenda.com/privacy-policy/88689564" target="_blank" rel="noopener noreferrer" className="hover:text-slate-400">Privacidad</a>
+          <Link to="/terminos" target="_blank" className="hover:text-slate-400">Términos</Link>
+          <Link to="/privacidad" target="_blank" className="hover:text-slate-400">Privacidad</Link>
           <a href="#" className="iubenda-cs-preferences-link hover:text-slate-400">Cookies</a>
         </div>
 

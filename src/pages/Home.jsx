@@ -418,8 +418,8 @@ export default function Home() {
 
       {/* Enlaces legales */}
       <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 mt-10 pt-6 border-t border-slate-800">
-        <a href="https://www.iubenda.com/condiciones-de-uso/88689564" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">{t('landing.footer.terms')}</a>
-        <a href="https://www.iubenda.com/privacy-policy/88689564" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">{t('landing.footer.privacy')}</a>
+        <Link to="/terminos" target="_blank" className="hover:text-slate-300">{t('landing.footer.terms')}</Link>
+        <Link to="/privacidad" target="_blank" className="hover:text-slate-300">{t('landing.footer.privacy')}</Link>
         <a href="#" className="iubenda-cs-preferences-link hover:text-slate-300">Cookies</a>
         <a href="mailto:support@mystudyai.eu" className="hover:text-slate-300">support@mystudyai.eu</a>
       </div>

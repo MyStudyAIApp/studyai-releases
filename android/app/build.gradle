@@ -7,10 +7,10 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.studyai.app"
+    namespace = "eu.mystudyai.scan"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.studyai.app"
+        applicationId "eu.mystudyai.scan"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

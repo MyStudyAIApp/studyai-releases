@@ -357,8 +357,8 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <Logo size="sm" />
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <a href="https://www.iubenda.com/condiciones-de-uso/88689564" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">{t('landing.footer.terms')}</a>
-            <a href="https://www.iubenda.com/privacy-policy/88689564" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300">{t('landing.footer.privacy')}</a>
+            <Link to="/terminos" target="_blank" className="hover:text-slate-300">{t('landing.footer.terms')}</Link>
+            <Link to="/privacidad" target="_blank" className="hover:text-slate-300">{t('landing.footer.privacy')}</Link>
             <a href="#" className="iubenda-cs-preferences-link hover:text-slate-300">Preferencias de cookies</a>
             <Link to="/delete-account" className="hover:text-slate-300">{t('landing.footer.deleteAccount')}</Link>
             <a href="mailto:support@mystudyai.eu" className="hover:text-slate-300">support@mystudyai.eu</a>
