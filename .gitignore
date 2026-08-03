@@ -22,6 +22,8 @@ Thumbs.db
 *.asar
 .vite/
 android/local.properties
+android/keystore.properties
+*.keystore
 credentials/
 *service-account*.json
 .mcp.json
