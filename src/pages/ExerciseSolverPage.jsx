@@ -110,15 +110,14 @@ export default function ExerciseSolverPage() {
             🧮 Resolver ejercicio
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Sube o haz una foto de un ejercicio y te lo resolvemos paso a paso.
+            Sube una foto, un PDF, o haz una foto de un ejercicio y te lo resolvemos paso a paso.
           </p>
         </div>
 
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
-          capture="environment"
+          accept="image/*,application/pdf"
           className="hidden"
           onChange={e => handleFile(e.target.files?.[0])}
         />
@@ -132,15 +131,23 @@ export default function ExerciseSolverPage() {
                        text-center transition-all duration-200 cursor-pointer"
           >
             <div className="text-5xl mb-3">📸</div>
-            <p className="text-slate-300 font-medium mb-1">Arrastra una foto o haz clic para elegir</p>
-            <p className="text-slate-500 text-xs">En el móvil se abre la cámara directamente</p>
+            <p className="text-slate-300 font-medium mb-1">Arrastra una foto o PDF, o haz clic para elegir</p>
+            <p className="text-slate-500 text-xs">Foto, galería o PDF — en el móvil te deja elegir la cámara también</p>
           </div>
         )}
 
         {previewUrl && !result && (
           <div className="space-y-3">
             <div className="rounded-2xl overflow-hidden border border-slate-700">
-              <img src={previewUrl} alt="Ejercicio a resolver" className="w-full object-contain max-h-72" />
+              {file?.type === 'application/pdf' ? (
+                <div className="flex flex-col items-center justify-center gap-2 py-10 bg-slate-800/50">
+                  <span className="text-5xl">📄</span>
+                  <p className="text-slate-300 text-sm px-4 text-center break-all">{file.name}</p>
+                  <p className="text-slate-500 text-xs">Se resolverá la primera página</p>
+                </div>
+              ) : (
+                <img src={previewUrl} alt="Ejercicio a resolver" className="w-full object-contain max-h-72" />
+              )}
             </div>
             <div className="flex gap-2">
               <button onClick={otro} disabled={solving} className="btn-secondary flex-1 btn-sm">
@@ -168,7 +175,7 @@ export default function ExerciseSolverPage() {
 
         <div className="card bg-slate-900/40 border-slate-700/50 space-y-2 text-xs text-slate-500">
           <p className="font-medium text-slate-400">Cómo funciona:</p>
-          <p>📖 Lee el enunciado directamente de la foto</p>
+          <p>📖 Lee el enunciado directamente de la foto o el PDF</p>
           <p>✅ Resuelve paso a paso, sin saltarse ninguno</p>
           <p>📐 Funciona mejor con matemáticas, física y química</p>
         </div>
