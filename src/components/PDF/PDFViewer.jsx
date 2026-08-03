@@ -13,7 +13,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString()
 
-export default function PDFViewer({ document: doc }) {
+export default function PDFViewer({ document: doc, localBase64 = null }) {
   const { apiBase } = useAppStore()
   const [currentPage, setCurrentPage] = useState(1)
   const [numPages, setNumPages]       = useState(null)
@@ -33,7 +33,9 @@ export default function PDFViewer({ document: doc }) {
     return () => ro.disconnect()
   }, [])
 
-  // Descargar el PDF con las cabeceras de auth y crear un blob URL local
+  // Si hay una copia local (móvil sin conexión, ver offlineDocs.js) se usa
+  // directamente esa — sin red de por medio. Si no, se descarga con las
+  // cabeceras de auth como siempre y se crea un blob URL.
   useEffect(() => {
     if (!doc?.id) return
     let revoke = null
@@ -44,11 +46,17 @@ export default function PDFViewer({ document: doc }) {
 
     const load = async () => {
       try {
-        const headers = await getAuthHeader()
-        const url = `${apiBase}/documents/${doc.id}/file`
-        const res = await fetch(url, { headers })
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const blob = await res.blob()
+        let blob
+        if (localBase64) {
+          const bytes = Uint8Array.from(atob(localBase64), c => c.charCodeAt(0))
+          blob = new Blob([bytes], { type: 'application/pdf' })
+        } else {
+          const headers = await getAuthHeader()
+          const url = `${apiBase}/documents/${doc.id}/file`
+          const res = await fetch(url, { headers })
+          if (!res.ok) throw new Error(`HTTP ${res.status}`)
+          blob = await res.blob()
+        }
         const objectUrl = URL.createObjectURL(blob)
         revoke = objectUrl
         setBlobUrl(objectUrl)
@@ -62,7 +70,7 @@ export default function PDFViewer({ document: doc }) {
     load()
 
     return () => { if (revoke) URL.revokeObjectURL(revoke) }
-  }, [doc?.id, apiBase])
+  }, [doc?.id, apiBase, localBase64])
 
   const onDocumentLoadSuccess = useCallback(({ numPages }) => {
     setNumPages(numPages)

@@ -9,7 +9,7 @@ import TextToSpeech from '../components/Audio/TextToSpeech'
 import PodcastPanel from '../components/Audio/PodcastPanel'
 import Modal from '../components/UI/Modal'
 import { useTranslation } from 'react-i18next'
-import { getCached as getCachedOfflineDoc } from '../services/offlineDocs'
+import { getCached as getCachedOfflineDoc, getCachedPdfBase64 } from '../services/offlineDocs'
 import {
   IconLoader2, IconVolume, IconHeadphones, IconArrowLeft, IconFileText,
   IconBooks, IconFolder, IconChevronUp, IconChevronDown, IconSparkles, IconX, IconWifiOff,
@@ -123,6 +123,7 @@ export default function DocumentPage() {
   const [doc, setDoc] = useState(null)
   const [isOfflineCache, setIsOfflineCache] = useState(false)
   const [offlineText, setOfflineText] = useState(null)
+  const [offlinePdfBase64, setOfflinePdfBase64] = useState(null)
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
   const [genProgress, setGenProgress] = useState('')
@@ -211,6 +212,7 @@ export default function DocumentPage() {
         setDoc(d)
         setSavedResults(r.items || [])
         setIsOfflineCache(false)
+        setOfflinePdfBase64(null)
       })
       .catch(async () => {
         // Sin conexión (o el servidor no responde): si es MyStudy App y este
@@ -222,6 +224,10 @@ export default function DocumentPage() {
             setSavedResults(cached.results || [])
             setOfflineText(cached.text || '')
             setIsOfflineCache(true)
+            if (cached.hasPdf) {
+              const pdfBase64 = await getCachedPdfBase64(id).catch(() => null)
+              setOfflinePdfBase64(pdfBase64)
+            }
             return
           }
         }
@@ -300,13 +306,15 @@ export default function DocumentPage() {
 
   // Reutilizado en mobile y desktop
   const docViewerEl = (
-    isOfflineCache || doc.title?.startsWith('[Clase]') || doc.title?.startsWith('[Foto]') || !doc.file_path
-      ? <TextViewer docId={doc.id} title={doc.title} cachedText={isOfflineCache ? offlineText : undefined} />
-      : IS_WEB && !doc.file_path.includes('/')
+    isOfflineCache && offlinePdfBase64
+      ? <PDFViewer document={doc} localBase64={offlinePdfBase64} />
+      : isOfflineCache || doc.title?.startsWith('[Clase]') || doc.title?.startsWith('[Foto]') || !doc.file_path
         ? <TextViewer docId={doc.id} title={doc.title} cachedText={isOfflineCache ? offlineText : undefined} />
-        : doc.pages > 0
-          ? <PDFViewer document={doc} />
-          : (
+        : IS_WEB && !doc.file_path.includes('/')
+          ? <TextViewer docId={doc.id} title={doc.title} cachedText={isOfflineCache ? offlineText : undefined} />
+          : doc.pages > 0
+            ? <PDFViewer document={doc} />
+            : (
             <div className="flex-1 flex flex-col items-center justify-center p-6 gap-4 text-center">
               <IconBooks size={44} className="text-slate-600" />
               <p className="text-slate-300 font-semibold text-sm">{doc.title}</p>
