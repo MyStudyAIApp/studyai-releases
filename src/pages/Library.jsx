@@ -68,9 +68,9 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
         {onDownload && (
           <button
             onClick={e => { e.stopPropagation(); onDownload(e) }}
-            className={`shrink-0 p-1 transition-colors ${downloaded ? 'text-emerald-400' : 'text-slate-600 hover:text-primary-400'}`}
-            title={downloaded ? 'Descargado — pulsa para quitar' : 'Guardar para sin conexión'}
-          >{downloading ? <IconLoader2 size={16} className="animate-spin" /> : downloaded ? <IconCircleCheck size={16} /> : <IconDownload size={16} />}</button>
+            className={`shrink-0 p-1 transition-colors ${downloaded ? 'text-emerald-400' : 'text-amber-400 hover:text-primary-400'}`}
+            title={downloaded ? 'En este móvil y en la nube — pulsa para quitar del móvil' : 'Solo en la nube — pulsa para guardar en el móvil'}
+          >{downloading ? <IconLoader2 size={16} className="animate-spin" /> : downloaded ? <IconCloud size={16} /> : <IconDownload size={16} />}</button>
         )}
         <button
           onClick={e => { e.stopPropagation(); onPodcast() }}
@@ -191,6 +191,21 @@ export default function Library() {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
+  // ── Aviso de retención: el PDF original se borra a los 10 días de subirlo
+  // (el texto y todo lo generado se conserva siempre) — se puede desactivar,
+  // pero queda registrado en el servidor con fecha, no solo en el dispositivo.
+  const [showRetentionNotice, setShowRetentionNotice] = useState(false)
+  useEffect(() => {
+    if (!backendReady) return
+    api('GET', '/me').then(me => {
+      if (!me.pdf_retention_notice_dismissed) setShowRetentionNotice(true)
+    }).catch(() => {})
+  }, [backendReady])
+  async function dismissRetentionNotice() {
+    setShowRetentionNotice(false)
+    try { await api('POST', '/me/dismiss-pdf-retention-notice') } catch { /* se reintentará en la próxima visita */ }
+  }
+
   // ── Descargas offline (solo MyStudy App móvil) ──
   const [downloadedIds,   setDownloadedIds]   = useState(new Set())
   const [downloadingId,   setDownloadingId]   = useState(null)
@@ -739,6 +754,23 @@ export default function Library() {
           </div>
         )}
 
+        {/* Aviso de retención del PDF original */}
+        {showRetentionNotice && (
+          <div className="mb-4 rounded-xl border border-amber-700/40 bg-amber-950/30 px-4 py-3 flex items-start gap-3">
+            <span className="text-lg leading-none mt-0.5">⏳</span>
+            <p className="flex-1 text-xs text-amber-200/90 leading-relaxed">
+              El archivo original (PDF/foto) que subes se borra automáticamente a los <b>10 días</b> para
+              ahorrar espacio — tus resúmenes, fichas y exámenes generados <b>se conservan siempre</b>.
+              Si quieres guardar el archivo original, descárgalo a tu ordenador o móvil antes de que pasen esos días.
+            </p>
+            <button
+              onClick={dismissRetentionNotice}
+              className="shrink-0 text-amber-300/70 hover:text-amber-200 transition-colors"
+              title="No volver a mostrar"
+            ><IconX size={16} /></button>
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <div className="flex items-center gap-2 min-w-0">
@@ -981,9 +1013,9 @@ export default function Library() {
                     {IS_MOBILE && (
                       <button
                         onClick={e => toggleDownload(doc, e)}
-                        className={`transition-opacity ${downloadedIds.has(doc.id) ? 'text-emerald-400' : 'text-slate-400 hover:text-primary-400'} ${isNarrow ? '' : 'opacity-0 group-hover:opacity-100'}`}
-                        title={downloadedIds.has(doc.id) ? 'Descargado — pulsa para quitar' : 'Guardar para sin conexión'}
-                      >{downloadingId === doc.id ? <IconLoader2 size={14} className="animate-spin" /> : downloadedIds.has(doc.id) ? <IconCircleCheck size={14} /> : <IconDownload size={14} />}</button>
+                        className={`transition-opacity ${downloadedIds.has(doc.id) ? 'text-emerald-400' : 'text-amber-400 hover:text-primary-400'} ${isNarrow ? '' : 'opacity-0 group-hover:opacity-100'}`}
+                        title={downloadedIds.has(doc.id) ? 'En este móvil y en la nube — pulsa para quitar del móvil' : 'Solo en la nube — pulsa para guardar en el móvil'}
+                      >{downloadingId === doc.id ? <IconLoader2 size={14} className="animate-spin" /> : downloadedIds.has(doc.id) ? <IconCloud size={14} /> : <IconDownload size={14} />}</button>
                     )}
                     <button
                       onClick={e => { e.stopPropagation(); navigate(`/document/${doc.id}`, { state: { openPodcast: true } }) }}
