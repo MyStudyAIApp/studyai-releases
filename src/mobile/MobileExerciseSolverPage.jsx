@@ -5,8 +5,9 @@ import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import { apiUpload, useAppStore } from '../store/appStore'
+import { api, apiUpload, useAppStore } from '../store/appStore'
 import { useDocumentScan } from './useDocumentScan'
+import { ensureMathDelimiters } from '../utils/mathText'
 import {
   IconArrowLeft, IconCalculator, IconPackage, IconCamera, IconSparkles,
   IconLoader2, IconRefresh, IconChevronUp, IconChevronDown, IconDeviceFloppy,
@@ -21,6 +22,11 @@ export default function MobileExerciseSolverPage() {
   const [saving, setSaving]         = useState(false)
   const [result, setResult]         = useState(null)
   const [expandedStep, setExpandedStep] = useState(true)
+  // Ver arriba (ExerciseSolverPage): hay símbolos ambiguos en el papel que
+  // ningún motor acierta — dejar corregir la lectura evita que el alumno se
+  // quede con un resultado equivocado con pinta de bueno.
+  const [editingStatement, setEditingStatement] = useState(null)
+  const [resolvingText, setResolvingText] = useState(false)
   const { scan: docScan, installing, installProgress } = useDocumentScan()
   const { addToast } = useAppStore()
   const navigate = useNavigate()
@@ -97,10 +103,26 @@ export default function MobileExerciseSolverPage() {
     }
   }
 
+  const resolverConTexto = async () => {
+    const statement = (editingStatement || '').trim()
+    if (!statement) { addToast('Escribe el enunciado', 'warning'); return }
+    setResolvingText(true)
+    try {
+      const data = await api('POST', '/exercises/solve-text', { statement, difficulty: 'normal' })
+      setResult(data)
+      setEditingStatement(null)
+    } catch (e) {
+      if (!e.quotaExceeded) addToast('No se pudo resolver: ' + e.message, 'error')
+    } finally {
+      setResolvingText(false)
+    }
+  }
+
   const otro = () => {
     setPreviewB64(null)
     setPhotoUri(null)
     setResult(null)
+    setEditingStatement(null)
   }
 
   return (
@@ -189,9 +211,55 @@ export default function MobileExerciseSolverPage() {
                 </span>
               )}
               <div className="prose-studyai text-sm text-slate-100">
-                <ReactMarkdown {...MD_OPTS}>{result.statement}</ReactMarkdown>
+                <ReactMarkdown {...MD_OPTS}>{ensureMathDelimiters(result.statement)}</ReactMarkdown>
               </div>
             </div>
+
+            {/* Comprobar la lectura antes de fiarse del resultado */}
+            {editingStatement === null ? (
+              <button
+                onClick={() => setEditingStatement(result.statement || '')}
+                className="w-full rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-left"
+              >
+                <span className="block text-xs font-medium text-amber-300/90">
+                  ✏️ ¿He leído bien tu ejercicio?
+                </span>
+                <span className="block text-[11px] text-slate-400 mt-0.5">
+                  Si algún número o signo no coincide, tócame para corregirlo
+                </span>
+              </button>
+            ) : (
+              <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 space-y-3">
+                <p className="text-xs font-medium text-amber-300/90">
+                  Corrige el enunciado y lo resuelvo de nuevo
+                </p>
+                <textarea
+                  value={editingStatement}
+                  onChange={e => setEditingStatement(e.target.value)}
+                  rows={4}
+                  className="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2
+                             text-sm text-slate-100 font-mono outline-none focus:border-primary-500"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setEditingStatement(null)}
+                    disabled={resolvingText}
+                    className="flex-1 py-3 rounded-xl bg-slate-700 text-slate-300 font-medium
+                               active:bg-slate-600 disabled:opacity-40 text-sm"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={resolverConTexto}
+                    disabled={resolvingText}
+                    className="flex-1 py-3 rounded-xl bg-primary-600 text-white font-bold
+                               active:bg-primary-700 disabled:opacity-50 text-sm"
+                  >
+                    {resolvingText ? 'Resolviendo...' : 'Resolver con esto'}
+                  </button>
+                </div>
+              </div>
+            )}
 
             <button
               onClick={() => setExpandedStep(v => !v)}

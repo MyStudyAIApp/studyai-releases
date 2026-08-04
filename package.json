@@ -1,6 +1,6 @@
 {
   "name": "studyai",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "description": "Asistente de estudio — resúmenes, esquemas, exámenes, flashcards",
   "author": "StudyAI",
   "main": "electron/main.js",

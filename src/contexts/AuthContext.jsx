@@ -64,7 +64,15 @@ export function AuthProvider({ children }) {
 
   const clearPasswordRecovery = () => setIsPasswordRecovery(false)
 
-  const value = { user, session, loading, signOut, getToken, isPasswordRecovery, clearPasswordRecovery }
+  // En apps nativas el evento PASSWORD_RECOVERY no llega: el enlace del email
+  // vuelve por deep link y se canjea a mano (ver src/lib/googleAuth.js), así que
+  // es el propio flujo quien avisa de que toca pedir contraseña nueva.
+  const beginPasswordRecovery = () => setIsPasswordRecovery(true)
+
+  const value = {
+    user, session, loading, signOut, getToken,
+    isPasswordRecovery, clearPasswordRecovery, beginPasswordRecovery,
+  }
 
   return (
     <AuthContext.Provider value={value}>

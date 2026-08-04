@@ -206,8 +206,12 @@ function AppInner() {
   }, [backendReady])
 
   // Si el usuario llegó desde el enlace de "restablecer contraseña",
-  // mostramos solo ese formulario (el hash del token ya fue procesado por Supabase)
-  if (IS_WEB && isPasswordRecovery) {
+  // mostramos solo ese formulario (el hash del token ya fue procesado por Supabase).
+  // Antes solo se comprobaba en IS_WEB — en móvil (MyStudy App) el evento
+  // PASSWORD_RECOVERY también llega y abre sesión igual, pero nunca se
+  // mostraba esta pantalla: quien abriera el enlace entraba directo a la
+  // cuenta sin tener que fijar la contraseña nueva.
+  if (isPasswordRecovery) {
     return <ResetPasswordPage />
   }
 

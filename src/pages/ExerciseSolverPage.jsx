@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppStore, api, apiUpload } from '../store/appStore'
 import ProblemsView from '../components/Exam/ProblemsView'
 import Spinner from '../components/UI/Spinner'
+import { IconTrash } from '@tabler/icons-react'
 
 export default function ExerciseSolverPage() {
   const { addToast } = useAppStore()
@@ -16,6 +17,12 @@ export default function ExerciseSolverPage() {
   const [result, setResult] = useState(null)
   const [recent, setRecent] = useState([])
   const [loadingRecent, setLoadingRecent] = useState(true)
+  // Corrección del enunciado: hay símbolos que en el papel son genuinamente
+  // ambiguos (un "1" cuyo remate parece un menos) y ningún motor los acierta —
+  // dejar corregir la lectura es el único remedio real, y evita que el alumno
+  // se quede con un resultado equivocado que parece bueno.
+  const [editingStatement, setEditingStatement] = useState(null)
+  const [resolvingText, setResolvingText] = useState(false)
 
   useEffect(() => {
     loadRecent()
@@ -25,7 +32,7 @@ export default function ExerciseSolverPage() {
     setLoadingRecent(true)
     api('GET', '/documents').then(docs => {
       const items = (docs.items || [])
-        .filter(d => d.title.startsWith('[Ejercicio]'))
+        .filter(d => d.title?.startsWith('[Ejercicio]'))
         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
         .slice(0, 10)
       setRecent(items)
@@ -37,6 +44,7 @@ export default function ExerciseSolverPage() {
     if (!f) return
     setFile(f)
     setResult(null)
+    setEditingStatement(null)
     setPreviewUrl(URL.createObjectURL(f))
   }
 
@@ -54,6 +62,7 @@ export default function ExerciseSolverPage() {
     if (!file) return
     setSolving(true)
     setResult(null)
+    setEditingStatement(null)
     try {
       const form = new FormData()
       form.append('file', file)
@@ -94,9 +103,37 @@ export default function ExerciseSolverPage() {
     }
   }
 
+  async function resolverConTexto() {
+    const statement = (editingStatement || '').trim()
+    if (!statement) { addToast('Escribe el enunciado', 'warning'); return }
+    setResolvingText(true)
+    try {
+      const data = await api('POST', '/exercises/solve-text', { statement, difficulty: 'normal' })
+      setResult(data)
+      setEditingStatement(null)
+    } catch (e) {
+      if (!e.quotaExceeded) addToast('No se pudo resolver: ' + e.message, 'error')
+    } finally {
+      setResolvingText(false)
+    }
+  }
+
+  async function borrar(docId, e) {
+    e.stopPropagation()
+    if (!window.confirm('¿Eliminar este ejercicio? No se puede deshacer.')) return
+    try {
+      await api('DELETE', `/documents/${docId}`)
+      setRecent(prev => prev.filter(d => d.id !== docId))
+      addToast('Ejercicio eliminado', 'success')
+    } catch (e) {
+      addToast('No se pudo eliminar: ' + e.message, 'error')
+    }
+  }
+
   function otro() {
     setFile(null)
     setResult(null)
+    setEditingStatement(null)
     setPreviewUrl(null)
   }
 
@@ -191,7 +228,60 @@ export default function ExerciseSolverPage() {
         )}
 
         {!solving && result && (
-          <ProblemsView result={{ problems: [result] }} />
+          <>
+            {/* Comprobación de la lectura — antes del resultado a propósito:
+                si la IA leyó mal un símbolo, todo lo de abajo está mal, y más
+                vale que el alumno lo vea aquí que fiarse de un resultado falso. */}
+            <div className="card bg-amber-500/5 border-amber-500/25 mb-4 space-y-2">
+              {editingStatement === null ? (
+                <>
+                  <p className="text-xs text-amber-300/90 font-medium">
+                    📖 Esto es lo que he leído de tu foto
+                  </p>
+                  <p className="text-[11px] text-slate-400">
+                    Si algún número o signo no coincide con tu ejercicio, corrígelo — el
+                    resultado depende de ello.
+                  </p>
+                  <button
+                    onClick={() => setEditingStatement(result.statement || '')}
+                    className="btn-secondary btn-sm"
+                  >
+                    ✏️ Corregir enunciado
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs text-amber-300/90 font-medium">
+                    ✏️ Corrige el enunciado y lo resuelvo de nuevo
+                  </p>
+                  <textarea
+                    value={editingStatement}
+                    onChange={e => setEditingStatement(e.target.value)}
+                    rows={3}
+                    className="w-full bg-slate-800 border border-slate-600 rounded-xl px-3 py-2
+                               text-sm text-slate-100 font-mono focus:outline-none focus:border-primary-500"
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setEditingStatement(null)}
+                      disabled={resolvingText}
+                      className="btn-secondary flex-1 btn-sm"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={resolverConTexto}
+                      disabled={resolvingText}
+                      className="btn-primary flex-1 btn-sm"
+                    >
+                      {resolvingText ? '⏳ Resolviendo...' : '✨ Resolver con esto'}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+            <ProblemsView result={{ problems: [result] }} />
+          </>
         )}
 
         {!solving && !result && (
@@ -226,6 +316,13 @@ export default function ExerciseSolverPage() {
                         })}
                       </span>
                     </div>
+                    <button
+                      onClick={e => borrar(doc.id, e)}
+                      title="Eliminar"
+                      className="shrink-0 p-1.5 rounded-lg text-slate-600 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                    >
+                      <IconTrash size={16} />
+                    </button>
                     <span className="text-slate-600 group-hover:text-slate-300 transition-colors text-sm">→</span>
                   </div>
                 ))}

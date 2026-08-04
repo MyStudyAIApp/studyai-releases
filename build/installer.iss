@@ -1,8 +1,8 @@
-; StudyAI - Inno Setup Installer
+﻿; StudyAI - Inno Setup Installer
 ; Compresion lzma2/ultra64 - sin limite de tamano, maneja >2 GB sin problemas
 
 #define MyAppName "MyStudy AI"
-#define MyAppVersion "1.0.42"
+#define MyAppVersion "1.0.43"
 #define MyAppPublisher "MyStudy AI"
 #define MyAppExeName "MyStudy AI.exe"
 #define SourceDir "..\dist-electron\win-unpacked"

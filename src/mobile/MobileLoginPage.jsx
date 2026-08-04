@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Browser } from '@capacitor/browser'
 import { supabase } from '../lib/supabase'
-import { getGoogleOAuthUrl } from '../lib/googleAuth'
+import { getGoogleOAuthUrl, startNativePasswordRecovery } from '../lib/googleAuth'
 import { useAuth } from '../contexts/AuthContext'
 import Logo from '../components/UI/Logo'
 
@@ -12,6 +12,7 @@ export default function MobileLoginPage() {
   const [password, setPassword] = useState('')
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState('')
+  const [resetSent, setResetSent] = useState(false)
   const navigate                = useNavigate()
 
   // El login con Google se completa en segundo plano (deep link, ver
@@ -28,6 +29,23 @@ export default function MobileLoginPage() {
       await Browser.open({ url })
     } catch (err) {
       setError('No se pudo iniciar sesión con Google. Inténtalo de nuevo.')
+    }
+  }
+
+  const handleForgotPassword = async () => {
+    if (!email) { setError('Escribe tu email primero.'); return }
+    setError('')
+    setLoading(true)
+    try {
+      // El enlace del email tiene que volver A LA APP (mystudyai://auth-callback):
+      // si abre el navegador del móvil, el canje del código PKCE falla y el
+      // usuario acaba en la landing sin poder cambiar la contraseña.
+      await startNativePasswordRecovery(email)
+      setResetSent(true)
+    } catch {
+      setError('No se pudo enviar el email. Inténtalo de nuevo.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -90,6 +108,12 @@ export default function MobileLoginPage() {
           <p className="text-red-400 text-sm text-center">{error}</p>
         )}
 
+        {resetSent && (
+          <p className="text-green-400 text-sm text-center">
+            📧 Te hemos enviado un enlace para restablecer tu contraseña.
+          </p>
+        )}
+
         <button
           type="submit"
           disabled={loading}
@@ -97,6 +121,15 @@ export default function MobileLoginPage() {
                      active:bg-primary-700 disabled:opacity-50 transition-colors"
         >
           {loading ? 'Entrando...' : 'Iniciar sesión'}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleForgotPassword}
+          disabled={loading}
+          className="w-full text-slate-500 active:text-slate-300 text-sm transition-colors"
+        >
+          ¿Olvidaste tu contraseña?
         </button>
       </form>
 

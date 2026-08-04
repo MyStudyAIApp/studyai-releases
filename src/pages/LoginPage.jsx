@@ -12,7 +12,7 @@ import { IS_WEB, IS_ELECTRON, IS_MOBILE } from '../store/appStore'
 import { App as CapacitorApp } from '@capacitor/app'
 import { Browser } from '@capacitor/browser'
 import { useAuth } from '../contexts/AuthContext'
-import { getGoogleOAuthUrl, completeGoogleOAuthFromUrl } from '../lib/googleAuth'
+import { getGoogleOAuthUrl, completeNativeAuthFromUrl, startNativePasswordRecovery } from '../lib/googleAuth'
 import Logo from '../components/UI/Logo'
 import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconBrandYoutube } from '@tabler/icons-react'
 
@@ -32,7 +32,7 @@ const INVITE_ERROR_LABELS = {
 }
 
 export default function LoginPage() {
-  const { user } = useAuth()
+  const { user, beginPasswordRecovery } = useAuth()
   const navigate = useNavigate()
 
   // En cuanto el login tiene éxito, user pasa de null a tener valor → ir al inicio
@@ -91,10 +91,13 @@ export default function LoginPage() {
     if (IS_WEB || !window.electron?.onDeepLink) return
     const off = window.electron.onDeepLink(async (url) => {
       try {
-        const ok = await completeGoogleOAuthFromUrl(url)
-        if (!ok) setError('No se pudo completar el login con Google.')
+        const { ok, isRecovery } = await completeNativeAuthFromUrl(url)
+        if (!ok) setError(isRecovery
+          ? 'El enlace de la contraseña ha caducado. Pide uno nuevo.'
+          : 'No se pudo completar el login con Google.')
+        else if (isRecovery) beginPasswordRecovery()
       } catch {
-        setError('No se pudo completar el login con Google.')
+        setError('No se pudo completar la operación. Inténtalo de nuevo.')
       }
     })
     return off
@@ -107,11 +110,15 @@ export default function LoginPage() {
     if (!IS_MOBILE) return
     const listenerPromise = CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
       try {
-        const ok = await completeGoogleOAuthFromUrl(url)
-        if (ok) { try { await Browser.close() } catch {} }
-        else setError('No se pudo completar el login con Google.')
+        const { ok, isRecovery } = await completeNativeAuthFromUrl(url)
+        if (ok) {
+          try { await Browser.close() } catch {}
+          if (isRecovery) beginPasswordRecovery()
+        } else setError(isRecovery
+          ? 'El enlace de la contraseña ha caducado. Pide uno nuevo.'
+          : 'No se pudo completar el login con Google.')
       } catch {
-        setError('No se pudo completar el login con Google.')
+        setError('No se pudo completar la operación. Inténtalo de nuevo.')
       }
     })
     return () => { listenerPromise.then(l => l.remove()) }
@@ -139,14 +146,25 @@ export default function LoginPage() {
   const handleForgotPassword = async () => {
     if (!email) { setError('Escribe tu email primero.'); return }
     setLoading(true); setError(null)
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      // En web: redirige al origen actual. En Electron: sin redirectTo,
-      // Supabase usa la URL configurada en el dashboard (la web pública).
-      ...(IS_WEB ? { redirectTo: window.location.origin } : {})
-    })
-    setLoading(false)
-    if (error) setError('No se pudo enviar el email. Inténtalo de nuevo.')
-    else setResetSent(true)
+    try {
+      if (IS_WEB) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin,
+        })
+        if (error) throw error
+      } else {
+        // Escritorio y móvil: el enlace debe volver A LA APP, no a la web. Con
+        // PKCE el código solo se canjea donde se guardó el verificador; si abre
+        // el navegador, falla en silencio y el usuario acaba en la landing sin
+        // poder cambiar nada (ver src/lib/googleAuth.js).
+        await startNativePasswordRecovery(email)
+      }
+      setResetSent(true)
+    } catch {
+      setError('No se pudo enviar el email. Inténtalo de nuevo.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -289,7 +307,7 @@ export default function LoginPage() {
           <div className="grid grid-cols-2 gap-3">
             {/* App móvil — Scan (fotos/grabar, la sencilla) */}
             <a
-              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.42/StudyAI-Android-1.0.42.apk"
+              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.43/StudyAI-Android-1.0.43.apk"
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-primary-500 rounded-2xl px-3 py-3 transition-all group min-w-0"
             >
               <span className="text-2xl shrink-0">🔍</span>
@@ -301,7 +319,7 @@ export default function LoginPage() {
 
             {/* App móvil completa — envoltorio TWA con toda la web */}
             <a
-              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.42/MyStudyApp-1.0.42.apk"
+              href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.43/MyStudyApp-1.0.43.apk"
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-primary-500 rounded-2xl px-3 py-3 transition-all group min-w-0"
             >
               <span className="text-2xl shrink-0">🎓</span>

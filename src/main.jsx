@@ -45,6 +45,12 @@ Sentry.init({
   ],
   tracesSampleRate: 0.1,           // registra el 10% de las navegaciones (rendimiento)
   sendDefaultPii: false,           // no enviar datos personales por defecto
+  // beacon.min.js es el script de analítica RUM de Cloudflare, no código
+  // propio — falla solo en navegadores muy antiguos (Chrome <92, sin
+  // Array.prototype.at) y no afecta a la app. Se descarta aquí para no
+  // seguir viendo ese ruido como si fuera un error real de StudyAI.
+  denyUrls: [/\/beacon\.min\.js/],
+  ignoreErrors: ['t.entries.at is not a function'],
 })
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import { useAppStore, api } from '../../store/appStore'
+import { ensureMathDelimiters } from '../../utils/mathText'
 
 const MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 
@@ -57,7 +58,7 @@ export default function ProblemsView({ result }) {
                 )}
               </div>
               <div className="prose-studyai text-sm">
-                <ReactMarkdown {...MD_OPTS}>{p.statement}</ReactMarkdown>
+                <ReactMarkdown {...MD_OPTS}>{ensureMathDelimiters(p.statement)}</ReactMarkdown>
               </div>
             </div>
           </div>

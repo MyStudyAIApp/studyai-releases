@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { App as CapacitorApp } from '@capacitor/app'
 import { Browser } from '@capacitor/browser'
 import { useAuth } from '../contexts/AuthContext'
-import { completeGoogleOAuthFromUrl } from '../lib/googleAuth'
+import { completeNativeAuthFromUrl } from '../lib/googleAuth'
 import MobileLoginPage from './MobileLoginPage'
 import MobileHomePage from './MobileHomePage'
 import MobileScannerPage from './MobileScannerPage'
@@ -28,14 +28,21 @@ function Protected({ children }) {
 }
 
 export default function MobileApp() {
+  const { beginPasswordRecovery } = useAuth()
+
   // Deep link de vuelta tras iniciar sesión con Google (mystudyai://auth-callback)
   useEffect(() => {
     const listenerPromise = CapacitorApp.addListener('appUrlOpen', async ({ url }) => {
       try {
-        const ok = await completeGoogleOAuthFromUrl(url)
-        if (ok) { try { await Browser.close() } catch {} }
+        const { ok, isRecovery } = await completeNativeAuthFromUrl(url)
+        if (ok) {
+          try { await Browser.close() } catch {}
+          // Restablecer contraseña: hay que enseñar el formulario de contraseña
+          // nueva, no dejar al usuario dentro con la contraseña vieja intacta.
+          if (isRecovery) beginPasswordRecovery()
+        }
       } catch (e) {
-        console.error('Login con Google (deep link) falló:', e)
+        console.error('Callback de autenticación (deep link) falló:', e)
       }
     })
     return () => { listenerPromise.then(l => l.remove()) }
