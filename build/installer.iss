@@ -2,7 +2,7 @@
 ; Compresion lzma2/ultra64 - sin limite de tamano, maneja >2 GB sin problemas
 
 #define MyAppName "MyStudy AI"
-#define MyAppVersion "1.0.44"
+#define MyAppVersion "1.0.45"
 #define MyAppPublisher "MyStudy AI"
 #define MyAppExeName "MyStudy AI.exe"
 #define SourceDir "..\dist-electron\win-unpacked"
