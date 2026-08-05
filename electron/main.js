@@ -785,6 +785,22 @@ ipcMain.handle('dialog:saveFile', async (_, opts) => {
   return result.canceled ? null : result.filePath
 })
 
+// Guarda un archivo binario que el renderer ya tiene en memoria (p.ej. el
+// PDF/foto original de un documento de la Biblioteca, descargado por fetch)
+// con el selector de carpeta nativo, en vez de caer en la carpeta de
+// Descargas por defecto del navegador. path.basename() evita que un nombre
+// de documento con '..' o '/' escriba fuera de la carpeta elegida.
+ipcMain.handle('dialog:saveBinaryFile', async (_, { suggestedName, data } = {}) => {
+  const safeName = path.basename(suggestedName || 'documento')
+  const result = await dialog.showSaveDialog(mainWindow, {
+    title: 'Guardar archivo original',
+    defaultPath: path.join(app.getPath('downloads'), safeName),
+  })
+  if (result.canceled || !result.filePath) return { ok: false, reason: 'cancelled' }
+  fs.writeFileSync(result.filePath, Buffer.from(data))
+  return { ok: true, filePath: result.filePath }
+})
+
 // shell.openExternal es, en Windows, un paso directo a ShellExecute: abriría
 // ejecutables locales, rutas de red (file:, UNC, smb:) o protocolos del sistema
 // (ms-*, search-ms:) fuera del sandbox de Chromium. Como el renderer elige el

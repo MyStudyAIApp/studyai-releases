@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useAppStore, api, apiUpload, IS_WEB, IS_MOBILE, IS_ELECTRON } from '../store/appStore'
+import { useAppStore, api, apiUpload, getAuthHeader, IS_WEB, IS_MOBILE, IS_ELECTRON } from '../store/appStore'
 import * as offlineDocs from '../services/offlineDocs'
 import Spinner from '../components/UI/Spinner'
 import Modal from '../components/UI/Modal'
@@ -10,6 +10,8 @@ import { useAuth } from '../contexts/AuthContext'
 import { deleteSyncedSubject, syncSingleDocument, checkCloudPresence } from '../services/syncService'
 import WeeklyHoursWidget, { loadWeeklyHours, saveWeeklyHours } from '../components/Study/WeeklyHoursWidget'
 import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
+import RetentionChip from '../components/UI/RetentionChip'
+import { CURRENT_PLATFORM } from '../lib/retention'
 import {
   IconPhoto, IconCamera, IconFileText, IconFolder, IconTrash, IconDeviceFloppy,
   IconCloud, IconBooks, IconDownload, IconMenu2, IconLayoutGrid, IconX, IconHeadphones,
@@ -40,7 +42,7 @@ function groupDocsByDate(docs) {
 }
 
 // ─── List row ───────────────────────────────────────────────────────────────
-function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, onDragStart, onDragEnd, dragging, isNarrow, onSync, syncing, cloudVerified, onPodcast, onDownload, downloaded, downloading }) {
+function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, onDragStart, onDragEnd, dragging, isNarrow, onSync, syncing, cloudVerified, onPodcast, onDownload, downloaded, downloading, onDownloadOriginal, downloadingOriginal }) {
   const { t } = useTranslation()
 
   // ── Móvil: fila compacta apilada (mismo espíritu que MobileLibraryPage) ──
@@ -64,6 +66,7 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
             <span className="text-[10px] text-slate-500">{doc.pages} pág. · {(doc.file_size / 1024 / 1024).toFixed(1)} MB</span>
             {doc.subject_name && <span className="badge-blue text-[10px] truncate max-w-[80px]">{doc.subject_name}</span>}
             {doc.topic_name   && <span className="text-[10px] bg-slate-700/70 text-slate-300 border border-slate-600 rounded px-1 truncate max-w-[80px]"><IconFolder size={11} className="inline -mt-0.5" /> {doc.topic_name}</span>}
+            {doc.original_available && <RetentionChip createdAt={doc.created_at} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />}
           </div>
         </div>
         {onDownload && (
@@ -72,6 +75,13 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
             className={`shrink-0 p-1 transition-colors ${downloaded ? 'text-emerald-400' : 'text-amber-400 hover:text-primary-400'}`}
             title={downloaded ? 'En este móvil y en la nube — pulsa para quitar del móvil' : 'Solo en la nube — pulsa para guardar en el móvil'}
           >{downloading ? <IconLoader2 size={16} className="animate-spin" /> : downloaded ? <IconCloud size={16} /> : <IconDownload size={16} />}</button>
+        )}
+        {onDownloadOriginal && doc.original_available && (
+          <button
+            onClick={e => { e.stopPropagation(); onDownloadOriginal(doc, e) }}
+            className="shrink-0 p-1 text-amber-400 hover:text-primary-400 transition-colors"
+            title="Descargar el archivo original antes de que se borre"
+          >{downloadingOriginal ? <IconLoader2 size={16} className="animate-spin" /> : <IconDownload size={16} />}</button>
         )}
         <button
           onClick={e => { e.stopPropagation(); onPodcast() }}
@@ -135,9 +145,19 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
 
       <span className="flex-1" />
 
-      <span className="text-xs text-slate-500 w-24 text-right shrink-0">
+      {doc.original_available && <RetentionChip createdAt={doc.created_at} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />}
+
+      <span className="text-xs text-slate-500 w-24 text-right shrink-0 ml-2">
         {new Date(doc.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
       </span>
+
+      {onDownloadOriginal && doc.original_available && (
+        <button
+          onClick={e => { e.stopPropagation(); onDownloadOriginal(doc, e) }}
+          className="opacity-0 group-hover:opacity-100 btn-ghost btn-icon btn-sm text-amber-400 shrink-0 ml-1"
+          title="Descargar el archivo original antes de que se borre"
+        >{downloadingOriginal ? <IconLoader2 size={16} className="animate-spin" /> : <IconDownload size={16} />}</button>
+      )}
 
       {/* Icono sync (solo escritorio) — pulsable para subir/reintentar */}
       {(() => {
@@ -224,14 +244,77 @@ export default function Library() {
     } else {
       setDownloadingId(doc.id)
       try {
-        await offlineDocs.downloadDocument(doc.id)
+        const { hasPdf } = await offlineDocs.downloadDocument(doc.id)
         setDownloadedIds(prev => new Set(prev).add(doc.id))
         addToast('Documento guardado para sin conexión', 'success')
+        // Solo si de verdad se guardó el binario original (no todos los
+        // documentos lo tienen, ver downloadPdfBinary en offlineDocs.js) --
+        // si no, el móvil solo tiene el texto/resultados, no el archivo que
+        // se borra a los 10 días, y el aviso debe seguir mostrándose.
+        if (hasPdf) {
+          const nowIso = new Date().toISOString()
+          setDocs(prev => prev.map(d => d.id === doc.id ? { ...d, downloaded_at: nowIso, downloaded_platform: CURRENT_PLATFORM } : d))
+          api('POST', `/documents/${doc.id}/mark-downloaded`).catch(() => { /* no crítico */ })
+        }
       } catch (err) {
         addToast(`No se pudo descargar: ${err.message}`, 'error')
       } finally {
         setDownloadingId(null)
       }
+    }
+  }
+
+  // ── Descarga del archivo original (PDF/foto) a este ordenador (web+escritorio) ──
+  // En móvil esto ya lo cubre toggleDownload/offlineDocs (guarda el binario
+  // dentro de la app para verlo sin conexión) -- aquí es la copia "de verdad"
+  // fuera de StudyAI, para que sobreviva al borrado a los 10 días.
+  const [downloadingOriginalId, setDownloadingOriginalId] = useState(null)
+  async function downloadOriginal(doc, e) {
+    e?.stopPropagation()
+    if (downloadingOriginalId) return
+    setDownloadingOriginalId(doc.id)
+    try {
+      const { apiBase } = useAppStore.getState()
+      const headers = await getAuthHeader()
+      const res = await fetch(`${apiBase}/documents/${doc.id}/file`, { headers })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const disposition = res.headers.get('content-disposition') || ''
+      const match = disposition.match(/filename="([^"]+)"/)
+      const ext = match ? match[1].split('.').pop() : 'pdf'
+      const filename = `${doc.title}.${ext}`
+      const blob = await res.blob()
+
+      let saved = true
+      if (IS_ELECTRON) {
+        const buffer = await blob.arrayBuffer()
+        const result = await window.electron.dialog.saveBinaryFile({
+          suggestedName: filename,
+          data: new Uint8Array(buffer),
+        })
+        saved = result.ok
+        if (result.ok) addToast('Archivo guardado', 'success')
+        else if (result.reason !== 'cancelled') addToast('No se pudo guardar el archivo', 'error')
+      } else {
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        a.click()
+        URL.revokeObjectURL(url)
+      }
+
+      // Se marca como descargado para que deje de avisar (chip + email) --
+      // el borrado real a los 10 días no cambia, solo dejamos de molestar
+      // con algo que el usuario ya tiene a salvo.
+      if (saved) {
+        const nowIso = new Date().toISOString()
+        setDocs(prev => prev.map(d => d.id === doc.id ? { ...d, downloaded_at: nowIso, downloaded_platform: CURRENT_PLATFORM } : d))
+        api('POST', `/documents/${doc.id}/mark-downloaded`).catch(() => { /* no crítico, se reintentará en la próxima descarga */ })
+      }
+    } catch (err) {
+      addToast(`No se pudo descargar: ${err.message}`, 'error')
+    } finally {
+      setDownloadingOriginalId(null)
     }
   }
 
@@ -1022,6 +1105,14 @@ export default function Library() {
                         title={downloadedIds.has(doc.id) ? 'En este móvil y en la nube — pulsa para quitar del móvil' : 'Solo en la nube — pulsa para guardar en el móvil'}
                       >{downloadingId === doc.id ? <IconLoader2 size={14} className="animate-spin" /> : downloadedIds.has(doc.id) ? <IconCloud size={14} /> : <IconDownload size={14} />}</button>
                     )}
+                    {!IS_MOBILE && doc.original_available && (
+                      <button
+                        onClick={e => downloadOriginal(doc, e)}
+                        disabled={downloadingOriginalId === doc.id}
+                        className={`text-amber-400 hover:text-primary-400 transition-opacity ${isNarrow ? '' : 'opacity-0 group-hover:opacity-100'}`}
+                        title="Descargar el archivo original antes de que se borre"
+                      >{downloadingOriginalId === doc.id ? <IconLoader2 size={14} className="animate-spin" /> : <IconDownload size={14} />}</button>
+                    )}
                     <button
                       onClick={e => { e.stopPropagation(); navigate(`/document/${doc.id}`, { state: { openPodcast: true } }) }}
                       className={`text-slate-400 hover:text-primary-400 transition-opacity ${isNarrow ? '' : 'opacity-0 group-hover:opacity-100'}`}
@@ -1058,9 +1149,12 @@ export default function Library() {
                       </div>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 mt-3 pl-6">
-                    {new Date(doc.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
-                  </p>
+                  <div className="flex items-center gap-2 mt-3 pl-6">
+                    <p className="text-xs text-slate-500">
+                      {new Date(doc.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </p>
+                    {doc.original_available && <RetentionChip createdAt={doc.created_at} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />}
+                  </div>
                 </div>
               )
             })}
@@ -1117,6 +1211,8 @@ export default function Library() {
                       onDownload={IS_MOBILE ? (e => toggleDownload(doc, e)) : null}
                       downloaded={downloadedIds.has(doc.id)}
                       downloading={downloadingId === doc.id}
+                      onDownloadOriginal={!IS_MOBILE ? downloadOriginal : null}
+                      downloadingOriginal={downloadingOriginalId === doc.id}
                     />
                   ))}
                 </div>

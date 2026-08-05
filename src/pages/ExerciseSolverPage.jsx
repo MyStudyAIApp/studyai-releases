@@ -9,14 +9,11 @@ import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import { IconTrash, IconDownload, IconChevronDown, IconChevronUp, IconX } from '@tabler/icons-react'
 import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
+import RetentionChip from '../components/UI/RetentionChip'
+import { CURRENT_PLATFORM } from '../lib/retention'
 
 const MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 const RETENTION_DAYS = 10
-
-function diasParaCaducar(expiresAt) {
-  const ms = new Date(expiresAt).getTime() - Date.now()
-  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)))
-}
 
 function descargarTexto(title, text) {
   const blob = new Blob([text], { type: 'text/plain' })
@@ -67,6 +64,18 @@ export default function ExerciseSolverPage() {
   async function dismissRetentionNotice() {
     setShowRetentionNotice(false)
     try { await api('POST', '/me/dismiss-exercise-retention-notice') } catch { /* se reintentará en la próxima visita */ }
+  }
+
+  // Al descargar, se marca como descargado para que el aviso "se borra en X
+  // días" desaparezca (mismo mecanismo que en Biblioteca, ver RetentionChip)
+  // -- el borrado real a los 10 días no cambia, solo dejamos de avisar de
+  // algo que el alumno ya tiene a salvo.
+  function downloadExercise(doc, e) {
+    e.stopPropagation()
+    descargarTexto(doc.title, doc.text_content)
+    const nowIso = new Date().toISOString()
+    setRecent(prev => prev.map(d => d.id === doc.id ? { ...d, downloaded_at: nowIso, downloaded_platform: CURRENT_PLATFORM } : d))
+    api('POST', `/documents/${doc.id}/mark-downloaded`).catch(() => { /* no crítico */ })
   }
 
   function handleFile(f) {
@@ -322,7 +331,6 @@ export default function ExerciseSolverPage() {
             ) : (
               <div className="space-y-3">
                 {recent.map(doc => {
-                  const dias = diasParaCaducar(doc.expires_at)
                   const expanded = expandedId === doc.id
                   return (
                     <div key={doc.id} className="card space-y-0">
@@ -339,13 +347,11 @@ export default function ExerciseSolverPage() {
                                 weekday: 'short', day: 'numeric', month: 'short'
                               })}
                             </span>
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${dias <= 2 ? 'bg-red-500/15 text-red-300' : 'bg-slate-700/60 text-slate-400'}`}>
-                              {dias === 0 ? 'caduca hoy' : `caduca en ${dias} día${dias === 1 ? '' : 's'}`}
-                            </span>
+                            <RetentionChip createdAt={doc.created_at} retentionDays={RETENTION_DAYS} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />
                           </div>
                         </div>
                         <button
-                          onClick={e => { e.stopPropagation(); descargarTexto(doc.title, doc.text_content) }}
+                          onClick={e => downloadExercise(doc, e)}
                           title="Descargar"
                           className="shrink-0 p-1.5 rounded-lg text-slate-600 hover:text-primary-400 hover:bg-primary-500/10 transition-colors"
                         ><IconDownload size={16} /></button>

@@ -10,6 +10,8 @@ import { api, apiUpload, useAppStore } from '../store/appStore'
 import { useDocumentScan } from './useDocumentScan'
 import { ensureMathDelimiters } from '../utils/mathText'
 import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
+import RetentionChip from '../components/UI/RetentionChip'
+import { CURRENT_PLATFORM } from '../lib/retention'
 import {
   IconArrowLeft, IconCalculator, IconPackage, IconCamera, IconSparkles,
   IconLoader2, IconRefresh, IconChevronUp, IconChevronDown, IconTrash,
@@ -27,11 +29,6 @@ const DOWNLOAD_INDEX_KEY = 'downloaded_exercises'
 async function readDownloadIndex() {
   const { value } = await Preferences.get({ key: DOWNLOAD_INDEX_KEY })
   return value ? JSON.parse(value) : []
-}
-
-function diasParaCaducar(expiresAt) {
-  const ms = new Date(expiresAt).getTime() - Date.now()
-  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)))
 }
 
 export default function MobileExerciseSolverPage() {
@@ -99,6 +96,13 @@ export default function MobileExerciseSolverPage() {
       await Preferences.set({ key: DOWNLOAD_INDEX_KEY, value: JSON.stringify([entry, ...list.filter(d => d.id !== doc.id)]) })
       setDownloadedIds(prev => new Set(prev).add(doc.id))
       addToast('Guardado en el móvil', 'success')
+      // Igual que en Biblioteca/escritorio: marcarlo como descargado oculta
+      // el aviso "se borra en X días" (aquí, y en otras plataformas se
+      // mantiene indicando que la copia está en el móvil) -- el borrado real
+      // a los 10 días no cambia.
+      const nowIso = new Date().toISOString()
+      setRecent(prev => prev.map(d => d.id === doc.id ? { ...d, downloaded_at: nowIso, downloaded_platform: CURRENT_PLATFORM } : d))
+      api('POST', `/documents/${doc.id}/mark-downloaded`).catch(() => { /* no crítico */ })
     } catch (e) {
       addToast('No se pudo descargar: ' + e.message, 'error')
     } finally {
@@ -248,7 +252,6 @@ export default function MobileExerciseSolverPage() {
               ) : (
                 <div className="space-y-2 pb-4">
                   {recent.map(doc => {
-                    const dias = diasParaCaducar(doc.expires_at)
                     const expanded = expandedId === doc.id
                     const downloaded = downloadedIds.has(doc.id)
                     return (
@@ -260,9 +263,7 @@ export default function MobileExerciseSolverPage() {
                           <span className="text-xl shrink-0">🧮</span>
                           <div className="min-w-0 flex-1">
                             <p className="text-sm font-medium text-slate-100 truncate">{doc.title}</p>
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${dias <= 2 ? 'bg-red-500/15 text-red-300' : 'bg-slate-700/60 text-slate-400'}`}>
-                              {dias === 0 ? 'caduca hoy' : `caduca en ${dias} día${dias === 1 ? '' : 's'}`}
-                            </span>
+                            <RetentionChip createdAt={doc.created_at} retentionDays={RETENTION_DAYS} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />
                           </div>
                           {expanded ? <IconChevronUp size={16} className="text-slate-500 shrink-0 mt-1" /> : <IconChevronDown size={16} className="text-slate-500 shrink-0 mt-1" />}
                         </button>

@@ -7,8 +7,9 @@ contextBridge.exposeInMainWorld('electron', {
     close:     () => ipcRenderer.invoke('window:close'),
   },
   dialog: {
-    openFile:  (opts) => ipcRenderer.invoke('dialog:openFile', opts),
-    saveFile:  (opts) => ipcRenderer.invoke('dialog:saveFile', opts),
+    openFile:       (opts) => ipcRenderer.invoke('dialog:openFile', opts),
+    saveFile:       (opts) => ipcRenderer.invoke('dialog:saveFile', opts),
+    saveBinaryFile: (opts) => ipcRenderer.invoke('dialog:saveBinaryFile', opts),
   },
   shell: {
     openExternal: (url) => ipcRenderer.invoke('shell:openExternal', url),
