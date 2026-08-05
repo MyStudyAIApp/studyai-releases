@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase'
 import { getGoogleOAuthUrl, startNativePasswordRecovery } from '../lib/googleAuth'
 import { useAuth } from '../contexts/AuthContext'
 import Logo from '../components/UI/Logo'
+import PasswordInput from '../components/UI/PasswordInput'
 
 export default function MobileLoginPage() {
   const { user } = useAuth()
@@ -94,8 +95,7 @@ export default function MobileLoginPage() {
           className="w-full px-4 py-4 rounded-xl bg-slate-800 text-slate-100 placeholder-slate-500
                      border border-slate-700 focus:border-primary-500 outline-none text-base"
         />
-        <input
-          type="password"
+        <PasswordInput
           placeholder="Contraseña"
           value={password}
           onChange={e => setPassword(e.target.value)}

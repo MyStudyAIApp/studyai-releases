@@ -14,6 +14,7 @@ import { Browser } from '@capacitor/browser'
 import { useAuth } from '../contexts/AuthContext'
 import { getGoogleOAuthUrl, completeNativeAuthFromUrl, startNativePasswordRecovery } from '../lib/googleAuth'
 import Logo from '../components/UI/Logo'
+import PasswordInput from '../components/UI/PasswordInput'
 import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconBrandYoutube } from '@tabler/icons-react'
 
 const SOCIAL_LINKS = [
@@ -431,8 +432,7 @@ export default function LoginPage() {
           {/* Contraseña */}
           <div>
             <label className="block text-sm text-slate-400 mb-1">Contraseña</label>
-            <input
-              type="password"
+            <PasswordInput
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder={mode === 'register' ? 'Mínimo 6 caracteres' : '••••••••'}

@@ -6,6 +6,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import PasswordInput from '../components/UI/PasswordInput'
 
 export default function ResetPasswordPage() {
   const { clearPasswordRecovery } = useAuth()
@@ -72,8 +73,7 @@ export default function ResetPasswordPage() {
 
               <div>
                 <label className="block text-sm text-slate-400 mb-1">Nueva contraseña</label>
-                <input
-                  type="password"
+                <PasswordInput
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder="Mínimo 6 caracteres"
@@ -86,8 +86,7 @@ export default function ResetPasswordPage() {
 
               <div>
                 <label className="block text-sm text-slate-400 mb-1">Repite la contraseña</label>
-                <input
-                  type="password"
+                <PasswordInput
                   value={confirm}
                   onChange={e => setConfirm(e.target.value)}
                   placeholder="••••••••"

@@ -13,6 +13,7 @@ const RESPONSE_LANGS = [
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
 ]
 import { useAuth } from '../contexts/AuthContext'
+import PasswordInput from '../components/UI/PasswordInput'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { supabase, WEB_API } from '../lib/supabase'
 import WhisperSetup from '../components/WhisperSetup'
@@ -788,21 +789,19 @@ export default function SettingsPage() {
         <div className="pt-2 border-t border-slate-800">
           <label className="block text-sm text-slate-400 mb-1 mt-2">Cambiar contraseña</label>
           <div className="grid grid-cols-2 gap-2">
-            <input
-              type="password"
+            <PasswordInput
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Nueva contraseña"
               autoComplete="new-password"
-              className="input"
+              className="input w-full"
             />
-            <input
-              type="password"
+            <PasswordInput
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Repite la contraseña"
               autoComplete="new-password"
-              className="input"
+              className="input w-full"
             />
           </div>
           <button
@@ -1384,8 +1383,7 @@ export default function SettingsPage() {
           </ul>
           <div>
             <label className="block text-sm text-slate-400 mb-1">{t('settings.dangerZone.passwordLabel')}</label>
-            <input
-              type="password"
+            <PasswordInput
               value={deletePassword}
               onChange={e => setDeletePassword(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleDeleteAccount()}
