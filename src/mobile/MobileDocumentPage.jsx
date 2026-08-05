@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
 import { api, useAppStore } from '../store/appStore'
+import { ensureMathDelimiters } from '../utils/mathText'
 import {
   IconArrowLeft, IconCamera, IconPhoto, IconFileText, IconFolder, IconMoodSad,
   IconLoader2, IconPaperclip,
 } from '@tabler/icons-react'
 
 const TYPE_ICON = { escaneado: IconCamera, foto: IconPhoto, pdf: IconFileText }
+const TEXT_MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 
 export default function MobileDocumentPage() {
   const { id } = useParams()
@@ -120,9 +126,11 @@ export default function MobileDocumentPage() {
 
           {doc.text_content ? (
             <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700">
-              <p className="text-slate-200 text-sm leading-relaxed whitespace-pre-wrap">
-                {doc.text_content}
-              </p>
+              <div className="prose-studyai text-slate-200 text-sm leading-relaxed">
+                <ReactMarkdown {...TEXT_MD_OPTS}>
+                  {ensureMathDelimiters(doc.text_content).replace(/\n/g, '\n\n')}
+                </ReactMarkdown>
+              </div>
             </div>
           ) : (
             <div className="bg-slate-800/60 rounded-2xl p-6 border border-slate-700 text-center">

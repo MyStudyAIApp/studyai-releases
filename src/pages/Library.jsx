@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '../contexts/AuthContext'
 import { deleteSyncedSubject, syncSingleDocument, checkCloudPresence } from '../services/syncService'
 import WeeklyHoursWidget, { loadWeeklyHours, saveWeeklyHours } from '../components/Study/WeeklyHoursWidget'
+import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
 import {
   IconPhoto, IconCamera, IconFileText, IconFolder, IconTrash, IconDeviceFloppy,
   IconCloud, IconBooks, IconDownload, IconMenu2, IconLayoutGrid, IconX, IconHeadphones,
@@ -756,18 +757,22 @@ export default function Library() {
 
         {/* Aviso de retención del PDF original */}
         {showRetentionNotice && (
-          <div className="mb-4 rounded-xl border border-amber-700/40 bg-amber-950/30 px-4 py-3 flex items-start gap-3">
-            <span className="text-lg leading-none mt-0.5">⏳</span>
-            <p className="flex-1 text-xs text-amber-200/90 leading-relaxed">
-              El archivo original (PDF/foto) que subes se borra automáticamente a los <b>10 días</b> para
-              ahorrar espacio — tus resúmenes, fichas y exámenes generados <b>se conservan siempre</b>.
-              Si quieres guardar el archivo original, descárgalo a tu ordenador o móvil antes de que pasen esos días.
-            </p>
-            <button
-              onClick={dismissRetentionNotice}
-              className="shrink-0 text-amber-300/70 hover:text-amber-200 transition-colors"
-              title="No volver a mostrar"
-            ><IconX size={16} /></button>
+          <div className="mb-4 rounded-xl border border-amber-700/40 bg-amber-950/30 px-4 py-3 space-y-2">
+            <div className="flex items-start gap-3">
+              <span className="text-lg leading-none mt-0.5">⏳</span>
+              <p className="flex-1 text-xs text-amber-200/90 leading-relaxed">
+                El archivo original (PDF/foto) que subes se borra automáticamente a los <b>10 días</b> para
+                ahorrar espacio (te avisamos por email 3 días antes) — tus resúmenes, fichas y exámenes
+                generados <b>se conservan siempre</b>.
+                Si quieres guardar el archivo original, descárgalo a tu ordenador o móvil antes de que pasen esos días.
+              </p>
+              <button
+                onClick={dismissRetentionNotice}
+                className="shrink-0 text-amber-300/70 hover:text-amber-200 transition-colors"
+                title="No volver a mostrar"
+              ><IconX size={16} /></button>
+            </div>
+            <EmailWarningsToggle className="ml-7" />
           </div>
         )}
 

@@ -1,43 +1,72 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAppStore, api, apiUpload } from '../store/appStore'
 import ProblemsView from '../components/Exam/ProblemsView'
 import Spinner from '../components/UI/Spinner'
-import { IconTrash } from '@tabler/icons-react'
+import { ensureMathDelimiters } from '../utils/mathText'
+import ReactMarkdown from 'react-markdown'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
+import { IconTrash, IconDownload, IconChevronDown, IconChevronUp, IconX } from '@tabler/icons-react'
+import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
+
+const MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
+const RETENTION_DAYS = 10
+
+function diasParaCaducar(expiresAt) {
+  const ms = new Date(expiresAt).getTime() - Date.now()
+  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)))
+}
+
+function descargarTexto(title, text) {
+  const blob = new Blob([text], { type: 'text/plain' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${(title || 'ejercicio').slice(0, 60)}.txt`
+  a.click()
+  URL.revokeObjectURL(url)
+}
 
 export default function ExerciseSolverPage() {
   const { addToast } = useAppStore()
-  const navigate = useNavigate()
   const fileInputRef = useRef(null)
 
   const [previewUrl, setPreviewUrl] = useState(null)
   const [file, setFile] = useState(null)
   const [solving, setSolving] = useState(false)
-  const [saving, setSaving] = useState(false)
   const [result, setResult] = useState(null)
   const [recent, setRecent] = useState([])
   const [loadingRecent, setLoadingRecent] = useState(true)
+  const [expandedId, setExpandedId] = useState(null)
   // Corrección del enunciado: hay símbolos que en el papel son genuinamente
   // ambiguos (un "1" cuyo remate parece un menos) y ningún motor los acierta —
   // dejar corregir la lectura es el único remedio real, y evita que el alumno
   // se quede con un resultado equivocado que parece bueno.
   const [editingStatement, setEditingStatement] = useState(null)
   const [resolvingText, setResolvingText] = useState(false)
+  // Aviso de retención (mismo patrón que el de los PDF en Biblioteca): se
+  // guardan solos y se borran solos a los 10 días — el aviso es dismissible
+  // y se registra en el servidor, no solo en este dispositivo.
+  const [showRetentionNotice, setShowRetentionNotice] = useState(false)
 
   useEffect(() => {
     loadRecent()
+    api('GET', '/me').then(me => {
+      if (!me.exercise_retention_notice_dismissed) setShowRetentionNotice(true)
+    }).catch(() => {})
   }, [])
 
   function loadRecent() {
     setLoadingRecent(true)
-    api('GET', '/documents').then(docs => {
-      const items = (docs.items || [])
-        .filter(d => d.title?.startsWith('[Ejercicio]'))
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-        .slice(0, 10)
-      setRecent(items)
-    }).catch(() => {})
-    .finally(() => setLoadingRecent(false))
+    api('GET', '/exercises/recent').then(r => setRecent(r.items || []))
+      .catch(() => {})
+      .finally(() => setLoadingRecent(false))
+  }
+
+  async function dismissRetentionNotice() {
+    setShowRetentionNotice(false)
+    try { await api('POST', '/me/dismiss-exercise-retention-notice') } catch { /* se reintentará en la próxima visita */ }
   }
 
   function handleFile(f) {
@@ -69,37 +98,11 @@ export default function ExerciseSolverPage() {
       form.append('difficulty', 'normal')
       const data = await apiUpload('/exercises/solve-photo', form)
       setResult(data)
+      loadRecent()  // se autoguarda en el servidor; refrescar la lista de aquí
     } catch (e) {
       if (!e.quotaExceeded) addToast('No se pudo resolver el ejercicio: ' + e.message, 'error')
     } finally {
       setSolving(false)
-    }
-  }
-
-  async function guardar() {
-    if (!result) return
-    setSaving(true)
-    try {
-      const lines = [
-        result.statement,
-        '',
-        ...result.steps.map((s, i) => `${i + 1}. ${s}`),
-        '',
-        `Resultado: ${result.answer}`,
-      ]
-      const blob = new Blob([lines.join('\n')], { type: 'text/plain' })
-      const title = (result.topic || 'Ejercicio').slice(0, 60)
-      const fileToSave = new File([blob], `${title}.txt`, { type: 'text/plain' })
-      const form = new FormData()
-      form.append('file', fileToSave)
-      form.append('label', 'Ejercicio')
-      await apiUpload('/documents/upload-text', form)
-      addToast('Ejercicio guardado en la biblioteca', 'success')
-      loadRecent()
-    } catch (e) {
-      addToast('No se pudo guardar: ' + e.message, 'error')
-    } finally {
-      setSaving(false)
     }
   }
 
@@ -111,6 +114,7 @@ export default function ExerciseSolverPage() {
       const data = await api('POST', '/exercises/solve-text', { statement, difficulty: 'normal' })
       setResult(data)
       setEditingStatement(null)
+      loadRecent()
     } catch (e) {
       if (!e.quotaExceeded) addToast('No se pudo resolver: ' + e.message, 'error')
     } finally {
@@ -199,14 +203,9 @@ export default function ExerciseSolverPage() {
 
         {result && (
           <div className="space-y-3">
-            <div className="flex gap-2">
-              <button onClick={otro} className="btn-secondary flex-1 btn-sm">
-                Resolver otro
-              </button>
-              <button onClick={guardar} disabled={saving} className="btn-primary flex-1 btn-sm">
-                {saving ? '⏳ Guardando...' : '💾 Guardar'}
-              </button>
-            </div>
+            <button onClick={otro} className="btn-secondary w-full btn-sm">
+              Resolver otro
+            </button>
           </div>
         )}
 
@@ -286,9 +285,32 @@ export default function ExerciseSolverPage() {
 
         {!solving && !result && (
           <>
-            <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
-              Ejercicios resueltos recientes
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+                Tus ejercicios de los últimos {RETENTION_DAYS} días
+              </h2>
+            </div>
+
+            {showRetentionNotice && (
+              <div className="mb-4 rounded-xl border border-amber-700/40 bg-amber-950/30 px-4 py-3 space-y-2">
+                <div className="flex items-start gap-3">
+                  <span className="text-lg leading-none mt-0.5">⏳</span>
+                  <p className="flex-1 text-xs text-amber-200/90 leading-relaxed">
+                    Los ejercicios que resuelves aquí se guardan solos y se conservan
+                    durante <b>{RETENTION_DAYS} días</b> — pasado ese plazo se borran automáticamente
+                    (te avisamos por email 3 días antes).
+                    Si quieres quedarte con alguno para siempre, descárgalo con el botón ⬇️ antes de que caduque.
+                  </p>
+                  <button
+                    onClick={dismissRetentionNotice}
+                    className="shrink-0 text-amber-300/70 hover:text-amber-200 transition-colors"
+                    title="No volver a mostrar"
+                  ><IconX size={16} /></button>
+                </div>
+                <EmailWarningsToggle className="ml-7" />
+              </div>
+            )}
+
             {loadingRecent ? (
               <div className="flex justify-center py-12"><Spinner /></div>
             ) : recent.length === 0 ? (
@@ -299,33 +321,53 @@ export default function ExerciseSolverPage() {
               </div>
             ) : (
               <div className="space-y-3">
-                {recent.map(doc => (
-                  <div
-                    key={doc.id}
-                    onClick={() => navigate(`/document/${doc.id}`)}
-                    className="card-hover flex items-start gap-3 cursor-pointer group"
-                  >
-                    <span className="text-2xl shrink-0 mt-0.5">🧮</span>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-slate-100 truncate">
-                        {doc.title.replace('[Ejercicio] ', '')}
-                      </p>
-                      <span className="text-xs text-slate-500">
-                        {new Date(doc.created_at).toLocaleDateString('es-ES', {
-                          weekday: 'short', day: 'numeric', month: 'short'
-                        })}
-                      </span>
+                {recent.map(doc => {
+                  const dias = diasParaCaducar(doc.expires_at)
+                  const expanded = expandedId === doc.id
+                  return (
+                    <div key={doc.id} className="card space-y-0">
+                      <div
+                        onClick={() => setExpandedId(expanded ? null : doc.id)}
+                        className="flex items-start gap-3 cursor-pointer group"
+                      >
+                        <span className="text-2xl shrink-0 mt-0.5">🧮</span>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-slate-100 truncate">{doc.title}</p>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-xs text-slate-500">
+                              {new Date(doc.created_at).toLocaleDateString('es-ES', {
+                                weekday: 'short', day: 'numeric', month: 'short'
+                              })}
+                            </span>
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${dias <= 2 ? 'bg-red-500/15 text-red-300' : 'bg-slate-700/60 text-slate-400'}`}>
+                              {dias === 0 ? 'caduca hoy' : `caduca en ${dias} día${dias === 1 ? '' : 's'}`}
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          onClick={e => { e.stopPropagation(); descargarTexto(doc.title, doc.text_content) }}
+                          title="Descargar"
+                          className="shrink-0 p-1.5 rounded-lg text-slate-600 hover:text-primary-400 hover:bg-primary-500/10 transition-colors"
+                        ><IconDownload size={16} /></button>
+                        <button
+                          onClick={e => borrar(doc.id, e)}
+                          title="Eliminar"
+                          className="shrink-0 p-1.5 rounded-lg text-slate-600 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                        ><IconTrash size={16} /></button>
+                        <span className="shrink-0 text-slate-600 group-hover:text-slate-300 transition-colors mt-1">
+                          {expanded ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
+                        </span>
+                      </div>
+                      {expanded && (
+                        <div className="prose-studyai text-sm text-slate-300 mt-3 pt-3 border-t border-slate-800">
+                          <ReactMarkdown {...MD_OPTS}>
+                            {ensureMathDelimiters(doc.text_content).replace(/\n/g, '\n\n')}
+                          </ReactMarkdown>
+                        </div>
+                      )}
                     </div>
-                    <button
-                      onClick={e => borrar(doc.id, e)}
-                      title="Eliminar"
-                      className="shrink-0 p-1.5 rounded-lg text-slate-600 hover:text-red-400 hover:bg-red-500/10 transition-colors"
-                    >
-                      <IconTrash size={16} />
-                    </button>
-                    <span className="text-slate-600 group-hover:text-slate-300 transition-colors text-sm">→</span>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </>
