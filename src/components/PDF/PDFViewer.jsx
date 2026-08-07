@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
-import { useAppStore, getAuthHeader } from '../../store/appStore'
+import { useAppStore, getAuthHeader, getLocalAuthHeader } from '../../store/appStore'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/Page/TextLayer.css'
 
@@ -51,9 +51,9 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
           const bytes = Uint8Array.from(atob(localBase64), c => c.charCodeAt(0))
           blob = new Blob([bytes], { type: 'application/pdf' })
         } else {
-          const headers = await getAuthHeader()
+          const [headers, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
           const url = `${apiBase}/documents/${doc.id}/file`
-          const res = await fetch(url, { headers })
+          const res = await fetch(url, { headers: { ...headers, ...localHeader } })
           if (!res.ok) throw new Error(`HTTP ${res.status}`)
           blob = await res.blob()
         }

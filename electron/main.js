@@ -370,6 +370,13 @@ ipcMain.handle('backup:export', async () => {
 
 // ── Arrancar el servicio Python / backend.exe ────────────────────────────────
 
+// Si backend.exe muere solo (sin que la app se esté cerrando), lo relanzamos
+// -- hasta un límite, para no entrar en un bucle de reinicios infinito si de
+// verdad está roto (p.ej. falta un recurso bundleado). Se resetea a 0 en
+// cuanto un reinicio consigue levantar el backend con éxito.
+let backendRestartAttempts = 0
+const MAX_BACKEND_RESTARTS = 5
+
 function startPythonService() {
   const backendExe = getBackendPath()
   const res = getResourcesPath()
@@ -428,6 +435,28 @@ function startPythonService() {
     const msg = '[Python] exited with code ' + code
     console.log(msg)
     writeBackendLog(msg)
+
+    if (isQuitting) return  // cierre normal de la app, no reintentar
+
+    if (backendRestartAttempts >= MAX_BACKEND_RESTARTS) {
+      writeBackendLog(`[Electron] Backend murió ${MAX_BACKEND_RESTARTS} veces seguidas -- no se reintenta más, hace falta reiniciar la app a mano`)
+      return
+    }
+    backendRestartAttempts++
+    writeBackendLog(`[Electron] Backend murió inesperadamente -- reintentando (${backendRestartAttempts}/${MAX_BACKEND_RESTARTS})`)
+    setTimeout(() => {
+      killZombiesOnPort(PYTHON_PORT)
+      startPythonService()
+      waitForPython().then(() => {
+        backendRestartAttempts = 0
+        writeBackendLog('[Electron] Backend reiniciado y listo')
+        if (mainWindow && !mainWindow.isDestroyed()) {
+          mainWindow.webContents.send('backend:ready')
+        }
+      }).catch(e => {
+        writeBackendLog('[Electron] Reinicio del backend no respondió a tiempo: ' + e.message)
+      })
+    }, 1500)
   })
   pythonProcess.on('error', err => {
     const msg = '[Python] spawn error: ' + err.message
@@ -546,12 +575,24 @@ async function createWindow() {
   // Si los avisos de examen están activados, cerrar la ventana la minimiza a
   // la bandeja en vez de cerrar la app del todo -- así puede seguir avisando
   // en segundo plano. Si el usuario los tiene desactivados, cerrar funciona
-  // como siempre (cierra la app).
+  // como siempre (cierra la app). La primera vez que pasa esto, un globo
+  // junto al icono de bandeja explica qué ha pasado y cómo cerrarla del
+  // todo -- sin esto, un usuario normal no tiene por qué saber que existe
+  // ese icono ni que "cerrar" no cerró de verdad la app.
   mainWindow.on('close', (event) => {
     const settings = loadNotifSettings()
     if (!isQuitting && settings.notifEnabled) {
       event.preventDefault()
       mainWindow.hide()
+      if (!settings.trayHintShown) {
+        saveNotifSettings({ ...settings, trayHintShown: true })
+        try {
+          tray?.displayBalloon({
+            title: 'MyStudy AI sigue abierto',
+            content: 'Se ha minimizado aquí para poder avisarte de tus exámenes. Haz clic para volver a abrirla, o clic derecho → Salir para cerrarla del todo. Puedes desactivar esto en Ajustes → Notificaciones.',
+          })
+        } catch (e) { writeBackendLog('[Tray] Error mostrando aviso de bandeja: ' + e.message) }
+      }
     }
   })
 }
@@ -568,6 +609,7 @@ const DEFAULT_NOTIF_SETTINGS = {
   startWithSystem: false,
   startMinimized:  false,
   notifiedKeys:    [],
+  trayHintShown:   false,
 }
 
 function loadNotifSettings() {
@@ -621,7 +663,7 @@ function checkAndNotifyExams() {
   const settings = loadNotifSettings()
   if (!settings.notifEnabled) return
 
-  http.get(`http://127.0.0.1:${PYTHON_PORT}/notifications/startup`, (res) => {
+  http.get(`http://127.0.0.1:${PYTHON_PORT}/notifications/startup`, { headers: { 'X-Local-Auth': LOCAL_AUTH_TOKEN } }, (res) => {
     let body = ''
     res.on('data', d => { body += d })
     res.on('end', () => {

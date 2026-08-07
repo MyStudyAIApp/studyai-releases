@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useAppStore, api, apiUpload, getAuthHeader, IS_WEB, IS_MOBILE, IS_ELECTRON } from '../store/appStore'
+import { useAppStore, api, apiUpload, getAuthHeader, getLocalAuthHeader, IS_WEB, IS_MOBILE, IS_ELECTRON } from '../store/appStore'
 import * as offlineDocs from '../services/offlineDocs'
 import Spinner from '../components/UI/Spinner'
 import Modal from '../components/UI/Modal'
@@ -275,8 +275,8 @@ export default function Library() {
     setDownloadingOriginalId(doc.id)
     try {
       const { apiBase } = useAppStore.getState()
-      const headers = await getAuthHeader()
-      const res = await fetch(`${apiBase}/documents/${doc.id}/file`, { headers })
+      const [headers, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
+      const res = await fetch(`${apiBase}/documents/${doc.id}/file`, { headers: { ...headers, ...localHeader } })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const disposition = res.headers.get('content-disposition') || ''
       const match = disposition.match(/filename="([^"]+)"/)

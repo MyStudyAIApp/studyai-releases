@@ -128,8 +128,12 @@ contextBridge.exposeInMainWorld('electron', {
 
 // Alias para compatibilidad (App.jsx usa window.electronAPI)
 contextBridge.exposeInMainWorld('electronAPI', {
+  // .on (no .once): el backend puede reiniciarse solo si muere de forma
+  // inesperada (ver pythonProcess.on('close') en main.js) y el proceso
+  // principal reenvía este evento cada vez que vuelve a estar listo -- con
+  // .once solo se habría enterado la primera vez.
   onBackendReady: (cb) => {
-    ipcRenderer.once('backend:ready', cb)
+    ipcRenderer.on('backend:ready', cb)
     return () => ipcRenderer.removeAllListeners('backend:ready')
   },
 })

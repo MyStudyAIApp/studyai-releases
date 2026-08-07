@@ -266,11 +266,16 @@ export async function pullFromCloud(user) {
     const { items: localDocs } = await api('GET', '/documents?limit=1000')
     const localSupabaseIds = new Set(localDocs.filter(d => d.supabase_id).map(d => d.supabase_id))
 
+    // Los ejercicios autoguardados ([Ejercicio] ..., ver ExerciseSolverPage)
+    // viven solo en su propia sección de "Resolver ejercicio", nunca en la
+    // Biblioteca -- GET /documents (nube) ya los excluye, pero esta consulta
+    // habla con Supabase directamente y hay que repetir el mismo filtro aquí.
     const { data: cloudDocs, error } = await supabase
       .from('documents')
       .select('id, title, text_content, pages, file_size, has_images, has_formulas, is_scanned, subject_id')
       .eq('user_id', user.id)
       .is('deleted_at', null)
+      .not('title', 'like', '[Ejercicio]%')
     if (error) throw error
 
     const missing = (cloudDocs || []).filter(d => !localSupabaseIds.has(d.id))

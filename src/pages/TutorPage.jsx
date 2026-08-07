@@ -285,10 +285,10 @@ export default function TutorPage() {
   // /tts/speak en web_main.py -- ya no espera a generar el MP3 completo en
   // disco antes de responder) y devuelve una URL de blob lista para reproducir.
   async function fetchSpeechChunk(text) {
-    const authHeader = await getAuthHeader()
+    const [authHeader, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
     const res = await fetch(`${apiBase}/tts/speak`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...authHeader },
+      headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
       body: JSON.stringify({
         text,
         rate: tutorTtsRate,

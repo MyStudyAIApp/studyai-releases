@@ -560,10 +560,10 @@ export default function LanguagesPage() {
   }
 
   async function fetchSpeechChunk(text, voice) {
-    const authHeader = await getAuthHeader()
+    const [authHeader, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
     const res = await fetch(`${apiBase}/tts/speak`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...authHeader },
+      headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
       body: JSON.stringify({ text, voice, rate: langsTtsRateRef.current }),
     })
     if (!res.ok) throw new Error()
@@ -901,10 +901,10 @@ export default function LanguagesPage() {
     try {
       const fd = new FormData()
       fd.append('file', file)
-      const authHeader = await getAuthHeader()
+      const [authHeader, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
       const res = await fetch(`${apiBase}/languages/vocabulary/upload?language=${language}`, {
         method: 'POST',
-        headers: { ...authHeader },
+        headers: { ...authHeader, ...localHeader },
         body: fd,
       })
       if (!res.ok) throw new Error()
@@ -990,10 +990,10 @@ export default function LanguagesPage() {
     setSpeaking(true)
     setListenPlays(p => p + 1)
     try {
-      const authHeader = await getAuthHeader()
+      const [authHeader, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
       const res = await fetch(`${apiBase}/tts/speak`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...authHeader },
+        headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
         body: JSON.stringify({ text, voice, rate: langsTtsRateRef.current }),
       })
       if (!res.ok) throw new Error()
