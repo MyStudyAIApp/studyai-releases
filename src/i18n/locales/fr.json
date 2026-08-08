@@ -37,6 +37,7 @@
     "retrying": "Vérification..."
   },
   "home": {
+    "welcome": "Bienvenue, {{name}}",
     "dropzoneTitle": "Importer un document à étudier",
     "dropzoneDesc": "Glisse un PDF ou une photo ici, ou utilise les boutons",
     "uploadPdf": "Importer un PDF",
@@ -383,6 +384,7 @@
       "title": "Configurer l'examen blanc",
       "types": "Types de questions",
       "type_test": "Choix multiples",
+      "type_true_false": "Vrai/Faux",
       "type_development": "Dissertation",
       "type_problem": "Exercices",
       "minutes": "Temps (minutes)",

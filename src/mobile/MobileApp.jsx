@@ -15,6 +15,7 @@ import MobileDocumentPage from './MobileDocumentPage'
 import MobileExamsPage from './MobileExamsPage'
 import MobileSettingsPage from './MobileSettingsPage'
 import QuotaExceededModal from '../components/UI/QuotaExceededModal'
+import AnnouncementModal from '../components/UI/AnnouncementModal'
 
 function Protected({ children }) {
   const { user, loading } = useAuth()
@@ -64,6 +65,7 @@ export default function MobileApp() {
         <Route path="*"         element={<Navigate to="/" replace />} />
       </Routes>
       <QuotaExceededModal />
+      <AnnouncementModal />
     </div>
   )
 }

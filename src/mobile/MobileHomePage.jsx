@@ -19,17 +19,21 @@ function daysUntil(examDate) {
 }
 
 export default function MobileHomePage() {
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const navigate = useNavigate()
-  const setPlanTier = useAppStore(s => s.setPlanTier)
+  const { setPlanTier, backendReady } = useAppStore()
   const [urgentExams, setUrgentExams] = useState([])
   const [docCount, setDocCount]       = useState(null)
+  const [displayName, setDisplayName] = useState(null)
 
   useEffect(() => {
     // Tier real (incluye plan_override='pro' manual) para el badge — mobile
     // no tiene Sidebar.jsx, que es quien hace esto en escritorio/web.
+    // authLoading evita el 401 benigno de disparar antes de tener sesión.
+    if (!backendReady || authLoading) return
     api('GET', '/usage/summary').then(data => setPlanTier(data.tier)).catch(() => {})
-  }, [])
+    api('GET', '/me').then(me => setDisplayName(me.display_name || null)).catch(() => {})
+  }, [backendReady, authLoading])
 
   useEffect(() => {
     // Exámenes urgentes (≤3 días)
@@ -52,7 +56,7 @@ export default function MobileHomePage() {
       {/* Cabecera */}
       <div className="mb-6">
         <h1 className="flex items-center gap-2"><Logo size="xl" /><PlanBadge /></h1>
-        <p className="text-slate-400 mt-0.5 text-sm truncate">{user?.email}</p>
+        <p className="text-slate-400 mt-0.5 text-sm truncate">{displayName || user?.email}</p>
       </div>
 
       {/* Alertas de exámenes urgentes */}

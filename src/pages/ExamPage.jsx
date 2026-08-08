@@ -27,7 +27,7 @@ export default function ExamPage() {
         {docs.map(doc => (
           <button
             key={doc.id}
-            onClick={() => navigate(`/document/${doc.id}`)}
+            onClick={() => navigate(`/document/${doc.id}`, { state: { autoGenerate: 'timed' } })}
             className="card-hover flex items-center gap-4 text-left"
           >
             <span className="text-2xl">📄</span>

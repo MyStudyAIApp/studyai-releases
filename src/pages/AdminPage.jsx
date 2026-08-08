@@ -159,6 +159,11 @@ export default function AdminPage() {
   const [trendRange, setTrendRange] = useState(30)
   const [renderDeploys, setRenderDeploys] = useState([])
   const [featureUsage, setFeatureUsage] = useState([])
+  const [announcements, setAnnouncements] = useState([])
+  const [annTitle, setAnnTitle] = useState('')
+  const [annMessage, setAnnMessage] = useState('')
+  const [annLink, setAnnLink] = useState('')
+  const [creatingAnn, setCreatingAnn] = useState(false)
   const [inviteCodes, setInviteCodes] = useState([])
   const [inviteNote, setInviteNote] = useState('')
   const [inviteMaxUses, setInviteMaxUses] = useState(1)
@@ -207,6 +212,10 @@ export default function AdminPage() {
         const rInvites = await fetch(`${WEB_API}/admin/invite-codes`, { headers: { ...authHeader } })
         if (rInvites.ok) setInviteCodes((await rInvites.json()).items || [])
       } catch { /* opcional, no bloquea el resto del panel */ }
+      try {
+        const rAnn = await fetch(`${WEB_API}/admin/announcements`, { headers: { ...authHeader } })
+        if (rAnn.ok) setAnnouncements((await rAnn.json()).items || [])
+      } catch { /* opcional, no bloquea el resto del panel */ }
     } catch (e) {
       setError(e.message)
     } finally {
@@ -248,6 +257,38 @@ export default function AdminPage() {
       method: 'DELETE', headers: { ...authHeader },
     })
     setInviteCodes(prev => prev.map(c => c.code === code ? { ...c, active: false } : c))
+  }
+
+  async function createAnnouncement() {
+    if (!annTitle.trim() || !annMessage.trim()) return
+    setCreatingAnn(true)
+    try {
+      const authHeader = await getAuthHeader()
+      const res = await fetch(`${WEB_API}/admin/announcements`, {
+        method: 'POST',
+        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: annTitle.trim(),
+          message: annMessage.trim(),
+          link_url: annLink.trim() || null,
+        }),
+      })
+      if (res.ok) {
+        setAnnTitle('')
+        setAnnMessage('')
+        setAnnLink('')
+        const rAnn = await fetch(`${WEB_API}/admin/announcements`, { headers: { ...authHeader } })
+        if (rAnn.ok) setAnnouncements((await rAnn.json()).items || [])
+      }
+    } finally {
+      setCreatingAnn(false)
+    }
+  }
+
+  async function deactivateAnnouncement(id) {
+    const authHeader = await getAuthHeader()
+    await fetch(`${WEB_API}/admin/announcements/${id}`, { method: 'DELETE', headers: { ...authHeader } })
+    setAnnouncements(prev => prev.map(a => a.id === id ? { ...a, active: false } : a))
   }
 
   async function deleteOrphaned() {
@@ -504,6 +545,49 @@ export default function AdminPage() {
                 </span>
                 {c.active && (
                   <button onClick={() => deactivateInviteCode(c.code)} className="text-xs text-slate-500 hover:text-red-400 transition-colors">
+                    desactivar
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Anuncios — mensaje que ven todos los usuarios al entrar (web/escritorio/móvil) */}
+      <div className="card space-y-3">
+        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Anuncios</h2>
+        <p className="text-[11px] text-slate-600 -mt-1">Solo se muestra el más reciente activo. Cada usuario lo ve una vez, hasta que lo cierre.</p>
+
+        <div className="space-y-2">
+          <input type="text" value={annTitle} onChange={e => setAnnTitle(e.target.value)}
+            placeholder="Título (ej. ¡Gracias por confiar en nosotros!)" className="input w-full text-sm" />
+          <textarea value={annMessage} onChange={e => setAnnMessage(e.target.value)} rows={3}
+            placeholder="Mensaje..." className="input w-full text-sm resize-none" />
+          <input type="text" value={annLink} onChange={e => setAnnLink(e.target.value)}
+            placeholder="Enlace opcional (ej. https://mystudyai.eu/novedades)" className="input w-full text-sm" />
+          <button onClick={createAnnouncement} disabled={creatingAnn || !annTitle.trim() || !annMessage.trim()}
+            className="btn-secondary btn-sm disabled:opacity-50">
+            {creatingAnn ? 'Publicando…' : '+ Publicar anuncio'}
+          </button>
+        </div>
+
+        <div className="space-y-1.5 max-h-72 overflow-y-auto">
+          {announcements.length === 0 ? (
+            <p className="text-xs text-slate-600 italic">Sin anuncios todavía.</p>
+          ) : announcements.map(a => (
+            <div key={a.id} className="flex items-center justify-between gap-2 py-1.5 border-b border-slate-800 last:border-0">
+              <div className="min-w-0">
+                <span className="text-sm text-slate-200">{a.title}</span>
+                <p className="text-[11px] text-slate-600 truncate">{a.message}</p>
+                <p className="text-[10px] text-slate-700">{new Date(a.created_at).toLocaleString()}</p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <span className={`text-[10px] px-2 py-0.5 rounded-full ${a.active ? 'bg-emerald-500/15 text-emerald-400' : 'bg-slate-700 text-slate-500'}`}>
+                  {a.active ? 'activo' : 'inactivo'}
+                </span>
+                {a.active && (
+                  <button onClick={() => deactivateAnnouncement(a.id)} className="text-xs text-slate-500 hover:text-red-400 transition-colors">
                     desactivar
                   </button>
                 )}

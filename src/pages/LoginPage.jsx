@@ -292,18 +292,6 @@ export default function LoginPage() {
       {/* Descarga de apps — solo visible en web */}
       {IS_WEB && (
         <div className="w-full max-w-lg mb-4 space-y-3">
-          {/* App escritorio — separada de las de móvil */}
-          <a
-            href="https://github.com/Taylorete/studyai-releases/releases/latest/download/StudyAI-Setup.exe"
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-primary-500 rounded-2xl px-3 py-3 transition-all group min-w-0"
-          >
-            <span className="text-2xl shrink-0">🖥️</span>
-            <div className="min-w-0">
-              <p className="text-[10px] text-slate-500 group-hover:text-slate-400 truncate">Descargar para</p>
-              <p className="text-sm font-semibold text-slate-100 truncate">Windows</p>
-            </div>
-          </a>
-
           {/* Apps móviles — juntas */}
           <div className="grid grid-cols-2 gap-3">
             {/* App móvil — Scan (fotos/grabar, la sencilla) */}

@@ -216,6 +216,16 @@ export default function DocumentPage() {
     }
   }, [location.state?.autoResult])
 
+  // Disparar la generación directamente al llegar desde el menú "Examen"
+  // (ExamPage) -- sin pasar por el panel de tipos, genera el examen mixto
+  // (test + V/F + desarrollo + problema) de una vez.
+  useEffect(() => {
+    if (location.state?.autoGenerate) {
+      generate(location.state.autoGenerate, location.state.autoGenerateParams || {})
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+  }, [location.state?.autoGenerate])
+
   useEffect(() => {
     if (!backendReady || !id) return
     Promise.all([

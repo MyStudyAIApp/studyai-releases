@@ -37,6 +37,7 @@
     "retrying": "Comprobando..."
   },
   "home": {
+    "welcome": "Bienvenido, {{name}}",
     "dropzoneTitle": "Sube un documento para estudiar",
     "dropzoneDesc": "Arrastra aquí un PDF o una foto, o usa los botones",
     "uploadPdf": "Subir PDF",
@@ -383,6 +384,7 @@
       "title": "Configura el simulacro",
       "types": "Tipos de pregunta",
       "type_test": "Tipo test",
+      "type_true_false": "Verdadero/Falso",
       "type_development": "Desarrollo",
       "type_problem": "Problemas",
       "minutes": "Tiempo (minutos)",

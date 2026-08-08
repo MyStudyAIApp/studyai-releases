@@ -316,16 +316,6 @@ export default function LandingPage() {
       <section className="max-w-lg mx-auto px-4 py-16">
         <h2 className="section-title text-center mb-6">{t('landing.download.title')}</h2>
         <div className="space-y-3">
-          <a
-            href="https://github.com/Taylorete/studyai-releases/releases/latest/download/StudyAI-Setup.exe"
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-primary-500 rounded-2xl px-3 py-3 transition-all group min-w-0"
-          >
-            <span className="text-2xl shrink-0">🖥️</span>
-            <div className="min-w-0">
-              <p className="text-[10px] text-slate-400 group-hover:text-slate-300 truncate">{t('landing.download.for')}</p>
-              <p className="text-sm font-semibold text-slate-100 truncate">Windows</p>
-            </div>
-          </a>
           <div className="grid grid-cols-2 gap-3">
             <a
               href="https://github.com/Taylorete/studyai-releases/releases/download/v1.0.44/StudyAI-Android-1.0.44.apk"

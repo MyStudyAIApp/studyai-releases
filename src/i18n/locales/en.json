@@ -37,6 +37,7 @@
     "retrying": "Checking..."
   },
   "home": {
+    "welcome": "Welcome, {{name}}",
     "dropzoneTitle": "Upload a document to study",
     "dropzoneDesc": "Drag a PDF or photo here, or use the buttons",
     "uploadPdf": "Upload PDF",
@@ -383,6 +384,7 @@
       "title": "Configure the mock exam",
       "types": "Question types",
       "type_test": "Multiple choice",
+      "type_true_false": "True/False",
       "type_development": "Essay",
       "type_problem": "Problems",
       "minutes": "Time (minutes)",

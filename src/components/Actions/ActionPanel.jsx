@@ -70,7 +70,7 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction 
   const [showProblemsModal, setShowProblemsModal] = useState(false)
   const [showSchemaModal, setShowSchemaModal] = useState(false)
   const [showTimedModal, setShowTimedModal] = useState(false)
-  const [timedTypes, setTimedTypes] = useState({ test: true, development: true, problem: true })
+  const [timedTypes, setTimedTypes] = useState({ test: true, true_false: true, development: true, problem: true })
   const [timedMinutes, setTimedMinutes] = useState(numQuestions * 2)
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction 
   function toggleTimedType(type) {
     setTimedTypes(t => {
       const next = { ...t, [type]: !t[type] }
-      if (!next.test && !next.development && !next.problem) return t  // al menos uno marcado
+      if (!next.test && !next.true_false && !next.development && !next.problem) return t  // al menos uno marcado
       return next
     })
   }
@@ -288,7 +288,7 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction 
           <div>
             <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">{t('actionPanel.timedModal.types')}</p>
             <div className="space-y-1.5">
-              {['test', 'development', 'problem'].map(type => (
+              {['test', 'true_false', 'development', 'problem'].map(type => (
                 <label key={type} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700/50 hover:bg-slate-700 cursor-pointer">
                   <input
                     type="checkbox"

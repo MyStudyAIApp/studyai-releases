@@ -1,18 +1,41 @@
+import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { version } from '../../../package.json'
 import Logo from '../UI/Logo'
 import PlanBadge from '../UI/PlanBadge'
+import { useAuth } from '../../contexts/AuthContext'
+import { useAppStore, api } from '../../store/appStore'
 
 export default function TitleBar() {
+  const { t } = useTranslation()
   const isElectron = !!window.electron
+  const { user } = useAuth()
+  const { backendReady } = useAppStore()
+  const [displayName, setDisplayName] = useState(null)
+
+  useEffect(() => {
+    if (!backendReady || !user) return
+    api('GET', '/me').then(me => setDisplayName(me.display_name || null)).catch(() => {})
+  }, [backendReady, user])
 
   return (
     <div className="titlebar-drag h-10 bg-slate-950 border-b border-slate-800 flex items-center px-4 shrink-0 select-none">
       {/* Logo — izquierda */}
-      <div className="flex items-center gap-2 flex-1">
+      <div className="flex items-center gap-2 flex-1 min-w-0">
         <Logo size="md" />
         <PlanBadge />
         <span className="badge-blue text-[10px]">v{version}</span>
       </div>
+
+      {/* Cuenta activa — para distinguir a simple vista si se ha entrado con
+          la cuenta equivocada (confusión real detectada en pruebas de QA).
+          Nombre en vez de email por privacidad frente a miradas indiscretas
+          (ej. compartir pantalla) -- cae al email solo si no hay nombre guardado. */}
+      {(displayName || user?.email) && (
+        <span className="hidden sm:block text-[10px] text-slate-500 truncate max-w-[220px] mr-2">
+          {t('home.welcome', { name: displayName || user.email })}
+        </span>
+      )}
 
       {/* Controles — derecha */}
       <div className="titlebar-no-drag flex items-center">

@@ -30,3 +30,4 @@ credentials/
 .claude/settings.local.json
 .claude/skills/
 .impeccable/
+strix_runs/

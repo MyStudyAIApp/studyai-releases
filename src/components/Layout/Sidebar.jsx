@@ -15,17 +15,21 @@ import IconBadge from '../UI/IconBadge'
 export default function Sidebar() {
   const { t } = useTranslation()
   const { backendReady, todayStudyMinutes, dailyGoalMinutes, planTier, setPlanTier } = useAppStore()
-  const { user, signOut } = useAuth()
+  const { user, signOut, loading: authLoading } = useAuth()
   const [usage, setUsage] = useState(null)
+  const [displayName, setDisplayName] = useState(null)
 
   // /usage/summary devuelve el tier REAL (incluye plan_override='pro' manual,
   // que el cálculo local de getPlanTier() no puede conocer) — se guarda en el
   // store global para que PlanBadge también lo use, en vez de cada uno
   // calculando su propia versión (potencialmente distinta) del plan.
+  // authLoading evita disparar la llamada antes de que la sesión esté lista
+  // (causaba un 401 benigno en cada login, detectado en pruebas de QA).
   useEffect(() => {
-    if (!backendReady) return
+    if (!backendReady || authLoading) return
     api('GET', '/usage/summary').then(data => { setUsage(data); setPlanTier(data.tier) }).catch(() => {})
-  }, [backendReady])
+    api('GET', '/me').then(me => setDisplayName(me.display_name || null)).catch(() => {})
+  }, [backendReady, authLoading])
 
   const isFree = (planTier ?? getPlanTier(user)) === 'free'
 
@@ -160,7 +164,7 @@ export default function Sidebar() {
       {user && (
         <div className="px-2 py-2 border-t border-slate-800">
           <p className="hidden lg:block text-[10px] text-slate-600 truncate px-2 mb-1">
-            {user.email}
+            {displayName || user.email}
           </p>
           <button
             onClick={signOut}

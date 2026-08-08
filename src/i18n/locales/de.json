@@ -37,6 +37,7 @@
     "retrying": "Wird geprüft..."
   },
   "home": {
+    "welcome": "Willkommen, {{name}}",
     "dropzoneTitle": "Dokument zum Lernen hochladen",
     "dropzoneDesc": "Ziehe ein PDF oder Foto hierher oder benutze die Buttons",
     "uploadPdf": "PDF hochladen",
@@ -383,6 +384,7 @@
       "title": "Probeprüfung konfigurieren",
       "types": "Fragetypen",
       "type_test": "Multiple Choice",
+      "type_true_false": "Wahr/Falsch",
       "type_development": "Aufsatz",
       "type_problem": "Aufgaben",
       "minutes": "Zeit (Minuten)",

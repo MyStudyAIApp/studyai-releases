@@ -6,9 +6,12 @@ import TitleBar from './TitleBar'
 import { useAppStore, IS_WEB, IS_MOBILE, api } from '../../store/appStore'
 import BackendBanner from './BackendBanner'
 import QuotaExceededModal from '../UI/QuotaExceededModal'
+import AnnouncementModal from '../UI/AnnouncementModal'
+import { useAuth } from '../../contexts/AuthContext'
 
 export default function Layout() {
   const { backendReady, setPlanTier } = useAppStore()
+  const { loading: authLoading } = useAuth()
   // Este layout "de escritorio" (Sidebar) lo comparten web, escritorio Y la
   // app completa Capacitor de móvil (MyStudy App) — solo la versión reducida
   // Scan tiene su propio árbol de rutas aparte y nunca llega aquí. Necesita
@@ -28,9 +31,9 @@ export default function Layout() {
   // el PlanBadge se queda sin dato del backend ahí y cae al cálculo local
   // (que no conoce plan_override), mostrando "Free" aunque la cuenta sea Pro.
   useEffect(() => {
-    if (!backendReady) return
+    if (!backendReady || authLoading) return
     api('GET', '/usage/summary').then(data => setPlanTier(data.tier)).catch(() => {})
-  }, [backendReady])
+  }, [backendReady, authLoading])
 
   return (
     <div className="flex flex-col h-screen h-dvh overflow-hidden">
@@ -44,6 +47,7 @@ export default function Layout() {
       </div>
       {isMobileWeb && <MobileBottomNav />}
       <QuotaExceededModal />
+      <AnnouncementModal />
     </div>
   )
 }
