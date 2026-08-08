@@ -18,6 +18,21 @@ import {
   IconCircleCheck, IconLoader2,
 } from '@tabler/icons-react'
 
+// Tooltip que aparece al instante al pasar el ratón (el `title` nativo del
+// navegador tarda ~1s y es fácil no llegar a verlo nunca) -- usado para
+// explicar el icono de sincronización justo donde y cuando hace falta, en
+// vez de solo en el bloque de texto al final de la página.
+function FastTooltip({ text, children }) {
+  return (
+    <span className="relative inline-flex group/tip">
+      {children}
+      <span className="pointer-events-none absolute z-30 bottom-full left-1/2 -translate-x-1/2 mb-1.5 whitespace-nowrap rounded-md bg-slate-900 border border-slate-700 px-2 py-1 text-[11px] text-slate-200 opacity-0 group-hover/tip:opacity-100 transition-opacity">
+        {text}
+      </span>
+    </span>
+  )
+}
+
 // ─── Date grouping helpers ──────────────────────────────────────────────────
 function getDateGroup(dateStr) {
   const d = new Date(dateStr)
@@ -54,8 +69,15 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
           hover:bg-slate-800/60 transition-colors select-none
           ${selected ? 'bg-primary-900/30 ring-1 ring-primary-600/50' : ''}`}
       >
-        <div onClick={e => { e.stopPropagation(); onSelect() }} className="shrink-0 pt-0.5">
-          <input type="checkbox" checked={selected} onChange={() => {}} className="w-4 h-4 rounded accent-primary-500 cursor-pointer" />
+        <div className="shrink-0 pt-0.5">
+          <input
+            type="checkbox"
+            checked={selected}
+            onChange={onSelect}
+            onClick={e => e.stopPropagation()}
+            aria-label={`Seleccionar ${doc.title}`}
+            className="w-4 h-4 rounded accent-primary-500 cursor-pointer"
+          />
         </div>
         <span className="shrink-0 text-slate-400">
           {doc.file_type === 'foto' ? <IconPhoto size={18} /> : doc.file_type === 'escaneado' ? <IconCamera size={18} /> : <IconFileText size={18} />}
@@ -107,11 +129,13 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
         ${dragging ? 'opacity-40' : ''}`}
     >
       {/* Checkbox */}
-      <div onClick={e => { e.stopPropagation(); onSelect() }} className="mr-3 shrink-0">
+      <div className="mr-3 shrink-0">
         <input
           type="checkbox"
           checked={selected}
-          onChange={() => {}}
+          onChange={onSelect}
+          onClick={e => e.stopPropagation()}
+          aria-label={`Seleccionar ${doc.title}`}
           className="w-4 h-4 rounded accent-primary-500 cursor-pointer"
         />
       </div>
@@ -164,15 +188,16 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
         const b = syncBadge(doc, cloudVerified)
         if (!b) return null
         if (b.clickable === false) {
-          return <span className={`${b.color} text-xs shrink-0 ml-1 opacity-60`} title={b.title}>{b.Icon ? <b.Icon size={13} /> : b.icon}</span>
+          return <FastTooltip text={b.title}><span className={`${b.color} text-xs shrink-0 ml-1 opacity-60`}>{b.Icon ? <b.Icon size={13} /> : b.icon}</span></FastTooltip>
         }
         return (
-          <button
-            onClick={e => { e.stopPropagation(); onSync?.() }}
-            disabled={syncing}
-            className={`${b.color} text-xs shrink-0 ml-1 hover:opacity-100 ${syncing ? 'opacity-30 cursor-wait' : 'opacity-60'} transition-opacity`}
-            title={syncing ? 'Subiendo…' : b.title}
-          >{b.Icon ? <b.Icon size={13} /> : b.icon}</button>
+          <FastTooltip text={syncing ? 'Subiendo…' : b.title}>
+            <button
+              onClick={e => { e.stopPropagation(); onSync?.() }}
+              disabled={syncing}
+              className={`${b.color} text-xs shrink-0 ml-1 hover:opacity-100 ${syncing ? 'opacity-30 cursor-wait' : 'opacity-60'} transition-opacity`}
+            >{b.Icon ? <b.Icon size={13} /> : b.icon}</button>
+          </FastTooltip>
         )
       })()}
 
@@ -1078,14 +1103,15 @@ export default function Library() {
                 >
                   {/* Checkbox — top-left, siempre visible en táctil (isNarrow), al pasar el ratón en escritorio */}
                   <div
-                    onClick={e => { e.stopPropagation(); toggleSelect(doc.id) }}
                     className={`absolute top-3 left-3 z-10 transition-opacity
                       ${sel || isNarrow ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                   >
                     <input
                       type="checkbox"
                       checked={sel}
-                      onChange={() => {}}
+                      onChange={() => toggleSelect(doc.id)}
+                      onClick={e => e.stopPropagation()}
+                      aria-label={`Seleccionar ${doc.title}`}
                       className="w-4 h-4 rounded accent-primary-500 cursor-pointer"
                     />
                   </div>
@@ -1119,12 +1145,13 @@ export default function Library() {
                       title="Generar podcast"
                     ><IconHeadphones size={14} /></button>
                     {(() => { const b = syncBadge(doc, cloudVerified); return b ? (
-                      <button
-                        onClick={e => { e.stopPropagation(); handleSyncDoc(doc) }}
-                        disabled={syncingDocId === doc.id}
-                        className={`text-sm ${b.color} ${syncingDocId === doc.id ? 'opacity-30 cursor-wait' : 'opacity-70 hover:opacity-100'} transition-opacity`}
-                        title={syncingDocId === doc.id ? 'Subiendo…' : b.title}
-                      >{b.Icon ? <b.Icon size={14} /> : b.icon}</button>
+                      <FastTooltip text={syncingDocId === doc.id ? 'Subiendo…' : b.title}>
+                        <button
+                          onClick={e => { e.stopPropagation(); handleSyncDoc(doc) }}
+                          disabled={syncingDocId === doc.id}
+                          className={`text-sm ${b.color} ${syncingDocId === doc.id ? 'opacity-30 cursor-wait' : 'opacity-70 hover:opacity-100'} transition-opacity`}
+                        >{b.Icon ? <b.Icon size={14} /> : b.icon}</button>
+                      </FastTooltip>
                     ) : null })()}
                   </div>
 
