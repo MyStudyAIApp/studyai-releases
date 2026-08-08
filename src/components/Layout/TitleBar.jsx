@@ -1,22 +1,18 @@
-import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { version } from '../../../package.json'
 import Logo from '../UI/Logo'
 import PlanBadge from '../UI/PlanBadge'
 import { useAuth } from '../../contexts/AuthContext'
-import { useAppStore, api } from '../../store/appStore'
 
 export default function TitleBar() {
   const { t } = useTranslation()
   const isElectron = !!window.electron
   const { user } = useAuth()
-  const { backendReady } = useAppStore()
-  const [displayName, setDisplayName] = useState(null)
-
-  useEffect(() => {
-    if (!backendReady || !user) return
-    api('GET', '/me').then(me => setDisplayName(me.display_name || null)).catch(() => {})
-  }, [backendReady, user])
+  // user_metadata.full_name -- misma fuente que edita Ajustes (supabase.auth.updateUser).
+  // Antes se leía profiles.display_name vía /me, una columna aparte que solo
+  // se rellena al registrarse y nunca se actualiza después -- por eso el
+  // nombre editado en Ajustes no se reflejaba aquí.
+  const displayName = user?.user_metadata?.full_name || null
 
   return (
     <div className="titlebar-drag h-10 bg-slate-950 border-b border-slate-800 flex items-center px-4 shrink-0 select-none">

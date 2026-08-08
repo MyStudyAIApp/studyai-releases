@@ -198,13 +198,22 @@ export default function AdminPage() {
     checkTwoFAStatus()
   }, [])
 
+  // Dispara load() cuando el token de 2FA cambia (login o setup) -- usar un
+  // efecto en vez de llamar a load() justo después de setTwoFAToken evita la
+  // condición de carrera de React (el estado no se actualiza al instante,
+  // así que la llamada saldría sin el token nuevo y el backend la rechazaría
+  // con 401, disparando un cierre de sesión de golpe).
+  useEffect(() => {
+    if (twoFAToken) load()
+  }, [twoFAToken])
+
   async function checkTwoFAStatus() {
     const authHeader = await getAuthHeader()
     const res = await fetch(`${WEB_API}/admin/2fa/status`, { headers: { ...authHeader } })
     if (!res.ok) return
     const data = await res.json()
     setTwoFAEnabled(data.enabled)
-    if (!data.enabled || twoFAToken) load()
+    if (!data.enabled) load()
   }
 
   async function verifyTwoFA() {
@@ -223,7 +232,6 @@ export default function AdminPage() {
       setTwoFAToken(data.admin_2fa_token)
       sessionStorage.setItem('admin_2fa_token', data.admin_2fa_token)
       setTwoFACode('')
-      load()
     } finally {
       setVerifying2FA(false)
     }

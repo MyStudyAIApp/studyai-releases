@@ -17,7 +17,8 @@ export default function Sidebar() {
   const { backendReady, todayStudyMinutes, dailyGoalMinutes, planTier, setPlanTier } = useAppStore()
   const { user, signOut, loading: authLoading } = useAuth()
   const [usage, setUsage] = useState(null)
-  const [displayName, setDisplayName] = useState(null)
+  // user_metadata.full_name -- misma fuente que edita Ajustes, ver TitleBar.jsx.
+  const displayName = user?.user_metadata?.full_name || null
 
   // /usage/summary devuelve el tier REAL (incluye plan_override='pro' manual,
   // que el cálculo local de getPlanTier() no puede conocer) — se guarda en el
@@ -28,7 +29,6 @@ export default function Sidebar() {
   useEffect(() => {
     if (!backendReady || authLoading) return
     api('GET', '/usage/summary').then(data => { setUsage(data); setPlanTier(data.tier) }).catch(() => {})
-    api('GET', '/me').then(me => setDisplayName(me.display_name || null)).catch(() => {})
   }, [backendReady, authLoading])
 
   const isFree = (planTier ?? getPlanTier(user)) === 'free'

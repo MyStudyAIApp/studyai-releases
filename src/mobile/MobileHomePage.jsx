@@ -24,7 +24,8 @@ export default function MobileHomePage() {
   const { setPlanTier, backendReady } = useAppStore()
   const [urgentExams, setUrgentExams] = useState([])
   const [docCount, setDocCount]       = useState(null)
-  const [displayName, setDisplayName] = useState(null)
+  // user_metadata.full_name -- misma fuente que edita Ajustes, ver TitleBar.jsx.
+  const displayName = user?.user_metadata?.full_name || null
 
   useEffect(() => {
     // Tier real (incluye plan_override='pro' manual) para el badge — mobile
@@ -32,7 +33,6 @@ export default function MobileHomePage() {
     // authLoading evita el 401 benigno de disparar antes de tener sesión.
     if (!backendReady || authLoading) return
     api('GET', '/usage/summary').then(data => setPlanTier(data.tier)).catch(() => {})
-    api('GET', '/me').then(me => setDisplayName(me.display_name || null)).catch(() => {})
   }, [backendReady, authLoading])
 
   useEffect(() => {
