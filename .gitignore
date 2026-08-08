@@ -31,3 +31,5 @@ credentials/
 .claude/skills/
 .impeccable/
 strix_runs/
+*.apk
+*.exe
