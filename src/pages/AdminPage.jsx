@@ -177,22 +177,125 @@ export default function AdminPage() {
   const [searching, setSearching] = useState(false)
   const [renderActionBusy, setRenderActionBusy] = useState(false)
 
+  // ── 2FA del panel admin ──────────────────────────────────────────────────
+  const [twoFAEnabled, setTwoFAEnabled] = useState(null)   // null = comprobando todavía
+  const [twoFAToken, setTwoFAToken] = useState(() => sessionStorage.getItem('admin_2fa_token'))
+  const [twoFACode, setTwoFACode] = useState('')
+  const [twoFAError, setTwoFAError] = useState('')
+  const [verifying2FA, setVerifying2FA] = useState(false)
+  const [setupStep, setSetupStep] = useState(null)   // null | 'qr' | 'backup-codes'
+  const [setupQr, setSetupQr] = useState('')
+  const [setupSecret, setSetupSecret] = useState('')
+  const [backupCodes, setBackupCodes] = useState(null)
+  const [disableCode, setDisableCode] = useState('')
+  const [disabling2FA, setDisabling2FA] = useState(false)
+
+  function twoFAHeader() {
+    return twoFAToken ? { 'X-Admin-2FA': twoFAToken } : {}
+  }
+
   useEffect(() => {
-    load()
+    checkTwoFAStatus()
   }, [])
+
+  async function checkTwoFAStatus() {
+    const authHeader = await getAuthHeader()
+    const res = await fetch(`${WEB_API}/admin/2fa/status`, { headers: { ...authHeader } })
+    if (!res.ok) return
+    const data = await res.json()
+    setTwoFAEnabled(data.enabled)
+    if (!data.enabled || twoFAToken) load()
+  }
+
+  async function verifyTwoFA() {
+    if (!twoFACode.trim()) return
+    setVerifying2FA(true)
+    setTwoFAError('')
+    try {
+      const authHeader = await getAuthHeader()
+      const res = await fetch(`${WEB_API}/admin/2fa/verify`, {
+        method: 'POST',
+        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: twoFACode.trim() }),
+      })
+      if (!res.ok) { setTwoFAError('Código incorrecto.'); return }
+      const data = await res.json()
+      setTwoFAToken(data.admin_2fa_token)
+      sessionStorage.setItem('admin_2fa_token', data.admin_2fa_token)
+      setTwoFACode('')
+      load()
+    } finally {
+      setVerifying2FA(false)
+    }
+  }
+
+  async function startTwoFASetup() {
+    const authHeader = await getAuthHeader()
+    const res = await fetch(`${WEB_API}/admin/2fa/setup`, { method: 'POST', headers: { ...authHeader } })
+    if (!res.ok) return
+    const data = await res.json()
+    setSetupQr(data.qr_code_png_base64)
+    setSetupSecret(data.secret)
+    setSetupStep('qr')
+  }
+
+  async function confirmTwoFASetup() {
+    if (!twoFACode.trim()) return
+    setVerifying2FA(true)
+    setTwoFAError('')
+    try {
+      const authHeader = await getAuthHeader()
+      const res = await fetch(`${WEB_API}/admin/2fa/confirm-setup`, {
+        method: 'POST',
+        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: twoFACode.trim() }),
+      })
+      if (!res.ok) { setTwoFAError('Código incorrecto. Comprueba la hora del móvil y vuelve a intentarlo.'); return }
+      const data = await res.json()
+      setTwoFAToken(data.admin_2fa_token)
+      sessionStorage.setItem('admin_2fa_token', data.admin_2fa_token)
+      setBackupCodes(data.backup_codes)
+      setSetupStep('backup-codes')
+      setTwoFAEnabled(true)
+      setTwoFACode('')
+    } finally {
+      setVerifying2FA(false)
+    }
+  }
+
+  async function disableTwoFA() {
+    if (!disableCode.trim()) return
+    setDisabling2FA(true)
+    try {
+      const authHeader = await getAuthHeader()
+      const res = await fetch(`${WEB_API}/admin/2fa/disable`, {
+        method: 'POST',
+        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: disableCode.trim() }),
+      })
+      if (res.ok) {
+        setTwoFAEnabled(false)
+        setTwoFAToken(null)
+        sessionStorage.removeItem('admin_2fa_token')
+        setDisableCode('')
+      }
+    } finally {
+      setDisabling2FA(false)
+    }
+  }
 
   async function load() {
     setLoading(true)
     setError('')
     try {
       let authHeader = await getAuthHeader()
-      let res = await fetch(`${WEB_API}/admin/stats`, { headers: { ...authHeader } })
+      let res = await fetch(`${WEB_API}/admin/stats`, { headers: { ...authHeader, ...twoFAHeader() } })
       if (res.status === 401) {
         // Puede ser un bache puntual con el token a punto de caducar (mismo
         // patrón ya usado en Tutor/Idiomas) -- forzamos un refresco y
         // reintentamos una vez antes de rendirnos y cerrar la sesión.
         authHeader = await getAuthHeader(true)
-        res = await fetch(`${WEB_API}/admin/stats`, { headers: { ...authHeader } })
+        res = await fetch(`${WEB_API}/admin/stats`, { headers: { ...authHeader, ...twoFAHeader() } })
       }
       if (!res.ok) {
         if (res.status === 401) { handleUnauthorized(); throw new Error('Sesión caducada, vuelve a iniciar sesión.') }
@@ -201,19 +304,19 @@ export default function AdminPage() {
       }
       setStats(await res.json())
       try {
-        const rDeploys = await fetch(`${WEB_API}/admin/render/deploys`, { headers: { ...authHeader } })
+        const rDeploys = await fetch(`${WEB_API}/admin/render/deploys`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rDeploys.ok) setRenderDeploys((await rDeploys.json()).deploys || [])
       } catch { /* opcional, no bloquea el resto del panel */ }
       try {
-        const rUsage = await fetch(`${WEB_API}/admin/feature-usage`, { headers: { ...authHeader } })
+        const rUsage = await fetch(`${WEB_API}/admin/feature-usage`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rUsage.ok) setFeatureUsage((await rUsage.json()).items || [])
       } catch { /* opcional, no bloquea el resto del panel */ }
       try {
-        const rInvites = await fetch(`${WEB_API}/admin/invite-codes`, { headers: { ...authHeader } })
+        const rInvites = await fetch(`${WEB_API}/admin/invite-codes`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rInvites.ok) setInviteCodes((await rInvites.json()).items || [])
       } catch { /* opcional, no bloquea el resto del panel */ }
       try {
-        const rAnn = await fetch(`${WEB_API}/admin/announcements`, { headers: { ...authHeader } })
+        const rAnn = await fetch(`${WEB_API}/admin/announcements`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rAnn.ok) setAnnouncements((await rAnn.json()).items || [])
       } catch { /* opcional, no bloquea el resto del panel */ }
     } catch (e) {
@@ -230,7 +333,7 @@ export default function AdminPage() {
       const authHeader = await getAuthHeader()
       const res = await fetch(`${WEB_API}/admin/invite-codes`, {
         method: 'POST',
-        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        headers: { ...authHeader, ...twoFAHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify({
           note: inviteNote.trim() || null,
           max_uses: Math.max(1, Number(inviteMaxUses) || 1),
@@ -243,7 +346,7 @@ export default function AdminPage() {
         setInviteNote('')
         setInviteMaxUses(1)
         setInviteExpiresDays('')
-        const rInvites = await fetch(`${WEB_API}/admin/invite-codes`, { headers: { ...authHeader } })
+        const rInvites = await fetch(`${WEB_API}/admin/invite-codes`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rInvites.ok) setInviteCodes((await rInvites.json()).items || [])
       }
     } finally {
@@ -254,7 +357,7 @@ export default function AdminPage() {
   async function deactivateInviteCode(code) {
     const authHeader = await getAuthHeader()
     await fetch(`${WEB_API}/admin/invite-codes/${encodeURIComponent(code)}`, {
-      method: 'DELETE', headers: { ...authHeader },
+      method: 'DELETE', headers: { ...authHeader, ...twoFAHeader() },
     })
     setInviteCodes(prev => prev.map(c => c.code === code ? { ...c, active: false } : c))
   }
@@ -266,7 +369,7 @@ export default function AdminPage() {
       const authHeader = await getAuthHeader()
       const res = await fetch(`${WEB_API}/admin/announcements`, {
         method: 'POST',
-        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        headers: { ...authHeader, ...twoFAHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: annTitle.trim(),
           message: annMessage.trim(),
@@ -277,7 +380,7 @@ export default function AdminPage() {
         setAnnTitle('')
         setAnnMessage('')
         setAnnLink('')
-        const rAnn = await fetch(`${WEB_API}/admin/announcements`, { headers: { ...authHeader } })
+        const rAnn = await fetch(`${WEB_API}/admin/announcements`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rAnn.ok) setAnnouncements((await rAnn.json()).items || [])
       }
     } finally {
@@ -287,7 +390,7 @@ export default function AdminPage() {
 
   async function deactivateAnnouncement(id) {
     const authHeader = await getAuthHeader()
-    await fetch(`${WEB_API}/admin/announcements/${id}`, { method: 'DELETE', headers: { ...authHeader } })
+    await fetch(`${WEB_API}/admin/announcements/${id}`, { method: 'DELETE', headers: { ...authHeader, ...twoFAHeader() } })
     setAnnouncements(prev => prev.map(a => a.id === id ? { ...a, active: false } : a))
   }
 
@@ -298,7 +401,7 @@ export default function AdminPage() {
       const authHeader = await getAuthHeader()
       await fetch(`${WEB_API}/admin/storage/delete-orphaned`, {
         method: 'POST',
-        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        headers: { ...authHeader, ...twoFAHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify({ paths: orphanedSelected }),
       })
       setOrphanedSelected([])
@@ -314,7 +417,7 @@ export default function AdminPage() {
     setSearchResults(null)
     try {
       const authHeader = await getAuthHeader()
-      const res = await fetch(`${WEB_API}/admin/documents-by-user?email=${encodeURIComponent(searchEmail.trim())}`, { headers: { ...authHeader } })
+      const res = await fetch(`${WEB_API}/admin/documents-by-user?email=${encodeURIComponent(searchEmail.trim())}`, { headers: { ...authHeader, ...twoFAHeader() } })
       setSearchResults(res.ok ? await res.json() : { email: searchEmail, documents: [], error: true })
     } finally {
       setSearching(false)
@@ -326,10 +429,42 @@ export default function AdminPage() {
     setRenderActionBusy(true)
     try {
       const authHeader = await getAuthHeader()
-      await fetch(`${WEB_API}/admin/render/suspend`, { method: 'POST', headers: { ...authHeader } })
+      await fetch(`${WEB_API}/admin/render/suspend`, { method: 'POST', headers: { ...authHeader, ...twoFAHeader() } })
     } finally {
       setRenderActionBusy(false)
     }
+  }
+
+  // Puerta de verificación: 2FA activo pero sin token de sesión todavía --
+  // no se carga ningún dato del panel hasta pasar el código.
+  if (twoFAEnabled && !twoFAToken) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-6">
+        <div className="card max-w-sm w-full space-y-4 text-center">
+          <p className="text-4xl">🔐</p>
+          <h1 className="text-lg font-semibold text-slate-100">Verificación en dos pasos</h1>
+          <p className="text-sm text-slate-400">Introduce el código de tu app de autenticación (o un código de respaldo).</p>
+          <input
+            type="text" inputMode="numeric" autoFocus value={twoFACode}
+            onChange={e => setTwoFACode(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && verifyTwoFA()}
+            placeholder="123456" className="input w-full text-center text-lg tracking-widest"
+          />
+          {twoFAError && <p className="text-red-400 text-sm">{twoFAError}</p>}
+          <button onClick={verifyTwoFA} disabled={verifying2FA || !twoFACode.trim()} className="btn-primary w-full disabled:opacity-50">
+            {verifying2FA ? 'Verificando…' : 'Verificar'}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (twoFAEnabled === null) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+        <Spinner />
+      </div>
+    )
   }
 
   if (loading) {
@@ -384,6 +519,66 @@ export default function AdminPage() {
           ))}
         </div>
       )}
+
+      {/* Seguridad — verificación en dos pasos del panel admin */}
+      <div className="card space-y-3">
+        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Seguridad</h2>
+
+        {!twoFAEnabled && setupStep === null && (
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-sm text-slate-400">La verificación en dos pasos no está activada.</p>
+            <button onClick={startTwoFASetup} className="btn-secondary btn-sm shrink-0">Activar 2FA</button>
+          </div>
+        )}
+
+        {setupStep === 'qr' && (
+          <div className="space-y-3">
+            <p className="text-sm text-slate-300">Escanea este código con Google Authenticator, Authy o similar:</p>
+            {setupQr && <img src={`data:image/png;base64,${setupQr}`} alt="Código QR del 2FA" className="mx-auto rounded-lg bg-white p-2 w-48 h-48" />}
+            <p className="text-[11px] text-slate-500 text-center">¿No puedes escanear? Clave manual: <span className="font-mono">{setupSecret}</span></p>
+            <input
+              type="text" inputMode="numeric" value={twoFACode}
+              onChange={e => setTwoFACode(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && confirmTwoFASetup()}
+              placeholder="Código de 6 dígitos" className="input w-full text-center"
+            />
+            {twoFAError && <p className="text-red-400 text-sm">{twoFAError}</p>}
+            <div className="flex gap-2">
+              <button onClick={() => { setSetupStep(null); setTwoFACode(''); setTwoFAError('') }} className="btn-secondary flex-1">Cancelar</button>
+              <button onClick={confirmTwoFASetup} disabled={verifying2FA || !twoFACode.trim()} className="btn-primary flex-1 disabled:opacity-50">
+                {verifying2FA ? 'Confirmando…' : 'Confirmar'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {setupStep === 'backup-codes' && backupCodes && (
+          <div className="space-y-3">
+            <p className="text-sm text-emerald-400 font-semibold">✓ 2FA activado</p>
+            <p className="text-sm text-slate-300">Guarda estos códigos de respaldo en un sitio seguro — cada uno solo sirve una vez, y son la única forma de entrar si pierdes el móvil.</p>
+            <div className="bg-slate-900 rounded-lg p-3 grid grid-cols-2 gap-1.5 font-mono text-sm text-slate-200">
+              {backupCodes.map(c => <span key={c}>{c}</span>)}
+            </div>
+            <button onClick={() => { setSetupStep(null); setBackupCodes(null) }} className="btn-primary w-full">Ya los he guardado</button>
+          </div>
+        )}
+
+        {twoFAEnabled && setupStep === null && (
+          <div className="space-y-2">
+            <p className="text-sm text-emerald-400">✓ Verificación en dos pasos activada.</p>
+            <div className="flex items-end gap-2">
+              <input
+                type="text" inputMode="numeric" value={disableCode}
+                onChange={e => setDisableCode(e.target.value)}
+                placeholder="Código para desactivar" className="input flex-1 text-sm"
+              />
+              <button onClick={disableTwoFA} disabled={disabling2FA || !disableCode.trim()} className="btn-secondary btn-sm shrink-0 disabled:opacity-50">
+                {disabling2FA ? 'Desactivando…' : 'Desactivar'}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Estado de servicios */}
       <div className="card space-y-3">
