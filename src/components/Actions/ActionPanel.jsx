@@ -109,7 +109,9 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction 
 
   function confirmTimed() {
     const question_types = Object.entries(timedTypes).filter(([, v]) => v).map(([k]) => k)
-    onGenerate('timed', { ...baseParams(), question_types, time_limit_minutes: timedMinutes })
+    const parsed = parseInt(timedMinutes, 10)
+    const time_limit_minutes = Number.isFinite(parsed) ? Math.min(240, Math.max(5, parsed)) : numQuestions * 2
+    onGenerate('timed', { ...baseParams(), question_types, time_limit_minutes })
     setShowTimedModal(false)
   }
 
@@ -307,7 +309,11 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction 
               type="number"
               min={5} max={240}
               value={timedMinutes}
-              onChange={e => setTimedMinutes(Number(e.target.value))}
+              onChange={e => setTimedMinutes(e.target.value.replace(/[^0-9]/g, ''))}
+              onBlur={() => {
+                const parsed = parseInt(timedMinutes, 10)
+                setTimedMinutes(Number.isFinite(parsed) ? Math.min(240, Math.max(5, parsed)) : numQuestions * 2)
+              }}
               className="input text-sm"
             />
           </div>
