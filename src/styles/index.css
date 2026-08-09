@@ -197,6 +197,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
            transition-colors;
   }
 
+  /* El icono del selector nativo de <input type="date"/time"> es oscuro por
+     defecto -- invisible sobre el fondo oscuro de .input. Se invierte para
+     que se vea claro, como el resto de la interfaz. */
+  .input[type="date"]::-webkit-calendar-picker-indicator,
+  .input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
   /* ── Badges ── */
   .badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;

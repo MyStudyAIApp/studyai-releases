@@ -179,7 +179,7 @@ export default function AdminPage() {
 
   // ── 2FA del panel admin ──────────────────────────────────────────────────
   const [twoFAEnabled, setTwoFAEnabled] = useState(null)   // null = comprobando todavía
-  const [twoFAToken, setTwoFAToken] = useState(() => sessionStorage.getItem('admin_2fa_token'))
+  const [twoFAToken, setTwoFAToken] = useState(() => localStorage.getItem('admin_2fa_token'))
   const [twoFACode, setTwoFACode] = useState('')
   const [twoFAError, setTwoFAError] = useState('')
   const [verifying2FA, setVerifying2FA] = useState(false)
@@ -230,7 +230,7 @@ export default function AdminPage() {
       if (!res.ok) { setTwoFAError('Código incorrecto.'); return }
       const data = await res.json()
       setTwoFAToken(data.admin_2fa_token)
-      sessionStorage.setItem('admin_2fa_token', data.admin_2fa_token)
+      localStorage.setItem('admin_2fa_token', data.admin_2fa_token)
       setTwoFACode('')
     } finally {
       setVerifying2FA(false)
@@ -261,7 +261,7 @@ export default function AdminPage() {
       if (!res.ok) { setTwoFAError('Código incorrecto. Comprueba la hora del móvil y vuelve a intentarlo.'); return }
       const data = await res.json()
       setTwoFAToken(data.admin_2fa_token)
-      sessionStorage.setItem('admin_2fa_token', data.admin_2fa_token)
+      localStorage.setItem('admin_2fa_token', data.admin_2fa_token)
       setBackupCodes(data.backup_codes)
       setSetupStep('backup-codes')
       setTwoFAEnabled(true)
@@ -284,7 +284,7 @@ export default function AdminPage() {
       if (res.ok) {
         setTwoFAEnabled(false)
         setTwoFAToken(null)
-        sessionStorage.removeItem('admin_2fa_token')
+        localStorage.removeItem('admin_2fa_token')
         setDisableCode('')
       }
     } finally {

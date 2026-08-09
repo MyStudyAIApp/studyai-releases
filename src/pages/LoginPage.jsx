@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect, useRef } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { supabase, WEB_API } from '../lib/supabase'
 import { IS_WEB, IS_ELECTRON, IS_MOBILE } from '../store/appStore'
 import { App as CapacitorApp } from '@capacitor/app'
@@ -35,10 +35,15 @@ const INVITE_ERROR_LABELS = {
 export default function LoginPage() {
   const { user, beginPasswordRecovery } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
 
-  // En cuanto el login tiene éxito, user pasa de null a tener valor → ir al inicio
+  // En cuanto el login tiene éxito, user pasa de null a tener valor → ir al
+  // destino de donde venía (ej. /admin si el candado de MyStudy Admin está
+  // activo, o de donde ProtectedRoute redirigió) -- si no hay ninguno, /home.
   useEffect(() => {
-    if (user) navigate('/home', { replace: true })
+    if (!user) return
+    const isAdminLockedApp = localStorage.getItem('studyai_admin_lock') === '1'
+    navigate(isAdminLockedApp ? '/admin' : (location.state?.from || '/home'), { replace: true })
   }, [user])
   const [mode, setMode]         = useState('login')   // 'login' | 'register' | 'sent' | 'confirmed'
   const [email, setEmail]       = useState('')

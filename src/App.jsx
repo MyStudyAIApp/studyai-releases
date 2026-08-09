@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { useAppStore, api, IS_WEB, IS_MOBILE, IS_ELECTRON, detectIsFullMobileApp } from './store/appStore'
 import MobileApp from './mobile/MobileApp'
 import Layout from './components/Layout/Layout'
@@ -36,16 +36,30 @@ import { applyTheme } from './services/themeService'
 import { saveWeeklyHours } from './components/Study/WeeklyHoursWidget'
 import i18n from './i18n'
 
+// ── Candado de MyStudy Admin ──────────────────────────────────────────────────
+// La app MyStudy Admin (Capacitor aparte, solo para el dueño) navega aquí con
+// ?adminLock=1 (delante del #, así llega como parámetro real de la URL, no
+// como parte del hash de la SPA). Se persiste en ESTE dominio (localStorage
+// es por origen, la propia app no puede escribirlo por adelantado) para que
+// el candado se mantenga aunque se cierre y reabra la app más adelante.
+if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('adminLock') === '1') {
+  localStorage.setItem('studyai_admin_lock', '1')
+}
+
 // ── Guardia de rutas ──────────────────────────────────────────────────────────
 // Redirige a /login si no hay sesión (web y escritorio)
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
+  const location = useLocation()
   if (loading) return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center">
       <div className="text-slate-400 animate-pulse text-lg">Cargando...</div>
     </div>
   )
-  if (!user) return <Navigate to="/login" replace />
+  // Guarda a dónde iba (ej. /admin) para volver ahí tras el login, en vez de
+  // caer siempre en /home -- lo necesita la app MyStudy Admin, que abre
+  // directamente en /admin.
+  if (!user) return <Navigate to="/login" state={{ from: location.pathname }} replace />
   return children
 }
 
@@ -89,6 +103,7 @@ function AppInner() {
   // Tutorial detallado de una sola sección, lanzado desde Ajustes
   const [onboardingSection, setOnboardingSection] = useState(null)
   const navigate = useNavigate()
+  const routeLocation = useLocation()
 
   // Whisper — mostrar pantalla de descarga si el modelo no está instalado
   // (solo en Electron; en web no existe Whisper local)
@@ -237,6 +252,18 @@ function AppInner() {
     }
     // isFullMobileApp === true: sigue abajo y renderiza el árbol completo (mismo que web)
   }
+
+  // "Modo candado" -- lo activa MyStudy Admin (app aparte, solo para el
+  // dueño) marcando localStorage antes de redirigir a /#/admin. Bloquea
+  // cualquier ruta que no sea /admin o /login, para que ese acceso rápido no
+  // pueda acabar navegando por accidente al resto de la cuenta.
+  const isAdminLockedApp = typeof window !== 'undefined' && localStorage.getItem('studyai_admin_lock') === '1'
+  useEffect(() => {
+    if (!isAdminLockedApp) return
+    if (routeLocation.pathname !== '/admin' && routeLocation.pathname !== '/login') {
+      navigate('/admin', { replace: true })
+    }
+  }, [isAdminLockedApp, routeLocation.pathname])
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 font-sans">
