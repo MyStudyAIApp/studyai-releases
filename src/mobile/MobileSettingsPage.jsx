@@ -6,10 +6,11 @@ import {
   scheduleExamNotifications,
   cancelAllExamNotifications,
 } from './notificationService'
-import { api } from '../store/appStore'
+import { api, useAppStore, detectIsFullMobileApp } from '../store/appStore'
+import Billing from '../lib/billingPlugin'
 import MobileTabBar from './MobileTabBar'
 import FeedbackModal from '../components/UI/FeedbackModal'
-import { IconSettings, IconLoader2, IconCircleCheck, IconDeviceFloppy, IconMessageCircle, IconLogout } from '@tabler/icons-react'
+import { IconSettings, IconLoader2, IconCircleCheck, IconDeviceFloppy, IconMessageCircle, IconLogout, IconCrown } from '@tabler/icons-react'
 
 const DAY_OPTIONS = [1, 2, 3, 5, 7, 14]
 const HOUR_OPTIONS = [
@@ -26,10 +27,45 @@ export default function MobileSettingsPage() {
   const [saving,       setSaving]       = useState(false)
   const [saved,        setSaved]        = useState(false)
   const [showFeedback, setShowFeedback] = useState(false)
+  const [isFullApp,    setIsFullApp]    = useState(false)
+
+  const planTier = useAppStore(s => s.planTier)
+  const setPlanTier = useAppStore(s => s.setPlanTier)
+
+  const [productPrice,   setProductPrice]   = useState('')
+  const [purchasing,     setPurchasing]     = useState(false)
+  const [purchaseError,  setPurchaseError]  = useState(null)
 
   useEffect(() => {
     getNotifSettings().then(setSettings)
+    detectIsFullMobileApp().then(setIsFullApp)
   }, [])
+
+  useEffect(() => {
+    if (!isFullApp || planTier === 'pro') return
+    Billing.queryProducts().then(p => setProductPrice(p.formattedPrice)).catch(() => {})
+  }, [isFullApp, planTier])
+
+  async function handleGoPro() {
+    setPurchasing(true)
+    setPurchaseError(null)
+    try {
+      const product = await Billing.queryProducts()
+      const result = await Billing.purchase({ offerToken: product.offerToken })
+      const purchase = result.purchases?.[0]
+      if (!purchase) throw new Error('No se recibió confirmación de la compra')
+      await api('POST', '/billing/verify-purchase', { purchase_token: purchase.purchaseToken })
+      if (!purchase.isAcknowledged) {
+        // Google revierte el cobro solo si no se reconoce en <=3 días
+        await Billing.acknowledgePurchase({ purchaseToken: purchase.purchaseToken })
+      }
+      setPlanTier('pro')
+    } catch (e) {
+      setPurchaseError(e?.message || 'No se pudo completar la compra')
+    } finally {
+      setPurchasing(false)
+    }
+  }
 
   function toggleDay(day) {
     setSettings(s => {
@@ -174,6 +210,36 @@ export default function MobileSettingsPage() {
             </p>
           )}
         </section>
+
+        {/* ── Suscripción Pro (solo MyStudy App, no Scan) ── */}
+        {isFullApp && planTier && planTier !== 'pro' && (
+          <section>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
+              Suscripción
+            </p>
+            <div className="bg-gradient-to-br from-amber-500/10 to-yellow-600/10 border border-amber-500/30 rounded-2xl p-4">
+              <div className="flex items-center gap-2 mb-1">
+                <IconCrown size={18} className="text-amber-400" />
+                <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
+              </div>
+              <p className="text-xs text-slate-400 mb-4">
+                Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+              </p>
+              <button
+                onClick={handleGoPro}
+                disabled={purchasing}
+                className="w-full py-3 rounded-xl font-semibold text-sm bg-amber-500 active:bg-amber-600 text-slate-900 disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {purchasing
+                  ? <><IconLoader2 size={16} className="animate-spin" /> Procesando...</>
+                  : `Suscribirme${productPrice ? ` — ${productPrice}` : ''}`}
+              </button>
+              {purchaseError && (
+                <p className="text-xs text-red-400 mt-2 text-center">{purchaseError}</p>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* ── Feedback ── */}
         <section>
