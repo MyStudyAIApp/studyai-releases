@@ -15,13 +15,18 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export default function PDFViewer({ document: doc, localBase64 = null }) {
   const { apiBase } = useAppStore()
-  const [currentPage, setCurrentPage] = useState(1)
+  const [visiblePage, setVisiblePage] = useState(1)
   const [numPages, setNumPages]       = useState(null)
   const [blobUrl, setBlobUrl]         = useState(null)
   const [loading, setLoading]         = useState(true)
   const [error, setError]             = useState(false)
   const [containerWidth, setContainerWidth] = useState(null)
   const containerRef = useRef(null)
+  const pageRefs = useRef([])
+
+  const scrollToPage = (n) => {
+    pageRefs.current[n - 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   // Medir el ancho del contenedor para que la página llene el espacio
   useEffect(() => {
@@ -42,7 +47,8 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
     setLoading(true)
     setError(false)
     setBlobUrl(null)
-    setCurrentPage(1)
+    setVisiblePage(1)
+    pageRefs.current = []
 
     const load = async () => {
       try {
@@ -76,6 +82,25 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
     setNumPages(numPages)
   }, [])
 
+  // Actualiza el indicador "X / Y" según la página que esté cruzando la
+  // parte superior del área visible mientras el usuario hace scroll -- el
+  // visor ya no muestra una sola página con botones, sino todas seguidas.
+  useEffect(() => {
+    if (!numPages || !containerRef.current) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter(e => e.isIntersecting)
+        if (visible.length === 0) return
+        const top = visible.reduce((a, b) => (a.boundingClientRect.top < b.boundingClientRect.top ? a : b))
+        const idx = pageRefs.current.indexOf(top.target)
+        if (idx !== -1) setVisiblePage(idx + 1)
+      },
+      { root: containerRef.current, rootMargin: '0px 0px -70% 0px', threshold: 0 }
+    )
+    pageRefs.current.forEach(el => el && observer.observe(el))
+    return () => observer.disconnect()
+  }, [numPages, blobUrl])
+
   if (!doc) return null
 
   if (loading) return (
@@ -92,31 +117,31 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
   )
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col h-full min-h-0 overflow-hidden">
 
-      {/* Barra de navegación */}
+      {/* Barra de navegación -- salta a una página, el scroll real es continuo abajo */}
       <div className="flex items-center gap-2 px-3 py-2 border-b border-slate-800 bg-slate-900 shrink-0">
         <button
-          onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-          disabled={currentPage <= 1}
+          onClick={() => scrollToPage(Math.max(1, visiblePage - 1))}
+          disabled={visiblePage <= 1}
           className="btn-ghost btn-icon btn-sm"
         >◀</button>
 
         <span className="text-xs text-slate-400 flex-1 text-center">
-          {currentPage} / {numPages ?? '…'}
+          {visiblePage} / {numPages ?? '…'}
         </span>
 
         <button
-          onClick={() => setCurrentPage(p => Math.min(numPages ?? 1, p + 1))}
-          disabled={currentPage >= (numPages ?? 1)}
+          onClick={() => scrollToPage(Math.min(numPages ?? 1, visiblePage + 1))}
+          disabled={visiblePage >= (numPages ?? 1)}
           className="btn-ghost btn-icon btn-sm"
         >▶</button>
       </div>
 
-      {/* Área del PDF — la página llena todo el espacio disponible */}
+      {/* Área del PDF — todas las páginas seguidas, con scroll continuo */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-auto bg-slate-950 flex justify-center py-2"
+        className="flex-1 min-h-0 overflow-auto bg-slate-950 flex flex-col items-center py-2 gap-2"
       >
         {blobUrl && (
           <Document
@@ -128,13 +153,17 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
               </div>
             }
           >
-            <Page
-              pageNumber={currentPage}
-              width={containerWidth ? containerWidth - 16 : undefined}
-              renderAnnotationLayer={false}
-              renderTextLayer={false}
-              loading=""
-            />
+            {numPages && Array.from({ length: numPages }, (_, i) => (
+              <div key={i} ref={el => { pageRefs.current[i] = el }}>
+                <Page
+                  pageNumber={i + 1}
+                  width={containerWidth ? containerWidth - 16 : undefined}
+                  renderAnnotationLayer={false}
+                  renderTextLayer={false}
+                  loading=""
+                />
+              </div>
+            ))}
           </Document>
         )}
       </div>

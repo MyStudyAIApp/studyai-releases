@@ -220,6 +220,23 @@ function AppInner() {
     }).catch(() => { /* silencioso */ })
   }, [backendReady])
 
+  // "Modo candado" -- lo activa MyStudy Admin (app aparte, solo para el
+  // dueño) marcando localStorage antes de redirigir a /#/admin. Bloquea
+  // cualquier ruta que no sea /admin o /login, para que ese acceso rápido no
+  // pueda acabar navegando por accidente al resto de la cuenta.
+  // Este hook tiene que ir ANTES de los `return` condicionales de abajo
+  // (recuperación de contraseña / móvil reducido) -- si no, el número de
+  // hooks ejecutados varía entre renders y React lanza "Rendered more
+  // hooks than during the previous render" (visto en producción vía Sentry,
+  // solo en Android WebView, porque ahí SÍ se pasa por el return de móvil).
+  const isAdminLockedApp = typeof window !== 'undefined' && localStorage.getItem('studyai_admin_lock') === '1'
+  useEffect(() => {
+    if (!isAdminLockedApp) return
+    if (routeLocation.pathname !== '/admin' && routeLocation.pathname !== '/login') {
+      navigate('/admin', { replace: true })
+    }
+  }, [isAdminLockedApp, routeLocation.pathname])
+
   // Si el usuario llegó desde el enlace de "restablecer contraseña",
   // mostramos solo ese formulario (el hash del token ya fue procesado por Supabase).
   // Antes solo se comprobaba en IS_WEB — en móvil (MyStudy App) el evento
@@ -252,18 +269,6 @@ function AppInner() {
     }
     // isFullMobileApp === true: sigue abajo y renderiza el árbol completo (mismo que web)
   }
-
-  // "Modo candado" -- lo activa MyStudy Admin (app aparte, solo para el
-  // dueño) marcando localStorage antes de redirigir a /#/admin. Bloquea
-  // cualquier ruta que no sea /admin o /login, para que ese acceso rápido no
-  // pueda acabar navegando por accidente al resto de la cuenta.
-  const isAdminLockedApp = typeof window !== 'undefined' && localStorage.getItem('studyai_admin_lock') === '1'
-  useEffect(() => {
-    if (!isAdminLockedApp) return
-    if (routeLocation.pathname !== '/admin' && routeLocation.pathname !== '/login') {
-      navigate('/admin', { replace: true })
-    }
-  }, [isAdminLockedApp, routeLocation.pathname])
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 font-sans">

@@ -39,9 +39,9 @@ export default function Layout() {
     <div className="flex flex-col h-screen h-dvh overflow-hidden">
       <TitleBar />
       {!backendReady && <BackendBanner />}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 min-h-0 overflow-hidden">
         {!isMobileWeb && <Sidebar />}
-        <main className="flex-1 overflow-auto bg-slate-900">
+        <main className="flex-1 min-h-0 overflow-auto bg-slate-900">
           <Outlet />
         </main>
       </div>

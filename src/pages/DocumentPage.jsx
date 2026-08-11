@@ -95,11 +95,11 @@ function TextViewer({ docId, title, cachedText }) {
   )
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
       <div className="px-3 py-2 border-b border-slate-800 bg-slate-900/50 shrink-0">
         <p className="text-xs text-slate-500 font-medium uppercase tracking-wide">{t('document.transcription')}</p>
       </div>
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 min-h-0 overflow-y-auto p-4">
         {/* Cada línea como su propio párrafo, para conservar los saltos de
             línea (ej. los pasos de un ejercicio guardado) — si no, Markdown
             fusiona líneas sueltas en un solo párrafo. */}
@@ -334,7 +334,13 @@ export default function DocumentPage() {
       ? <PDFViewer document={doc} localBase64={offlinePdfBase64} />
       : isOfflineCache || doc.title?.startsWith('[Clase]') || doc.title?.startsWith('[Foto]') || !doc.file_path
         ? <TextViewer docId={doc.id} title={doc.title} cachedText={isOfflineCache ? offlineText : undefined} />
-        : IS_WEB && !doc.file_path.includes('/')
+        : !doc.file_path.includes('/')
+          // file_path sin "/" no es una ruta de almacenamiento real -- pasa esto
+          // en documentos sin PDF detrás (p. ej. apuntes de voz transcritos,
+          // donde el backend guarda el título como file_path). Antes este caso
+          // solo se cubría en IS_WEB; en móvil caía al PDFViewer de abajo, que
+          // intentaba descargar un PDF inexistente y mostraba "No se pudo
+          // cargar el PDF" en vez del texto real.
           ? <TextViewer docId={doc.id} title={doc.title} cachedText={isOfflineCache ? offlineText : undefined} />
           : doc.pages > 0
             ? <PDFViewer document={doc} />
@@ -385,7 +391,7 @@ export default function DocumentPage() {
   // ── Mobile web: PDF first → result full screen ────────────────────────────
   if (isMobileWeb) {
     return (
-      <div className="flex flex-col h-full overflow-hidden relative">
+      <div className="flex flex-col h-full min-h-0 overflow-hidden relative">
 
         {mobilePanel === 'pdf' ? (
           <>
@@ -407,7 +413,12 @@ export default function DocumentPage() {
               </div>
             )}
             {savedResultsBar}
-            <div className="flex-1 overflow-hidden">{docViewerEl}</div>
+            {/* flex flex-col es imprescindible: el visor de dentro (TextViewer /
+                PDFViewer) se dimensiona con flex-1, que solo surte efecto si su
+                padre es un contenedor flex. Sin esto el texto crecía hacia abajo
+                y overflow-hidden lo recortaba sin dejar desplazarlo -- por eso
+                fallaba en la app móvil y no en escritorio (que sí usa flex). */}
+            <div className="flex-1 min-h-0 flex flex-col overflow-hidden">{docViewerEl}</div>
             {!isOfflineCache && (
               <button
                 onClick={() => setShowActionSheet(true)}

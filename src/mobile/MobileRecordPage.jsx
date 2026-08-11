@@ -79,9 +79,9 @@ export default function MobileRecordPage() {
       form.append('clean', limpiarRuido ? 'true' : 'false')
       if (topicId) form.append('topic_id', topicId)
       else if (subjectId) form.append('subject_id', subjectId)
-      await apiUpload('/audio/transcribe-mobile', form)
+      const res = await apiUpload('/audio/transcribe-mobile', form)
       addToast('¡Apuntes transcritos y guardados!', 'success')
-      navigate('/')
+      navigate(res?.id ? `/document/${res.id}` : '/')
     } catch (e) {
       if (!e.quotaExceeded) addToast('Error al procesar el audio', 'error')
     } finally {

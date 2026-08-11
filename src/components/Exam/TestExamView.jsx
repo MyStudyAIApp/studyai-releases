@@ -147,8 +147,8 @@ export default function TestExamView({ result, doc, onFinished }) {
           finalPct >= 70 ? 'border-emerald-500 bg-emerald-900/20' :
           finalPct >= 50 ? 'border-yellow-500 bg-yellow-900/20' :
                      'border-red-500 bg-red-900/20'}`}>
-          <p className="text-6xl font-black mb-2">{finalPct}%</p>
-          <p className="text-xl font-semibold">{questions.length} preguntas · nota combinada</p>
+          <p className="text-6xl font-black mb-2">{(finalPct / 10).toFixed(1)}</p>
+          <p className="text-xl font-semibold">{questions.length} preguntas · nota combinada ({finalPct}%)</p>
           <p className="text-slate-400 mt-2">
             {finalPct >= 70 ? '🎉 ¡Excelente trabajo!' :
              finalPct >= 50 ? '📚 Aprobado, hay margen de mejora' :
@@ -184,7 +184,7 @@ export default function TestExamView({ result, doc, onFinished }) {
                     <span className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 ${
                       openScore.score_pct >= 70 ? 'bg-emerald-900 text-emerald-300' :
                       openScore.score_pct >= 40 ? 'bg-yellow-900 text-yellow-300' : 'bg-red-900 text-red-300'}`}>
-                      {openScore.score_pct}%
+                      {(openScore.score_pct / 10).toFixed(1)}
                     </span>
                   )}
                 </div>
