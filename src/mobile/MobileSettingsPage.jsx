@@ -51,14 +51,13 @@ export default function MobileSettingsPage() {
     setPurchaseError(null)
     try {
       const product = await Billing.queryProducts()
-      const result = await Billing.purchase({ offerToken: product.offerToken })
+      const result = await Billing.purchase({ offerToken: product.offerToken, accountId: user.id })
       const purchase = result.purchases?.[0]
       if (!purchase) throw new Error('No se recibió confirmación de la compra')
+      // El reconocimiento ante Google lo hace el backend dentro de
+      // verify-purchase (no aquí) -- si esta llamada falla a mitad, no queda
+      // una compra pagada sin reconocer que Google reembolsaría sin avisar.
       await api('POST', '/billing/verify-purchase', { purchase_token: purchase.purchaseToken })
-      if (!purchase.isAcknowledged) {
-        // Google revierte el cobro solo si no se reconoce en <=3 días
-        await Billing.acknowledgePurchase({ purchaseToken: purchase.purchaseToken })
-      }
       setPlanTier('pro')
     } catch (e) {
       setPurchaseError(e?.message || 'No se pudo completar la compra')
