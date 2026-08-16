@@ -50,14 +50,13 @@ export default function MobileSettingsPage() {
     setPurchasing(true)
     setPurchaseError(null)
     try {
-      const product = await Billing.queryProducts()
-      const result = await Billing.purchase({ offerToken: product.offerToken, accountId: user.id })
-      const purchase = result.purchases?.[0]
-      if (!purchase) throw new Error('No se recibió confirmación de la compra')
-      // El reconocimiento ante Google lo hace el backend dentro de
-      // verify-purchase (no aquí) -- si esta llamada falla a mitad, no queda
-      // una compra pagada sin reconocer que Google reembolsaría sin avisar.
-      await api('POST', '/billing/verify-purchase', { purchase_token: purchase.purchaseToken })
+      // purchase() ya liga la compra a user.id (Purchases.logIn en el plugin
+      // nativo) y RevenueCat valida contra Google en su propio servidor --
+      // "active" aquí es solo para la UI optimista, la fuente de verdad real
+      // es lo que responda /billing/verify-purchase preguntando a RevenueCat.
+      const result = await Billing.purchase({ accountId: user.id })
+      if (!result.active) throw new Error('No se recibió confirmación de la compra')
+      await api('POST', '/billing/verify-purchase')
       setPlanTier('pro')
     } catch (e) {
       setPurchaseError(e?.message || 'No se pudo completar la compra')
