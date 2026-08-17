@@ -34,3 +34,7 @@ strix_runs/
 *.apk
 *.exe
 BASURA/
+resources/whisper-models/
+resources/ffmpeg/
+resources/tesseract/
+assets/ffmpeg-lgpl/
