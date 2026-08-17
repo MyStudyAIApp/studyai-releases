@@ -27,8 +27,8 @@ FULL_DESC = """MyStudy Scan es la forma más rápida de pasar tus apuntes en pap
 
 Sincroniza con tu cuenta de MyStudy App para generar resúmenes, exámenes, podcasts y mucho más a partir de lo que escanees o grabes aquí."""
 
-ICON_PATH = Path(r"D:\Proyectos Claude\studyai\assets\icon-scan-512-rgb.png")
-FEATURE_GRAPHIC_PATH = Path(r"D:\Proyectos Claude\studyai\assets\feature-graphic-scan.png")
+ICON_PATH = Path(r"D:\Proyectos Claude 2\studyai\assets\icon-scan-512-rgb.png")
+FEATURE_GRAPHIC_PATH = Path(r"D:\Proyectos Claude 2\studyai\assets\feature-graphic-scan.png")
 
 
 def main():

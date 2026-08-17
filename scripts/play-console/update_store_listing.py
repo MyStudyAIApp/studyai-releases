@@ -36,8 +36,8 @@ Lleva todos tus apuntes contigo y repásalos donde quieras, sin depender de esta
 Ideal para estudiantes de cualquier nivel que quieran estudiar de forma más eficiente."""
 
 SCRATCHPAD = Path(r"C:\Users\rinco\AppData\Local\Temp\claude\D--Proyectos-Claude-studyai\ff409346-2918-4d96-9c4c-e109cefaebd9\scratchpad")
-ICON_PATH = Path(r"D:\Proyectos Claude\studyai\src\public\pwa-512-rgb.png")
-FEATURE_GRAPHIC_PATH = Path(r"D:\Proyectos Claude\studyai\src\public\feature-graphic.png")
+ICON_PATH = Path(r"D:\Proyectos Claude 2\studyai\src\public\pwa-512-rgb.png")
+FEATURE_GRAPHIC_PATH = Path(r"D:\Proyectos Claude 2\studyai\src\public\feature-graphic.png")
 SCREENSHOTS_DIR = SCRATCHPAD / "playstore_screens"
 SCREENSHOT_ORDER = ["progreso", "biblioteca1", "biblioteca2", "pendiente", "tutor"]
 
