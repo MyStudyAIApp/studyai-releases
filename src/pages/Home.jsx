@@ -1,18 +1,71 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useAppStore, api, apiUpload } from '../store/appStore'
+import { useAppStore, api, apiUpload, IS_MOBILE } from '../store/appStore'
 import Spinner from '../components/UI/Spinner'
 import Modal from '../components/UI/Modal'
+import ProgressBar from '../components/UI/ProgressBar'
+import Billing from '../lib/billingPlugin'
+import { useAuth } from '../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
 import {
   IconFileText, IconCamera, IconBooks, IconFolder, IconBrain, IconFlame,
-  IconChartBar, IconScale, IconAlertTriangle,
+  IconChartBar, IconScale, IconAlertTriangle, IconCrown, IconLoader2,
 } from '@tabler/icons-react'
 import IconBadge from '../components/UI/IconBadge'
 
 export default function Home() {
   const { t } = useTranslation()
-  const { backendReady, addToast } = useAppStore()
+  const { user } = useAuth()
+  const { backendReady, addToast, planTier, setPlanTier } = useAppStore()
+  // Uso del plan (solo app móvil completa -- en escritorio/web se ve en el
+  // Sidebar, que aquí no se monta, ver Layout.jsx).
+  const [usage, setUsage] = useState(null)
+
+  // ── Suscripción Pro / bonos (solo app móvil completa) ──────────────────
+  const [productPrice,  setProductPrice]  = useState('')
+  const [purchasing,    setPurchasing]    = useState(false)
+  const [purchaseError, setPurchaseError] = useState(null)
+  const [bonoPrices,    setBonoPrices]    = useState({})
+  const [buyingBono,    setBuyingBono]    = useState(null)
+  const [bonoMessage,   setBonoMessage]   = useState(null)
+
+  useEffect(() => {
+    if (!IS_MOBILE || planTier === 'pro') return
+    Billing.queryProducts().then(p => setProductPrice(p.formattedPrice)).catch(() => {})
+  }, [planTier])
+
+  useEffect(() => {
+    if (!IS_MOBILE || planTier !== 'pro') return
+    Billing.queryBonoProducts().then(setBonoPrices).catch(() => {})
+  }, [planTier])
+
+  async function handleGoPro() {
+    setPurchasing(true)
+    setPurchaseError(null)
+    try {
+      const result = await Billing.purchase({ accountId: user.id })
+      if (!result.active) throw new Error('No se recibió confirmación de la compra')
+      await api('POST', '/billing/verify-purchase')
+      setPlanTier('pro')
+    } catch (e) {
+      setPurchaseError(e?.message || 'No se pudo completar la compra')
+    } finally {
+      setPurchasing(false)
+    }
+  }
+
+  async function handleBuyBono(category) {
+    setBuyingBono(category)
+    setBonoMessage(null)
+    try {
+      await Billing.purchaseBono({ category, accountId: user.id })
+      setBonoMessage({ type: 'ok', text: 'Compra completada — el bono se añadirá en unos segundos.' })
+    } catch (e) {
+      setBonoMessage({ type: 'error', text: e?.message || 'No se pudo completar la compra' })
+    } finally {
+      setBuyingBono(null)
+    }
+  }
   const [recentDocs, setRecentDocs] = useState([])
   const [subjects, setSubjects] = useState([])
   const [mastery, setMastery] = useState([])
@@ -69,6 +122,11 @@ export default function Home() {
       setMastery(m.items || (Array.isArray(m) ? m : []))
       setStreakDays(st.streak_days || 0)
     }).finally(() => setLoading(false))
+  }, [backendReady])
+
+  useEffect(() => {
+    if (!IS_MOBILE || !backendReady) return
+    api('GET', '/usage/summary').then(setUsage).catch(() => {})
   }, [backendReady])
 
   useEffect(() => {
@@ -415,6 +473,108 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Uso del plan (solo app móvil completa) */}
+      {IS_MOBILE && usage && planTier === 'free' && (
+        <section>
+          <h3 className="section-title">Uso del plan Free · últimos 30 días</h3>
+          <div className="card space-y-3">
+            {[
+              { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
+              { label: 'Voz / visión (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+            ].map(({ label, used, max }) => (
+              <div key={label}>
+                <div className="flex items-center justify-between text-xs mb-1">
+                  <span className="text-slate-400">{label}</span>
+                  <span className={used >= max ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{used}/{max}</span>
+                </div>
+                <ProgressBar value={used} max={max} color={used >= max ? 'yellow' : 'primary'} height="h-1.5" />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {IS_MOBILE && usage?.voice_budget && planTier === 'pro' && (
+        <section>
+          <h3 className="section-title">Uso de voz este mes</h3>
+          <div className="card space-y-3">
+            {[
+              { label: '🎙️ Transcripción', pct: usage.voice_budget.transcription?.spent_pct ?? 0 },
+              { label: '🎧 Podcasts', pct: usage.voice_budget.podcast?.spent_pct ?? 0 },
+            ].map(({ label, pct }) => (
+              <div key={label}>
+                <div className="flex items-center justify-between text-xs mb-1">
+                  <span className="text-slate-400">{label}</span>
+                  <span className={pct >= 90 ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{pct}%</span>
+                </div>
+                <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1.5" />
+              </div>
+            ))}
+            {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
+              <p className="text-xs text-amber-400">
+                Te estás quedando sin cupo de voz este mes.{' '}
+                <a href="mailto:soporte@mystudyai.eu" className="underline">Escríbenos</a> para ampliarlo.
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ── Suscripción Pro / bonos (solo app móvil completa) ─────────── */}
+      {IS_MOBILE && planTier && planTier !== 'pro' && (
+        <section>
+          <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <IconCrown size={18} className="text-amber-400" />
+              <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
+            </div>
+            <p className="text-xs text-slate-400 mb-4">
+              Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+            </p>
+            <button
+              onClick={handleGoPro}
+              disabled={purchasing}
+              className="w-full py-3 rounded-xl font-semibold text-sm bg-amber-500 hover:bg-amber-600 text-slate-900 disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {purchasing
+                ? <><IconLoader2 size={16} className="animate-spin" /> Procesando...</>
+                : `Suscribirme${productPrice ? ` — ${productPrice}` : ''}`}
+            </button>
+            {purchaseError && <p className="text-xs text-red-400 mt-2 text-center">{purchaseError}</p>}
+          </div>
+        </section>
+      )}
+
+      {IS_MOBILE && planTier === 'pro' && (
+        <section>
+          <h3 className="section-title">Ampliar cupo de voz</h3>
+          <div className="card divide-y divide-slate-800">
+            {[
+              { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra' },
+              { category: 'podcast',       emoji: '🎧', label: '10 podcasts extra' },
+            ].map(({ category, emoji, label }) => (
+              <div key={category} className="py-3 flex items-center justify-between gap-4">
+                <p className="text-sm font-semibold text-slate-200">{emoji} {label}</p>
+                <button
+                  onClick={() => handleBuyBono(category)}
+                  disabled={buyingBono === category}
+                  className="shrink-0 px-4 py-2 rounded-xl text-sm font-semibold bg-primary-600 hover:bg-primary-700 text-white disabled:opacity-50 flex items-center gap-2"
+                >
+                  {buyingBono === category
+                    ? <IconLoader2 size={14} className="animate-spin" />
+                    : bonoPrices[category === 'transcription' ? 'bono_transcripcion_10h' : 'bono_podcast_10']?.formattedPrice || 'Comprar'}
+                </button>
+              </div>
+            ))}
+          </div>
+          {bonoMessage && (
+            <p className={`text-xs mt-2 text-center ${bonoMessage.type === 'ok' ? 'text-emerald-400' : 'text-red-400'}`}>
+              {bonoMessage.text}
+            </p>
+          )}
+        </section>
+      )}
 
       {/* Enlaces legales */}
       <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 mt-10 pt-6 border-t border-slate-800">
