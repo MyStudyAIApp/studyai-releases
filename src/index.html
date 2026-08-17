@@ -11,13 +11,6 @@
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#0f172a" />
   <meta name="google-site-verification" content="q42wzByrw4VJp1MkVW_VwRLe6zjTSjoE49ZsvjgZtrA" />
-  <!-- El widget de cookies de iubenda se carga desde main.jsx SOLO en web (no en el
-       escritorio empaquetado) -- ver F15 en CLAUDE-SECURITY-20260730-135819/. Cargar
-       un script remoto sin control siempre en el renderer con preload de Electron
-       le da a ese script acceso al puente privilegiado (shell.openExternal, el token
-       local, etc.) en cuanto se cargue. En web no hay ese puente, así que ahí el
-       riesgo real es mucho menor. -->
-
   <!-- Open Graph — tarjeta de vista previa al compartir el enlace (WhatsApp, Facebook, etc.) -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mystudyai.eu" />
