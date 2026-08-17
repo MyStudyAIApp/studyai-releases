@@ -72,6 +72,85 @@ The Data concerning the User is collected to allow the Owner to provide its Serv
 
 ## Detailed information on the processing of Personal Data
 
+### Hosting and backend infrastructure
+This type of service has the purpose of hosting Data and files that enable this Application to run and be distributed as well as to provide a ready-made infrastructure to run specific features or parts of this Application. Some services listed below, if any, may work through geographically distributed servers, making it difficult to determine the actual location where Personal Data are stored.
+
+### Supabase
+Company: Supabase, Inc.
+Place of processing: Europe
+Supabase is a hosting and backend service provided by Supabase, Inc.
+
+### Personal Data processed:
+- Usage Data
+- Various types of Data as specified in the service's privacy policy
+- Trackers
+
+### Service provided by:
+- Supabase, Inc. (Europe) – Privacy Policy
+
+### GroqCloud
+Company: Groq, LLC and affiliates
+Place of processing: USA and other locations
+GroqCloud is an AI inference service provided by Groq, LLC, Groq UK Limited or Groq Limited, depending on how the Owner manages Data processing, and used internally by the Owner as the large language model (LLM) engine of its business intelligence tool. The service analyzes User support communications and product usage data to derive business insights. This involves profiling, but no decision based solely on automated processing that produces legal effects or similarly significant effects for Users. This service is not integrated into this Application.
+
+### Personal Data processed:
+- Usage Data
+- IP address
+- Trackers
+
+### Service provided by:
+- Groq, LLC (USA) – Privacy Policy
+- Groq UK Limited (UK, Liechtenstein, Norway, Iceland) – Privacy Policy
+- Groq Limited (Saudi Arabia) – Privacy Policy
+
+### Microsoft Azure
+Company: Microsoft Corporation
+Place of processing: USA
+Microsoft Azure is a hosting service provided by Microsoft Corporation.
+
+### Personal Data processed:
+- Various types of Data as specified in the service's privacy policy
+
+### Service provided by:
+- Microsoft Corporation (USA) – Privacy Policy
+
+### Render
+Hosting service for the application's backend server, Frankfurt region (EU).
+
+### Infrastructure monitoring
+This type of service allows this Application to monitor the use and behavior of its components, enabling the improvement of its performance, operation, and maintenance, and helping to troubleshoot bugs. The Personal Data processed depend on the characteristics and mode of implementation of these services, whose function is to filter this Application's activity.
+
+### Sentry
+Company: Functional Software, Inc.
+Place of processing: USA
+Sentry is an application-monitoring service provided by Functional Software, Inc.
+
+### Personal Data processed:
+- Various types of Data as specified in the service's privacy policy
+
+### Service provided by:
+- Functional Software, Inc. (USA) – Privacy Policy
+
+### Traffic optimization and distribution
+This type of service allows this Application to distribute their content using servers located across different countries and to optimize their performance. Which Personal Data are processed depends on the characteristics and the way these services are implemented. Their function is to filter communications between this Application and the User's browser. Considering the widespread distribution of this system, it is difficult to determine the locations to which the content that may contain Personal Data of the User are transferred.
+
+### Cloudflare
+Company: Cloudflare, Inc.
+Place of processing: USA
+Cloudflare is a traffic optimization and distribution service provided by Cloudflare Inc. The way Cloudflare is integrated means that it filters all the traffic through this Application, i.e., communication between this Application and the User's browser, while also allowing analytics data from this Application to be collected.
+
+### Personal Data processed:
+- Various types of Data as specified in the service's privacy policy
+- Trackers
+
+### Service provided by:
+- Cloudflare, Inc. (USA) – Privacy Policy
+
+### Provision of the Service
+
+### Mistral AI
+Artificial intelligence service (Mistral AI, France) used to generate summaries, exams, study cards, and other content from the text of the User's documents. Documents and text provided by the User are not used to train Mistral AI's or any other provider's public Artificial Intelligence models.
+
 ### Payments and subscriptions
 
 ### RevenueCat
@@ -86,10 +165,12 @@ Purchase and subscription management service (RevenueCat, Inc., USA), used to ve
 This type of service allows User Data to be utilized for advertising communication purposes. These communications are displayed in the form of banners and other advertisements on this Application, possibly based on User interests. This does not mean that all Personal Data are used for this purpose. Information and conditions of use are shown below. Some of the services listed below may use Trackers to identify Users or they may use the behavioral retargeting technique, i.e. displaying ads tailored to the User’s interests and behavior, including those detected outside this Application. For more information, please check the privacy policies of the relevant services. Services of this kind usually allow Users to opt out of such tracking. Users may learn how to opt out of interest-based advertising more generally by visiting the relevant opt-out section in this document.
 This type of service allows User Data to be utilized for advertising communication purposes. These communications are displayed in the form of banners and other advertisements on this Application, possibly based on User interests. This does not mean that all Personal Data are used for this purpose. Information and conditions of use are shown below. Some of the services listed below may use Trackers to identify Users or they may use the behavioral retargeting technique, i.e. displaying ads tailored to the User’s interests and behavior, including those detected outside this Application. For more information, please check the privacy policies of the relevant services. Services of this kind usually allow Users to opt out of such tracking. Users may learn how to opt out of interest-based advertising more generally by visiting the relevant opt-out section in this document.
 
+Meta Pixel and TikTok Pixel are not currently active on this Application. If activated in the future, they will only run after the User's prior, explicit consent given through the cookie management banner, and will be automatically disabled if the User indicates being a minor. This Application does not target minors with personalized advertising.
+
 ### Meta Pixel (Facebook Ads)
 Company: this Application
 Personal Data processed: Trackers
-Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Conversion tracking pixel from Meta (Facebook/Instagram Ads), used to measure the effectiveness of advertising campaigns and show personalized ads to those who have already visited the site.
 
 ### Personal Data processed:
 - Trackers
@@ -100,7 +181,7 @@ Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado pa
 ### TikTok Pixel (TikTok Ads)
 Company: this Application
 Personal Data processed: Trackers
-Píxel de seguimiento de conversiones de TikTok Ads, usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Conversion tracking pixel from TikTok Ads, used to measure the effectiveness of advertising campaigns and show personalized ads to those who have already visited the site.
 
 ### Personal Data processed:
 - Trackers
@@ -138,6 +219,9 @@ El archivo original (PDF o foto) que el usuario sube se conserva durante 10 día
 
 ### Conservación de datos – ejercicios resueltos
 En la función "Resolver ejercicio", el enunciado y la solución de cada ejercicio resuelto se guardan automáticamente durante 10 días para que el usuario pueda consultarlo. Pasado ese plazo se borra automáticamente, avisando por email al usuario 3 días antes. El usuario puede descargar el ejercicio a su dispositivo antes de que caduque, y puede desactivar el aviso por email desde la propia aplicación.
+
+### International data transfers
+Some of the providers listed in this document (including Groq, Sentry, Cloudflare, Microsoft Azure and RevenueCat) process data in the United States. Depending on the provider, these transfers rely on the EU-U.S. Data Privacy Framework or on the Standard Contractual Clauses approved by the European Commission, ensuring a level of protection equivalent to that required by the GDPR. Users may request further information on the safeguards applicable to each provider using the contact details provided in this document.
 
 ## Cookie Policy
 This Application uses Trackers. To learn more, Users may consult the Cookie Policy .

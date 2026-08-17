@@ -193,7 +193,7 @@ La modalidad de integración de Cloudflare prevé que filtre todo el tráfico de
 ### Prestación del Servicio
 
 ### Mistral AI
-Servicio de inteligencia artificial (Mistral AI, Francia) usado para generar resumenes, examenes, fichas de estudio y otros contenidos a partir del texto de los documentos del usuario.
+Servicio de inteligencia artificial (Mistral AI, Francia) usado para generar resumenes, examenes, fichas de estudio y otros contenidos a partir del texto de los documentos del usuario. Los documentos y textos facilitados por el usuario no se utilizan para entrenar modelos públicos de Inteligencia Artificial de Mistral AI ni de ningún otro proveedor.
 
 ### Pagos y suscripciones
 
@@ -206,6 +206,7 @@ Servicio de gestión de compras y suscripciones (RevenueCat, Inc., EE.UU.), usad
 - Plataforma de compra
 
 ### Publicidad
+Meta Pixel y TikTok Pixel no están activos actualmente en esta Aplicación. Si en el futuro se activan, su ejecución quedará condicionada al consentimiento explícito y previo del Usuario a través del banner de gestión de cookies, y se desactivarán automáticamente si el Usuario indica ser menor de edad. Esta Aplicación no dirige publicidad personalizada a menores de edad.
 Este tipo de servicio permite que se utilicen los Datos de los Usuarios para fines de comunicación publicitaria. Estas comunicaciones se muestran en forma de banners y otros anuncios en esta Aplicación, posiblemente basados en los intereses de los Usuarios. Esto no significa que todos los Datos Personales sean utilizados para esta finalidad. La información y condiciones de uso se detallan más adelante. Algunos de los servicios enumerados a continuación pueden emplear Rastreadores para identificar a los Usuarios, behavioral retargeting, es decir, mostrar anuncios publicitarios personalizados en base a los intereses y al comportamiento del Usuario, o para medir el rendimiento de los anuncios. Para obtener más información, por favor verifique las políticas de privacidad de los servicios correspondientes. Los servicios de este tipo normalmente permiten a los Usuarios inhabilitar dicho seguimiento. Los Usuarios pueden averiguar cómo inhabilitar la publicidad basada en intereses de forma más general visitando la sección sobre autoexclusión del presente documento.
 Este tipo de servicio permite que se utilicen los Datos de los Usuarios para fines de comunicación publicitaria. Estas comunicaciones se muestran en forma de banners y otros anuncios en esta Aplicación, posiblemente basados en los intereses de los Usuarios. Esto no significa que todos los Datos Personales sean utilizados para esta finalidad. La información y condiciones de uso se detallan más adelante. Algunos de los servicios enumerados a continuación pueden emplear Rastreadores para identificar a los Usuarios, behavioral retargeting, es decir, mostrar anuncios publicitarios personalizados en base a los intereses y al comportamiento del Usuario, o para medir el rendimiento de los anuncios. Para obtener más información, por favor verifique las políticas de privacidad de los servicios correspondientes. Los servicios de este tipo normalmente permiten a los Usuarios inhabilitar dicho seguimiento. Los Usuarios pueden averiguar cómo inhabilitar la publicidad basada en intereses de forma más general visitando la sección sobre autoexclusión del presente documento.
 
@@ -238,6 +239,9 @@ El archivo original (PDF o foto) que el usuario sube se conserva durante 10 día
 
 ### Conservación de datos – ejercicios resueltos
 En la función "Resolver ejercicio", el enunciado y la solución de cada ejercicio resuelto se guardan automáticamente durante 10 días para que el usuario pueda consultarlo. Pasado ese plazo se borra automáticamente, avisando por email al usuario 3 días antes. El usuario puede descargar el ejercicio a su dispositivo antes de que caduque, y puede desactivar el aviso por email desde la propia aplicación.
+
+### Transferencias internacionales de datos
+Algunos de los proveedores enumerados en este documento (entre otros, Groq, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.
 
 ## Política de Cookies
 Esta Aplicación utiliza Rastreadores. Para obtener más información, los Usuarios pueden consultar la Política de Cookies .

@@ -32,7 +32,7 @@ Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guima
 Courriel de contact du Propriétaire : support@mystudyai.eu
 
 ## L’essentiel de ce que les Utilisateurs doivent savoir en un coup d’œil
-- Les mineurs peuvent seulement avoir accès à cette Application et utiliser son Service sous supervision parentale ou d’un adulte.
+- Cette Application n’est pas destinée aux personnes de moins de 16 ans.
 - Veuillez noter que certaines dispositions de ces Conditions générales pourraient ne s’appliquer qu’à certaines catégories d’Utilisateurs. En particulier, certaines des dispositions peuvent s’appliquer uniquement aux Consommateurs ou, au contraire, uniquement aux Utilisateurs qui ne sont pas qualifiés de Consommateurs. De telles limites sont toujours mentionnées expressément dans chaque clause affectée. En l’absence de telle mention, les clauses s’appliquent à tous les Utilisateurs.
 - Le droit de rétractation ne s’applique qu’aux Consommateurs Européens.
 - L’âge pour utiliser cette Application et ce Service est limité, tel que détaillé dans la section correspondante de ce document.
@@ -43,7 +43,6 @@ Des conditions d’utilisation uniques ou additionnelles peuvent s’appliquer �
 En utilisant cette Application, les Utilisateurs s’engagent à respecter les conditions suivantes :
 - Il n’y a pas de restrictions pour les Utilisateurs en termes de leur statut de Consommateur ou d’Utilisateurs Professionnels.
 - Les Utilisateurs doivent avoir au moins 16 ans ;
-- Les Mineurs peuvent seulement utiliser cette Application sous supervision parentale ou d’un adulte.
 - Les Utilisateurs ne sont pas situés dans un pays visé par un embargo du gouvernement États-Unis, ou qui a été désigné de pays « soutenant le terrorisme » par le gouvernement des États-Unis ;
 - Les Utilisateurs ne sont sur aucune liste de parties interdites ou restreintes du gouvernement des États-Unis ;
 - Les Utilisateurs déclarent ne pas être situés dans un territoire sanctionné désigné par une autorité à laquelle le Propriétaire est directement ou indirectement soumis;
@@ -67,6 +66,10 @@ La suspension ou la suppression de comptes due à des causes imputables à l’U
 ### Contenu sur cette Application
 Sauf indication contraire ou clairement identifiable, tout contenu accessible sur cette Application appartient au Propriétaire ou à ses concédants de licence, ou est présenté par ceux-ci.
 Le Propriétaire s’efforce de s’assurer que le contenu présenté sur cette Application n’enfreint aucune disposition légale en vigueur ni aucun droit de tiers. Il n’est cependant pas toujours possible de parvenir à ce résultat. Dans de tels cas, sans préjudice aux prérogatives légales des Utilisateurs pour mettre leurs droits en application, les Utilisateurs sont priés préférablement de signaler toute plainte en se servant des coordonnées fournies dans ce document.
+
+### Contenu généré par l’Intelligence Artificielle
+Cette Application utilise des modèles d’Intelligence Artificielle pour générer automatiquement des résumés, explications, tests et autres supports d’étude. L’Utilisateur reconnaît et accepte que les résultats générés par l’IA sont fournis à titre informatif et de soutien à l’étude uniquement, et peuvent contenir des imprécisions, erreurs ou biais. Le Propriétaire ne garantit pas l’exactitude pédagogique ni la réussite scolaire et recommande de vérifier le contenu généré auprès de sources pédagogiques officielles.
+Les contenus générés par l’IA lors de l’utilisation du Service sont concédés à l’Utilisateur inscrit sous une licence d’usage personnel, non commercial et non exclusif.
 
 ### Droits concernant le contenu sur cette Application
 Le Propriétaire détient et se réserve tous les droits de propriété intellectuelle pour ce contenu.

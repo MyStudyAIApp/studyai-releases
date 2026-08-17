@@ -72,6 +72,121 @@ Personenbezogene Daten über den Nutzer werden erhoben, damit der Anbieter den D
 
 ## Ausführliche Angaben über die Verarbeitung personenbezogener Daten
 
+### Kommunikation
+
+### Resend
+Dienst für den Versand transaktionaler E-Mails (Kontobestätigung, Passwort zurücksetzen, Benachrichtigungen). Versand aus der EU (eu-west-1); Metadaten und Konto-Logs werden in den USA gespeichert.
+
+### Amazon SES (AWS)
+Indirekter Unterauftragsverarbeiter von Resend: Der Versand transaktionaler E-Mails läuft im Hintergrund über Amazon SES (eu-west-1, Irland).
+
+### ImprovMX
+Dienst zur Weiterleitung eingehender E-Mails an die Domain mystudyai.eu (Postfach support@mystudyai.eu).
+
+### Hosting und Backend-Infrastruktur
+Diese Art von Dienst dient dem Hosting von Daten und Dateien, die den Betrieb und die Verbreitung dieser Anwendung ermöglichen, bzw. der Bereitstellung einer Infrastruktur zur Ausführung bestimmter Funktionen oder Teile dieser Anwendung. Einige der unten aufgeführten Dienste können über geografisch verteilte Server betrieben werden, was die genaue Bestimmung des Speicherorts der personenbezogenen Daten erschwert.
+
+### Supabase
+Unternehmen: Supabase, Inc.
+Ort der Verarbeitung: Europa
+Supabase ist ein Hosting- und Backend-Dienst von Supabase, Inc.
+
+### Verarbeitete personenbezogene Daten:
+- Nutzungsdaten
+- verschiedene in der Datenschutzerklärung des Dienstes aufgeführte Datenarten
+- Tracker
+
+### Dienst bereitgestellt von:
+- Supabase, Inc. (Europa) – Datenschutzerklärung
+
+### GroqCloud
+Unternehmen: Groq, LLC u.a.
+Ort der Verarbeitung: USA u.a.
+GroqCloud ist ein KI-Inferenzdienst von Groq, LLC, Groq UK Limited oder Groq Limited, je nachdem, wie der Anbieter die Datenverarbeitung organisiert, und wird intern vom Anbieter als Large-Language-Model(LLM)-Engine seines Business-Intelligence-Tools genutzt. Der Dienst analysiert Support-Kommunikation der Nutzer und Produktnutzungsdaten, um Geschäftserkenntnisse zu gewinnen. Dies beinhaltet eine Profilerstellung, jedoch keine ausschließlich auf automatisierter Verarbeitung beruhende Entscheidung, die rechtliche Wirkung entfaltet oder den Nutzer in ähnlicher Weise erheblich beeinträchtigt. Der Dienst ist nicht in diese Anwendung integriert.
+
+### Verarbeitete personenbezogene Daten:
+- Nutzungsdaten
+- IP-Adresse
+- Tracker
+
+### Dienst bereitgestellt von:
+- Groq, LLC (USA) – Datenschutzerklärung
+- Groq UK Limited (Vereinigtes Königreich, Liechtenstein, Norwegen, Island) – Datenschutzerklärung
+- Groq Limited (Saudi-Arabien) – Datenschutzerklärung
+
+### Microsoft Azure
+Unternehmen: Microsoft Corporation
+Ort der Verarbeitung: USA
+Microsoft Azure ist ein Hosting-Dienst von Microsoft Corporation.
+
+### Verarbeitete personenbezogene Daten:
+- verschiedene in der Datenschutzerklärung des Dienstes aufgeführte Datenarten
+
+### Dienst bereitgestellt von:
+- Microsoft Corporation (USA) – Datenschutzerklärung
+
+### Render
+Hosting-Dienst für den Backend-Server der Anwendung, Region Frankfurt (EU).
+
+### Überwachung der Infrastruktur
+Diese Art von Diensten ermöglicht dieser Anwendung, die Nutzung und das Verhalten ihrer Komponenten zu überwachen, um deren Leistung und Funktionalität zu verbessern, sie zu warten oder Fehler zu beheben. Die verarbeiteten personenbezogenen Daten hängen von den Merkmalen und der Art der Implementierung dieser Dienste ab, die naturgemäß die Aktivität dieser Anwendung filtern.
+
+### Sentry
+Unternehmen: Functional Software, Inc.
+Ort der Verarbeitung: USA
+Sentry ist ein Anwendungsüberwachungsdienst von Functional Software, Inc.
+
+### Verarbeitete personenbezogene Daten:
+- verschiedene in der Datenschutzerklärung des Dienstes aufgeführte Datenarten
+
+### Dienst bereitgestellt von:
+- Functional Software, Inc. (USA) – Datenschutzerklärung
+
+### Optimierung und Verbreitung des Datenverkehrs
+Diese Art von Diensten ermöglicht es dieser Anwendung, ihre Inhalte über Server in verschiedenen Ländern zu verbreiten und ihre Leistung zu optimieren. Die verarbeiteten personenbezogenen Daten hängen von den Merkmalen und der Art der Implementierung dieser Dienste ab, die naturgemäß die Kommunikation zwischen dieser Anwendung und dem Browser des Nutzers filtern. Aufgrund der verteilten Natur dieses Systems ist es schwierig, den genauen Ort zu bestimmen, an den Inhalte übertragen werden, die personenbezogene Daten des Nutzers enthalten können.
+
+### Cloudflare
+Unternehmen: Cloudflare, Inc.
+Ort der Verarbeitung: USA
+Cloudflare ist ein Dienst zur Optimierung und Verbreitung des Datenverkehrs von Cloudflare Inc. Die Art der Integration von Cloudflare sieht vor, dass der gesamte Datenverkehr dieser Anwendung – also die Kommunikation zwischen dieser Anwendung und dem Browser des Nutzers – gefiltert wird, wobei gleichzeitig statistische Daten über diese Anwendung erhoben werden können.
+
+### Verarbeitete personenbezogene Daten:
+- verschiedene in der Datenschutzerklärung des Dienstes aufgeführte Datenarten
+- Tracker
+
+### Dienst bereitgestellt von:
+- Cloudflare, Inc. (USA) – Datenschutzerklärung
+
+### Erbringung des Dienstes
+
+### Mistral AI
+KI-Dienst (Mistral AI, Frankreich), der zur Erstellung von Zusammenfassungen, Prüfungen, Lernkarten und anderen Inhalten aus den vom Nutzer hochgeladenen Dokumenten verwendet wird. Die vom Nutzer bereitgestellten Dokumente und Texte werden nicht zum Training öffentlicher KI-Modelle von Mistral AI oder anderen Anbietern verwendet.
+
+### Zahlungen und Abonnements
+
+### RevenueCat
+Dienst zur Verwaltung von Käufen und Abonnements (RevenueCat, Inc., USA), verwendet zur Überprüfung aktiver Abonnements, zur Verwaltung des Tarifkatalogs und zur Synchronisierung des Abonnementstatus zwischen Plattformen (Web, Android, Desktop).
+
+### Verarbeitete personenbezogene Daten:
+- Nutzerkennung
+- Kauf-/Abonnementverlauf
+- Kaufplattform
+
+### Werbung
+Diese Art von Dienst ermöglicht die Nutzung von Nutzerdaten für Zwecke der Werbekommunikation. Diese Kommunikation erfolgt in Form von Bannern und anderen Werbeanzeigen auf dieser Anwendung, möglicherweise basierend auf den Interessen der Nutzer. Dies bedeutet nicht, dass alle personenbezogenen Daten zu diesem Zweck verwendet werden. Einige der unten aufgeführten Dienste können Tracker verwenden, um Nutzer zu identifizieren oder Behavioral-Retargeting einzusetzen, d. h. auf die Interessen und das Verhalten des Nutzers zugeschnittene Werbung anzuzeigen. Weitere Informationen finden sich in den Datenschutzerklärungen der jeweiligen Dienste. Solche Dienste erlauben den Nutzern in der Regel, dieses Tracking abzulehnen.
+Meta Pixel und TikTok Pixel sind derzeit in dieser Anwendung nicht aktiv. Sollten sie künftig aktiviert werden, laufen sie ausschließlich nach vorheriger, ausdrücklicher Einwilligung des Nutzers über das Cookie-Verwaltungsbanner und werden automatisch deaktiviert, wenn der Nutzer angibt, minderjährig zu sein. Diese Anwendung richtet keine personalisierte Werbung an Minderjährige.
+
+### Meta Pixel (Facebook Ads)
+Verarbeitete personenbezogene Daten: Tracker
+Conversion-Tracking-Pixel von Meta (Facebook/Instagram Ads), verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
+
+### TikTok Pixel (TikTok Ads)
+Verarbeitete personenbezogene Daten: Tracker
+Conversion-Tracking-Pixel von TikTok Ads, verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
+
+### Internationale Datenübermittlungen
+Einige der in diesem Dokument genannten Anbieter (u. a. Groq, Sentry, Cloudflare, Microsoft Azure und RevenueCat) verarbeiten Daten in den USA. Je nach Anbieter stützen sich diese Übermittlungen auf das EU-U.S. Data Privacy Framework oder auf die von der Europäischen Kommission genehmigten Standardvertragsklauseln, die ein der DSGVO gleichwertiges Schutzniveau gewährleisten. Nutzer können über die in diesem Dokument angegebenen Kontaktdaten weitere Informationen zu den für den jeweiligen Anbieter geltenden Garantien anfordern.
+
 ## Informationen zur Ablehnung von interessenbasierter Werbung
 Zusätzlich zu jeder Opt-Out-Funktion, die von den in diesem Dokument aufgelisteten Diensten zur Verfügung gestellt
 wird, können Nutzer im entsprechenden Abschnitt der Cookie-Richtlinie mehr darüber

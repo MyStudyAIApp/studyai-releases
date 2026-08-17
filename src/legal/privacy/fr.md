@@ -72,6 +72,121 @@ Les Données relatives à l’Utilisateur sont collectées afin de permettre au 
 
 ## Informations détaillées sur le traitement des Données personnelles
 
+### Communication
+
+### Resend
+Service d'envoi d'e-mails transactionnels (confirmation de compte, réinitialisation du mot de passe, notifications). Envoi depuis l'UE (eu-west-1), avec métadonnées et journaux de compte hébergés aux États-Unis.
+
+### Amazon SES (AWS)
+Sous-traitant indirect de Resend : l'envoi des e-mails transactionnels transite par Amazon SES (eu-west-1, Irlande) en arrière-plan.
+
+### ImprovMX
+Service de redirection du courrier entrant vers le domaine mystudyai.eu (boîte support@mystudyai.eu).
+
+### Hébergement web et infrastructure de backend
+Ce type de service a pour but d'héberger des Données et fichiers permettant le fonctionnement et la distribution de cette Application, ou de fournir une infrastructure prête à exécuter des fonctions spécifiques ou des parties de cette Application. Certains des services listés ci-après peuvent fonctionner via des serveurs géographiquement répartis, ce qui rend difficile la détermination de l'emplacement exact où sont stockées les Données personnelles.
+
+### Supabase
+Société : Supabase, Inc.
+Lieu de traitement : Europe
+Supabase est un service d'hébergement et de backend fourni par Supabase, Inc.
+
+### Données personnelles traitées :
+- Données d'usage
+- diverses catégories de Données précisées dans la politique de confidentialité du service
+- Traceurs
+
+### Service fourni par :
+- Supabase, Inc. (Europe) – Politique de confidentialité
+
+### GroqCloud
+Société : Groq, LLC et affiliés
+Lieu de traitement : États-Unis et autres
+GroqCloud est un service d'inférence IA fourni par Groq, LLC, Groq UK Limited ou Groq Limited, selon la manière dont le Propriétaire gère le traitement des Données, utilisé en interne par le Propriétaire comme moteur de modèle de langage (LLM) de son outil d'intelligence d'affaires. Le service analyse les communications d'assistance des Utilisateurs et les données d'usage du produit afin d'en tirer des informations commerciales. Cela implique un profilage, mais aucune décision fondée uniquement sur un traitement automatisé produisant des effets juridiques ou affectant significativement les Utilisateurs de manière similaire. Ce service n'est pas intégré à cette Application.
+
+### Données personnelles traitées :
+- Données d'usage
+- Adresse IP
+- Traceurs
+
+### Service fourni par :
+- Groq, LLC (États-Unis) – Politique de confidentialité
+- Groq UK Limited (Royaume-Uni, Liechtenstein, Norvège, Islande) – Politique de confidentialité
+- Groq Limited (Arabie Saoudite) – Politique de confidentialité
+
+### Microsoft Azure
+Société : Microsoft Corporation
+Lieu de traitement : États-Unis
+Microsoft Azure est un service d'hébergement fourni par Microsoft Corporation.
+
+### Données personnelles traitées :
+- diverses catégories de Données précisées dans la politique de confidentialité du service
+
+### Service fourni par :
+- Microsoft Corporation (États-Unis) – Politique de confidentialité
+
+### Render
+Service d'hébergement du serveur backend de l'application, région Francfort (UE).
+
+### Surveillance de l’infrastructure
+Ce type de services permet à cette Application de surveiller l'utilisation et le comportement de ses composants, afin d'en améliorer les performances, la fonctionnalité, la maintenance, et de résoudre les problèmes. Les Données personnelles traitées dépendent des caractéristiques et des modalités de mise en œuvre de ces services, qui par nature filtrent l'activité de cette Application.
+
+### Sentry
+Société : Functional Software, Inc.
+Lieu de traitement : États-Unis
+Sentry est un service de surveillance d'applications fourni par Functional Software, Inc.
+
+### Données personnelles traitées :
+- diverses catégories de Données précisées dans la politique de confidentialité du service
+
+### Service fourni par :
+- Functional Software, Inc. (États-Unis) – Politique de confidentialité
+
+### Optimisation et répartition du trafic
+Ce type de services permet à cette Application de distribuer ses contenus via des serveurs situés dans différents pays et d'optimiser ses performances. Les Données personnelles traitées dépendent des caractéristiques et des modalités de mise en œuvre de ces services, qui par nature filtrent les communications entre cette Application et le navigateur de l'Utilisateur. En raison de la nature distribuée de ce système, il est difficile de déterminer l'emplacement exact vers lequel sont transférés les contenus pouvant contenir des Données personnelles de l'Utilisateur.
+
+### Cloudflare
+Société : Cloudflare, Inc.
+Lieu de traitement : États-Unis
+Cloudflare est un service d'optimisation et de répartition du trafic fourni par Cloudflare Inc. Les modalités d'intégration de Cloudflare prévoient qu'il filtre l'ensemble du trafic de cette Application, c'est-à-dire les communications entre cette Application et le navigateur de l'Utilisateur, tout en permettant la collecte de données statistiques sur cette Application.
+
+### Données personnelles traitées :
+- diverses catégories de Données précisées dans la politique de confidentialité du service
+- Traceurs
+
+### Service fourni par :
+- Cloudflare, Inc. (États-Unis) – Politique de confidentialité
+
+### Fourniture du Service
+
+### Mistral AI
+Service d'intelligence artificielle (Mistral AI, France) utilisé pour générer des résumés, examens, fiches de révision et autres contenus à partir du texte des documents de l'Utilisateur. Les documents et textes fournis par l'Utilisateur ne sont pas utilisés pour entraîner des modèles publics d'Intelligence Artificielle de Mistral AI ni d'aucun autre fournisseur.
+
+### Paiements et abonnements
+
+### RevenueCat
+Service de gestion des achats et abonnements (RevenueCat, Inc., États-Unis), utilisé pour vérifier les abonnements actifs, gérer le catalogue de plans et synchroniser l'état de l'abonnement entre plateformes (Web, Android, bureau).
+
+### Données personnelles traitées :
+- Identifiant utilisateur
+- Historique d'achats/abonnements
+- Plateforme d'achat
+
+### Publicité
+Ce type de service permet l'utilisation des Données des Utilisateurs à des fins de communication publicitaire. Ces communications sont affichées sous forme de bannières et d'autres publicités sur cette Application, éventuellement basées sur les intérêts des Utilisateurs. Cela ne signifie pas que toutes les Données personnelles sont utilisées à cette fin. Certains des services listés ci-dessous peuvent utiliser des Traceurs pour identifier les Utilisateurs ou recourir au retargeting comportemental, c'est-à-dire afficher des publicités adaptées aux intérêts et au comportement de l'Utilisateur. Pour en savoir plus, veuillez consulter les politiques de confidentialité des services concernés. Ces services permettent généralement aux Utilisateurs de refuser ce suivi.
+Meta Pixel et TikTok Pixel ne sont pas actuellement actifs sur cette Application. S'ils sont activés à l'avenir, ils ne fonctionneront qu'après le consentement explicite et préalable de l'Utilisateur via la bannière de gestion des cookies, et seront automatiquement désactivés si l'Utilisateur indique être mineur. Cette Application ne cible pas les mineurs avec de la publicité personnalisée.
+
+### Meta Pixel (Facebook Ads)
+Données personnelles traitées : Traceurs
+Pixel de suivi des conversions de Meta (Facebook/Instagram Ads), utilisé pour mesurer l'efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
+
+### TikTok Pixel (TikTok Ads)
+Données personnelles traitées : Traceurs
+Pixel de suivi des conversions de TikTok Ads, utilisé pour mesurer l'efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
+
+### Transferts internationaux de données
+Certains prestataires mentionnés dans ce document (notamment Groq, Sentry, Cloudflare, Microsoft Azure et RevenueCat) traitent des données aux États-Unis. Selon le prestataire, ces transferts s'appuient sur le Data Privacy Framework UE-États-Unis ou sur les Clauses Contractuelles Types approuvées par la Commission européenne, garantissant un niveau de protection équivalent à celui exigé par le RGPD. Les Utilisateurs peuvent demander davantage d'informations sur les garanties applicables à chaque prestataire via les coordonnées indiquées dans ce document.
+
 ## Information sur le refus de publicité ciblée par centres d’intérêt
 En complément de toute fonctionnalité de désinscription fournie par l’un quelconque des services listés dans le
 présent document, les Utilisateurs peuvent en savoir plus sur les options dont ils disposent

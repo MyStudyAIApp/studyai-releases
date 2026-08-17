@@ -32,7 +32,7 @@ Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guima
 E-Mail-Adresse des Anbieters: support@mystudyai.eu
 
 ## Das Wichtigste auf einen Blick
-- Minderjährige dürfen nur unter Aufsicht der Eltern oder eines Erwachsenen auf diese Anwendung zugreifen und den Service nutzen.
+- Diese Anwendung ist nicht für Personen unter 16 Jahren bestimmt.
 - Es ist zu beachten, dass einzelne Vorschriften dieser AGB nur für bestimmte Nutzerkategorien einschlägig sein könnten, zum Beispiel nur für Verbraucher oder nur für Nutzer, die nicht als Verbraucher handeln. Auf derartige Einschränkungen des Anwendungsbereichs wird in jeder betroffenen Klausel ausdrücklich hingewiesen. Fehlt ein solcher Hinweis, so gilt die Klausel für alle Nutzer.
 - Das Widerrufsrecht steht nur europäischen Verbrauchern zu.
 - Der Zugriff auf diese Anwendung und den Dienst ist altersbeschränkt. Einzelheiten sind dem entsprechenden Abschnitt dieses Dokuments zu entnehmen.
@@ -43,7 +43,6 @@ Einzelne oder zusätzliche Nutzungs- oder Zugriffsbedingungen können unter best
 Durch Nutzen des Dienstes bestätigen Nutzer, die folgenden Bedingungen zu erfüllen:
 - Nutzer können Verbraucher oder Geschäftskunden sein;
 - Nutzer müssen älter als 16 sein;
-- Minderjährige dürfen diese Anwendung nur unter Aufsicht der Eltern oder eines Erwachsenen nutzen.
 - Nutzer befinden sich nicht in einem Land, das einem Embargo der US-Regierung unterliegt oder von der US-Regierung als “Terrorismus unterstützendes Land” eingestuft wurde;
 - Nutzer sind nicht auf einer Liste nicht oder eingeschränkt zugelassener Parteien der US-Regierung aufgeführt;
 - Nutzer erklären, sich nicht in einem von einer zuständigen Behörde sanktionierten Gebiet zu befinden, dem der Anbieter direkt oder indirekt unterliegt;
@@ -65,6 +64,10 @@ Die Sperrung oder Löschung von Konten aus Gründen, die der Nutzer zu vertreten
 ### Über diese Anwendung verfügbare Inhalte
 Sofern nicht anders angegeben oder deutlich erkennbar, sind alle über diese Anwendung verfügbaren Inhalte Eigentum des Anbieters und werden vom Anbieter oder seinen Lizenzgebern bereitgestellt.
 Der Anbieter unternimmt alle Anstrengungen, um auszuschließen, dass die über diese Anwendung bereitgestellten Inhalte gegen geltende Rechtsvorschriften oder Rechte Dritter verstoßen. Es ist jedoch nicht immer möglich, dieses Ergebnis zu erreichen. In solchen Fällen sind Nutzer gebeten, ihre Beschwerde vorzugsweise an die in diesem Dokument angegebenen Kontaktdaten zu richten. Das Recht, etwaige Ansprüche (außer)gerichtlich durchzusetzen, bleibt hiervon unberührt.
+
+### Von Künstlicher Intelligenz erzeugte Inhalte
+Die Anwendung nutzt Modelle der Künstlichen Intelligenz zur automatischen Erstellung von Zusammenfassungen, Erklärungen, Tests und weiterem Lernmaterial. Der Nutzer erkennt an und akzeptiert, dass die von der KI erzeugten Ergebnisse ausschließlich zu Informations- und Lernzwecken bereitgestellt werden und Ungenauigkeiten, Fehler oder Verzerrungen enthalten können. Der Anbieter übernimmt keine Garantie für die pädagogische Richtigkeit oder den akademischen Erfolg und empfiehlt, die erzeugten Inhalte mit offiziellen Lehrquellen abzugleichen.
+Die von der KI im Rahmen der Nutzung des Dienstes erzeugten Materialien werden dem registrierten Nutzer unter einer persönlichen, nicht kommerziellen und nicht ausschließlichen Nutzungslizenz überlassen.
 
 ### Rechte an den über diese Anwendung verfügbaren Inhalten
 Sämtliche Rechte an den Inhalten sind dem Anbieter vorbehalten.
