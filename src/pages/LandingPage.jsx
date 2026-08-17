@@ -349,7 +349,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link to="/terminos" target="_blank" className="hover:text-slate-300">{t('landing.footer.terms')}</Link>
             <Link to="/privacidad" target="_blank" className="hover:text-slate-300">{t('landing.footer.privacy')}</Link>
-            <a href="#" className="iubenda-cs-preferences-link hover:text-slate-300">Preferencias de cookies</a>
+            <Link to="/cookies" target="_blank" className="hover:text-slate-300">Cookies</Link>
             <Link to="/delete-account" className="hover:text-slate-300">{t('landing.footer.deleteAccount')}</Link>
             <a href="mailto:support@mystudyai.eu" className="hover:text-slate-300">support@mystudyai.eu</a>
           </div>

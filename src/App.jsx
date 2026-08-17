@@ -277,6 +277,7 @@ function AppInner() {
         <Route path="/login"        element={<LoginPage />} />
         <Route path="/terminos"     element={<LegalPlaceholderPage docKey="terms" />} />
         <Route path="/privacidad"   element={<LegalPlaceholderPage docKey="privacy" />} />
+        <Route path="/cookies"      element={<LegalPlaceholderPage docKey="cookies" />} />
         <Route path="/delete-account" element={<DeleteAccountInfoPage />} />
         <Route path="/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
         <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>

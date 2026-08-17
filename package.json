@@ -26,6 +26,8 @@
     "@capacitor/local-notifications": "^8.2.0",
     "@capacitor/preferences": "^8.0.1",
     "@dagrejs/dagre": "^3.0.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
     "@tabler/icons-react": "^3.44.0",
     "dompurify": "^3.4.12",
     "electron-updater": "^6.8.9",
@@ -36,6 +38,7 @@
   "devDependencies": {
     "@sentry/react": "^10.56.0",
     "@supabase/supabase-js": "^2.107.0",
+    "@tailwindcss/typography": "^0.5.20",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.0",
     "axios": "^1.6.0",

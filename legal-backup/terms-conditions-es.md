@@ -1,0 +1,468 @@
+- Español
+- Deutsch
+- Français
+- English
+
+## Condiciones de Uso de mystudyai.eu
+Bienvenido a la página de Términos y Condiciones de mystudyai.eu. Este documento le ayudará a entender cómo puede utilizar nuestros servicios y qué puede esperar de nosotros.
+Última revisión:  4 agosto 2026
+Back to overview
+
+## Índice
+- Introducción
+- Lo que el Usuario debería saber de un vistazo
+- CONDICIONES DE USO
+- TÉRMINOS Y CONDICIONES DE VENTA
+- Derechos de los Usuarios
+- Garantías
+- Responsabilidad y exención de responsabilidad
+- Disposiciones comunes
+- Resolución de conflictos
+- Definiciones y referencias legales
+
+## Introducción
+Las presentes Condiciones regulan
+- el uso de esta Aplicación, y,
+- cualquier otro Contrato o relación jurídica conexos celebrados con el Titular
+de forma jurídicamente vinculante. Las palabras en mayúsculas se definen en la sección correspondiente específica del presente documento.
+Los Usuarios deben leer atentamente el presente documento.
+Aunque la relación contractual relativa a estos Productos en su totalidad se establece únicamente entre el Titular y los Usuarios, los Usuarios reconocen y aceptan que, cuando esta Aplicación se les haya facilitado a través de la Apple App Store, Apple podrá exigir el cumplimiento de las presentes Condiciones como tercero beneficiario.
+Esta Aplicación es ofrecida por:
+Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España)
+Correo electrónico de contacto del Titular: support@mystudyai.eu
+
+## Lo que el Usuario debería saber de un vistazo
+- Los menores de edad solo podrán acceder a esta Aplicación y utilizar su Servicio bajo la supervisión de sus padres o de un adulto.
+- Por favor tenga en cuenta que algunas disposiciones de las presentes Condiciones solo son aplicables a determinadas categorías de Usuarios. En particular, ciertas disposiciones solo serán de aplicación a los Consumidores o a aquellos Usuarios que no entren en la categoría de Consumidores. Tales limitaciones se mencionan siempre de forma expresa en cada una de las cláusulas a las que se refieren. En ausencia de una mención de este tipo, las cláusulas serán aplicables a todos los Usuarios.
+- El derecho de desistimiento solo es aplicable a los Consumidores europeos.
+- El uso de esta Aplicación y del Servicio está restringido en función de la edad, según se detalla en la sección correspondiente del presente documento.
+
+## CONDICIONES DE USO
+Salvo que se establezca lo contrario, las condiciones de uso detalladas en esta sección se aplicarán de forma general al uso de esta Aplicación.
+En situaciones concretas pueden aplicarse condiciones de uso o de acceso individuales o adicionales y en tales supuestos se indicarán de forma adicional en el presente documento.
+Al utilizar esta Aplicación, los Usuarios confirman que cumplen los siguientes requisitos:
+- No existen restricciones referidas a los Usuarios en el sentido de que estos sean Consumidores o Usuarios Profesionales;
+- Los Usuarios deberán haber cumplido como mínimo 16 años;
+- Los menores de edad solo podrán utilizar esta Aplicación bajo la supervisión de sus padres o de un adulto.
+- Los Usuarios no deberán estar situados en un país que esté sometido a un embargo decretado por el gobierno de los EE. UU. o que haya sido calificado por el gobierno de los EE. UU. como un país “que apoya el terrorismo»;
+- Los Usuarios no deberán estar incluidos en ninguna lista de partes prohibidas o restringidas elaborada por el gobierno de EE. UU.;
+- Los Usuarios declaran no encontrarse en un territorio sancionado designado por una autoridad a la que el Titular esté directa o indirectamente sujeto;
+
+### Registro de la cuenta
+Para utilizar el Servicio los Usuarios deberán registrar o crear una cuenta de Usuario, facilitando todos los datos o la información exigidos de forma completa y fidedigna. En caso de no hacerlo el Servicio no estará disponible.
+Los Usuarios son responsables de la custodia de sus credenciales de acceso con garantías de confidencialidad y seguridad. Por este motivo, los Usuarios también deberán escoger contraseñas que cumplan los más altos estándares de fortaleza permitidos por esta Aplicación.
+Al registrarse, los Usuarios acuerdan asumir plena responsabilidad por todas las actividades que tengan lugar bajo su nombre de usuario y su contraseña. Los Usuarios deberán informar al Titular de forma inmediata y sin ambigüedades, usando para ello los datos de contacto indicados en el presente documento, en caso de que crean que su información personal, incluyendo, con carácter enunciativo y no limitativo, las cuentas de Usuario, las credenciales de acceso o los datos personales, han sido vulnerados, revelados de forma indebida o robados.
+
+### Cancelación de la cuenta
+Los Usuarios podrán cancelar sus cuentas y dejar de utilizar el Servicio en cualquier momento de la siguiente forma:
+- Contactando directamente con el Titular a través de los datos de contacto facilitados en el presente documento.
+
+### Suspensión y eliminación de la cuenta
+El Titular se reserva el derecho, a su entera discreción, de suspender o eliminar las cuentas de Usuarios en cualquier momento y sin preaviso, si las considera inapropiadas, ofensivas o entiende que incumplen las presentes Condiciones.
+La suspensión o eliminación de cuentas de Usuario no dará derecho a los Usuarios a exigir ninguna compensación, indemnización por daños y perjuicios o reembolso.
+La suspensión o eliminación de cuentas debido a causas imputables al Usuario no eximirá a dicho Usuario de abonar las tarifas o los precios que sean de aplicación.
+
+### Contenido en esta Aplicación
+Salvo que se especifique lo contrario o se pueda reconocer de forma clara, todos los contenidos disponibles en esta Aplicación son propiedad del Titular o son proporcionados por este o sus licenciantes.
+El Titular se compromete a actuar con la máxima diligencia para velar por que los contenidos proporcionados en esta Aplicación no infrinjan ninguna disposición legal ni vulneren los derechos de terceros. Sin embargo, no siempre será posible conseguir dicho objetivo. En tales supuestos, sin perjuicio de las prerrogativas legales de que dispongan los Usuarios para hacer cumplir sus derechos, se ruega a los Usuarios que comuniquen las quejas en este sentido utilizando los datos de contacto facilitados en el presente documento.
+
+### Derechos relativos a los contenidos en esta Aplicación
+El Titular se reserva todos los derechos de propiedad intelectual sobre la totalidad de dichos contenidos.
+Por consiguiente, los Usuarios no podrán utilizar esos contenidos de formas que no sean necesarias o estén implícitas en el uso adecuado del Servicio.
+En particular, pero sin limitaciones, los Usuarios no podrán copiar, descargar, compartir (más allá de los límites establecidos más adelante), modificar, traducir, transformar, publicar, transmitir, vender, sublicenciar, editar, transferir/ceder a terceros o crear obras derivadas de los contenidos disponibles en esta Aplicación, ni permitir a ningún tercero hacerlo a través del Usuario o de su dispositivo, incluso sin el conocimiento del Usuario.
+En los casos en que se establezca de forma expresa en esta Aplicación, el Usuario podrá descargar, copiar y/o compartir cualquier contenido disponible a través de esta Aplicación únicamente para su uso personal y no comercial y siempre y cuando se efectúen correctamente los reconocimientos de derechos de autor y todos los demás reconocimientos solicitados por el Titular.
+Las limitaciones o excepciones de los derechos de autor establecidas por ley no se verán afectadas.
+
+### Contenidos proporcionados por los Usuarios
+El Titular permite a los Usuarios subir, compartir o proporcionar sus propios contenidos a esta Aplicación.
+Al proporcionar contenidos a esta Aplicación, los Usuarios confirman que están legitimados para hacerlo y que no están infringiendo ninguna disposición legal y/o vulnerando los derechos de terceros.
+
+### Derechos relativos a los contenidos proporcionados por los Usuarios
+Los Usuarios reconocen y aceptan que al proporcionar sus contenidos propios en esta Aplicación conceden al Titular una licencia no exclusiva, completamente pagada y libre de cánones para tratar dichos contenidos únicamente para la explotación y el mantenimiento de esta Aplicación, según lo exigido en el contrato.
+En la medida en que lo permitan las leyes aplicables, los Usuarios renuncian a todos los derechos morales en relación con el contenido que proporcionen a esta Aplicación.
+Los Usuarios reconocen, aceptan y confirman que todos los contenidos que proporcionen a través de esta Aplicación serán facilitados de conformidad con las mismas condiciones generales establecidas para los contenidos en esta Aplicación.
+
+### Responsabilidad por los contenidos proporcionados
+Los Usuarios serán los únicos responsables de los contenidos que suban, publiquen, compartan o proporcionen a través de esta Aplicación. Los Usuarios reconocen y aceptan que el Titular no filtra ni modera dichos contenidos .
+Sin embargo, el Titular se reserva el derecho a retirar, eliminar o bloquear dichos contenidos a su total discreción y a denegar, sin previo aviso, el acceso a esta Aplicación por parte del Usuario que los haya subido:
+- Si tiene conocimiento de cualquier (presunta) violación de las presentes Condiciones, de los derechos de terceros o de la ley aplicable, basada en dichos contenidos;
+- Si se recibe una notificación de vulneración de derechos de propiedad intelectual;
+- Si se recibe una notificación de la violación de la privacidad de un tercero, incluida su intimidad;
+- Siguiendo una orden emitida por una autoridad pública; o
+- Cuando se comunique al Titular que los contenidos, mientras sigan siendo accesibles a través de esta Aplicación, pueden suponer un riesgo para los Usuarios, para terceros y/o para la disponibilidad del Servicio.
+La retirada, la eliminación o el bloqueo de los contenidos no darán derecho a los Usuarios que hayan proporcionado dichos contenidos o que sean responsables de ellos a reclamar ninguna compensación, indemnización por daños y perjuicios o reembolso.
+Los Usuarios acuerdan que eximirán al Titular de toda responsabilidad derivada de cualquier reclamación que se formule y/o de los daños y perjuicios que se puedan producir debido a los contenidos que hayan proporcionado a esta Aplicación o a través de esta.
+
+### Acceso a recursos externos
+A través de esta Aplicación los Usuarios podrán acceder a recursos externos proporcionados por terceros. Los Usuarios reconocen y aceptan que el Titular no tiene ningún control sobre dichos recursos y que, por tanto, no es responsable de sus contenidos y disponibilidad.
+Las condiciones aplicables a los recursos proporcionados por terceros, incluidas las aplicables a cualquier posible concesión de derechos sobre el contenido, se derivan de los términos y condiciones de dichos terceros o, a falta de estos, de las leyes aplicables.
+
+### Usos aceptables
+Esta Aplicación y el Servicio solo podrán utilizarse dentro del ámbito para el cual se proporcionan, con arreglo a las presentes Condiciones y a la legislación aplicable.
+Los Usuarios serán los únicos responsables de asegurarse de que su utilización de esta Aplicación y/o del Servicio no infringe ninguna ley o reglamento ni vulnera derechos de terceros.
+Por consiguiente, el Titular se reserva el derecho a adoptar las medidas oportunas para proteger sus intereses legítimos, incluyendo denegar a los Usuarios el acceso a esta Aplicación o al Servicio, resolver contratos, denunciar conductas inadecuadas llevadas a cabo a través de esta Aplicación o del Servicio a las autoridades competentes - tales como las autoridades judiciales o administrativas - siempre que los Usuarios realicen o se sospechen que han realizado cualquiera de las siguientes actividades:
+- Infracciones de las leyes, los reglamentos y/o de las presentes Condiciones;
+- Vulneración de los derechos de terceros;
+- Causar un perjuicio considerable a los intereses legítimos del Titular;
+- Ofender al Titular o a algún tercero.
+
+### Prohibición del abuso y la explotación sexual infantil
+Está totalmente prohibido crear, subir o distribuir contenido que facilite la explotación o el abuso de menores de edad. Estas actividades incluyen cualquier material de abuso sexual infantil, entre otros.
+
+## TÉRMINOS Y CONDICIONES DE VENTA
+
+### Productos pagados
+Algunos de los Productos proporcionados en esta Aplicación, como parte del Servicio, se facilitan a cambio de una contraprestación.
+Las tarifas, la duración y las condiciones aplicables a la compra de dichos Productos se describen más adelante y en las secciones específicas de esta Aplicación.
+
+### Descripción del producto
+Los precios, las descripciones o la disponibilidad de los Productos se detallan en las secciones correspondientes de esta Aplicación y podrán sufrir cambios sin preaviso.
+Aunque los Productos en esta Aplicación se presentan con la máxima fidelidad posible desde un punto de vista técnico, la representación en esta Aplicación a través de cualquier medio (incluyendo, según corresponda, materiales gráficos, imágenes, colores o sonidos) únicamente pretenden servir como referencia y no implican ninguna garantía de las características del Producto adquirido.
+Las características del Producto escogido se describirán durante el proceso de compra.
+
+### Purchasing process
+Any steps taken from choosing a Product to order submission form part of the purchasing process.
+The purchasing process includes these steps:
+- Users must indicate the desired Product by selecting it, including, where possible, quantity and specific characteristics, to make it appear in the purchase selection.
+- Users may review their purchase selection, modify, remove or add items.
+- Users will be required to specify their billing address, contact details and a payment method of their choice.
+- If the purchase results in a product being shipped, Users may need to indicate a shipping address.
+- During the purchasing process, Users may, at any time, modify, correct or change the information provided, or altogether abort the purchasing process with no consequence.
+- After providing all required information, Users must carefully review the order and, subsequently, may proceed to checkout.
+To submit the order, Users must accept these Terms and use the respective button or mechanism on esta Aplicación, hereby committing to pay the agreed-upon price.
+
+### Envío del pedido
+Cuando los Usuarios realizan un pedido, son de aplicación las siguientes cláusulas:
+- La realización de un pedido determina la celebración del contrato y, por tanto, obliga al Usuario a abonar el precio, los impuestos y todas las posibles comisiones y gastos adicionales, según lo indicado en la página de pedido.
+- En caso de que el Producto adquirido exija una acción por parte del Usuario, como aportar información o datos personales, especificaciones o deseos especiales, la realización del pedido obligará al Usuario a cooperar en este sentido.
+- Una vez que se haya realizado el pedido, los Usuarios recibirán un comprobante confirmando la recepción del pedido.
+Todas las notificaciones relativas al proceso de compra descrito se enviarán a la dirección de correo electrónico facilitada por el Usuario a tal fin.
+
+### Precios
+Se informará a los Usuarios, durante el proceso de compra y antes del envío del pedido, de todas las comisiones, tarifas y costes (incluidos, en su caso, los costes de envío) que deban abonarse.
+Los precios en esta Aplicación se muestran:
+- ya sea incluyendo o excluyendo todas las comisiones, tarifas y costes aplicables, dependiendo de la sección que esté consultando el Usuario.
+
+### Métodos de pago
+Se facilitará la información relativa a los métodos de pago aceptados durante el proceso de compra.
+Algunos métodos de pago solo estarán disponibles sujetos a condiciones o comisiones adicionales. En esos casos, la información relativa a estos podrá encontrarse en la sección específica de esta Aplicación.
+Todos los pagos se tramitan de forma independiente a través de servicios de terceros. Por consiguiente, esta Aplicación no recoge ninguna información de pago - como datos de tarjetas de crédito - sino que únicamente recibe una notificación una vez que se ha completado satisfactoriamente el pago. Los Usuarios pueden leer la política de privacidad de esta Aplicación para obtener más información sobre el tratamiento de datos y los derechos de los Usuarios sobre sus datos.
+Si falla el pago a través de los métodos disponibles o bien es denegado por el proveedor de servicios de pago, el Titular no tendrá ninguna obligación de ejecutar el pedido de compra. Si un pago falla o es denegado, el Titular se reserva el derecho a reclamar al Usuario todos los gastos o daños y perjuicios relacionados con este.
+
+### Retención de los derechos de uso
+Los Usuarios no adquirirán ningún derecho a utilizar el Producto adquirido hasta que el Titular haya recibido íntegramente el precio de compra.
+
+### Prestación de los servicios
+El servicio contratado se prestará o se facilitará en el plazo especificado en esta Aplicación o según lo comunicado antes del envío del pedido.
+Los Usuarios reconocen y aceptan que, para acceder al Servicio, deberán emplear dispositivos y/o softwares legales, de uso habitual y actualizados (incluidos los sistemas operativos) que sean compatibles con los estándares de mercado vigentes.
+Los Usuarios reconocen y aceptan que la capacidad para utilizar los Servicios puede verse limitada en el tiempo y el espacio.
+
+### Duración y cancelación
+
+### Suscripciones
+Las suscripciones permiten a los Usuarios recibir un Producto de forma continua o periódica a lo largo del tiempo. Los detalles dependiendo del tipo de suscripción y cancelación se describen a continuación.
+
+### Suscripciones indefinidas
+Las suscripciones de pago comenzarán el día en que el Titular reciba el pago.
+Para mantener las suscripciones, los Usuarios deberán pagar la tarifa periódica exigida dentro del plazo establecido. En caso de no hacerlo se podrán producir interrupciones en el servicio.
+
+### Cancelación por parte del Usuario de suscripciones de duración indefinida
+Las suscripciones indefinidas podrán cancelarse en cualquier momento mediante el envío al Titular de una notificación de cancelación clara e inequívoca utilizando los datos de contacto indicados en el presente documento, o — en su caso — utilizando las opciones correspondientes dentro de esta Aplicación.
+Las cancelaciones se harán efectivas 0 días después de que el Titular reciba la notificación de cancelación.
+
+### Cancelación por parte del Titular de suscripciones de duración indefinida
+El Titular se reserva el derecho a cancelar la suscripción por conveniencia en cualquier momento mediante el envío de una notificación de cancelación al Usuario. La cancelación surtirá efecto al finalizar el periodo de preaviso.
+El periodo de preaviso es de 0 días.
+
+### Cancelación por causa justificada y/o imposibilidad de ejecución
+El Titular se reserva expresamente el derecho a resolver el contrato con efecto inmediato por causa justificada y/o por imposibilidad de ejecución —como, por ejemplo, órdenes de autoridades públicas, infracción de la ley, vulneración de derechos de terceros, insolvencia real o inminente, uso inapropiado de esta Aplicación.
+En particular, el Titular podrá resolver el contrato con efecto inmediato si el Usuario es una persona o entidad sancionada o si se encuentra en un territorio sancionado designado por una autoridad a la que el Titular esté directa o indirectamente sujeto.
+
+### Derechos legales de cancelación
+Los derechos imperativos de cancelación previstos por la legislación aplicable permanecerán inalterados.
+
+### Proporcionar datos personales
+Para acceder a algunos de los Productos proporcionados a través de esta Aplicación como parte del Servicio o recibirlos, se podrá exigir a los Usuarios que proporcionen sus datos personales según se indica en esta Aplicación. Si el Usuario retira el consentimiento para el tratamiento de los datos personales necesarios para la prestación del Servicio, el Titular se reserva el derecho a resolver el contrato con el Usuario.
+
+## Derechos de los Usuarios
+
+### Derecho de desistimiento
+Salvo en caso de que sea aplicable alguna excepción, los Usuarios podrán desistir del contrato en el plazo señalado a continuación (por lo general, 14 días), por cualquier motivo y sin necesidad de justificación. Los Usuarios pueden obtener más información sobre las condiciones de desistimiento en esta sección.
+
+### A quién se aplica el derecho de desistimiento
+Salvo que se indique alguna excepción aplicable a continuación, los Usuarios que sean Consumidores europeos tienen reconocido un derecho legal de desistimiento conforme a la normativa de la UE, que les permite desistir de los contratos celebrados en línea (contratos a distancia) dentro del plazo especificado aplicable a su caso, por cualquier motivo y sin necesidad de justificación.
+Los Usuarios que no reúnan esta condición no podrán beneficiarse de los derechos descritos en este apartado.
+El Consumidor únicamente será responsable de la disminución del valor de los bienes resultante de una manipulación de los mismos distinta de la necesaria para determinar su naturaleza, sus características y su funcionamiento.
+
+### Ejercicio del derecho de desistimiento
+Para ejercer su derecho de desistimiento, los Usuarios deben enviar al Titular una declaración inequívoca de su intención de desistir del contrato.
+A tal fin, los Usuarios podrán utilizar el formulario modelo de desistimiento disponible en la sección "definiciones" de este documento.
+En la medida en que el Titular ofrezca dicha funcionalidad, los Usuarios también podrán cumplimentar y enviar electrónicamente el formulario modelo de desistimiento o cualquier otra declaración inequívoca en esta Aplicación. Si se utiliza esta opción, el Titular comunicará a los Usuarios un acuse de recibo de dicho desistimiento en un soporte duradero (p. ej., por correo electrónico) sin demora.
+Los Usuarios también podrán ejercer el derecho de desistimiento en línea en esta Aplicación. Si se utiliza la función en línea, el Titular enviará un acuse de recibo del desistimiento en un soporte duradero (p. ej., por correo electrónico), incluyendo su contenido y la fecha y hora de su envío, sin demora indebida.
+No obstante, los Usuarios son libres de expresar su intención de desistir del contrato mediante una declaración inequívoca en cualquier otra forma adecuada. A fin de respetar el plazo dentro del cual pueden ejercer dicho derecho, los Usuarios deberán enviar la notificación de desistimiento antes de que expire el período de desistimiento.
+¿Cuándo expira el período de desistimiento?
+- En cuanto a la contratación de un servicio , el plazo de desistimiento expirará 14 días a partir del día en que se celebre el contrato, salvo que el Usuario haya renunciado a su derecho de desistimiento.
+- En caso de la adquisición de contenidos digitales no suministrados en un soporte material , el plazo de desistimiento expirará 14 días a partir del día en que se celebre el contrato, salvo que el Usuario haya renunciado a su derecho de desistimiento.
+
+### Efectos del desistimiento
+El Titular reembolsará a los Usuarios que desistan correctamente de un contrato todos los pagos realizados al Titular, incluyendo, en su caso, los que sirvieran para cubrir los gastos de envío.
+Sin embargo, no se reembolsarán los costes adicionales derivados de la elección de un método de envío concreto distinto de la forma de envío estándar menos costosa ofrecida por el Titular.
+Dicho reembolso se realizará sin demoras indebidas y, en cualquier caso, como máximo 14 días a partir del día en que se informe al Titular de la decisión del Usuario de desistir del contrato.  Salvo que se haya acordado lo contrario con el Usuario, los reembolsos se efectuarán utilizando los mismos medios de pago utilizados para tramitar la transacción inicial. En cualquier caso, el Usuario no incurrirá en ningún coste o tarifa a consecuencia de dicho reembolso.
+
+### …sobre la contratación de servicios
+Cuando un Usuario ejercite el derecho de desistimiento tras haber solicitado que el servicio sea prestado antes de la expiración del plazo de desistimiento, el Usuario deberá abonar al Titular un importe que sea proporcional a la parte del servicio que se haya prestado.
+Dicho pago se calculará sobre la base de la tarifa acordada en el contrato y será proporcional a la parte del servicio que se haya prestado hasta el momento en que el Usuario desista, en comparación con la cobertura completa del contrato.
+
+### UK User rights
+
+### Right to cancel
+Unless exceptions apply, Users who are Consumers in the United Kingdom have a legal right of cancellation under UK law and may be eligible to withdraw from contracts made online (distance contracts) within the period specified below (generally 14 days), for any reason and without justification.
+Users that do not qualify as Consumers, cannot benefit from the rights described in this section. Users can learn more about the cancellation conditions within this section.
+
+### Exercising the right to cancel
+To exercise their right to cancel, Users must send to the Owner an unequivocal statement of their intention to withdraw from the contract. To this end, Users may use the model withdrawal form available from within the “definitions” section of this document. Users are, however, free to express their intention to withdraw from the contract by making an unequivocal statement in any other suitable way. In order to meet the deadline within which they can exercise such right, Users must send the withdrawal notice before the cancellation period expires.
+When does the cancellation period expire?
+- Regarding the purchase of a service , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
+- In case of purchase of a digital content not supplied in a tangible medium , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
+
+### Effects of cancellation
+Users who correctly withdraw from a contract will be reimbursed by the Owner for all payments made to the Owner, including, if any, those covering the costs of delivery.
+However, any additional costs resulting from the choice of a particular delivery method other than the least expensive type of standard delivery offered by the Owner, will not be reimbursed.
+Such reimbursement shall be made without undue delay and, in any event, no later than 14 days from the day on which the Owner is informed of the User’s decision to withdraw from the contract. Unless otherwise agreed with the User, reimbursements will be made using the same means of payment as used to process the initial transaction. In any event, the User shall not incur any costs or fees as a result of such reimbursement.
+Where a User exercises the right to cancel after having requested that the service be performed before the cancellation period expires, the User shall pay to the Owner an amount which is in proportion to the part of service provided.
+Such payment shall be calculated based on the fee contractually agreed upon, and be proportional to the part of service provided until the time the User withdraws, compared with the full coverage of the contract.
+
+### Direitos do Usuário brasileiro
+
+### Direito de arrependimento
+Salvo se for estipulada abaixo uma exceção aplicável, os Usuários Consumidores no Brasil terão o direito legal de arrependimento de acordo com a legislação brasileira. Isto significa que o Consumidor tem o direito de rescindir os contratos online (contratos à distância ou celebrados fora do estabelecimento comercial) por qualquer motivo e sem justificativa, no prazo de 7 (sete) dias a contar da data da celebração do contrato ou do recebimento do produto ou serviço. Usuários que não se qualificam como Consumidores não podem se beneficiar dos direitos estabelecidos nesta seção. O direito de arrependimento poderá ser exercido pelo Consumidor por meio dos canais de contato indicados no início deste documento e de acordo com as orientações desta seção.
+
+### Exercício do direito de arrependimento
+Para exercer o direito de arrependimento, os Usuários devem enviar ao Proprietário uma declaração inequívoca de sua intenção de rescindir o contrato. Para tanto, os Usuários poderão utilizar o modelo de formulário de rescisão disponível na seção “definições” deste documento. No entanto, os usuários são livres para expressar sua vontade de rescindir o contrato através de uma declaração inequívoca por qualquer via adequada. Para respeitar o prazo estabelecido para o exercício de tal direito, os Usuários devem enviar o aviso de arrependimento antes do fim do prazo. Quando termina o prazo de arrependimento?
+- Em relação à aquisição de um serviço , o prazo de arrependimento é de 7 (sete) dias após a data da celebração do contrato, e somente se o serviço ainda não tiver sido prestado.
+- No caso de compra de conteúdo digital , o prazo de arrependimento é de 7 (sete) dias após a data de celebração do contrato, e somente se o conteúdo digital ainda não tiver sido fornecido e integrado ao dispositivo do Consumidor.
+
+### Efeitos do arrependimento
+Os Usuários que rescindirem corretamente um contrato serão reembolsados pelo Proprietário por todos os pagamentos feitos ao Proprietário, incluindo, se houver, aqueles que cobrem os custos de entrega.
+No entanto, não serão reembolsados quaisquer custos adicionais resultantes da escolha de um método de entrega específico que não seja o tipo de entrega padrão mais barato oferecido pelo Proprietário.
+Este reembolso será realizado sem demora injustificada e no prazo máximo de 14 (catorze) dias, a contar do dia em que o Proprietário foi informado da decisão do Usuário de rescindir o contrato ou da devolução efetiva do produto, o que ocorrer por último. Salvo se acordado de outra forma com o Usuário, os reembolsos serão efetuados por meio do mesmo método de pagamento utilizado para processar a transação inicial. O Usuário não incorrerá em quaisquer custos ou taxas em razão de tal reembolso.
+Quando o Usuário exerce o direito de arrependimento após a solicitação da execução do serviço, mesmo antes do fim do período de arrependimento, o Usuário deverá pagar ao Proprietário uma quantia que seja proporcional à parte do serviço prestado.
+Tal pagamento será calculado com base no valor contratualmente acordado, e será proporcional à parte do serviço prestado até o momento em que o Usuário cancelar o serviço.
+
+## Garantías
+
+### Garantía legal de conformidad de los bienes con arreglo al Derecho de la Unión Europea
+Con arreglo al Derecho de la Unión Europea, durante un plazo mínimo de 2 años a partir de la entrega o, en el caso de los Productos Digitales suministrados de forma continuada a lo largo de más de 2 años durante la totalidad el período de suministro, los comerciantes garantizarán la conformidad de los Productos Digitales que proporcionen a los Consumidores.
+Cuando los Usuarios entren en la categoría de Consumidores europeos, la garantía jurídica de conformidad se aplicará a los Productos Digitales disponibles en esta Aplicación con arreglo al Derecho del país de su residencia habitual.
+Es posible que las leyes nacionales de dicho país concedan derechos más amplios a los Usuarios.
+
+### Garantia legal de conformidade de serviços para Consumidores no Brasil
+A garantia legal aplicada aos serviços comercializados por esta Aplicación obedece aos seguintes termos, de acordo com o Código de Defesa do Consumidor:
+- os serviços não duráveis terão garantia de 30 (trinta) dias; e
+- os serviços duráveis terão garantia de 90 (noventa) dias.
+O período de garantia se inicia ao final da prestação dos serviços.
+A garantia não é cabível em casos de uso indevido do serviço, eventos naturais ou se o serviço tiver sido submetido a qualquer assistência técnica diferente da fornecida por esta Aplicación. A garantia pode ser acionada através dos canais de contato fornecidos por esta Aplicación. Caso necessário, o Proprietário arcará com os custos do envio de qualquer produto para avaliação técnica. O Proprietário, a seu critério, também poderá fornecer uma garantia contratual além da garantia legal. As normas aplicáveis às garantias contratuais podem ser encontradas nas especificações fornecidas por esta Aplicación. Se tais informações não forem fornecidas, apenas as disposições legais serão aplicadas.
+
+## Responsabilidad y exención de responsabilidad
+Salvo que se establezca o acuerde con los Usuarios lo contrario de forma expresa, se excluye, limita y/o reduce la responsabilidad del Titular por los daños y perjuicios relativos a la ejecución del Contrato hasta el máximo permitido por la ley aplicable.
+
+### Exención de responsabilidad
+El Usuario acuerda indemnizar y eximir de toda responsabilidad al Titular y a sus filiales, sociedades afiliadas, directivos, administradores, agentes, cotitulares de marcas, socios y empleados frente a cualquier reclamación o demanda - incluyendo, con carácter enunciativo y no limitativo, los honorarios de abogados y las costas - formuladas por cualquier tercero debido a o en relación con una violación negligente de las presentes Condiciones, los derechos de terceros o las disposiciones establecidas por ley relacionadas con el uso del Servicio por parte del Usuario o de sus sociedades afiliadas, directivos, administradores, agentes, cotitulares de marcas, socios y empleados hasta la máxima extensión permitida por la ley aplicable.
+Lo anterior también se aplica a cualquier reclamación presentada por terceros (incluyendo, con carácter enunciativo y no limitativo, los clientes o consumidores del Titular) contra el Titular relativas a Productos Digitales suministrados por el Usuario como, por ejemplo, las reclamaciones relativas a la conformidad.
+
+### Limitación de responsabilidad
+Salvo que se establezca expresamente lo contrario y sin perjuicio de la ley aplicable, el Usuario no podrá reclamar daños y perjuicios contra el Titular (ni contra ninguna persona física o jurídica que actúe en su nombre).
+Lo anterior no será aplicable a los daños que afecten a la vida, la salud o la integridad física, los daños y perjuicios resultantes del incumplimiento de las obligaciones contractuales sustantivas, como cualquier obligación que sea estrictamente necesaria para lograr el objetivo del contrato, y/o a los daños y perjuicios resultantes del dolo o la negligencia grave, siempre y cuando el Usuario haya utilizado esta Aplicación de forma apropiada y correcta.
+Salvo que los daños hayan sido causados mediante dolo o negligencia grave, o que afecten a la vida, la salud o la integridad física, el Titular solo será responsable en la medida de los daños que fueran típicos y previsibles en el momento en el que se celebró el contrato.
+
+### Usuarios australianos
+
+### Limitación de responsabilidad
+Ninguna de las disposiciones de las presentes Condiciones excluye, limita o modifica ninguna de las garantías, condiciones, derechos o recursos de que disponga el Usuario con arreglo a la Competition and Consumer Act 2010 (Ley sobre Competencia y Consumidores de 2010, en lo sucesivo «Cth») o cualquier otra normativa de un estado o territorio y que no pueda excluirse, limitarse o modificarse (derecho no excluible). En la máxima medida de lo permitido por la ley, nuestra responsabilidad ante el Usuario, incluyendo la responsabilidad por la vulneración de un derecho no excluible y la responsabilidad que no se haya excluido de cualquier otra forma en las presentes Condiciones, está limitada, a la exclusiva discreción del Titular, a la repetición de la prestación de los servicios o al pago del coste de que se presten de nuevo los servicios.
+
+### Usuarios de EE.UU.
+
+### Exclusión de garantías
+Esta Aplicación se proporciona estrictamente en el estado y en las condiciones en las que se ofrece y tal como está disponible. La utilización del Servicio será bajo la propia responsabilidad de los Usuarios. En la medida de lo legalmente posible, el Titular excluye expresamente todas las condiciones, declaraciones y garantías — ya sean expresas, implícitas, establecidas por la ley o de cualquier otro tipo, incluyendo, con carácter enunciativo y no limitativo, cualquier garantía implícita de comercialización, idoneidad para un fin determinado o no vulneración de derechos de terceros. Ningún asesoramiento o información, ya sea en forma oral o escrita, obtenidos por el Usuario del Titular o a través del Servicio dará lugar a ninguna garantía que no se haya establecido expresamente en las presentes Condiciones.
+Sin perjuicio de lo anterior, el Titular, sus filiales, sociedades afiliadas, licenciantes, directivos, administradores, agentes, cotitulares de marcas, socios, proveedores y empleados no garantizan que el contenido sea exacto, fiable o correcto; que el Servicio cumpla las exigencias de los Usuarios; que el Servicio esté disponible en un momento o lugar determinados, que no presente interrupciones ni que sea seguro; que todo defecto o error sea corregido; o que el Servicio esté libre de virus o de otros componentes dañinos. Todo contenido descargado o que se haya obtenido de cualquier otro modo mediante el uso del Servicio se descargará bajo la exclusiva responsabilidad de los Usuarios y los Usuarios serán los únicos responsables de cualquier daño que se produzca en los sistemas informáticos o dispositivos móviles de los Usuarios o de la pérdida de datos que resulte de dicha descarga o de la utilización del Servicio por parte de los Usuarios.
+El Titular no garantiza, respalda ni asume responsabilidad alguna respecto de ningún producto o servicio publicitado u ofrecido por un tercero a través del Servicio o de cualquier página web o servicio conectados mediante enlaces, y el Titular no será parte ni supervisará de modo alguno ninguna transacción entre los Usuarios y los terceros proveedores de productos o servicios.
+El Servicio puede resultar inaccesible o puede no funcionar correctamente con el navegador web del Usuario, su dispositivo móvil y/o su sistema operativo. No podrá exigirse responsabilidad alguna al Titular por cualesquiera daños y perjuicios presuntos o reales derivados de los contenidos, el funcionamiento o la utilización del presente Servicio.
+Las leyes federales, de algunos Estados y de otras jurisdicciones no permiten la exclusión y limitación de determinadas garantías implícitas. Es posible que las exclusiones anteriormente mencionadas no sean aplicables a los Usuarios. El presente Contrato otorga derechos legales específicos a los Usuarios y los Usuarios pueden disponer de otros derechos, que variarán de un Estado a otro. Las cláusulas de exención de responsabilidad y exclusiones en virtud del presente Contrato no serán aplicables en la medida en que estén prohibidas por la ley aplicable.
+
+### Limitaciones de responsabilidad
+En la máxima medida de lo permitido por la ley aplicable, en ningún caso serán responsables el Titular o sus filiales, sociedades afiliadas, directivos, administradores, agentes, cotitulares de marcas, socios, proveedores y empleados respecto de:
+- cualesquiera daños y perjuicios de carácter indirecto, punitivo, incidental, especial, emergente o ejemplar, incluyendo, con carácter enunciativo y no limitativo, daños y perjuicios por pérdida de beneficios, fondo de comercio, uso, datos u otras pérdidas intangibles, derivados del uso o incapacidad para usar el Servicio, o relacionados con dicho uso o incapacidad de usarlo; y
+- cualesquiera daños y perjuicios, pérdidas o lesiones resultantes de la piratería informática, la manipulación o cualquier otro acceso o utilización no autorizados del Servicio o de la cuenta de Usuario o de la información contenida en estos;
+- cualesquiera errores, equivocaciones o inexactitudes del contenido;
+- daños personales o materiales de cualquier naturaleza resultantes del acceso al Servicio por parte del Usuario o su utilización;
+- cualquier acceso o utilización no autorizados de los servidores seguros del Titular y/o de cualquier información personal almacenada en ellos;
+- cualquier interrupción o cese en la transmisión al Servicio o desde este;
+- cualesquiera errores de programación, virus, troyanos o elementos similares que puedan transmitirse al Servicio o a través de este;
+- cualesquiera errores u omisiones en cualquier contenido o por cualquier pérdida o daños y perjuicios que se produzcan como resultado de la utilización de cualquier contenido publicado, enviado por correo electrónico, transmitido o puesto a disposición de cualquier otra manera a través del Servicio; y/o
+- la conducta difamatoria, ofensiva o ilegal de cualquier Usuario o tercero.
+En ningún caso serán responsables el Titular o sus filiales, sociedades afiliadas, directivos, administradores, agentes, cotitulares de marcas, socios, proveedores o empleados por cualesquiera demandas, procedimientos, responsabilidades, obligaciones, daños y perjuicios, pérdidas o costes por un importe que exceda de la cantidad abonada por el Usuario al Titular con arreglo a las presentes Condiciones en los 12 meses anteriores, o en el plazo de duración del presente Contrato entre el Titular y el Usuario, siendo relevante el plazo más corto de los dos anteriormente mencionados.
+Esta sección de limitación de responsabilidad será aplicable en la máxima medida de lo permitido por la ley en la jurisdicción correspondiente, con independencia de si la responsabilidad alegada es de carácter contractual, extracontractual, basada en la negligencia, en la responsabilidad objetiva o en cualquier otro supuesto, incluso si se ha advertido al Usuario de la posibilidad de tales daños y perjuicios.
+Algunas jurisdicciones no permiten la exclusión o la limitación de los daños incidentales o emergentes y, por tanto, las limitaciones o exclusiones antes mencionadas podrían no ser aplicables al Usuario. Las presentes Condiciones otorgan al Usuario derechos legales específicos y el Usuario puede disponer también de otros derechos, que variarán dependiendo de la jurisdicción.  Las cláusulas de exención de responsabilidad, exclusiones y limitaciones de responsabilidad en virtud de las presentes Condiciones no serán aplicables en la medida en que estén prohibidas por la ley aplicable.
+
+### Exención de responsabilidad
+El Usuario acuerda defender, eximir y liberar de toda responsabilidad al Titular y a sus filiales, sociedades afiliadas, directivos, administradores, agentes, cotitulares de marcas, socios, proveedores y empleados en relación con cualquier demanda o reclamación, daños y perjuicios, obligaciones, pérdidas, responsabilidades, costes o deudas y gastos, incluyendo, de forma enunciativa y no limitativa, gastos y costas legales, derivados de:
+- la utilización del Servicio por parte del Usuario o su acceso a este, incluyendo cualesquiera datos o contenidos transmitidos o recibidos por el Usuario;
+- el incumplimiento por parte del Usuario de las presentes Condiciones, incluyendo, de forma enunciativa y no limitativa, la vulneración por parte del Usuario de cualquiera de las declaraciones y garantías establecidas en las presentes Condiciones,
+- la vulneración por parte del Usuario de cualesquiera derechos de terceros, incluyendo, de forma enunciativa y no limitativa, cualquier derecho a la privacidad o derechos de propiedad intelectual;
+- la infracción por parte del Usuario de cualquier ley, norma o reglamento;
+- cualesquiera contenidos que sean publicados desde la cuenta del Usuario, incluyendo el acceso de terceros con el nombre único del Usuario, la contraseña u otras medidas de seguridad únicas del Usuario, en su caso, incluyendo, de forma enunciativa y no limitativa, la información engañosa, falsa o inexacta;
+- la conducta dolosa del Usuario; o
+- la infracción de cualquier disposición legal por parte del Usuario o de sus sociedades afiliadas, directivos, administradores, agentes, cotitulares de marcas, socios, proveedores y empleados en la máxima medida de lo permitido por la ley aplicable.
+
+## Disposiciones comunes
+
+### No renuncia
+La falta de ejercicio de cualquier derecho o el hecho de no invocar una disposición en virtud de las presentes Condiciones no constituirán una renuncia a dicho derecho o dicha disposición. No se considerará que ninguna renuncia constituya a su vez una renuncia adicional o continuada a dicho término o a cualquier otro término.
+
+### Interrupción del servicio
+Para garantizar el mejor nivel de servicio posible, el Titular se reserva el derecho a interrumpir el Servicio para labores de mantenimiento, actualizaciones del sistema o cualesquiera otros cambios, informando adecuadamente a los Usuarios.
+Dentro de los límites de la ley, el Titular también podrá decidir suspender o dejar de prestar por completo el Servicio. Si el servicio deja de prestarse, el Titular cooperará con los Usuarios para permitirles retirar datos personales o información y respetará los derechos de los Usuarios relativos al uso continuado/la continuación en el uso del producto y/o la compensación, según establezca la ley aplicable.
+Asimismo, el Servicio podrá no estar disponible debido a motivos fuera del control razonable del Titular, como la «fuerza mayor» (p.ej. averías en las infraestructuras o apagones, etc.).
+
+### Reventa del Servicio
+Los Usuarios no reproducirán, duplicarán, copiarán, venderán, revenderán o explotarán ninguna parte de esta Aplicación y de su Servicio sin la autorización previa, expresa y por escrito del Titular, concedida ya sea directamente o a través de un programa de reventa legítimo.
+
+### Política de privacidad
+Para obtener más información sobre la utilización de sus datos personales, los Usuarios podrán referirse a la política de privacidad de esta Aplicación.
+
+### Derechos de propiedad intelectual
+Sin perjuicio de cualesquiera disposiciones más específicas de las presentes Condiciones, los derechos de propiedad intelectual, tales como los derechos de autor, derechos derivados de marcas registradas, derechos de patentes y derechos de diseños relativos a esta Aplicación son propiedad exclusiva del Titular o de sus licenciantes y están protegidos por las leyes en vigor en materia de marcas y los tratados internacionales relacionados.
+Todas las marcas registradas - sean denominativas o gráficas - y cualesquiera otras marcas, nombres comerciales, marcas de servicio, signos denominativos, ilustraciones, imágenes o logotipos que aparezcan en relación con esta Aplicación son y seguirán siendo propiedad exclusiva del Titular o de sus licenciantes y están protegidos por las leyes en vigor en materia de marcas y los tratados internacionales relacionados.
+
+### Cambios de las presentes Condiciones
+El Titular se reserva el derecho a cambiar o modificar de cualquier otro modo las presentes Condiciones en cualquier momento. En tales casos, el Titular informará adecuadamente a los Usuarios de esos cambios.
+Dichos cambios solo afectarán a la relación con los Usuarios a partir de la fecha comunicada a los Usuarios.
+La continuidad en el uso del Servicio indicará la aceptación por parte de los Usuarios de las Condiciones modificadas. Si los Usuarios no desean quedar vinculados por estos cambios, deberán dejar de usar el Servicio y podrán resolver el Contrato.
+La versión aplicable previa regulará la relación antes de la aceptación del Usuario. Los Usuarios podrán obtener cualquier versión previa del Titular.
+Si lo exige la ley, el Titular notificará por adelantado a los Usuarios la fecha en que se harán efectivas las Condiciones modificadas.
+
+### Cesión del contrato
+El Titular se reserva el derecho a transferir, ceder, disponer mediante novación o subcontratar cualquiera de los derechos o las obligaciones establecidos con arreglo a las presentes Condiciones, teniendo en cuenta los intereses legítimos de los Usuarios.
+Las disposiciones relativas a los cambios de las presentes Condiciones se aplicarán mutatis mutandis.
+Los Usuarios no podrán ceder ni transferir sus derechos u obligaciones con arreglo a las presentes Condiciones en modo alguno, salvo con el permiso por escrito del Titular.
+
+### Contacto
+Todas las comunicaciones relativas a la utilización de esta Aplicación deberán remitirse utilizando los datos de contacto señalados en el presente documento.
+
+### Posibilidad de separar una disposición
+En el caso de que cualquier disposición de las presentes Condiciones fuera declarada o se convirtiera en inválida o inejecutable con arreglo a la ley aplicable, la invalidez o inejecutabilidad de dicha disposición no afectarán a la validez de las disposiciones restantes, que continuarán gozando de plena vigencia y efectividad.
+
+### Usuarios de la Unión Europea
+En el caso de que cualquiera de las disposiciones de las presentes Condiciones fuera nula, inválida o inejecutable, o se declarara como tal, las partes actuarán con la máxima diligencia para acordar de forma amistosa unas disposiciones válidas y ejecutables que sustituyan a las partes nulas, inválidas o inejecutables. En caso de que no se lograra llegar a dicho acuerdo, las disposiciones nulas, inválidas o inejecutables serán sustituidas por las disposiciones aplicables establecidas por la ley, si la normativa aplicable lo permite o establece de este modo. Sin perjuicio de lo anterior, la nulidad, invalidez o la imposibilidad de ejecutar una disposición concreta de las presentes Condiciones no anularán el Contrato en su conjunto, salvo que las disposiciones que sean separadas sean esenciales para el Contrato, o tengan una importancia tal que las partes no hubieran celebrado el contrato si hubieran sabido que esas disposiciones no serían válidas, o bien en supuestos en los que las disposiciones restantes darían lugar a dificultades inaceptables para cualquiera de las partes.
+
+### Usuarios de EE.UU.
+Cualquiera de esas disposiciones inválidas o inejecutables se interpretará y modificará en la medida en que sea razonablemente necesario para hacer que sea válida, ejecutable y coherente con la intención original. Las presentes Condiciones constituyen el Contrato completo entre los Usuarios y el Titular con respecto al objeto del presente documento y sustituyen a cualquier otra comunicación, incluyendo, con carácter enunciativo y no limitativo, todos los contratos anteriores entre las partes referidos al mismo objeto. Las presentes Condiciones se ejecutarán en la máxima medida de lo permitido por la ley.
+
+### Ley aplicable
+Las presentes Condiciones se rigen por las leyes del lugar en el que tenga su sede el Titular, según lo declarado en la sección correspondiente del presente documento, sin tener en cuenta los principios sobre conflictos de leyes.
+
+### Primacía del Derecho nacional
+Sin embargo, sin perjuicio de lo anterior, si el Derecho del país en el que está situado el Usuario establece unos estándares de protección al consumidor aplicables más elevados, prevalecerán dichos estándares más elevados.
+
+### Excepción para los Consumidores situados en Suiza
+Si puede considerarse que el Usuario es un Consumidor situado en Suiza, será de aplicación la ley suiza.
+
+### Exceção para Consumidores no Brasil
+Se o Usuário se qualificar como um Consumidor Brasileiro e o produto e/ou serviço for comercializado no Brasil, será aplicada a legislação brasileira.
+
+### Fuero jurisdiccional
+La competencia exclusiva para resolver cualquier controversia resultante de las presentes Condiciones o relacionada con estas corresponde a los tribunales del lugar en el que se encuentre el domicilio social del Titular, como se indica en la sección correspondiente del presente documento.
+
+### Excepción para Consumidores situados en Europa
+Las disposiciones anteriores no serán aplicables a los Usuarios que entren en la categoría de Consumidores europeos, ni a los Consumidores residentes en el Reino Unido, Suiza, Noruega o Islandia.
+
+### Exceção para Consumidores no Brasil
+O acima não se aplica a Usuários no Brasil que se qualifiquem como Consumidores.
+
+## Resolución de conflictos
+
+### Resolución amistosa de conflictos
+Los Usuarios podrán plantear cualquier conflicto al Titular, que tratará de resolverlo de forma amistosa.
+Aunque el derecho de los Usuarios a emprender acciones legales no se verá afectado en ningún momento, en caso de producirse una controversia relativa a la utilización de esta Aplicación o del Servicio, se ruega a los Usuarios que contacten con el Titular mediante los datos de contacto indicados en el presente documento.
+El Usuario podrá formular su queja incluyendo una breve descripción y, si es relevante, los datos del pedido, la compra o la cuenta a los que se refiere, enviándolos a la dirección de correo electrónico del Titular especificada en el presente documento.
+El Titular tramitará la queja sin demoras indebidas y en el plazo de 2 días desde su recepción.
+
+## Definiciones y referencias legales
+
+### Esta Aplicación (o esta Aplicación)
+La propiedad que permite la prestación del Servicio.
+
+### Contrato
+Cualquier relación jurídica o contractualmente vinculante establecida entre el Titular y el Usuario, regulada por las presentes Condiciones.
+
+### Brasileño/a (o Brasil)
+Es aplicable cuando un Usuario, con independencia de su nacionalidad, está situado en Brasil.
+
+### Usuario profesional
+Cualquier Usuario que no entre en la categoría de Consumidor.
+
+### Producto Digital
+Es un Producto que consiste en:
+- contenidos producidos y suministrados en formato digital; y/o
+- un servicio que permite la creación, tratamiento, almacenamiento o acceso a datos en formato digital o compartir o cualquier otra forma de interacción con los datos digitales subidos o creados por el Usuario o por cualquier otro usuario de esta Aplicación.
+
+### Europeo/a (o Europa)
+Es aplicable cuando un Usuario, con independencia de su nacionalidad, está situado en la UE.
+
+### Formulario modelo de desistimiento
+*A la atención de:
+Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España) support@mystudyai.eu
+Yo/Nosotros comunico/comunicamos mi/nuestra intención de desistir de mi/nuestro contrato de compraventa de los siguientes bienes/para la prestación del siguiente servicio: .
+_____________________________________________ (insertar una descripción de los bienes/servicios a los que se refiere el desistimiento correspondiente)
+- Pedido el: _____________________________________________ (inserte la fecha)
+- Recibido el: _____________________________________________ (inserte la fecha)
+- Nombre del/de los consumidor(es):_____________________________________________
+- Dirección del/de los consumidor(es):_____________________________________________
+- Fecha: _____________________________________________
+(firmar si se comunica este formulario en formato impreso)
+
+### Titular (o Nosotros)
+Designa a la persona física o jurídica que proporciona esta Aplicación y/o el Servicio a los Usuarios.
+
+### Producto
+Un bien o un servicio disponibles a través de esta Aplicación, como por ejemplo bienes tangibles, archivos digitales, software, servicios de reservas, etc., y cualquier otro tipo de productos definidos de forma separada en el presente documento, como los Productos Digitales.
+
+### Servicio
+El servicio prestado por esta Aplicación según lo descrito en las presentes Condiciones y en esta Aplicación.
+
+### Condiciones
+Todas las disposiciones aplicables a la utilización de esta Aplicación y/o del Servicio según lo descrito en el presente documento, incluyendo todos los demás documentos o acuerdos conexos y en sus versiones actualizadas vigentes en cada momento.
+
+### Reino Unido (o RU)
+Es aplicable cuando un Usuario, con independencia de su nacionalidad, está situado en el Reino Unido.
+
+### Usuario
+Las personas físicas o jurídicas que utilicen el Servicio.
+
+### Usuario (o Usted)
+Designa a cualquier persona física o jurídica que utilice esta Aplicación.
+
+### Consumidor
+Un Consumidor es cualquier Usuario que tenga tal consideración con arreglo a la ley aplicable.
+
+## ¿Cómo podemos ayudarle?
+
+### Qué puede hacer
+
+### Sus datos
+- Pedirnos conocer y acceder a la información que tenemos sobre usted
+- Pedirnos que corrijamos información que tenemos sobre usted
+- Ejercitar su derecho al olvido (borrar la información que tenemos sobre usted)
+- Pedirnos portar sus datos a otro servicio
+- Gestione sus preferencias sobre privacidad
+
+### En caso de problemas
+Aunque intentamos crear una experiencia de usuario positiva, entendemos que en ocasiones pueden surgir problemas entre nosotros y nuestros usuarios. Si es así, por favor no dude en contactar con nosotros.
+
+## Footer
+
+### mystudyai.eu
+Correo electrónico de contacto del Titular: support@mystudyai.eu
+Términos y Condiciones by iubenda
+Genera tus Términos y Condiciones con el Generador de Términos y Condiciones
+Este documento se ha creado con el Generador de Términos y Condiciones de iubenda. Véase también el Generador de Políticas de Privacidad y Cookies . iubenda aloja este contenido y únicamente recoge los Datos Personales que sean estrictamente necesarios para prestar este servicio. (EN) This document has been created with the iubenda Terms and Conditions Generator . See also the Privacy and Cookie Policy Generator .
