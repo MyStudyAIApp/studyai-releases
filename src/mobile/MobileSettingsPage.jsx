@@ -36,6 +36,10 @@ export default function MobileSettingsPage() {
   const [purchasing,     setPurchasing]     = useState(false)
   const [purchaseError,  setPurchaseError]  = useState(null)
 
+  const [bonoPrices,    setBonoPrices]    = useState({})
+  const [buyingBono,    setBuyingBono]    = useState(null)
+  const [bonoMessage,   setBonoMessage]   = useState(null)
+
   useEffect(() => {
     getNotifSettings().then(setSettings)
     detectIsFullMobileApp().then(setIsFullApp)
@@ -45,6 +49,27 @@ export default function MobileSettingsPage() {
     if (!isFullApp || planTier === 'pro') return
     Billing.queryProducts().then(p => setProductPrice(p.formattedPrice)).catch(() => {})
   }, [isFullApp, planTier])
+
+  useEffect(() => {
+    if (!isFullApp || planTier !== 'pro') return
+    Billing.queryBonoProducts().then(setBonoPrices).catch(() => {})
+  }, [isFullApp, planTier])
+
+  async function handleBuyBono(category) {
+    setBuyingBono(category)
+    setBonoMessage(null)
+    try {
+      await Billing.purchaseBono({ category, accountId: user.id })
+      // El backend concede el bono via el webhook de RevenueCat (asíncrono,
+      // normalmente segundos) -- no hay nada que verificar de forma síncrona
+      // aquí, la compra ya quedó confirmada por Google/RevenueCat.
+      setBonoMessage({ type: 'ok', text: 'Compra completada — el bono se añadirá en unos segundos.' })
+    } catch (e) {
+      setBonoMessage({ type: 'error', text: e?.message || 'No se pudo completar la compra' })
+    } finally {
+      setBuyingBono(null)
+    }
+  }
 
   async function handleGoPro() {
     setPurchasing(true)
@@ -236,6 +261,41 @@ export default function MobileSettingsPage() {
                 <p className="text-xs text-red-400 mt-2 text-center">{purchaseError}</p>
               )}
             </div>
+          </section>
+        )}
+
+        {/* ── Bonos extra de voz (solo Pro) ── */}
+        {isFullApp && planTier === 'pro' && (
+          <section>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
+              Ampliar cupo de voz
+            </p>
+            <div className="bg-slate-800 rounded-2xl overflow-hidden divide-y divide-slate-700/60">
+              {[
+                { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra' },
+                { category: 'podcast',       emoji: '🎧', label: '10 podcasts extra' },
+              ].map(({ category, emoji, label }) => (
+                <div key={category} className="px-4 py-4 flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-200">{emoji} {label}</p>
+                  </div>
+                  <button
+                    onClick={() => handleBuyBono(category)}
+                    disabled={buyingBono === category}
+                    className="shrink-0 px-4 py-2 rounded-xl text-sm font-semibold bg-primary-600 active:bg-primary-700 text-white disabled:opacity-50 flex items-center gap-2"
+                  >
+                    {buyingBono === category
+                      ? <IconLoader2 size={14} className="animate-spin" />
+                      : bonoPrices[category === 'transcription' ? 'bono_transcripcion_10h' : 'bono_podcast_10']?.formattedPrice || 'Comprar'}
+                  </button>
+                </div>
+              ))}
+            </div>
+            {bonoMessage && (
+              <p className={`text-xs mt-2 text-center ${bonoMessage.type === 'ok' ? 'text-emerald-400' : 'text-red-400'}`}>
+                {bonoMessage.text}
+              </p>
+            )}
           </section>
         )}
 
