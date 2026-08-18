@@ -481,7 +481,7 @@ export default function Home() {
           <div className="card space-y-3">
             {[
               { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
-              { label: 'Voz / visión (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+              { label: 'Voz y análisis de imagen (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
             ].map(({ label, used, max }) => (
               <div key={label}>
                 <div className="flex items-center justify-between text-xs mb-1">
