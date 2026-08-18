@@ -456,7 +456,7 @@ export default function Home() {
       )}
 
       {/* Quick actions */}
-      <section>
+      <section className="mb-8">
         <h3 className="section-title">{t('home.quickActions')}</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
@@ -476,7 +476,7 @@ export default function Home() {
 
       {/* Uso del plan (solo app móvil completa) */}
       {IS_MOBILE && usage && planTier === 'free' && (
-        <section>
+        <section className="mb-8">
           <h3 className="section-title">Uso del plan Free · últimos 30 días</h3>
           <div className="card space-y-3">
             {[
@@ -496,7 +496,7 @@ export default function Home() {
       )}
 
       {IS_MOBILE && usage?.voice_budget && planTier === 'pro' && (
-        <section>
+        <section className="mb-8">
           <h3 className="section-title">Uso de voz este mes</h3>
           <div className="card space-y-3">
             {[
@@ -523,7 +523,7 @@ export default function Home() {
 
       {/* ── Suscripción Pro / bonos (solo app móvil completa) ─────────── */}
       {IS_MOBILE && planTier && planTier !== 'pro' && (
-        <section>
+        <section className="mb-8">
           <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
             <div className="flex items-center gap-2 mb-1">
               <IconCrown size={18} className="text-amber-400" />
@@ -547,7 +547,7 @@ export default function Home() {
       )}
 
       {IS_MOBILE && planTier === 'pro' && (
-        <section>
+        <section className="mb-8">
           <h3 className="section-title">Ampliar cupo de voz</h3>
           <div className="card divide-y divide-slate-800">
             {[
