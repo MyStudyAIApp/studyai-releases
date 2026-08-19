@@ -24,13 +24,15 @@ const SOCIAL_LINKS = [
   { Icon: IconBrandYoutube,   href: 'https://youtube.com/@mystudyai-h6p', label: 'YouTube' },
 ]
 
-const INVITE_ERROR_LABELS = {
-  empty:     'Escribe tu código de invitación.',
-  not_found: 'Ese código de invitación no existe.',
-  inactive:  'Ese código de invitación ya no está activo.',
-  expired:   'Ese código de invitación ha caducado.',
-  exhausted: 'Ese código de invitación ya se ha usado el máximo de veces permitido.',
-}
+// Widget "mystudyai-registro" en Cloudflare Turnstile — protección anti-bot
+// del registro, verificada por Supabase Auth (Attack Protection) con el
+// secret key, nunca en el frontend. Activo en web Y en las apps móviles
+// (Capacitor sirve el WebView desde https://localhost por defecto, un
+// origen real que Turnstile sí puede validar -- "localhost" está añadido
+// como dominio permitido del widget). NO en Electron: ahí el WebView carga
+// vía file://, sin origen https, Turnstile no puede validar ahí.
+const TURNSTILE_SITE_KEY = '0x4AAAAAAEVQhAal_1_-KEtW'
+const USE_TURNSTILE = IS_WEB || IS_MOBILE
 
 export default function LoginPage() {
   const { user, beginPasswordRecovery } = useAuth()
@@ -48,29 +50,54 @@ export default function LoginPage() {
   const [mode, setMode]         = useState('login')   // 'login' | 'register' | 'sent' | 'confirmed'
   const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [name, setName]         = useState('')
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState(null)
   const [resetSent, setResetSent] = useState(false)
-  const [inviteCode, setInviteCode]         = useState('')
-  const [inviteCheck, setInviteCheck]       = useState(null)   // null | 'checking' | 'valid' | reason string
   const [acceptedTerms, setAcceptedTerms]   = useState(false)
-  const inviteCheckSeq = useRef(0)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const turnstileRef = useRef(null)
+  const turnstileWidgetId = useRef(null)
 
-  const checkInviteCode = async (code) => {
-    const trimmed = code.trim()
-    if (!trimmed) { setInviteCheck(null); return }
-    const seq = ++inviteCheckSeq.current
-    setInviteCheck('checking')
-    try {
-      const res = await fetch(`${WEB_API}/invite-codes/check?code=${encodeURIComponent(trimmed)}`)
-      const data = await res.json()
-      if (inviteCheckSeq.current !== seq) return
-      setInviteCheck(data.valid ? 'valid' : (data.reason || 'not_found'))
-    } catch {
-      if (inviteCheckSeq.current === seq) setInviteCheck(null)
+  // Cargar el script de Turnstile una sola vez
+  useEffect(() => {
+    if (!USE_TURNSTILE || window.turnstile || document.getElementById('turnstile-script')) return
+    const script = document.createElement('script')
+    script.id = 'turnstile-script'
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
+    script.async = true
+    document.head.appendChild(script)
+  }, [])
+
+  // Renderizar el widget cuando se entra en modo registro, quitarlo al salir
+  // (los tokens de Turnstile son de un solo uso, hay que resetear tras cada intento)
+  useEffect(() => {
+    if (!USE_TURNSTILE || (mode !== 'register' && mode !== 'login')) return
+    let cancelled = false
+    const tryRender = () => {
+      if (cancelled || !turnstileRef.current) return
+      if (window.turnstile && turnstileWidgetId.current === null) {
+        turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: (token) => setTurnstileToken(token),
+          'expired-callback': () => setTurnstileToken(''),
+          'error-callback': () => setTurnstileToken(''),
+        })
+      } else if (!window.turnstile) {
+        setTimeout(tryRender, 200)
+      }
     }
-  }
+    tryRender()
+    return () => {
+      cancelled = true
+      if (window.turnstile && turnstileWidgetId.current !== null) {
+        window.turnstile.remove(turnstileWidgetId.current)
+        turnstileWidgetId.current = null
+      }
+      setTurnstileToken('')
+    }
+  }, [mode])
 
   // Detectar callbacks de Supabase en el hash de la URL (#access_token=... o #error=...)
   useEffect(() => {
@@ -181,14 +208,23 @@ export default function LoginPage() {
     try {
       if (mode === 'login') {
         // ── Iniciar sesión ────────────────────────────────────────
-        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        if (USE_TURNSTILE && !turnstileToken) {
+          setError('Completa la verificación de seguridad.')
+          setLoading(false)
+          return
+        }
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+          ...(USE_TURNSTILE ? { options: { captchaToken: turnstileToken } } : {})
+        })
         if (error) throw error
         // Si funciona, el AuthContext detecta el cambio y redirige automáticamente
 
       } else {
         // ── Crear cuenta ──────────────────────────────────────────
-        if (inviteCheck && inviteCheck !== 'valid' && inviteCheck !== 'checking') {
-          setError(INVITE_ERROR_LABELS[inviteCheck] || 'Código de invitación no válido.')
+        if (password !== passwordConfirm) {
+          setError('Las contraseñas no coinciden.')
           setLoading(false)
           return
         }
@@ -197,12 +233,18 @@ export default function LoginPage() {
           setLoading(false)
           return
         }
+        if (USE_TURNSTILE && !turnstileToken) {
+          setError('Completa la verificación de seguridad.')
+          setLoading(false)
+          return
+        }
         const { error } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            data: { full_name: name, invite_code: inviteCode.trim() },
-            ...(IS_WEB ? { emailRedirectTo: window.location.origin } : {})
+            data: { full_name: name },
+            ...(IS_WEB ? { emailRedirectTo: window.location.origin } : {}),
+            ...(USE_TURNSTILE ? { captchaToken: turnstileToken } : {})
           }
         })
         if (error) throw error
@@ -223,6 +265,12 @@ export default function LoginPage() {
         setError('Código de invitación no válido, caducado o ya usado.')
       else
         setError(msg || 'Ha ocurrido un error. Inténtalo de nuevo.')
+      // El token de Turnstile es de un solo uso -- si el signUp falló hay que
+      // resetear el widget para que el usuario pueda reintentar
+      if (window.turnstile && turnstileWidgetId.current !== null) {
+        window.turnstile.reset(turnstileWidgetId.current)
+        setTurnstileToken('')
+      }
     } finally {
       setLoading(false)
     }
@@ -332,9 +380,6 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <h1><Logo size="xl" className="justify-center" /></h1>
           <p className="text-slate-400 mt-2">Tu asistente de estudio</p>
-          <span className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full bg-amber-900/30 border border-amber-700/50 text-amber-300 text-xs font-medium">
-            🚧 Beta privada — muy pronto disponible para todos
-          </span>
         </div>
 
         {/* Tabs Login / Registro */}
@@ -379,35 +424,6 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* Código de invitación (solo en registro -- registro cerrado por el momento) */}
-          {mode === 'register' && (
-            <div>
-              <label className="block text-sm text-slate-400 mb-1">Código de invitación</label>
-              <input
-                type="text"
-                value={inviteCode}
-                onChange={e => setInviteCode(e.target.value)}
-                onBlur={e => checkInviteCode(e.target.value)}
-                placeholder="XXXX-XXXX"
-                required
-                className={`w-full bg-slate-700 border rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none transition ${
-                  inviteCheck === 'valid' ? 'border-emerald-600 focus:border-emerald-500'
-                  : (inviteCheck && inviteCheck !== 'checking') ? 'border-red-600 focus:border-red-500'
-                  : 'border-slate-600 focus:border-primary-500'
-                }`}
-              />
-              {inviteCheck === 'checking' && (
-                <p className="text-xs text-slate-500 mt-1">Comprobando…</p>
-              )}
-              {inviteCheck === 'valid' && (
-                <p className="text-xs text-emerald-400 mt-1">✓ Código válido</p>
-              )}
-              {inviteCheck && inviteCheck !== 'valid' && inviteCheck !== 'checking' && (
-                <p className="text-xs text-red-400 mt-1">{INVITE_ERROR_LABELS[inviteCheck] || 'Código no válido.'}</p>
-              )}
-            </div>
-          )}
-
           {/* Email */}
           <div>
             <label className="block text-sm text-slate-400 mb-1">Email</label>
@@ -434,6 +450,28 @@ export default function LoginPage() {
               className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-primary-500 transition"
             />
           </div>
+
+          {/* Repetir contraseña (solo en registro) */}
+          {mode === 'register' && (
+            <div>
+              <label className="block text-sm text-slate-400 mb-1">Repite la contraseña</label>
+              <PasswordInput
+                value={passwordConfirm}
+                onChange={e => setPasswordConfirm(e.target.value)}
+                placeholder="Repite la contraseña"
+                required
+                autoComplete="new-password"
+                className={`w-full bg-slate-700 border rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none transition ${
+                  passwordConfirm && passwordConfirm !== password ? 'border-red-600 focus:border-red-500' : 'border-slate-600 focus:border-primary-500'
+                }`}
+              />
+            </div>
+          )}
+
+          {/* Verificación anti-bot (Cloudflare Turnstile) — login y registro */}
+          {USE_TURNSTILE && (
+            <div ref={turnstileRef} />
+          )}
 
           {/* Error */}
           {error && (
@@ -470,7 +508,7 @@ export default function LoginPage() {
           {/* Botón enviar */}
           <button
             type="submit"
-            disabled={loading || (mode === 'register' && !acceptedTerms)}
+            disabled={loading || (USE_TURNSTILE && !turnstileToken) || (mode === 'register' && (!acceptedTerms || password !== passwordConfirm))}
             className="w-full bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all shadow-lg"
           >
             {loading ? '...' : mode === 'login' ? 'Entrar' : 'Crear cuenta'}
