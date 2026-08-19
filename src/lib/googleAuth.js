@@ -44,10 +44,15 @@ export async function getGoogleOAuthUrl() {
   return data.url
 }
 
-/** Pide el email de restablecimiento desde una app nativa (móvil o escritorio). */
-export async function startNativePasswordRecovery(email) {
+/** Pide el email de restablecimiento desde una app nativa (móvil o escritorio).
+ *  captchaToken es obligatorio allí donde Turnstile esté activo (web y móvil):
+ *  Supabase aplica la protección anti-bot también a este endpoint, no solo al
+ *  login/registro, y sin token responde "captcha protection: request
+ *  disallowed". En Electron no hay widget, así que se omite. */
+export async function startNativePasswordRecovery(email, captchaToken) {
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: NATIVE_OAUTH_REDIRECT,
+    ...(captchaToken ? { captchaToken } : {}),
   })
   if (error) throw error
   localStorage.setItem(RECOVERY_KEY, String(Date.now()))

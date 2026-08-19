@@ -5,7 +5,7 @@
  * Tiene dos modos: "iniciar sesión" y "crear cuenta".
  */
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { supabase, WEB_API } from '../lib/supabase'
 import { IS_WEB, IS_ELECTRON, IS_MOBILE } from '../store/appStore'
@@ -13,6 +13,7 @@ import { App as CapacitorApp } from '@capacitor/app'
 import { Browser } from '@capacitor/browser'
 import { useAuth } from '../contexts/AuthContext'
 import { getGoogleOAuthUrl, completeNativeAuthFromUrl, startNativePasswordRecovery } from '../lib/googleAuth'
+import { useTurnstile } from '../hooks/useTurnstile'
 import Logo from '../components/UI/Logo'
 import PasswordInput from '../components/UI/PasswordInput'
 import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconBrandYoutube } from '@tabler/icons-react'
@@ -23,16 +24,6 @@ const SOCIAL_LINKS = [
   { Icon: IconBrandTiktok,    href: 'https://tiktok.com/@mystudy.ai', label: 'TikTok' },
   { Icon: IconBrandYoutube,   href: 'https://youtube.com/@mystudyai-h6p', label: 'YouTube' },
 ]
-
-// Widget "mystudyai-registro" en Cloudflare Turnstile — protección anti-bot
-// del registro, verificada por Supabase Auth (Attack Protection) con el
-// secret key, nunca en el frontend. Activo en web Y en las apps móviles
-// (Capacitor sirve el WebView desde https://localhost por defecto, un
-// origen real que Turnstile sí puede validar -- "localhost" está añadido
-// como dominio permitido del widget). NO en Electron: ahí el WebView carga
-// vía file://, sin origen https, Turnstile no puede validar ahí.
-const TURNSTILE_SITE_KEY = '0x4AAAAAAEVQhAal_1_-KEtW'
-const USE_TURNSTILE = IS_WEB || IS_MOBILE
 
 export default function LoginPage() {
   const { user, beginPasswordRecovery } = useAuth()
@@ -56,48 +47,8 @@ export default function LoginPage() {
   const [error, setError]       = useState(null)
   const [resetSent, setResetSent] = useState(false)
   const [acceptedTerms, setAcceptedTerms]   = useState(false)
-  const [turnstileToken, setTurnstileToken] = useState('')
-  const turnstileRef = useRef(null)
-  const turnstileWidgetId = useRef(null)
-
-  // Cargar el script de Turnstile una sola vez
-  useEffect(() => {
-    if (!USE_TURNSTILE || window.turnstile || document.getElementById('turnstile-script')) return
-    const script = document.createElement('script')
-    script.id = 'turnstile-script'
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
-    script.async = true
-    document.head.appendChild(script)
-  }, [])
-
-  // Renderizar el widget cuando se entra en modo registro, quitarlo al salir
-  // (los tokens de Turnstile son de un solo uso, hay que resetear tras cada intento)
-  useEffect(() => {
-    if (!USE_TURNSTILE || (mode !== 'register' && mode !== 'login')) return
-    let cancelled = false
-    const tryRender = () => {
-      if (cancelled || !turnstileRef.current) return
-      if (window.turnstile && turnstileWidgetId.current === null) {
-        turnstileWidgetId.current = window.turnstile.render(turnstileRef.current, {
-          sitekey: TURNSTILE_SITE_KEY,
-          callback: (token) => setTurnstileToken(token),
-          'expired-callback': () => setTurnstileToken(''),
-          'error-callback': () => setTurnstileToken(''),
-        })
-      } else if (!window.turnstile) {
-        setTimeout(tryRender, 200)
-      }
-    }
-    tryRender()
-    return () => {
-      cancelled = true
-      if (window.turnstile && turnstileWidgetId.current !== null) {
-        window.turnstile.remove(turnstileWidgetId.current)
-        turnstileWidgetId.current = null
-      }
-      setTurnstileToken('')
-    }
-  }, [mode])
+  // Widget anti-bot compartido con MobileLoginPage (ver src/hooks/useTurnstile.js)
+  const turnstile = useTurnstile(mode === 'login' || mode === 'register')
 
   // Detectar callbacks de Supabase en el hash de la URL (#access_token=... o #error=...)
   useEffect(() => {
@@ -178,11 +129,16 @@ export default function LoginPage() {
 
   const handleForgotPassword = async () => {
     if (!email) { setError('Escribe tu email primero.'); return }
+    if (turnstile.enabled && !turnstile.token) {
+      setError('Completa la verificación de seguridad.')
+      return
+    }
     setLoading(true); setError(null)
     try {
       if (IS_WEB) {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: window.location.origin,
+          ...(turnstile.enabled ? { captchaToken: turnstile.token } : {}),
         })
         if (error) throw error
       } else {
@@ -190,12 +146,13 @@ export default function LoginPage() {
         // PKCE el código solo se canjea donde se guardó el verificador; si abre
         // el navegador, falla en silencio y el usuario acaba en la landing sin
         // poder cambiar nada (ver src/lib/googleAuth.js).
-        await startNativePasswordRecovery(email)
+        await startNativePasswordRecovery(email, turnstile.token)
       }
       setResetSent(true)
     } catch {
       setError('No se pudo enviar el email. Inténtalo de nuevo.')
     } finally {
+      turnstile.reset()   // el token se consume en cada intento, salga bien o mal
       setLoading(false)
     }
   }
@@ -208,7 +165,7 @@ export default function LoginPage() {
     try {
       if (mode === 'login') {
         // ── Iniciar sesión ────────────────────────────────────────
-        if (USE_TURNSTILE && !turnstileToken) {
+        if (turnstile.enabled && !turnstile.token) {
           setError('Completa la verificación de seguridad.')
           setLoading(false)
           return
@@ -216,7 +173,7 @@ export default function LoginPage() {
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
-          ...(USE_TURNSTILE ? { options: { captchaToken: turnstileToken } } : {})
+          ...(turnstile.enabled ? { options: { captchaToken: turnstile.token } } : {})
         })
         if (error) throw error
         // Si funciona, el AuthContext detecta el cambio y redirige automáticamente
@@ -233,7 +190,7 @@ export default function LoginPage() {
           setLoading(false)
           return
         }
-        if (USE_TURNSTILE && !turnstileToken) {
+        if (turnstile.enabled && !turnstile.token) {
           setError('Completa la verificación de seguridad.')
           setLoading(false)
           return
@@ -244,7 +201,7 @@ export default function LoginPage() {
           options: {
             data: { full_name: name },
             ...(IS_WEB ? { emailRedirectTo: window.location.origin } : {}),
-            ...(USE_TURNSTILE ? { captchaToken: turnstileToken } : {})
+            ...(turnstile.enabled ? { captchaToken: turnstile.token } : {})
           }
         })
         if (error) throw error
@@ -265,12 +222,9 @@ export default function LoginPage() {
         setError('Código de invitación no válido, caducado o ya usado.')
       else
         setError(msg || 'Ha ocurrido un error. Inténtalo de nuevo.')
-      // El token de Turnstile es de un solo uso -- si el signUp falló hay que
+      // El token de Turnstile es de un solo uso -- si el intento falló hay que
       // resetear el widget para que el usuario pueda reintentar
-      if (window.turnstile && turnstileWidgetId.current !== null) {
-        window.turnstile.reset(turnstileWidgetId.current)
-        setTurnstileToken('')
-      }
+      turnstile.reset()
     } finally {
       setLoading(false)
     }
@@ -469,8 +423,8 @@ export default function LoginPage() {
           )}
 
           {/* Verificación anti-bot (Cloudflare Turnstile) — login y registro */}
-          {USE_TURNSTILE && (
-            <div ref={turnstileRef} />
+          {turnstile.enabled && (
+            <div ref={turnstile.containerRef} />
           )}
 
           {/* Error */}
@@ -508,7 +462,7 @@ export default function LoginPage() {
           {/* Botón enviar */}
           <button
             type="submit"
-            disabled={loading || (USE_TURNSTILE && !turnstileToken) || (mode === 'register' && (!acceptedTerms || password !== passwordConfirm))}
+            disabled={loading || (turnstile.enabled && !turnstile.token) || (mode === 'register' && (!acceptedTerms || password !== passwordConfirm))}
             className="w-full bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all shadow-lg"
           >
             {loading ? '...' : mode === 'login' ? 'Entrar' : 'Crear cuenta'}

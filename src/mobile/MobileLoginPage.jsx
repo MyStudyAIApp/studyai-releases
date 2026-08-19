@@ -4,6 +4,7 @@ import { Browser } from '@capacitor/browser'
 import { supabase } from '../lib/supabase'
 import { getGoogleOAuthUrl, startNativePasswordRecovery } from '../lib/googleAuth'
 import { useAuth } from '../contexts/AuthContext'
+import { useTurnstile } from '../hooks/useTurnstile'
 import Logo from '../components/UI/Logo'
 import PasswordInput from '../components/UI/PasswordInput'
 
@@ -15,6 +16,7 @@ export default function MobileLoginPage() {
   const [error, setError]       = useState('')
   const [resetSent, setResetSent] = useState(false)
   const navigate                = useNavigate()
+  const turnstile               = useTurnstile()
 
   // El login con Google se completa en segundo plano (deep link, ver
   // MobileApp.jsx) sin pasar por este componente -- aquí solo hace falta
@@ -35,17 +37,22 @@ export default function MobileLoginPage() {
 
   const handleForgotPassword = async () => {
     if (!email) { setError('Escribe tu email primero.'); return }
+    if (turnstile.enabled && !turnstile.token) {
+      setError('Completa la verificación de seguridad.')
+      return
+    }
     setError('')
     setLoading(true)
     try {
       // El enlace del email tiene que volver A LA APP (mystudyai://auth-callback):
       // si abre el navegador del móvil, el canje del código PKCE falla y el
       // usuario acaba en la landing sin poder cambiar la contraseña.
-      await startNativePasswordRecovery(email)
+      await startNativePasswordRecovery(email, turnstile.token)
       setResetSent(true)
     } catch {
       setError('No se pudo enviar el email. Inténtalo de nuevo.')
     } finally {
+      turnstile.reset()   // el token se consume en cada intento, salga bien o mal
       setLoading(false)
     }
   }
@@ -53,15 +60,24 @@ export default function MobileLoginPage() {
   const login = async (e) => {
     e.preventDefault()
     setError('')
+    if (turnstile.enabled && !turnstile.token) {
+      setError('Completa la verificación de seguridad.')
+      return
+    }
     setLoading(true)
     try {
-      const { error: err } = await supabase.auth.signInWithPassword({ email, password })
+      const { error: err } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+        ...(turnstile.enabled ? { options: { captchaToken: turnstile.token } } : {}),
+      })
       if (err) throw err
       navigate('/')
     } catch (err) {
       setError(err.message === 'Invalid login credentials'
         ? 'Email o contraseña incorrectos'
         : err.message)
+      turnstile.reset()   // el token ya se ha consumido, hace falta uno nuevo
     } finally {
       setLoading(false)
     }
@@ -104,6 +120,11 @@ export default function MobileLoginPage() {
                      border border-slate-700 focus:border-primary-500 outline-none text-base"
         />
 
+        {/* Verificación anti-bot (Cloudflare Turnstile) */}
+        {turnstile.enabled && (
+          <div ref={turnstile.containerRef} className="flex justify-center" />
+        )}
+
         {error && (
           <p className="text-red-400 text-sm text-center">{error}</p>
         )}
@@ -116,7 +137,7 @@ export default function MobileLoginPage() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || (turnstile.enabled && !turnstile.token)}
           className="w-full py-4 rounded-xl bg-primary-600 text-white font-bold text-base
                      active:bg-primary-700 disabled:opacity-50 transition-colors"
         >
