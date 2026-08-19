@@ -235,22 +235,22 @@ Such reimbursement shall be made without undue delay and, in any event, no later
 Where a User exercises the right to cancel after having requested that the service be performed before the cancellation period expires, the User shall pay to the Owner an amount which is in proportion to the part of service provided.
 Such payment shall be calculated based on the fee contractually agreed upon, and be proportional to the part of service provided until the time the User withdraws, compared with the full coverage of the contract.
 
-### Direitos do Usuário brasileiro
+### Derechos del Usuario brasileño
 
-### Direito de arrependimento
-Salvo se for estipulada abaixo uma exceção aplicável, os Usuários Consumidores no Brasil terão o direito legal de arrependimento de acordo com a legislação brasileira. Isto significa que o Consumidor tem o direito de rescindir os contratos online (contratos à distância ou celebrados fora do estabelecimento comercial) por qualquer motivo e sem justificativa, no prazo de 7 (sete) dias a contar da data da celebração do contrato ou do recebimento do produto ou serviço. Usuários que não se qualificam como Consumidores não podem se beneficiar dos direitos estabelecidos nesta seção. O direito de arrependimento poderá ser exercido pelo Consumidor por meio dos canais de contato indicados no início deste documento e de acordo com as orientações desta seção.
+### Derecho de arrepentimiento
+Salvo que se estipule a continuación una excepción aplicable, los Usuarios Consumidores en Brasil tendrán el derecho legal de arrepentimiento de acuerdo con la legislación brasileña. Esto significa que el Consumidor tiene el derecho de rescindir los contratos en línea (contratos a distancia o celebrados fuera del establecimiento comercial) por cualquier motivo y sin justificación, en el plazo de 7 (siete) días a contar desde la fecha de celebración del contrato o de recepción del producto o servicio. Los Usuarios que no se cualifiquen como Consumidores no podrán beneficiarse de los derechos establecidos en esta sección. El derecho de arrepentimiento podrá ser ejercido por el Consumidor a través de los canales de contacto indicados al inicio de este documento y de acuerdo con las indicaciones de esta sección.
 
-### Exercício do direito de arrependimento
-Para exercer o direito de arrependimento, os Usuários devem enviar ao Proprietário uma declaração inequívoca de sua intenção de rescindir o contrato. Para tanto, os Usuários poderão utilizar o modelo de formulário de rescisão disponível na seção “definições” deste documento. No entanto, os usuários são livres para expressar sua vontade de rescindir o contrato através de uma declaração inequívoca por qualquer via adequada. Para respeitar o prazo estabelecido para o exercício de tal direito, os Usuários devem enviar o aviso de arrependimento antes do fim do prazo. Quando termina o prazo de arrependimento?
-- Em relação à aquisição de um serviço , o prazo de arrependimento é de 7 (sete) dias após a data da celebração do contrato, e somente se o serviço ainda não tiver sido prestado.
-- No caso de compra de conteúdo digital , o prazo de arrependimento é de 7 (sete) dias após a data de celebração do contrato, e somente se o conteúdo digital ainda não tiver sido fornecido e integrado ao dispositivo do Consumidor.
+### Ejercicio del derecho de arrepentimiento
+Para ejercer el derecho de arrepentimiento, los Usuarios deben enviar al Titular una declaración inequívoca de su intención de rescindir el contrato. Para ello, los Usuarios podrán utilizar el modelo de formulario de rescisión disponible en la sección "definiciones" de este documento. No obstante, los Usuarios son libres de expresar su voluntad de rescindir el contrato mediante una declaración inequívoca por cualquier vía adecuada. Para respetar el plazo establecido para el ejercicio de dicho derecho, los Usuarios deben enviar el aviso de arrepentimiento antes de que finalice el plazo. ¿Cuándo termina el plazo de arrepentimiento?
+- En relación con la adquisición de un servicio, el plazo de arrepentimiento es de 7 (siete) días después de la fecha de celebración del contrato, y solo si el servicio aún no ha sido prestado.
+- En el caso de compra de contenido digital, el plazo de arrepentimiento es de 7 (siete) días después de la fecha de celebración del contrato, y solo si el contenido digital aún no ha sido suministrado ni integrado al dispositivo del Consumidor.
 
-### Efeitos do arrependimento
-Os Usuários que rescindirem corretamente um contrato serão reembolsados pelo Proprietário por todos os pagamentos feitos ao Proprietário, incluindo, se houver, aqueles que cobrem os custos de entrega.
-No entanto, não serão reembolsados quaisquer custos adicionais resultantes da escolha de um método de entrega específico que não seja o tipo de entrega padrão mais barato oferecido pelo Proprietário.
-Este reembolso será realizado sem demora injustificada e no prazo máximo de 14 (catorze) dias, a contar do dia em que o Proprietário foi informado da decisão do Usuário de rescindir o contrato ou da devolução efetiva do produto, o que ocorrer por último. Salvo se acordado de outra forma com o Usuário, os reembolsos serão efetuados por meio do mesmo método de pagamento utilizado para processar a transação inicial. O Usuário não incorrerá em quaisquer custos ou taxas em razão de tal reembolso.
-Quando o Usuário exerce o direito de arrependimento após a solicitação da execução do serviço, mesmo antes do fim do período de arrependimento, o Usuário deverá pagar ao Proprietário uma quantia que seja proporcional à parte do serviço prestado.
-Tal pagamento será calculado com base no valor contratualmente acordado, e será proporcional à parte do serviço prestado até o momento em que o Usuário cancelar o serviço.
+### Efectos del arrepentimiento
+Los Usuarios que rescindan correctamente un contrato serán reembolsados por el Titular por todos los pagos realizados al Titular, incluyendo, en su caso, los que cubran los costes de envío.
+No obstante, no se reembolsarán los costes adicionales derivados de la elección de un método de envío específico distinto del tipo de envío estándar más económico ofrecido por el Titular.
+Este reembolso se realizará sin demora injustificada y en un plazo máximo de 14 (catorce) días, a contar desde el día en que el Titular fue informado de la decisión del Usuario de rescindir el contrato o desde la devolución efectiva del producto, lo que ocurra en último lugar. Salvo que se acuerde de otro modo con el Usuario, los reembolsos se efectuarán mediante el mismo método de pago utilizado para procesar la transacción inicial. El Usuario no incurrirá en ningún coste o tarifa a causa de dicho reembolso.
+Cuando el Usuario ejerza el derecho de arrepentimiento tras haber solicitado la ejecución del servicio, incluso antes de que finalice el período de arrepentimiento, el Usuario deberá pagar al Titular una cantidad proporcional a la parte del servicio prestado.
+Dicho pago se calculará sobre la base del importe acordado contractualmente, y será proporcional a la parte del servicio prestado hasta el momento en que el Usuario cancele el servicio.
 
 ## Garantías
 
@@ -259,12 +259,12 @@ Con arreglo al Derecho de la Unión Europea, durante un plazo mínimo de 2 años
 Cuando los Usuarios entren en la categoría de Consumidores europeos, la garantía jurídica de conformidad se aplicará a los Productos Digitales disponibles en esta Aplicación con arreglo al Derecho del país de su residencia habitual.
 Es posible que las leyes nacionales de dicho país concedan derechos más amplios a los Usuarios.
 
-### Garantia legal de conformidade de serviços para Consumidores no Brasil
-A garantia legal aplicada aos serviços comercializados por esta Aplicación obedece aos seguintes termos, de acordo com o Código de Defesa do Consumidor:
-- os serviços não duráveis terão garantia de 30 (trinta) dias; e
-- os serviços duráveis terão garantia de 90 (noventa) dias.
-O período de garantia se inicia ao final da prestação dos serviços.
-A garantia não é cabível em casos de uso indevido do serviço, eventos naturais ou se o serviço tiver sido submetido a qualquer assistência técnica diferente da fornecida por esta Aplicación. A garantia pode ser acionada através dos canais de contato fornecidos por esta Aplicación. Caso necessário, o Proprietário arcará com os custos do envio de qualquer produto para avaliação técnica. O Proprietário, a seu critério, também poderá fornecer uma garantia contratual além da garantia legal. As normas aplicáveis às garantias contratuais podem ser encontradas nas especificações fornecidas por esta Aplicación. Se tais informações não forem fornecidas, apenas as disposições legais serão aplicadas.
+### Garantía legal de conformidad de servicios para Consumidores en Brasil
+La garantía legal aplicada a los servicios comercializados por esta Aplicación se rige por los siguientes términos, de acuerdo con el Código de Defensa del Consumidor:
+- los servicios no duraderos tendrán una garantía de 30 (treinta) días; y
+- los servicios duraderos tendrán una garantía de 90 (noventa) días.
+El período de garantía se inicia al finalizar la prestación de los servicios.
+La garantía no será aplicable en casos de uso indebido del servicio, eventos naturales o si el servicio ha sido sometido a cualquier asistencia técnica distinta de la proporcionada por esta Aplicación. La garantía puede ejercerse a través de los canales de contacto facilitados por esta Aplicación. En caso necesario, el Titular correrá con los costes de envío de cualquier producto para su evaluación técnica. El Titular, a su discreción, también podrá ofrecer una garantía contractual adicional a la garantía legal. Las normas aplicables a las garantías contractuales pueden encontrarse en las especificaciones proporcionadas por esta Aplicación. Si dicha información no se proporciona, solo se aplicarán las disposiciones legales.
 
 ## Responsabilidad y exención de responsabilidad
 Salvo que se establezca o acuerde con los Usuarios lo contrario de forma expresa, se excluye, limita y/o reduce la responsabilidad del Titular por los daños y perjuicios relativos a la ejecución del Contrato hasta el máximo permitido por la ley aplicable.
@@ -370,8 +370,8 @@ Sin embargo, sin perjuicio de lo anterior, si el Derecho del país en el que est
 ### Excepción para los Consumidores situados en Suiza
 Si puede considerarse que el Usuario es un Consumidor situado en Suiza, será de aplicación la ley suiza.
 
-### Exceção para Consumidores no Brasil
-Se o Usuário se qualificar como um Consumidor Brasileiro e o produto e/ou serviço for comercializado no Brasil, será aplicada a legislação brasileira.
+### Excepción para Consumidores en Brasil
+Si el Usuario se cualifica como Consumidor brasileño y el producto y/o servicio se comercializa en Brasil, se aplicará la legislación brasileña.
 
 ### Fuero jurisdiccional
 La competencia exclusiva para resolver cualquier controversia resultante de las presentes Condiciones o relacionada con estas corresponde a los tribunales del lugar en el que se encuentre el domicilio social del Titular, como se indica en la sección correspondiente del presente documento.
@@ -379,8 +379,8 @@ La competencia exclusiva para resolver cualquier controversia resultante de las 
 ### Excepción para Consumidores situados en Europa
 Las disposiciones anteriores no serán aplicables a los Usuarios que entren en la categoría de Consumidores europeos, ni a los Consumidores residentes en el Reino Unido, Suiza, Noruega o Islandia.
 
-### Exceção para Consumidores no Brasil
-O acima não se aplica a Usuários no Brasil que se qualifiquem como Consumidores.
+### Excepción para Consumidores en Brasil
+Lo anterior no será aplicable a los Usuarios en Brasil que se cualifiquen como Consumidores.
 
 ## Resolución de conflictos
 

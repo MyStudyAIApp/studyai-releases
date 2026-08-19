@@ -233,22 +233,22 @@ Such reimbursement shall be made without undue delay and, in any event, no later
 Where a User exercises the right to cancel after having requested that the service be performed before the cancellation period expires, the User shall pay to the Owner an amount which is in proportion to the part of service provided.
 Such payment shall be calculated based on the fee contractually agreed upon, and be proportional to the part of service provided until the time the User withdraws, compared with the full coverage of the contract.
 
-### Direitos do Usuário brasileiro
+### Rechte des brasilianischen Nutzers
 
-### Direito de arrependimento
-Salvo se for estipulada abaixo uma exceção aplicável, os Usuários Consumidores no Brasil terão o direito legal de arrependimento de acordo com a legislação brasileira. Isto significa que o Consumidor tem o direito de rescindir os contratos online (contratos à distância ou celebrados fora do estabelecimento comercial) por qualquer motivo e sem justificativa, no prazo de 7 (sete) dias a contar da data da celebração do contrato ou do recebimento do produto ou serviço. Usuários que não se qualificam como Consumidores não podem se beneficiar dos direitos estabelecidos nesta seção. O direito de arrependimento poderá ser exercido pelo Consumidor por meio dos canais de contato indicados no início deste documento e de acordo com as orientações desta seção.
+### Widerrufsrecht
+Sofern nachstehend keine anwendbare Ausnahme vorgesehen ist, haben Nutzer, die als Verbraucher in Brasilien einzustufen sind, gemäß brasilianischem Recht ein gesetzliches Widerrufsrecht. Das bedeutet, dass der Verbraucher das Recht hat, online geschlossene Verträge (Fernabsatzverträge oder außerhalb von Geschäftsräumen geschlossene Verträge) aus beliebigem Grund und ohne Begründung innerhalb von 7 (sieben) Tagen nach Vertragsschluss oder Erhalt des Produkts bzw. der Dienstleistung zu widerrufen. Nutzer, die nicht als Verbraucher einzustufen sind, können die in diesem Abschnitt genannten Rechte nicht in Anspruch nehmen. Das Widerrufsrecht kann vom Verbraucher über die zu Beginn dieses Dokuments angegebenen Kontaktdaten und gemäß den Angaben in diesem Abschnitt ausgeübt werden.
 
-### Exercício do direito de arrependimento
-Para exercer o direito de arrependimento, os Usuários devem enviar ao Proprietário uma declaração inequívoca de sua intenção de rescindir o contrato. Para tanto, os Usuários poderão utilizar o modelo de formulário de rescisão disponível na seção “definições” deste documento. No entanto, os usuários são livres para expressar sua vontade de rescindir o contrato através de uma declaração inequívoca por qualquer via adequada. Para respeitar o prazo estabelecido para o exercício de tal direito, os Usuários devem enviar o aviso de arrependimento antes do fim do prazo. Quando termina o prazo de arrependimento?
-- Em relação à aquisição de um serviço , o prazo de arrependimento é de 7 (sete) dias após a data da celebração do contrato, e somente se o serviço ainda não tiver sido prestado.
-- No caso de compra de conteúdo digital , o prazo de arrependimento é de 7 (sete) dias após a data de celebração do contrato, e somente se o conteúdo digital ainda não tiver sido fornecido e integrado ao dispositivo do Consumidor.
+### Ausübung des Widerrufsrechts
+Um das Widerrufsrecht auszuüben, müssen Nutzer dem Anbieter eine eindeutige Erklärung ihrer Absicht übermitteln, den Vertrag zu widerrufen. Hierzu können Nutzer das im Abschnitt „Begriffsbestimmungen“ dieses Dokuments verfügbare Musterwiderrufsformular verwenden. Nutzer können ihre Absicht, den Vertrag zu widerrufen, jedoch auch durch eine eindeutige Erklärung in beliebiger anderer geeigneter Form zum Ausdruck bringen. Um die Frist zur Ausübung dieses Rechts einzuhalten, müssen Nutzer die Widerrufserklärung vor Ablauf der Frist absenden. Wann endet die Widerrufsfrist?
+- Beim Erwerb einer Dienstleistung endet die Widerrufsfrist 7 (sieben) Tage nach Vertragsschluss, sofern die Dienstleistung noch nicht erbracht wurde.
+- Beim Erwerb digitaler Inhalte endet die Widerrufsfrist 7 (sieben) Tage nach Vertragsschluss, sofern die digitalen Inhalte noch nicht bereitgestellt und auf dem Gerät des Verbrauchers integriert wurden.
 
-### Efeitos do arrependimento
-Os Usuários que rescindirem corretamente um contrato serão reembolsados pelo Proprietário por todos os pagamentos feitos ao Proprietário, incluindo, se houver, aqueles que cobrem os custos de entrega.
-No entanto, não serão reembolsados quaisquer custos adicionais resultantes da escolha de um método de entrega específico que não seja o tipo de entrega padrão mais barato oferecido pelo Proprietário.
-Este reembolso será realizado sem demora injustificada e no prazo máximo de 14 (catorze) dias, a contar do dia em que o Proprietário foi informado da decisão do Usuário de rescindir o contrato ou da devolução efetiva do produto, o que ocorrer por último. Salvo se acordado de outra forma com o Usuário, os reembolsos serão efetuados por meio do mesmo método de pagamento utilizado para processar a transação inicial. O Usuário não incorrerá em quaisquer custos ou taxas em razão de tal reembolso.
-Quando o Usuário exerce o direito de arrependimento após a solicitação da execução do serviço, mesmo antes do fim do período de arrependimento, o Usuário deverá pagar ao Proprietário uma quantia que seja proporcional à parte do serviço prestado.
-Tal pagamento será calculado com base no valor contratualmente acordado, e será proporcional à parte do serviço prestado até o momento em que o Usuário cancelar o serviço.
+### Folgen des Widerrufs
+Nutzer, die einen Vertrag ordnungsgemäß widerrufen, erhalten vom Anbieter alle an den Anbieter geleisteten Zahlungen zurück, einschließlich etwaiger Lieferkosten.
+Zusätzliche Kosten, die sich aus der Wahl einer anderen als der vom Anbieter angebotenen günstigsten Standardlieferung ergeben, werden jedoch nicht erstattet.
+Diese Rückerstattung erfolgt ohne unangemessene Verzögerung und in jedem Fall spätestens 14 (vierzehn) Tage, nachdem der Anbieter über die Entscheidung des Nutzers zum Widerruf des Vertrags informiert wurde oder das Produkt tatsächlich zurückgesandt wurde, je nachdem, welches Ereignis später eintritt. Sofern mit dem Nutzer nichts anderes vereinbart wurde, erfolgt die Rückerstattung über dasselbe Zahlungsmittel, das für die ursprüngliche Transaktion verwendet wurde. Dem Nutzer entstehen durch diese Rückerstattung in keinem Fall Kosten oder Gebühren.
+Übt der Nutzer das Widerrufsrecht aus, nachdem er die Erbringung der Dienstleistung angefordert hat, und zwar noch vor Ablauf der Widerrufsfrist, hat der Nutzer dem Anbieter einen Betrag zu zahlen, der dem bereits erbrachten Teil der Dienstleistung entspricht.
+Diese Zahlung wird auf Grundlage des vertraglich vereinbarten Betrags berechnet und ist proportional zu dem Teil der Dienstleistung, der bis zu dem Zeitpunkt erbracht wurde, an dem der Nutzer den Dienst kündigt.
 
 ## Garantien
 
@@ -257,12 +257,12 @@ Nach EU-Recht gewährleisten Gewerbetreibende während eines Zeitraums von minde
 Wenn Nutzer als europäische Verbraucher gelten, gilt die gesetzliche Gewährleistung der Konformität für die auf diese Anwendung verfügbaren digitalen Produkte in Übereinstimmung mit den Gesetzen des Landes, in dem sie ihren gewöhnlichen Aufenthalt haben.
 Die nationalen Gesetze eines solchen Landes können den Nutzern weitergehende Rechte einräumen.
 
-### Garantia legal de conformidade de serviços para Consumidores no Brasil
-A garantia legal aplicada aos serviços comercializados por diese Anwendung obedece aos seguintes termos, de acordo com o Código de Defesa do Consumidor:
-- os serviços não duráveis terão garantia de 30 (trinta) dias; e
-- os serviços duráveis terão garantia de 90 (noventa) dias.
-O período de garantia se inicia ao final da prestação dos serviços.
-A garantia não é cabível em casos de uso indevido do serviço, eventos naturais ou se o serviço tiver sido submetido a qualquer assistência técnica diferente da fornecida por diese Anwendung. A garantia pode ser acionada através dos canais de contato fornecidos por diese Anwendung. Caso necessário, o Proprietário arcará com os custos do envio de qualquer produto para avaliação técnica. O Proprietário, a seu critério, também poderá fornecer uma garantia contratual além da garantia legal. As normas aplicáveis às garantias contratuais podem ser encontradas nas especificações fornecidas por diese Anwendung. Se tais informações não forem fornecidas, apenas as disposições legais serão aplicadas.
+### Gesetzliche Gewährleistung der Konformität von Dienstleistungen für Verbraucher in Brasilien
+Die gesetzliche Gewährleistung für die von dieser Anwendung angebotenen Dienstleistungen richtet sich nach folgenden Bestimmungen, gemäß dem brasilianischen Verbraucherschutzgesetz (Código de Defesa do Consumidor):
+- nicht dauerhafte Dienstleistungen unterliegen einer Gewährleistung von 30 (dreißig) Tagen; und
+- dauerhafte Dienstleistungen unterliegen einer Gewährleistung von 90 (neunzig) Tagen.
+Die Gewährleistungsfrist beginnt mit dem Ende der Erbringung der Dienstleistung.
+Die Gewährleistung gilt nicht bei unsachgemäßer Nutzung der Dienstleistung, bei Naturereignissen oder wenn die Dienstleistung einer anderen technischen Unterstützung als der von dieser Anwendung bereitgestellten unterzogen wurde. Die Gewährleistung kann über die von dieser Anwendung angegebenen Kontaktkanäle in Anspruch genommen werden. Falls erforderlich, trägt der Anbieter die Versandkosten für die technische Begutachtung eines Produkts. Der Anbieter kann nach eigenem Ermessen zusätzlich zur gesetzlichen Gewährleistung eine vertragliche Garantie anbieten. Die für vertragliche Garantien geltenden Regeln sind den von dieser Anwendung bereitgestellten Spezifikationen zu entnehmen. Werden solche Angaben nicht bereitgestellt, gelten ausschließlich die gesetzlichen Bestimmungen.
 
 ## Haftung und Schadloshaltung
 Sofern nicht ausdrücklich anders angegeben oder mit den Nutzern vereinbart, ist die Haftung des Anbieters für Schäden im Zusammenhang mit der Durchführung des Vertrags ausgeschlossen, begrenzt und/oder eingeschränkt, soweit dies nach geltendem Recht zulässig ist.
@@ -371,8 +371,8 @@ Wenn jedoch das Recht des Landes, in dem sich der Nutzer befindet, einen höhere
 ### Ausnahme für Verbraucher in der Schweiz
 Wenn der Nutzer in der Schweiz als Verbraucher einzustufen ist, kommt Schweizer Recht zur Anwendung.
 
-### Exceção para Consumidores no Brasil
-Se o Usuário se qualificar como um Consumidor Brasileiro e o produto e/ou serviço for comercializado no Brasil, será aplicada a legislação brasileira.
+### Ausnahme für Verbraucher in Brasilien
+Wenn der Nutzer als brasilianischer Verbraucher einzustufen ist und das Produkt und/oder die Dienstleistung in Brasilien vermarktet wird, gilt brasilianisches Recht.
 
 ### Gerichtsstand
 Die Gerichte des Ortes, in dem der Anbieter seinen Sitz hat – wie er sich aus den Angaben in diesem Dokument ergibt – sind ausschließlich zuständig für alle Streitigkeiten, die sich aus oder im Zusammenhang mit diesen AGB ergeben.
@@ -380,8 +380,8 @@ Die Gerichte des Ortes, in dem der Anbieter seinen Sitz hat – wie er sich aus 
 ### Ausnahme für europäische Verbraucher
 Dies gilt weder für Nutzer, die als europäische Verbraucher handeln noch für Nutzer im Vereinigten Königreich, in der Schweiz, Norwegen oder Island, die als Verbraucher handeln.
 
-### Exceção para Consumidores no Brasil
-O acima não se aplica a Usuários no Brasil que se qualifiquem como Consumidores.
+### Ausnahme für Verbraucher in Brasilien
+Dies gilt nicht für Nutzer in Brasilien, die als Verbraucher einzustufen sind.
 
 ## Streitbeilegung
 

@@ -180,6 +180,7 @@ Lugar de tratamiento: EE.UU.
 Datos Personales tratados: distintas clases de Datos, según se especifica en la Política de Privacidad del servicio +1
 Cloudflare es un servicio de optimización y distribución de tráfico prestado por Cloudflare Inc.
 La modalidad de integración de Cloudflare prevé que filtre todo el tráfico de esta Aplicación, esto es, las comunicaciones entre esta Aplicación y el navegador del Usuario, permitiendo no obstante la recogida de datos estadísticos sobre esta Aplicación.
+Cloudflare Turnstile se utiliza además en el formulario de registro para distinguir a usuarios humanos de bots automatizados, sin mostrar puzzles ni recopilar datos con fines publicitarios.
 
 ### Datos Personales tratados:
 - distintas clases de Datos, según se especifica en la Política de Privacidad del servicio

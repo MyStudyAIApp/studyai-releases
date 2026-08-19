@@ -138,6 +138,7 @@ This type of service allows this Application to distribute their content using s
 Company: Cloudflare, Inc.
 Place of processing: USA
 Cloudflare is a traffic optimization and distribution service provided by Cloudflare Inc. The way Cloudflare is integrated means that it filters all the traffic through this Application, i.e., communication between this Application and the User's browser, while also allowing analytics data from this Application to be collected.
+Cloudflare Turnstile is also used on the registration form to distinguish human users from automated bots, without showing puzzles or collecting data for advertising purposes.
 
 ### Personal Data processed:
 - Various types of Data as specified in the service's privacy policy
@@ -214,11 +215,11 @@ In addition to any opt-out feature provided by
 ### Data retention – inactive Free accounts
 Free-plan accounts that remain inactive (no login) for more than 6 months are permanently deleted, along with all associated data, after prior notice sent by email 30 days in advance.
 
-### Conservación de datos – archivos originales (PDF/foto)
-El archivo original (PDF o foto) que el usuario sube se conserva durante 10 días desde la subida y después se elimina automáticamente de nuestro almacenamiento. El contenido generado a partir de ese archivo (resúmenes, fichas de estudio, exámenes, esquemas y demás material generado) no se ve afectado y se conserva sin límite de tiempo, hasta que el usuario lo borre o cierre su cuenta. Se envía un aviso por email 3 días antes de la eliminación del archivo original; el usuario puede desactivar este aviso desde la aplicación, quedando registrada la fecha en que lo desactivó.
+### Data retention – original files (PDF/photo)
+The original file (PDF or photo) that the user uploads is retained for 10 days from the upload date and is then automatically deleted from our storage. Content generated from that file (summaries, study cards, exams, outlines, and other generated material) is not affected and is retained without a time limit, until the user deletes it or closes their account. An email notice is sent 3 days before the original file is deleted; the user can disable this notice from within the application, and the date they disabled it is recorded.
 
-### Conservación de datos – ejercicios resueltos
-En la función "Resolver ejercicio", el enunciado y la solución de cada ejercicio resuelto se guardan automáticamente durante 10 días para que el usuario pueda consultarlo. Pasado ese plazo se borra automáticamente, avisando por email al usuario 3 días antes. El usuario puede descargar el ejercicio a su dispositivo antes de que caduque, y puede desactivar el aviso por email desde la propia aplicación.
+### Data retention – solved exercises
+In the "Solve exercise" feature, the statement and solution of each solved exercise are automatically saved for 10 days so the user can review them. After that period they are automatically deleted, with an email notice sent to the user 3 days beforehand. The user can download the exercise to their device before it expires, and can disable the email notice from within the application.
 
 ### International data transfers
 Some of the providers listed in this document (including Groq, Sentry, Cloudflare, Microsoft Azure and RevenueCat) process data in the United States. Depending on the provider, these transfers rely on the EU-U.S. Data Privacy Framework or on the Standard Contractual Clauses approved by the European Commission, ensuring a level of protection equivalent to that required by the GDPR. Users may request further information on the safeguards applicable to each provider using the contact details provided in this document.

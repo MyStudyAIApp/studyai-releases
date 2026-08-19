@@ -149,6 +149,7 @@ Ce type de services permet à cette Application de distribuer ses contenus via d
 Société : Cloudflare, Inc.
 Lieu de traitement : États-Unis
 Cloudflare est un service d'optimisation et de répartition du trafic fourni par Cloudflare Inc. Les modalités d'intégration de Cloudflare prévoient qu'il filtre l'ensemble du trafic de cette Application, c'est-à-dire les communications entre cette Application et le navigateur de l'Utilisateur, tout en permettant la collecte de données statistiques sur cette Application.
+Cloudflare Turnstile est également utilisé sur le formulaire d'inscription pour distinguer les utilisateurs humains des robots automatisés, sans afficher d'énigmes ni collecter de données à des fins publicitaires.
 
 ### Données personnelles traitées :
 - diverses catégories de Données précisées dans la politique de confidentialité du service
@@ -198,11 +199,11 @@ aux Cookies.
 ### Conservation des données – comptes gratuits inactifs
 Les comptes du plan gratuit qui restent inactifs (sans connexion) pendant plus de 6 mois sont définitivement supprimés, avec toutes les données associées, après notification préalable par e-mail envoyée 30 jours à l'avance.
 
-### Conservación de datos – archivos originales (PDF/foto)
-El archivo original (PDF o foto) que el usuario sube se conserva durante 10 días desde la subida y después se elimina automáticamente de nuestro almacenamiento. El contenido generado a partir de ese archivo (resúmenes, fichas de estudio, exámenes, esquemas y demás material generado) no se ve afectado y se conserva sin límite de tiempo, hasta que el usuario lo borre o cierre su cuenta. Se envía un aviso por email 3 días antes de la eliminación del archivo original; el usuario puede desactivar este aviso desde la aplicación, quedando registrada la fecha en que lo desactivó.
+### Conservation des données – fichiers originaux (PDF/photo)
+Le fichier original (PDF ou photo) que l'utilisateur télécharge est conservé pendant 10 jours à compter du téléchargement, puis est automatiquement supprimé de notre stockage. Le contenu généré à partir de ce fichier (résumés, fiches de révision, examens, plans et autre matériel généré) n'est pas affecté et est conservé sans limite de temps, jusqu'à ce que l'utilisateur le supprime ou ferme son compte. Un avis par e-mail est envoyé 3 jours avant la suppression du fichier original ; l'utilisateur peut désactiver cet avis depuis l'application, la date de désactivation étant alors enregistrée.
 
-### Conservación de datos – ejercicios resueltos
-En la función "Resolver ejercicio", el enunciado y la solución de cada ejercicio resuelto se guardan automáticamente durante 10 días para que el usuario pueda consultarlo. Pasado ese plazo se borra automáticamente, avisando por email al usuario 3 días antes. El usuario puede descargar el ejercicio a su dispositivo antes de que caduque, y puede desactivar el aviso por email desde la propia aplicación.
+### Conservation des données – exercices résolus
+Dans la fonction « Résoudre un exercice », l'énoncé et la solution de chaque exercice résolu sont automatiquement enregistrés pendant 10 jours afin que l'utilisateur puisse les consulter. Passé ce délai, ils sont automatiquement supprimés, avec un avis par e-mail envoyé à l'utilisateur 3 jours auparavant. L'utilisateur peut télécharger l'exercice sur son appareil avant son expiration et peut désactiver l'avis par e-mail depuis l'application.
 
 ## Politique relative aux Cookies
 Cette Application utilise des Traqueurs. Pour en savoir plus, les Utilisateur peuvent consulter la Politique relative aux Cookies .

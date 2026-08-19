@@ -149,6 +149,7 @@ Diese Art von Diensten ermöglicht es dieser Anwendung, ihre Inhalte über Serve
 Unternehmen: Cloudflare, Inc.
 Ort der Verarbeitung: USA
 Cloudflare ist ein Dienst zur Optimierung und Verbreitung des Datenverkehrs von Cloudflare Inc. Die Art der Integration von Cloudflare sieht vor, dass der gesamte Datenverkehr dieser Anwendung – also die Kommunikation zwischen dieser Anwendung und dem Browser des Nutzers – gefiltert wird, wobei gleichzeitig statistische Daten über diese Anwendung erhoben werden können.
+Cloudflare Turnstile wird zusätzlich im Registrierungsformular eingesetzt, um menschliche Nutzer von automatisierten Bots zu unterscheiden, ohne Rätsel anzuzeigen oder Daten zu Werbezwecken zu erheben.
 
 ### Verarbeitete personenbezogene Daten:
 - verschiedene in der Datenschutzerklärung des Dienstes aufgeführte Datenarten
@@ -197,11 +198,11 @@ erfahren, wie sie generell interessenbasierte Werbung ablehnen können.
 ### Datenspeicherung – inaktive kostenlose Konten
 Konten des kostenlosen Plans, die länger als 6 Monate inaktiv bleiben (keine Anmeldung), werden zusammen mit allen zugehörigen Daten dauerhaft gelöscht, nach vorheriger Benachrichtigung per E-Mail 30 Tage im Voraus.
 
-### Conservación de datos – archivos originales (PDF/foto)
-El archivo original (PDF o foto) que el usuario sube se conserva durante 10 días desde la subida y después se elimina automáticamente de nuestro almacenamiento. El contenido generado a partir de ese archivo (resúmenes, fichas de estudio, exámenes, esquemas y demás material generado) no se ve afectado y se conserva sin límite de tiempo, hasta que el usuario lo borre o cierre su cuenta. Se envía un aviso por email 3 días antes de la eliminación del archivo original; el usuario puede desactivar este aviso desde la aplicación, quedando registrada la fecha en que lo desactivó.
+### Datenspeicherung – Originaldateien (PDF/Foto)
+Die vom Nutzer hochgeladene Originaldatei (PDF oder Foto) wird 10 Tage nach dem Hochladen aufbewahrt und danach automatisch aus unserem Speicher gelöscht. Aus dieser Datei erzeugte Inhalte (Zusammenfassungen, Lernkarten, Prüfungen, Übersichten und anderes generiertes Material) sind davon nicht betroffen und werden zeitlich unbegrenzt aufbewahrt, bis der Nutzer sie löscht oder sein Konto schließt. 3 Tage vor der Löschung der Originaldatei wird eine E-Mail-Benachrichtigung versendet; der Nutzer kann diese Benachrichtigung in der Anwendung deaktivieren, wobei das Datum der Deaktivierung gespeichert wird.
 
-### Conservación de datos – ejercicios resueltos
-En la función "Resolver ejercicio", el enunciado y la solución de cada ejercicio resuelto se guardan automáticamente durante 10 días para que el usuario pueda consultarlo. Pasado ese plazo se borra automáticamente, avisando por email al usuario 3 días antes. El usuario puede descargar el ejercicio a su dispositivo antes de que caduque, y puede desactivar el aviso por email desde la propia aplicación.
+### Datenspeicherung – gelöste Übungen
+Bei der Funktion „Übung lösen" werden die Aufgabenstellung und die Lösung jeder gelösten Übung automatisch 10 Tage lang gespeichert, damit der Nutzer sie einsehen kann. Nach Ablauf dieser Frist werden sie automatisch gelöscht, wobei der Nutzer 3 Tage zuvor per E-Mail benachrichtigt wird. Der Nutzer kann die Übung vor Ablauf auf sein Gerät herunterladen und die E-Mail-Benachrichtigung in der Anwendung deaktivieren.
 
 ## Cookie-Richtlinie
 Diese Anwendung verwendet Tracker. Weitere Informationen ergeben sich aus der Cookie-Richtlinie .
