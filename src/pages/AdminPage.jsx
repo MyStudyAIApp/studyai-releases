@@ -164,12 +164,6 @@ export default function AdminPage() {
   const [annMessage, setAnnMessage] = useState('')
   const [annLink, setAnnLink] = useState('')
   const [creatingAnn, setCreatingAnn] = useState(false)
-  const [inviteCodes, setInviteCodes] = useState([])
-  const [inviteNote, setInviteNote] = useState('')
-  const [inviteMaxUses, setInviteMaxUses] = useState(1)
-  const [inviteExpiresDays, setInviteExpiresDays] = useState('')
-  const [creatingInvite, setCreatingInvite] = useState(false)
-  const [lastCreatedCode, setLastCreatedCode] = useState('')
   const [orphanedSelected, setOrphanedSelected] = useState([])
   const [deletingOrphaned, setDeletingOrphaned] = useState(false)
   const [searchEmail, setSearchEmail] = useState('')
@@ -320,10 +314,6 @@ export default function AdminPage() {
         if (rUsage.ok) setFeatureUsage((await rUsage.json()).items || [])
       } catch { /* opcional, no bloquea el resto del panel */ }
       try {
-        const rInvites = await fetch(`${WEB_API}/admin/invite-codes`, { headers: { ...authHeader, ...twoFAHeader() } })
-        if (rInvites.ok) setInviteCodes((await rInvites.json()).items || [])
-      } catch { /* opcional, no bloquea el resto del panel */ }
-      try {
         const rAnn = await fetch(`${WEB_API}/admin/announcements`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rAnn.ok) setAnnouncements((await rAnn.json()).items || [])
       } catch { /* opcional, no bloquea el resto del panel */ }
@@ -332,42 +322,6 @@ export default function AdminPage() {
     } finally {
       setLoading(false)
     }
-  }
-
-  async function createInviteCode() {
-    setCreatingInvite(true)
-    setLastCreatedCode('')
-    try {
-      const authHeader = await getAuthHeader()
-      const res = await fetch(`${WEB_API}/admin/invite-codes`, {
-        method: 'POST',
-        headers: { ...authHeader, ...twoFAHeader(), 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          note: inviteNote.trim() || null,
-          max_uses: Math.max(1, Number(inviteMaxUses) || 1),
-          expires_in_days: inviteExpiresDays ? Number(inviteExpiresDays) : null,
-        }),
-      })
-      if (res.ok) {
-        const data = await res.json()
-        setLastCreatedCode(data.code)
-        setInviteNote('')
-        setInviteMaxUses(1)
-        setInviteExpiresDays('')
-        const rInvites = await fetch(`${WEB_API}/admin/invite-codes`, { headers: { ...authHeader, ...twoFAHeader() } })
-        if (rInvites.ok) setInviteCodes((await rInvites.json()).items || [])
-      }
-    } finally {
-      setCreatingInvite(false)
-    }
-  }
-
-  async function deactivateInviteCode(code) {
-    const authHeader = await getAuthHeader()
-    await fetch(`${WEB_API}/admin/invite-codes/${encodeURIComponent(code)}`, {
-      method: 'DELETE', headers: { ...authHeader, ...twoFAHeader() },
-    })
-    setInviteCodes(prev => prev.map(c => c.code === code ? { ...c, active: false } : c))
   }
 
   async function createAnnouncement() {
@@ -696,65 +650,6 @@ export default function AdminPage() {
         <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Uso por función</h2>
         <p className="text-[11px] text-slate-600 -mt-1">Histórico completo, todas las cuentas.</p>
         <FeatureUsageChart items={featureUsage} />
-      </div>
-
-      {/* Códigos de invitación — el registro público está siempre abierto; estos códigos son opcionales, para campañas puntuales */}
-      <div className="card space-y-3">
-        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Códigos de invitación</h2>
-        <p className="text-[11px] text-slate-600 -mt-1">Opcionales — el registro normal no los pide. Se validan en la base de datos si se usan.</p>
-
-        <div className="flex flex-wrap gap-2 items-end">
-          <div className="flex-1 min-w-[140px]">
-            <label className="block text-[11px] text-slate-500 mb-1">Nota (opcional)</label>
-            <input type="text" value={inviteNote} onChange={e => setInviteNote(e.target.value)}
-              placeholder="ej. familia, amigos" className="input w-full text-sm" />
-          </div>
-          <div className="w-24">
-            <label className="block text-[11px] text-slate-500 mb-1">Usos</label>
-            <input type="number" min={1} value={inviteMaxUses} onChange={e => setInviteMaxUses(e.target.value)}
-              className="input w-full text-sm" />
-          </div>
-          <div className="w-28">
-            <label className="block text-[11px] text-slate-500 mb-1">Caduca (días)</label>
-            <input type="number" min={1} value={inviteExpiresDays} onChange={e => setInviteExpiresDays(e.target.value)}
-              placeholder="nunca" className="input w-full text-sm" />
-          </div>
-          <button onClick={createInviteCode} disabled={creatingInvite} className="btn-secondary btn-sm shrink-0 disabled:opacity-50">
-            {creatingInvite ? 'Creando…' : '+ Crear código'}
-          </button>
-        </div>
-
-        {lastCreatedCode && (
-          <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-4 py-2 text-emerald-400 text-sm font-mono">
-            ✓ {lastCreatedCode}
-          </div>
-        )}
-
-        <div className="space-y-1.5 max-h-72 overflow-y-auto">
-          {inviteCodes.length === 0 ? (
-            <p className="text-xs text-slate-600 italic">Sin códigos todavía.</p>
-          ) : inviteCodes.map(c => (
-            <div key={c.code} className="flex items-center justify-between gap-2 py-1.5 border-b border-slate-800 last:border-0">
-              <div className="min-w-0">
-                <span className="font-mono text-sm text-slate-200">{c.code}</span>
-                {c.note && <span className="text-xs text-slate-500 ml-2">({c.note})</span>}
-                <p className="text-[11px] text-slate-600">
-                  {c.uses_count}/{c.max_uses} usos{c.expires_at ? ` · caduca ${new Date(c.expires_at).toLocaleDateString()}` : ''}
-                </p>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <span className={`text-[10px] px-2 py-0.5 rounded-full ${c.active ? 'bg-emerald-500/15 text-emerald-400' : 'bg-slate-700 text-slate-500'}`}>
-                  {c.active ? 'activo' : 'inactivo'}
-                </span>
-                {c.active && (
-                  <button onClick={() => deactivateInviteCode(c.code)} className="text-xs text-slate-500 hover:text-red-400 transition-colors">
-                    desactivar
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Anuncios — mensaje que ven todos los usuarios al entrar (web/escritorio/móvil) */}
