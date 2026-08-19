@@ -698,10 +698,10 @@ export default function AdminPage() {
         <FeatureUsageChart items={featureUsage} />
       </div>
 
-      {/* Códigos de invitación — registro cerrado mientras dure el beta */}
+      {/* Códigos de invitación — el registro público está siempre abierto; estos códigos son opcionales, para campañas puntuales */}
       <div className="card space-y-3">
         <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Códigos de invitación</h2>
-        <p className="text-[11px] text-slate-600 -mt-1">El registro exige un código válido — se valida en la base de datos, no se puede saltar.</p>
+        <p className="text-[11px] text-slate-600 -mt-1">Opcionales — el registro normal no los pide. Se validan en la base de datos si se usan.</p>
 
         <div className="flex flex-wrap gap-2 items-end">
           <div className="flex-1 min-w-[140px]">
