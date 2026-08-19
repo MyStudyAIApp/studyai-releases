@@ -28,6 +28,18 @@
 
   <!-- Fuentes auto-alojadas via @fontsource (ver main.jsx) — ya no dependemos
        de fonts.googleapis.com, asi que no requieren consentimiento de cookies. -->
+
+  <!-- Polyfill de Object.hasOwn (ES2022) -- varias dependencias (pdf.js,
+       reactflow) lo usan directamente. Falta en WebViews/navegadores viejos
+       (Chrome <93, Safari <15.4), causaba "Object.hasOwn is not a function"
+       en Sentry. Debe ir ANTES del bundle, no dentro de main.jsx. -->
+  <script>
+    if (typeof Object.hasOwn !== 'function') {
+      Object.hasOwn = function (obj, prop) {
+        return Object.prototype.hasOwnProperty.call(obj, prop)
+      }
+    }
+  </script>
 </head>
 <body class="bg-slate-900 text-slate-100 antialiased">
   <div id="root"></div>
