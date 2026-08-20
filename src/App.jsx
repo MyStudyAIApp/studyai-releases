@@ -163,15 +163,10 @@ function AppInner() {
                          : `en ${exam.days_left} días`
               const msg = `📅 Examen: ${exam.title} — ${when}`
               addToast(msg, exam.days_left <= 1 ? 'error' : 'warning', 8000)
-              // Notificación nativa del sistema operativo
-              const tryNotif = () => {
-                try { new Notification('MyStudy AI — Recordatorio de examen', { body: msg }) } catch { /* mobile requiere ServiceWorker */ }
-              }
-              if (Notification.permission === 'granted') {
-                tryNotif()
-              } else if (Notification.permission !== 'denied') {
-                Notification.requestPermission().then(p => { if (p === 'granted') tryNotif() })
-              }
+              // La notificación nativa del sistema operativo ya la manda el
+              // cron del backend (/admin/check-exam-notifications) vía Web
+              // Push -- esa sí lleva control de duplicados (notified_thresholds).
+              // Repetirla aquí en cada arranque de la app duplicaba el aviso.
             }
           } catch { /* notificaciones opcionales, no crítico */ }
         }, 2000)
