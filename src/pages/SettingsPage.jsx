@@ -549,6 +549,44 @@ export default function SettingsPage() {
     }
   }
 
+  // ── Plan y facturación (Stripe, solo web) ──────────────────────────────
+  const planTier = useAppStore(s => s.planTier)
+  const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | 'portal' | null
+
+  const STRIPE_PRICES = {
+    pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
+    transcription: 'price_1U6EFGBUwE5wbpTtPo2IKUr0',
+    podcast:       'price_1U6EFHBUwE5wbpTt0fQuBaqD',
+  }
+
+  useEffect(() => {
+    const billing = new URLSearchParams(location.search).get('billing')
+    if (billing === 'success') addToast('¡Pago completado! Puede tardar unos segundos en reflejarse.', 'success')
+    else if (billing === 'cancel') addToast('Pago cancelado', 'info')
+  }, [])
+
+  async function handleCheckout(kind) {
+    setBillingBusy(kind)
+    try {
+      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
+      window.location.href = res.url
+    } catch (e) {
+      addToast(e.message || 'No se pudo iniciar el pago', 'error')
+      setBillingBusy(null)
+    }
+  }
+
+  async function handlePortal() {
+    setBillingBusy('portal')
+    try {
+      const res = await api('GET', '/billing/portal')
+      window.location.href = res.url
+    } catch (e) {
+      addToast(e.message || 'Todavía no tienes ninguna compra', 'error')
+      setBillingBusy(null)
+    }
+  }
+
   // ── Copias de seguridad (solo escritorio) ─────────────────────────────────
   const [backupStatus,   setBackupStatus]   = useState(null)   // { lastBackup, history, dbSizeMB, uploadsMB }
   const [backupBusy,     setBackupBusy]     = useState(false)  // haciendo copia manual
@@ -826,6 +864,46 @@ export default function SettingsPage() {
           <p className="text-xs text-slate-500 mt-1">Solo informativo — no bloquea nada, es para que veas tu propio progreso del día.</p>
         </div>
       </CollapsibleCard>
+
+      {/* ── Plan y facturación (solo web, Stripe) ──────────────────────── */}
+      {IS_WEB && (
+        <CollapsibleCard icon="💳" title="Plan y facturación" subtitle={planTier === 'pro' ? 'Pro' : planTier === 'trial' ? 'Prueba gratis' : 'Free'} defaultOpen={false}>
+          {planTier !== 'pro' && (
+            <div className="pb-3 border-b border-slate-800">
+              <p className="text-sm text-slate-300 mb-2">Hazte Pro — 15€/mes, sin límite de generaciones.</p>
+              <button
+                onClick={() => handleCheckout('pro')}
+                disabled={!!billingBusy}
+                className="btn-primary disabled:opacity-40"
+              >{billingBusy === 'pro' ? 'Redirigiendo…' : 'Hazte Pro'}</button>
+            </div>
+          )}
+
+          <div className="pt-3">
+            <p className="text-sm text-slate-400 mb-2">Bonos extra (pago único)</p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => handleCheckout('transcription')}
+                disabled={!!billingBusy}
+                className="btn-secondary btn-sm disabled:opacity-40"
+              >{billingBusy === 'transcription' ? 'Redirigiendo…' : '+10h transcripción — 3€'}</button>
+              <button
+                onClick={() => handleCheckout('podcast')}
+                disabled={!!billingBusy}
+                className="btn-secondary btn-sm disabled:opacity-40"
+              >{billingBusy === 'podcast' ? 'Redirigiendo…' : '+10 podcasts — 7€'}</button>
+            </div>
+          </div>
+
+          <div className="pt-3 border-t border-slate-800 mt-3">
+            <button
+              onClick={handlePortal}
+              disabled={!!billingBusy}
+              className="text-sm text-slate-400 hover:text-slate-200 underline disabled:opacity-40"
+            >{billingBusy === 'portal' ? 'Abriendo…' : 'Gestionar suscripción / facturas'}</button>
+          </div>
+        </CollapsibleCard>
+      )}
 
       {/* ── Estado del sistema ──────────────────────────────────────── */}
       {/* Idéntico en las 3 plataformas — en escritorio /setup/check consulta lo
