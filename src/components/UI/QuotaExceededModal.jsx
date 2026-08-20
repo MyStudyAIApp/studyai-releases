@@ -18,7 +18,7 @@ export default function QuotaExceededModal() {
         <p className="text-sm text-slate-300">{quotaExceeded?.message}</p>
         {!isCostCap && (
           <p className="text-xs text-slate-500">
-            Esto afecta a {CATEGORY_LABELS[quotaExceeded?.category] || 'esta función'}. El cupo se renueva pasados 30 días desde tu primer uso.
+            Esto afecta a {CATEGORY_LABELS[quotaExceeded?.category] || 'esta función'}. El cupo se renueva al empezar tu siguiente ciclo mensual.
           </p>
         )}
         <div className="flex gap-2 pt-2">

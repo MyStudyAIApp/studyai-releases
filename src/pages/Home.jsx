@@ -500,7 +500,7 @@ export default function Home() {
       {/* Uso del plan (solo app móvil completa) */}
       {IS_MOBILE && usage && planTier === 'free' && (
         <section className="mb-8">
-          <h3 className="section-title">Uso del plan Free · últimos 30 días</h3>
+          <h3 className="section-title">Uso del plan Free · este ciclo</h3>
           <div className="card space-y-3">
             {[
               { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },

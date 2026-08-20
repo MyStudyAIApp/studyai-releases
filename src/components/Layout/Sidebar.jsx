@@ -97,10 +97,11 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Uso del plan Free (cupo real de los últimos 30 días) */}
+      {/* Uso del plan Free en el ciclo vigente (ya no son 30 días rodantes:
+          el ciclo va de aniversario a aniversario, ver ai/quotas.py) */}
       {isFree && usage && (
         <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Plan Free · últimos 30 días</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Plan Free · este ciclo</p>
           <div className="space-y-1.5">
             {[
               { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
