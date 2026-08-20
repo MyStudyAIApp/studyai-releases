@@ -125,24 +125,39 @@ export default function Sidebar() {
           calculado por el backend. */}
       {planTier === 'pro' && usage?.voice_budget && (
         <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Uso de voz este mes</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Uso de voz este ciclo</p>
           <div className="space-y-1.5">
             {[
-              { label: '🎙️ Transcripción', pct: usage.voice_budget.transcription?.spent_pct ?? 0 },
-              { label: '🎧 Podcasts', pct: usage.voice_budget.podcast?.spent_pct ?? 0 },
-            ].map(({ label, pct }) => (
-              <div key={label}>
-                <div className="flex items-center justify-between text-[11px] mb-0.5">
-                  <span className="text-slate-400">{label}</span>
-                  <span className={pct >= 90 ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{pct}%</span>
+              { label: '🎙️ Transcripción', b: usage.voice_budget.transcription },
+              { label: '🎧 Podcasts', b: usage.voice_budget.podcast },
+            ].map(({ label, b }) => {
+              const pct = b?.spent_pct ?? 0
+              return (
+                <div key={label}>
+                  <div className="flex items-center justify-between text-[11px] mb-0.5">
+                    <span className="text-slate-400">{label}</span>
+                    <span className={pct >= 90 ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{pct}%</span>
+                  </div>
+                  <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1" />
+                  {b?.bono_left > 0 && (
+                    <p className="text-[10px] text-primary-400 mt-0.5">+{b.bono_left} {b.bono_unit} de bono</p>
+                  )}
                 </div>
-                <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1" />
-              </div>
-            ))}
+              )
+            })}
           </div>
+          {/* El saldo de bono solo caduca si la cuenta deja de ser Pro, y aun
+              entonces hay 30 dias para gastarlo. Mientras exista esa cuenta
+              atras hay que decirlo aqui: un saldo pagado que desaparece sin
+              haberse mostrado nunca no es defendible. */}
+          {usage.bono_expires_at && (
+            <p className="text-[11px] text-amber-400 mt-2">
+              Tu saldo de bonos caduca el {new Date(usage.bono_expires_at).toLocaleDateString()}. Vuelve a Pro para conservarlo.
+            </p>
+          )}
           {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
             <p className="text-[11px] text-amber-400 mt-2">
-              Te estás quedando sin cupo de voz este mes.{' '}
+              Te estás quedando sin cupo de voz este ciclo.{' '}
               <a href="mailto:soporte@mystudyai.eu" className="underline hover:text-amber-300">Escríbenos</a> para ampliarlo.
             </p>
           )}

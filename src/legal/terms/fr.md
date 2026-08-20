@@ -123,7 +123,13 @@ Les caractéristiques du Produit choisi seront décrites lors du processus d’a
 - **Formule Free** : accès gratuit avec un quota de 10 générations de contenu par mois (résumés, examens, fiches, etc.) et 10 minutes/mois de fonctions vocales/vision (transcription, podcasts, résolution d'exercices par photo).
 - **Essai gratuit** : les 7 premiers jours après l'inscription, le compte a un accès équivalent à Pro sans frais.
 - **Formule Pro (15€/mois, abonnement récurrent)** : générations de contenu illimitées ; 20 heures/mois de fonctions vocales/vision.
-- **Bonus à paiement unique** : pour étendre le quota vocal/vision sans changer de formule — « +10 heures de transcription » (3€) et « +10 podcasts » (7€).
+- **Bonus à paiement unique** : pour étendre le quota vocal/vision sans changer de formule — « +10 heures de transcription » (3€) et « +10 podcasts » (7€). Ils ne peuvent être acquis que tant que le compte dispose d'une formule Pro active.
+
+**Comment le cycle est compté.** Les quotas se renouvellent chaque mois à compter de la date de souscription ou de renouvellement de la formule, et non par mois calendaires. Par exemple, un abonnement souscrit le 26 court du 26 d'un mois au 25 du suivant. Pour les comptes sans abonnement, le cycle est compté à partir de la date de création du compte. Lorsque le jour de souscription n'existe pas dans le mois d'échéance, le cycle se termine le dernier jour de ce mois.
+
+**Validité des bonus.** Le solde des bonus n'expire pas tant que le compte conserve une formule Pro active : ce qui n'est pas consommé pendant un cycle reste disponible lors des suivants. Le quota inclus dans la formule est toujours consommé en premier, et il n'est fait appel au solde des bonus qu'une fois ce quota épuisé. Si le compte cesse de bénéficier de la formule Pro, le solde des bonus reste disponible et utilisable pendant les 30 jours calendaires suivants ; à l'expiration de ce délai, le solde non consommé s'éteint. Le solde disponible et, le cas échéant, sa date d'extinction sont affichés à l'Utilisateur dans l'Application.
+
+**Rétractation portant sur un bonus.** Si l'Utilisateur exerce son droit de rétractation sur un bonus dont le solde a déjà été partiellement consommé, le montant à rembourser sera réduit proportionnellement à la part effectivement consommée.
 Tous les quotas ci-dessus sont en outre soumis à un plafond de dépense réel par Utilisateur, en protection contre un usage abusif ou automatisé, indépendant du quota par fonctionnalité.
 Les prix indiqués n'incluent pas les taxes applicables (TVA/IGIC), calculées et affichées lors du paiement selon la localisation de l'Utilisateur.
 

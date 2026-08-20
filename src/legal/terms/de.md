@@ -120,7 +120,13 @@ Die Merkmale des ausgewählten Produkts werden im Laufe des Kaufvorgangs erläut
 - **Free-Plan**: kostenloser Zugang mit einem Kontingent von 10 Inhaltsgenerierungen pro Monat (Zusammenfassungen, Prüfungen, Karteikarten usw.) und 10 Minuten/Monat für Sprach-/Bildfunktionen (Transkription, Podcasts, Aufgabenlösung per Foto).
 - **Kostenlose Testphase**: die ersten 7 Tage nach der Registrierung hat das Konto Pro-Zugang ohne Kosten.
 - **Pro-Plan (15 €/Monat, wiederkehrendes Abonnement)**: unbegrenzte Inhaltsgenerierungen; 20 Stunden/Monat für Sprach-/Bildfunktionen.
-- **Einmalige Zusatzpakete**: zur Erweiterung des Sprach-/Bildkontingents ohne Planwechsel — „+10 Stunden Transkription" (3 €) und „+10 Podcasts" (7 €).
+- **Einmalige Zusatzpakete**: zur Erweiterung des Sprach-/Bildkontingents ohne Planwechsel — „+10 Stunden Transkription" (3 €) und „+10 Podcasts" (7 €). Sie können nur erworben werden, solange das Konto über einen aktiven Pro-Plan verfügt.
+
+**Wie der Zyklus gezählt wird.** Die Kontingente erneuern sich monatlich, gerechnet ab dem Datum des Vertragsabschlusses bzw. der Verlängerung des Plans, nicht nach Kalendermonaten. Ein am 26. abgeschlossenes Abonnement läuft beispielsweise vom 26. eines Monats bis zum 25. des Folgemonats. Bei Konten ohne Abonnement wird der Zyklus ab dem Datum der Kontoerstellung gezählt. Existiert der Starttag im Endmonat nicht, endet der Zyklus am letzten Tag dieses Monats.
+
+**Gültigkeit der Zusatzpakete.** Das Guthaben aus Zusatzpaketen verfällt nicht, solange das Konto einen aktiven Pro-Plan behält: Was in einem Zyklus nicht verbraucht wird, bleibt in den folgenden verfügbar. Das im Plan enthaltene Kontingent wird stets zuerst verbraucht; auf das Guthaben aus Zusatzpaketen wird erst zurückgegriffen, wenn dieses Kontingent erschöpft ist. Verliert das Konto den Pro-Plan, bleibt das Guthaben weitere 30 Kalendertage verfügbar und nutzbar; nach Ablauf dieser Frist verfällt das nicht verbrauchte Guthaben. Das verfügbare Guthaben und gegebenenfalls sein Verfallsdatum werden dem Nutzer in der Anwendung angezeigt.
+
+**Widerruf eines Zusatzpakets.** Übt der Nutzer sein Widerrufsrecht für ein Zusatzpaket aus, dessen Guthaben bereits teilweise verbraucht wurde, verringert sich der zu erstattende Betrag anteilig um den tatsächlich verbrauchten Teil.
 Für alle oben genannten Kontingente gilt zusätzlich eine reale Ausgabenobergrenze pro Nutzer als Schutz vor missbräuchlicher oder automatisierter Nutzung, unabhängig vom jeweiligen Funktionskontingent.
 Die angegebenen Preise verstehen sich ohne anwendbare Steuern (MwSt./IGIC), die während des Bezahlvorgangs je nach Standort des Nutzers berechnet und angezeigt werden.
 

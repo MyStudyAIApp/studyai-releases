@@ -121,7 +121,14 @@ Las características del Producto escogido se describirán durante el proceso de
 - **Plan Free**: acceso gratuito con un cupo de 10 generaciones de contenido al mes (resúmenes, exámenes, fichas, etc.) y 10 minutos/mes de funciones de voz/visión (transcripción, podcasts, resolución de ejercicios por foto).
 - **Prueba gratis**: los 7 primeros días desde el registro, la cuenta tiene acceso equivalente al plan Pro sin coste.
 - **Plan Pro (15€/mes, suscripción recurrente)**: sin límite de generaciones de contenido; 20 horas/mes de funciones de voz/visión.
-- **Bonos de pago único**: para ampliar el cupo de voz/visión sin cambiar de plan — "+10 horas de transcripción" (3€) y "+10 podcasts" (7€).
+- **Bonos de pago único**: para ampliar el cupo de voz/visión sin cambiar de plan — "+10 horas de transcripción" (3€) y "+10 podcasts" (7€). Solo pueden adquirirse mientras la cuenta tenga el plan Pro activo.
+
+**Cómo se cuenta el ciclo.** Los cupos se renuevan cada mes contado desde la fecha de contratación o de renovación del plan, no por meses naturales. Por ejemplo, una suscripción contratada el día 26 tiene su ciclo del día 26 de un mes al día 25 del siguiente. En las cuentas sin suscripción, el ciclo se cuenta desde la fecha de alta de la cuenta. Cuando el día de contratación no exista en el mes de vencimiento, el ciclo termina el último día de dicho mes.
+
+**Vigencia de los bonos.** El saldo de los bonos no caduca mientras la cuenta mantenga el plan Pro activo: lo que no se consume durante un ciclo permanece disponible en los siguientes. El cupo incluido en el plan se consume siempre en primer lugar, y solo se recurre al saldo de bonos una vez agotado aquel. Si la cuenta deja de tener el plan Pro, el saldo de bonos permanece disponible y utilizable durante los 30 días naturales siguientes; transcurrido ese plazo, el saldo no consumido se extingue. El saldo disponible y, en su caso, su fecha de extinción, se muestran al Usuario dentro de la Aplicación.
+
+**Desistimiento de un bono.** Si el Usuario ejerce su derecho de desistimiento sobre un bono cuyo saldo ya hubiera consumido en parte, el importe a reembolsar se reducirá de forma proporcional a la parte efectivamente consumida.
+
 Todos los cupos anteriores incluyen además un límite de gasto real por Usuario como medida de protección frente a usos abusivos o automatizados, independiente del cupo por función.
 Los precios indicados no incluyen impuestos aplicables (IVA/IGIC), que se calculan y muestran durante el proceso de pago según la ubicación del Usuario.
 

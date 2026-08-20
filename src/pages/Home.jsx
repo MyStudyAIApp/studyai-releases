@@ -520,23 +520,34 @@ export default function Home() {
 
       {IS_MOBILE && usage?.voice_budget && planTier === 'pro' && (
         <section className="mb-8">
-          <h3 className="section-title">Uso de voz este mes</h3>
+          <h3 className="section-title">Uso de voz este ciclo</h3>
           <div className="card space-y-3">
             {[
-              { label: '🎙️ Transcripción', pct: usage.voice_budget.transcription?.spent_pct ?? 0 },
-              { label: '🎧 Podcasts', pct: usage.voice_budget.podcast?.spent_pct ?? 0 },
-            ].map(({ label, pct }) => (
+              { label: '🎙️ Transcripción', b: usage.voice_budget.transcription },
+              { label: '🎧 Podcasts', b: usage.voice_budget.podcast },
+            ].map(({ label, b }) => {
+              const pct = b?.spent_pct ?? 0
+              return (
               <div key={label}>
                 <div className="flex items-center justify-between text-xs mb-1">
                   <span className="text-slate-400">{label}</span>
                   <span className={pct >= 90 ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{pct}%</span>
                 </div>
                 <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1.5" />
+                {b?.bono_left > 0 && (
+                  <p className="text-[11px] text-primary-400 mt-1">+{b.bono_left} {b.bono_unit} de bono</p>
+                )}
               </div>
-            ))}
+              )
+            })}
+            {usage.bono_expires_at && (
+              <p className="text-xs text-amber-400">
+                Tu saldo de bonos caduca el {new Date(usage.bono_expires_at).toLocaleDateString()}. Vuelve a Pro para conservarlo.
+              </p>
+            )}
             {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
               <p className="text-xs text-amber-400">
-                Te estás quedando sin cupo de voz este mes.{' '}
+                Te estás quedando sin cupo de voz este ciclo.{' '}
                 <a href="mailto:soporte@mystudyai.eu" className="underline">Escríbenos</a> para ampliarlo.
               </p>
             )}

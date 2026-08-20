@@ -564,6 +564,15 @@ export default function SettingsPage() {
     podcast:       'price_1U6EFHBUwE5wbpTt0fQuBaqD',
   }
 
+  // Saldo de bonos y ciclo vigente -- se enseña aquí porque es la pantalla
+  // donde se compran: un saldo que puede caducar tiene que verse antes de
+  // pagar, no solo estar escrito en los Términos.
+  const [usage, setUsage] = useState(null)
+  useEffect(() => {
+    if (!IS_WEB) return
+    api('GET', '/usage/summary').then(setUsage).catch(() => {})
+  }, [])
+
   useEffect(() => {
     const billing = new URLSearchParams(location.search).get('billing')
     if (billing === 'success') addToast('¡Pago completado! Puede tardar unos segundos en reflejarse.', 'success')
@@ -928,6 +937,26 @@ export default function SettingsPage() {
                 className="btn-secondary btn-sm disabled:opacity-40"
               >{billingBusy === 'podcast' ? 'Redirigiendo…' : '+10 podcasts — 7€'}</button>
             </div>
+
+            {(usage?.voice_budget?.transcription?.bono_left > 0 || usage?.voice_budget?.podcast?.bono_left > 0) && (
+              <p className="text-xs text-slate-300 mt-2">
+                Saldo disponible:{' '}
+                {[
+                  usage.voice_budget.transcription?.bono_left > 0 && `${usage.voice_budget.transcription.bono_left} h de transcripción`,
+                  usage.voice_budget.podcast?.bono_left > 0 && `${usage.voice_budget.podcast.bono_left} podcasts`,
+                ].filter(Boolean).join(' · ')}
+              </p>
+            )}
+
+            <p className="text-xs text-slate-500 mt-2">
+              Los bonos no caducan mientras tu cuenta sea Pro. Si dejas de serlo, tienes 30 días para gastar el saldo que te quede.
+            </p>
+
+            {usage?.bono_expires_at && (
+              <p className="text-xs text-amber-400 mt-1">
+                Tu saldo caduca el {new Date(usage.bono_expires_at).toLocaleDateString()}.
+              </p>
+            )}
           </div>
 
           <div className="pt-3 border-t border-slate-800 mt-3">

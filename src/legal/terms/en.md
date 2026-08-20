@@ -121,7 +121,13 @@ The characteristics of the chosen Product will be outlined during the purchasing
 - **Free plan**: free access with a quota of 10 content generations per month (summaries, exams, flashcards, etc.) and 10 minutes/month of voice/vision features (transcription, podcasts, solving exercises from a photo).
 - **Free trial**: the first 7 days after registration, the account has Pro-equivalent access at no cost.
 - **Pro plan (€15/month, recurring subscription)**: unlimited content generations; 20 hours/month of voice/vision features.
-- **One-time top-ups**: to extend the voice/vision quota without changing plan — "+10 hours of transcription" (€3) and "+10 podcasts" (€7).
+- **One-time top-ups**: to extend the voice/vision quota without changing plan — "+10 hours of transcription" (€3) and "+10 podcasts" (€7). They can only be purchased while the account has an active Pro plan.
+
+**How the cycle is counted.** Quotas renew every month counted from the date the plan was taken out or renewed, not by calendar months. For example, a subscription taken out on the 26th runs from the 26th of one month to the 25th of the next. For accounts without a subscription, the cycle is counted from the account's registration date. Where the start day does not exist in the closing month, the cycle ends on the last day of that month.
+
+**Validity of top-ups.** Top-up balance does not expire while the account keeps an active Pro plan: whatever is not used during a cycle remains available in the following ones. The allowance included in the plan is always used first, and the top-up balance is only drawn on once that allowance is exhausted. If the account ceases to have the Pro plan, the top-up balance remains available and usable for the following 30 calendar days; after that period, any unused balance is extinguished. The available balance and, where applicable, its expiry date are shown to the User within the Application.
+
+**Withdrawal from a top-up.** If the User exercises their right of withdrawal over a top-up whose balance has already been partly used, the amount to be refunded will be reduced in proportion to the part actually used.
 All quotas above are additionally subject to a real spending cap per User, as a protection against abusive or automated use, independent of the per-feature quota.
 Listed prices do not include applicable taxes (VAT/IGIC), which are calculated and shown during checkout based on the User's location.
 
