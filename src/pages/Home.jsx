@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useAppStore, api, apiUpload, IS_MOBILE } from '../store/appStore'
+import { useAppStore, api, apiUpload, IS_MOBILE, IS_WEB } from '../store/appStore'
 import Spinner from '../components/UI/Spinner'
 import Modal from '../components/UI/Modal'
 import ProgressBar from '../components/UI/ProgressBar'
@@ -66,6 +66,24 @@ export default function Home() {
       setBuyingBono(null)
     }
   }
+  // ── Suscripción Pro / bonos (web, vía Stripe) ───────────────────────────
+  const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | null
+  const STRIPE_PRICES = {
+    pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
+    transcription: 'price_1U6EFGBUwE5wbpTtPo2IKUr0',
+    podcast:       'price_1U6EFHBUwE5wbpTt0fQuBaqD',
+  }
+  async function handleStripeCheckout(kind) {
+    setBillingBusy(kind)
+    try {
+      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
+      window.location.href = res.url
+    } catch (e) {
+      addToast(e.message || 'No se pudo iniciar el pago', 'error')
+      setBillingBusy(null)
+    }
+  }
+
   const [recentDocs, setRecentDocs] = useState([])
   const [subjects, setSubjects] = useState([])
   const [mastery, setMastery] = useState([])
@@ -573,6 +591,55 @@ export default function Home() {
               {bonoMessage.text}
             </p>
           )}
+        </section>
+      )}
+
+      {/* ── Suscripción Pro / bonos (web, vía Stripe) ───────────────────── */}
+      {IS_WEB && planTier && planTier !== 'pro' && (
+        <section className="mb-8">
+          <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
+            <div className="flex items-center gap-2 mb-1">
+              <IconCrown size={18} className="text-amber-400" />
+              <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
+            </div>
+            <p className="text-xs text-slate-400 mb-4">
+              Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+            </p>
+            <button
+              onClick={() => handleStripeCheckout('pro')}
+              disabled={!!billingBusy}
+              className="w-full py-3 rounded-xl font-semibold text-sm bg-amber-500 hover:bg-amber-600 text-slate-900 disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              {billingBusy === 'pro'
+                ? <><IconLoader2 size={16} className="animate-spin" /> Redirigiendo...</>
+                : 'Suscribirme — 15€/mes'}
+            </button>
+          </div>
+        </section>
+      )}
+
+      {IS_WEB && planTier === 'pro' && (
+        <section className="mb-8">
+          <h3 className="section-title">Ampliar cupo de voz</h3>
+          <div className="card divide-y divide-slate-800">
+            {[
+              { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra', price: '3€' },
+              { category: 'podcast',       emoji: '🎧', label: '10 podcasts extra',           price: '7€' },
+            ].map(({ category, emoji, label, price }) => (
+              <div key={category} className="py-3 flex items-center justify-between gap-4">
+                <p className="text-sm font-semibold text-slate-200">{emoji} {label}</p>
+                <button
+                  onClick={() => handleStripeCheckout(category)}
+                  disabled={!!billingBusy}
+                  className="shrink-0 px-4 py-2 rounded-xl text-sm font-semibold bg-primary-600 hover:bg-primary-700 text-white disabled:opacity-50 flex items-center gap-2"
+                >
+                  {billingBusy === category
+                    ? <IconLoader2 size={14} className="animate-spin" />
+                    : price}
+                </button>
+              </div>
+            ))}
+          </div>
         </section>
       )}
 
