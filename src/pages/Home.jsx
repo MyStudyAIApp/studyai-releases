@@ -68,6 +68,7 @@ export default function Home() {
   }
   // ── Suscripción Pro / bonos (web, vía Stripe) ───────────────────────────
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | null
+  const [canarias, setCanarias] = useState(false)
   const STRIPE_PRICES = {
     pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
     transcription: 'price_1U6EFGBUwE5wbpTtPo2IKUr0',
@@ -76,7 +77,7 @@ export default function Home() {
   async function handleStripeCheckout(kind) {
     setBillingBusy(kind)
     try {
-      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
+      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind], canarias })
       window.location.href = res.url
     } catch (e) {
       addToast(e.message || 'No se pudo iniciar el pago', 'error')
@@ -605,6 +606,10 @@ export default function Home() {
             <p className="text-xs text-slate-400 mb-4">
               Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
             </p>
+            <label className="flex items-center gap-2 text-xs text-slate-400 mb-3">
+              <input type="checkbox" checked={canarias} onChange={(e) => setCanarias(e.target.checked)} />
+              Resido en Canarias (se aplica IGIC en vez de IVA)
+            </label>
             <button
               onClick={() => handleStripeCheckout('pro')}
               disabled={!!billingBusy}
@@ -621,6 +626,10 @@ export default function Home() {
       {IS_WEB && planTier === 'pro' && (
         <section className="mb-8">
           <h3 className="section-title">Ampliar cupo de voz</h3>
+          <label className="flex items-center gap-2 text-xs text-slate-400 mb-2">
+            <input type="checkbox" checked={canarias} onChange={(e) => setCanarias(e.target.checked)} />
+            Resido en Canarias (se aplica IGIC en vez de IVA)
+          </label>
           <div className="card divide-y divide-slate-800">
             {[
               { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra', price: '3€' },

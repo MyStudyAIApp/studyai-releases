@@ -552,6 +552,7 @@ export default function SettingsPage() {
   // ── Plan y facturación (Stripe, solo web) ──────────────────────────────
   const planTier = useAppStore(s => s.planTier)
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | 'portal' | null
+  const [canarias, setCanarias] = useState(false)
 
   const STRIPE_PRICES = {
     pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
@@ -568,7 +569,7 @@ export default function SettingsPage() {
   async function handleCheckout(kind) {
     setBillingBusy(kind)
     try {
-      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
+      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind], canarias })
       window.location.href = res.url
     } catch (e) {
       addToast(e.message || 'No se pudo iniciar el pago', 'error')
@@ -894,6 +895,10 @@ export default function SettingsPage() {
       {/* ── Plan y facturación (solo web, Stripe) ──────────────────────── */}
       {IS_WEB && (
         <CollapsibleCard icon="💳" title="Plan y facturación" subtitle={planTier === 'pro' ? 'Pro' : planTier === 'trial' ? 'Prueba gratis' : 'Free'} defaultOpen={false}>
+          <label className="flex items-center gap-2 text-sm text-slate-400 pb-3 border-b border-slate-800 mb-3">
+            <input type="checkbox" checked={canarias} onChange={(e) => setCanarias(e.target.checked)} />
+            Resido en Canarias (se aplica IGIC en vez de IVA)
+          </label>
           {planTier !== 'pro' && (
             <div className="pb-3 border-b border-slate-800">
               <p className="text-sm text-slate-300 mb-2">Hazte Pro — 15€/mes, sin límite de generaciones.</p>
