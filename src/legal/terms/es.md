@@ -123,6 +123,14 @@ Los precios, las descripciones o la disponibilidad de los Productos se detallan 
 Aunque los Productos en esta Aplicación se presentan con la máxima fidelidad posible desde un punto de vista técnico, la representación en esta Aplicación a través de cualquier medio (incluyendo, según corresponda, materiales gráficos, imágenes, colores o sonidos) únicamente pretenden servir como referencia y no implican ninguna garantía de las características del Producto adquirido.
 Las características del Producto escogido se describirán durante el proceso de compra.
 
+### Planes, cuotas de uso y bonos
+- **Plan Free**: acceso gratuito con un cupo de 10 generaciones de contenido al mes (resúmenes, exámenes, fichas, etc.) y 10 minutos/mes de funciones de voz/visión (transcripción, podcasts, resolución de ejercicios por foto).
+- **Prueba gratis**: los 7 primeros días desde el registro, la cuenta tiene acceso equivalente al plan Pro sin coste.
+- **Plan Pro (15€/mes, suscripción recurrente)**: sin límite de generaciones de contenido; 20 horas/mes de funciones de voz/visión.
+- **Bonos de pago único**: para ampliar el cupo de voz/visión sin cambiar de plan — "+10 horas de transcripción" (3€) y "+10 podcasts" (7€).
+Todos los cupos anteriores incluyen además un límite de gasto real por Usuario como medida de protección frente a usos abusivos o automatizados, independiente del cupo por función.
+Los precios indicados no incluyen impuestos aplicables (IVA/IGIC), que se calculan y muestran durante el proceso de pago según la ubicación del Usuario.
+
 ### Purchasing process
 Any steps taken from choosing a Product to order submission form part of the purchasing process.
 The purchasing process includes these steps:
@@ -147,9 +155,9 @@ Los precios en esta Aplicación se muestran:
 - ya sea incluyendo o excluyendo todas las comisiones, tarifas y costes aplicables, dependiendo de la sección que esté consultando el Usuario.
 
 ### Métodos de pago
-Se facilitará la información relativa a los métodos de pago aceptados durante el proceso de compra.
+En la versión web, los pagos (suscripción Pro y bonos) se procesan a través de **Stripe**, un proveedor de pagos de terceros. Stripe acepta tarjeta de crédito/débito y otros métodos según disponibilidad. En la versión Android, los pagos se procesan a través de Google Play Billing.
 Algunos métodos de pago solo estarán disponibles sujetos a condiciones o comisiones adicionales. En esos casos, la información relativa a estos podrá encontrarse en la sección específica de esta Aplicación.
-Todos los pagos se tramitan de forma independiente a través de servicios de terceros. Por consiguiente, esta Aplicación no recoge ninguna información de pago - como datos de tarjetas de crédito - sino que únicamente recibe una notificación una vez que se ha completado satisfactoriamente el pago. Los Usuarios pueden leer la política de privacidad de esta Aplicación para obtener más información sobre el tratamiento de datos y los derechos de los Usuarios sobre sus datos.
+Todos los pagos se tramitan de forma independiente a través de servicios de terceros (Stripe / Google Play). Por consiguiente, esta Aplicación no recoge ninguna información de pago - como datos de tarjetas de crédito - sino que únicamente recibe una notificación una vez que se ha completado satisfactoriamente el pago. Los Usuarios pueden leer la política de privacidad de esta Aplicación para obtener más información sobre el tratamiento de datos y los derechos de los Usuarios sobre sus datos.
 Si falla el pago a través de los métodos disponibles o bien es denegado por el proveedor de servicios de pago, el Titular no tendrá ninguna obligación de ejecutar el pedido de compra. Si un pago falla o es denegado, el Titular se reserva el derecho a reclamar al Usuario todos los gastos o daños y perjuicios relacionados con este.
 
 ### Retención de los derechos de uso
