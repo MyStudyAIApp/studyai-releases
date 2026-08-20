@@ -1,5 +1,6 @@
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
+import DOMPurify from 'dompurify'
 
 function safeJsonParse(str) {
   try { return JSON.parse(str) } catch {}
@@ -91,6 +92,12 @@ function renderLatex(latex) {
   try {
     return katex.renderToString(latex, { displayMode: true, throwOnError: false })
   } catch {
-    return `<span class="font-mono">${latex}</span>`
+    // KaTeX en si es seguro (trust:false por defecto bloquea javascript: y
+    // \href peligrosos), pero este camino de respaldo interpolaba el LaTeX en
+    // crudo dentro del HTML. Como lo genera la IA, se limpia antes: sin
+    // etiquetas permitidas queda como texto plano, que es justo lo que quiere
+    // mostrar este fallback.
+    const plano = DOMPurify.sanitize(String(latex ?? ''), { ALLOWED_TAGS: [], ALLOWED_ATTR: [] })
+    return `<span class="font-mono">${plano}</span>`
   }
 }

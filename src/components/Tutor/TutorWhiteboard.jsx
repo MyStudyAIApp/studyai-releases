@@ -62,7 +62,9 @@ function MermaidBoard({ content }) {
 
   return (
     <div className="absolute inset-0 flex flex-col overflow-auto z-10 pointer-events-none p-3 gap-1">
-      {svg && <div className="flex-1" dangerouslySetInnerHTML={{ __html: svg }} />}
+      {/* Se sanea igual que el SVG que llega directo del tutor (ver abajo): el
+          diagrama lo genera la IA, y mermaid devuelve SVG sin filtrar. */}
+      {svg && <div className="flex-1" dangerouslySetInnerHTML={{ __html: sanitizeSVG(svg) }} />}
       <p className="text-[10px] text-slate-600 text-center shrink-0">
         Diagrama ilustrativo — verifica con tu libro de texto
       </p>

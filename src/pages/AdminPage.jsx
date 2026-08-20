@@ -233,7 +233,13 @@ export default function AdminPage() {
 
   async function startTwoFASetup() {
     const authHeader = await getAuthHeader()
-    const res = await fetch(`${WEB_API}/admin/2fa/setup`, { method: 'POST', headers: { ...authHeader } })
+    // X-Admin-2FA es obligatoria si el 2FA YA estaba activo: reconfigurarlo
+    // exige haber pasado el actual. En el alta inicial no hay token todavia y
+    // el backend no lo pide.
+    const res = await fetch(`${WEB_API}/admin/2fa/setup`, {
+      method: 'POST',
+      headers: { ...authHeader, ...(twoFAToken ? { 'X-Admin-2FA': twoFAToken } : {}) },
+    })
     if (!res.ok) return
     const data = await res.json()
     setSetupQr(data.qr_code_png_base64)
@@ -249,7 +255,11 @@ export default function AdminPage() {
       const authHeader = await getAuthHeader()
       const res = await fetch(`${WEB_API}/admin/2fa/confirm-setup`, {
         method: 'POST',
-        headers: { ...authHeader, 'Content-Type': 'application/json' },
+        headers: {
+          ...authHeader,
+          'Content-Type': 'application/json',
+          ...(twoFAToken ? { 'X-Admin-2FA': twoFAToken } : {}),
+        },
         body: JSON.stringify({ code: twoFACode.trim() }),
       })
       if (!res.ok) { setTwoFAError('Código incorrecto. Comprueba la hora del móvil y vuelve a intentarlo.'); return }
