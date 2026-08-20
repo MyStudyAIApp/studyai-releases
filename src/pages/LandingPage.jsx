@@ -307,7 +307,7 @@ export default function LandingPage() {
               <li>✓ {t('landing.pricing.proItem2')}</li>
               <li>✓ {t('landing.pricing.proItem3')}</li>
             </ul>
-            <a href="mailto:support@mystudyai.eu" className="btn-primary w-full justify-center mt-auto">{t('landing.pricing.proCta')}</a>
+            <Link to="/login" className="btn-primary w-full justify-center mt-auto">{t('landing.pricing.proCta')}</Link>
           </div>
         </div>
       </section>
