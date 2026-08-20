@@ -552,7 +552,11 @@ export default function SettingsPage() {
   // ── Plan y facturación (Stripe, solo web) ──────────────────────────────
   const planTier = useAppStore(s => s.planTier)
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | 'portal' | null
-  const [canarias, setCanarias] = useState(false)
+  const [canarias, setCanarias] = useState(() => localStorage.getItem('billing_canarias') === '1')
+  function toggleCanarias(checked) {
+    setCanarias(checked)
+    localStorage.setItem('billing_canarias', checked ? '1' : '0')
+  }
 
   const STRIPE_PRICES = {
     pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
@@ -896,7 +900,7 @@ export default function SettingsPage() {
       {IS_WEB && (
         <CollapsibleCard icon="💳" title="Plan y facturación" subtitle={planTier === 'pro' ? 'Pro' : planTier === 'trial' ? 'Prueba gratis' : 'Free'} defaultOpen={false}>
           <label className="flex items-center gap-2 text-sm text-slate-400 pb-3 border-b border-slate-800 mb-3">
-            <input type="checkbox" checked={canarias} onChange={(e) => setCanarias(e.target.checked)} />
+            <input type="checkbox" checked={canarias} onChange={(e) => toggleCanarias(e.target.checked)} />
             Resido en Canarias (se aplica IGIC en vez de IVA)
           </label>
           {planTier !== 'pro' && (

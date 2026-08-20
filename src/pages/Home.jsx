@@ -68,7 +68,11 @@ export default function Home() {
   }
   // ── Suscripción Pro / bonos (web, vía Stripe) ───────────────────────────
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | null
-  const [canarias, setCanarias] = useState(false)
+  const [canarias, setCanarias] = useState(() => localStorage.getItem('billing_canarias') === '1')
+  function toggleCanarias(checked) {
+    setCanarias(checked)
+    localStorage.setItem('billing_canarias', checked ? '1' : '0')
+  }
   const STRIPE_PRICES = {
     pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
     transcription: 'price_1U6EFGBUwE5wbpTtPo2IKUr0',
@@ -607,7 +611,7 @@ export default function Home() {
               Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
             </p>
             <label className="flex items-center gap-2 text-xs text-slate-400 mb-3">
-              <input type="checkbox" checked={canarias} onChange={(e) => setCanarias(e.target.checked)} />
+              <input type="checkbox" checked={canarias} onChange={(e) => toggleCanarias(e.target.checked)} />
               Resido en Canarias (se aplica IGIC en vez de IVA)
             </label>
             <button
@@ -627,7 +631,7 @@ export default function Home() {
         <section className="mb-8">
           <h3 className="section-title">Ampliar cupo de voz</h3>
           <label className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-            <input type="checkbox" checked={canarias} onChange={(e) => setCanarias(e.target.checked)} />
+            <input type="checkbox" checked={canarias} onChange={(e) => toggleCanarias(e.target.checked)} />
             Resido en Canarias (se aplica IGIC en vez de IVA)
           </label>
           <div className="card divide-y divide-slate-800">
