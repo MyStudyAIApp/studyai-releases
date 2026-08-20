@@ -1,12 +1,6 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Allgemeine Nutzungsbedingungen von mystudyai.eu
 Willkommen bei der Seite der AGBs von mystudyai.eu. Dieses Dokument hilft Ihnen zu verstehen, wie Sie unsere Dienste nutzen können und was Sie von uns erwarten können.
 Letzte Aktualisierung:  4. August 2026
-Back to overview
 
 ## Inhaltsverzeichnis
 - Einleitung
@@ -122,6 +116,14 @@ Preise, Beschreibungen und Verfügbarkeit der Produkte sind in den entsprechende
 Obwohl Produkte über diese Anwendung mit der technisch größtmöglichen Sorgfalt dargestellt werden, dienen Darstellungen jeglicher Art (einschließlich graphischer Darstellungsformen, Bilder, Farben, Klänge) lediglich als Referenz und stellen keine Garantie bezüglich der Eigenschaften des erworbenen Produkts dar.
 Die Merkmale des ausgewählten Produkts werden im Laufe des Kaufvorgangs erläutert.
 
+### Pläne, Nutzungskontingente und Zusatzpakete
+- **Free-Plan**: kostenloser Zugang mit einem Kontingent von 10 Inhaltsgenerierungen pro Monat (Zusammenfassungen, Prüfungen, Karteikarten usw.) und 10 Minuten/Monat für Sprach-/Bildfunktionen (Transkription, Podcasts, Aufgabenlösung per Foto).
+- **Kostenlose Testphase**: die ersten 7 Tage nach der Registrierung hat das Konto Pro-Zugang ohne Kosten.
+- **Pro-Plan (15 €/Monat, wiederkehrendes Abonnement)**: unbegrenzte Inhaltsgenerierungen; 20 Stunden/Monat für Sprach-/Bildfunktionen.
+- **Einmalige Zusatzpakete**: zur Erweiterung des Sprach-/Bildkontingents ohne Planwechsel — „+10 Stunden Transkription" (3 €) und „+10 Podcasts" (7 €).
+Für alle oben genannten Kontingente gilt zusätzlich eine reale Ausgabenobergrenze pro Nutzer als Schutz vor missbräuchlicher oder automatisierter Nutzung, unabhängig vom jeweiligen Funktionskontingent.
+Die angegebenen Preise verstehen sich ohne anwendbare Steuern (MwSt./IGIC), die während des Bezahlvorgangs je nach Standort des Nutzers berechnet und angezeigt werden.
+
 ### Kaufvorgang
 Alle Schritte von der Auswahl eines Produkts bis hin zur Aufgabe der Bestellung sind Teil des Kaufvorganges. Der Kaufvorgang umfasst folgende Schritte:
 - Der Nutzer sucht das gewünschte Produkt aus dem Sortiment aus und gibt, wo vorgesehen, die gewünschte Menge oder Eigenschaften an, damit das Produkt in der Produktauswahl erscheint.
@@ -145,9 +147,9 @@ Die Preise werden über diese Anwendung folgendermaßen angezeigt:
 - entweder exklusive oder inklusive aller anfallenden Gebühren, Steuern und Kosten, je nachdem, in welchen Abschnitt sich der Nutzer gerade befindet.
 
 ### Zahlungsmethoden
-Informationen zu den akzeptierten Zahlungsmethoden werden während des Kaufvorgangs zur Verfügung gestellt.
+In der Web-Version werden Zahlungen (Pro-Abonnement und Zusatzpakete) über **Stripe** abgewickelt, einen Zahlungsdienstleister von Drittanbietern. Stripe akzeptiert Kredit-/Debitkarten und je nach Verfügbarkeit weitere Zahlungsmethoden. In der Android-Version werden Zahlungen über Google Play Billing abgewickelt.
 Einige Zahlungsmethoden sind möglicherweise nur gegen zusätzliche Bedingungen oder Gebühren verfügbar. In diesen Fällen finden Sie die relevanten Information im entsprechenden Abschnitt des Dienstes (diese Anwendung).
-Alle Zahlungen werden über Drittanbieter abgewickelt. Daher sammelt diese Anwendung keine Zahlungsinformationen – wie z.B. Kreditkartendaten – sondern erhält lediglich eine Benachrichtigung, wenn die Zahlung erfolgreich abgeschlossen wurde. Der Nutzer kann die Datenschutzbestimmungen von diese Anwendung lesen, um mehr über die Datenverarbeitung und seine Rechte in Bezug auf seine Daten zu erfahren.
+Alle Zahlungen werden über Drittanbieter abgewickelt (Stripe / Google Play). Daher sammelt diese Anwendung keine Zahlungsinformationen – wie z.B. Kreditkartendaten – sondern erhält lediglich eine Benachrichtigung, wenn die Zahlung erfolgreich abgeschlossen wurde. Der Nutzer kann die Datenschutzbestimmungen von diese Anwendung lesen, um mehr über die Datenverarbeitung und seine Rechte in Bezug auf seine Daten zu erfahren.
 Wenn die Zahlung über die verfügbaren Methoden fehlschlägt oder vom Zahlungsdienstleister abgelehnt wird, ist der Anbieter nicht verpflichtet, die Bestellung zu erfüllen. Wenn eine Zahlung fehlschlägt oder abgelehnt wird, behält sich der Anbieter das Recht vor, alle damit verbundenen Kosten oder Schadenersatz vom Nutzer zu fordern.
 
 ### Aufrechterhaltung der Nutzungsrechte

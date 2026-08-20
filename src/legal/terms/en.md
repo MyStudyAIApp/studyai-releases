@@ -1,12 +1,6 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Terms and Conditions of mystudyai.eu
 Welcome to the Terms & Conditions page of mystudyai.eu. This document will help you understand how you can use our services and what you can expect from us.
 Latest update: August 04, 2026
-Back to overview
 
 ## Table of contents
 - Introduction
@@ -123,6 +117,14 @@ Prices, descriptions or availability of Products are outlined in the respective 
 While Products on this Application are presented with the greatest accuracy technically possible, representation on this Application through any means (including, as the case may be, graphic material, images, colors, sounds) is for reference only and implies no warranty as to the characteristics of the purchased Product.
 The characteristics of the chosen Product will be outlined during the purchasing process.
 
+### Plans, usage quotas and top-ups
+- **Free plan**: free access with a quota of 10 content generations per month (summaries, exams, flashcards, etc.) and 10 minutes/month of voice/vision features (transcription, podcasts, solving exercises from a photo).
+- **Free trial**: the first 7 days after registration, the account has Pro-equivalent access at no cost.
+- **Pro plan (€15/month, recurring subscription)**: unlimited content generations; 20 hours/month of voice/vision features.
+- **One-time top-ups**: to extend the voice/vision quota without changing plan — "+10 hours of transcription" (€3) and "+10 podcasts" (€7).
+All quotas above are additionally subject to a real spending cap per User, as a protection against abusive or automated use, independent of the per-feature quota.
+Listed prices do not include applicable taxes (VAT/IGIC), which are calculated and shown during checkout based on the User's location.
+
 ### Purchasing process
 Any steps taken from choosing a Product to order submission form part of the purchasing process.
 The purchasing process includes these steps:
@@ -147,9 +149,9 @@ Prices on this Application are displayed:
 - either exclusive or inclusive of any applicable fees, taxes and costs, depending on the section the User is browsing.
 
 ### Methods of payment
-Information related to accepted payment methods is made available during the purchasing process.
+On the web version, payments (Pro subscription and top-ups) are processed through **Stripe**, a third-party payment provider. Stripe accepts credit/debit cards and other methods depending on availability. On the Android version, payments are processed through Google Play Billing.
 Some payment methods may only be available subject to additional conditions or fees. In such cases related information can be found in the dedicated section of this Application.
-All payments are independently processed through third-party services. Therefore, this Application does not collect any payment information – such as credit card details – but only receives a notification once the payment has been successfully completed.  The User may read the privacy policy of this Application to learn more about the data processing and Users’ rights regarding their data.
+All payments are independently processed through third-party services (Stripe / Google Play). Therefore, this Application does not collect any payment information – such as credit card details – but only receives a notification once the payment has been successfully completed.  The User may read the privacy policy of this Application to learn more about the data processing and Users’ rights regarding their data.
 If a payment through the available methods fails or is refused by the payment service provider, the Owner shall be under no obligation to fulfill the purchase order. If a payment fails or is refused, the Owner reserves the right to claim any related expenses or damages from the User.
 
 ### Retention of usage rights

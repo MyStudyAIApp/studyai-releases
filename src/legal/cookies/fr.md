@@ -1,8 +1,3 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Politique relative aux cookies de mystudyai.eu
 Bienvenue sur la politique de cookies de mystudyai.eu. La présente politique vous aidera à comprendre quels cookies et technologies de traçage nous utilisons, la façon dont nous les utilisons et quels sont vos droits à cet égard.
 Dernière mise à jour :  5 août 2026

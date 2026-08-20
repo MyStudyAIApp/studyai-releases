@@ -1,8 +1,3 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Privacy Policy of mystudyai.eu
 Welcome to the privacy policy of mystudyai.eu. This policy will help you understand what data we collect, why we collect it, and what your rights are in relation to it.
 Latest update: August 05, 2026
@@ -161,6 +156,15 @@ Purchase and subscription management service (RevenueCat, Inc., USA), used to ve
 - User identifier
 - Purchase/subscription history
 - Purchase platform
+
+### Stripe
+Payment processing service (Stripe, Inc., USA), used exclusively for payments made from the web version (Pro subscription and one-time top-ups). Stripe collects and processes the User's card or payment method data directly — this Application never receives or stores that data, it only receives confirmation that the payment was completed. Subscription management (changing payment method, cancellation, downloading invoices) is done through Stripe's Customer Portal.
+
+### Personal Data processed:
+- Email address
+- User identifier
+- Billing data (address, country) and purchase history
+- Card or payment method data (processed directly by Stripe, never by this Application)
 
 ### Advertising
 This type of service allows User Data to be utilized for advertising communication purposes. These communications are displayed in the form of banners and other advertisements on this Application, possibly based on User interests. This does not mean that all Personal Data are used for this purpose. Information and conditions of use are shown below. Some of the services listed below may use Trackers to identify Users or they may use the behavioral retargeting technique, i.e. displaying ads tailored to the User’s interests and behavior, including those detected outside this Application. For more information, please check the privacy policies of the relevant services. Services of this kind usually allow Users to opt out of such tracking. Users may learn how to opt out of interest-based advertising more generally by visiting the relevant opt-out section in this document.

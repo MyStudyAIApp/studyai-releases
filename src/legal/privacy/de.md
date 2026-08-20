@@ -1,8 +1,3 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Datenschutzerklärung von mystudyai.eu
 Willkommen bei der Datenschutzrichtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Daten wir erheben, warum wir sie erheben und welche Rechte Sie diesbezüglich haben.
 Letzte Aktualisierung:  5. August 2026
@@ -172,6 +167,15 @@ Dienst zur Verwaltung von Käufen und Abonnements (RevenueCat, Inc., USA), verwe
 - Nutzerkennung
 - Kauf-/Abonnementverlauf
 - Kaufplattform
+
+### Stripe
+Zahlungsabwicklungsdienst (Stripe, Inc., USA), ausschließlich für Zahlungen aus der Web-Version verwendet (Pro-Abonnement und einmalige Zusatzpakete). Stripe erfasst und verarbeitet die Karten- oder Zahlungsdaten des Nutzers direkt — diese Anwendung erhält oder speichert diese Daten niemals, sondern erhält nur die Bestätigung, dass die Zahlung abgeschlossen wurde. Die Verwaltung des Abonnements (Zahlungsmethode ändern, Kündigung, Rechnungsdownload) erfolgt über das Kundenportal von Stripe.
+
+### Verarbeitete personenbezogene Daten:
+- E-Mail-Adresse
+- Nutzerkennung
+- Rechnungsdaten (Adresse, Land) und Kaufhistorie
+- Karten- oder Zahlungsdaten (direkt von Stripe verarbeitet, niemals von dieser Anwendung)
 
 ### Werbung
 Diese Art von Dienst ermöglicht die Nutzung von Nutzerdaten für Zwecke der Werbekommunikation. Diese Kommunikation erfolgt in Form von Bannern und anderen Werbeanzeigen auf dieser Anwendung, möglicherweise basierend auf den Interessen der Nutzer. Dies bedeutet nicht, dass alle personenbezogenen Daten zu diesem Zweck verwendet werden. Einige der unten aufgeführten Dienste können Tracker verwenden, um Nutzer zu identifizieren oder Behavioral-Retargeting einzusetzen, d. h. auf die Interessen und das Verhalten des Nutzers zugeschnittene Werbung anzuzeigen. Weitere Informationen finden sich in den Datenschutzerklärungen der jeweiligen Dienste. Solche Dienste erlauben den Nutzern in der Regel, dieses Tracking abzulehnen.

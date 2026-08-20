@@ -1,12 +1,6 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Conditions générales de mystudyai.eu
 Bienvenue sur la page des Conditions Générales de mystudyai.eu. Ce document vous aidera à comprendre comment vous pouvez utiliser nos services et ce que vous pouvez attendre de nous.
 Dernière mise à jour :  4 août 2026
-Back to overview
 
 ## Table des matières
 - Introduction
@@ -125,6 +119,14 @@ Les prix, les descriptions ou la disponibilité des Produits sont décrits dans 
 Bien que les Produits sur cette Application soient présentés avec la plus grande précision technique possible, les représentations sur cette Application par tout moyen (y compris, selon le cas, les éléments graphiques, les images, les couleurs, les sons) ne sont données qu’à titre indicatif et n’impliquent aucune garantie quant aux caractéristiques du Produit acheté.
 Les caractéristiques du Produit choisi seront décrites lors du processus d’achat.
 
+### Formules, quotas d'utilisation et bonus
+- **Formule Free** : accès gratuit avec un quota de 10 générations de contenu par mois (résumés, examens, fiches, etc.) et 10 minutes/mois de fonctions vocales/vision (transcription, podcasts, résolution d'exercices par photo).
+- **Essai gratuit** : les 7 premiers jours après l'inscription, le compte a un accès équivalent à Pro sans frais.
+- **Formule Pro (15€/mois, abonnement récurrent)** : générations de contenu illimitées ; 20 heures/mois de fonctions vocales/vision.
+- **Bonus à paiement unique** : pour étendre le quota vocal/vision sans changer de formule — « +10 heures de transcription » (3€) et « +10 podcasts » (7€).
+Tous les quotas ci-dessus sont en outre soumis à un plafond de dépense réel par Utilisateur, en protection contre un usage abusif ou automatisé, indépendant du quota par fonctionnalité.
+Les prix indiqués n'incluent pas les taxes applicables (TVA/IGIC), calculées et affichées lors du paiement selon la localisation de l'Utilisateur.
+
 ### Purchasing process
 Any steps taken from choosing a Product to order submission form part of the purchasing process.
 The purchasing process includes these steps:
@@ -149,9 +151,9 @@ Les Prix sont présentés sur cette Application :
 - soit excluant soit comprenant tous les frais, taxes et prix applicables, selon l’Utilisateur naviguant ;
 
 ### Méthodes de paiement
-Les informations liées aux méthodes de paiement acceptées sont rendues accessibles pendant le processus d’achat.
+Sur la version web, les paiements (abonnement Pro et bonus) sont traités via **Stripe**, un prestataire de paiement tiers. Stripe accepte les cartes de crédit/débit et d'autres méthodes selon disponibilité. Sur la version Android, les paiements sont traités via Google Play Billing.
 Certaines méthodes de paiement peuvent seulement être accessibles sur conditions ou frais additionnel. Dans de tels cas l’information qui y est connectée peut être trouvée dans la section dédiée de cette Application.
-Tous les paiements sont traités indépendamment à travers des services de tiers. C’est pourquoi cette Application ne collecte pas d’information de paiement – telle que les informations de carte de crédit – mais reçoit seulement une notification une fois que le paiement a été effectué avec succès. L’Utilisateur peut consulter la politique de confidentialité de cette Application pour en savoir plus sur le traitement des données et les droits des Utilisateurs concernant leurs données.
+Tous les paiements sont traités indépendamment à travers des services de tiers (Stripe / Google Play). C’est pourquoi cette Application ne collecte pas d’information de paiement – telle que les informations de carte de crédit – mais reçoit seulement une notification une fois que le paiement a été effectué avec succès. L’Utilisateur peut consulter la politique de confidentialité de cette Application pour en savoir plus sur le traitement des données et les droits des Utilisateurs concernant leurs données.
 Si un paiement par les moyens disponibles échoue ou est refusé par le fournisseur de service de paiement, le Propriétaire ne sera soumis à aucune obligation d’exécuter la commande. En cas d’échec du paiement ou de paiement refusé, le Propriétaire se réserve le droit de réclamer à l’Utilisateur le remboursement des éventuels frais ou dommages en découlant.
 
 ### Rétention des droits d’utilisation

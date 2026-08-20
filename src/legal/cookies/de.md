@@ -1,8 +1,3 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Cookie-Richtlinie von mystudyai.eu
 Willkommen bei der Cookie-Richtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Cookies und Tracking-Technologien wir verwenden, wie wir sie verwenden und welche Rechte Sie diesbezüglich haben.
 Letzte Aktualisierung:  5. August 2026

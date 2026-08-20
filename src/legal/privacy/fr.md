@@ -1,8 +1,3 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Politique de confidentialité de mystudyai.eu
 Bienvenue sur la politique de confidentialité de mystudyai.eu. La présente politique vous aidera à comprendre quelles données nous recueillons, pourquoi nous les recueillons et quels sont vos droits à cet égard.
 Dernière mise à jour :  5 août 2026
@@ -172,6 +167,15 @@ Service de gestion des achats et abonnements (RevenueCat, Inc., États-Unis), ut
 - Identifiant utilisateur
 - Historique d'achats/abonnements
 - Plateforme d'achat
+
+### Stripe
+Service de traitement des paiements (Stripe, Inc., États-Unis), utilisé exclusivement pour les paiements effectués depuis la version web (abonnement Pro et bonus à paiement unique). Stripe collecte et traite directement les données de carte ou de moyen de paiement de l'Utilisateur — cette Application ne reçoit ni ne stocke jamais ces données, elle reçoit uniquement la confirmation que le paiement a été effectué. La gestion de l'abonnement (changement de moyen de paiement, résiliation, téléchargement des factures) se fait via le Portail Client de Stripe.
+
+### Données personnelles traitées :
+- Adresse e-mail
+- Identifiant utilisateur
+- Données de facturation (adresse, pays) et historique d'achats
+- Données de carte ou de moyen de paiement (traitées directement par Stripe, jamais par cette Application)
 
 ### Publicité
 Ce type de service permet l'utilisation des Données des Utilisateurs à des fins de communication publicitaire. Ces communications sont affichées sous forme de bannières et d'autres publicités sur cette Application, éventuellement basées sur les intérêts des Utilisateurs. Cela ne signifie pas que toutes les Données personnelles sont utilisées à cette fin. Certains des services listés ci-dessous peuvent utiliser des Traceurs pour identifier les Utilisateurs ou recourir au retargeting comportemental, c'est-à-dire afficher des publicités adaptées aux intérêts et au comportement de l'Utilisateur. Pour en savoir plus, veuillez consulter les politiques de confidentialité des services concernés. Ces services permettent généralement aux Utilisateurs de refuser ce suivi.

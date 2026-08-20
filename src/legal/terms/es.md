@@ -1,12 +1,6 @@
-- Español
-- Deutsch
-- Français
-- English
-
 ## Condiciones de Uso de mystudyai.eu
 Bienvenido a la página de Términos y Condiciones de mystudyai.eu. Este documento le ayudará a entender cómo puede utilizar nuestros servicios y qué puede esperar de nosotros.
 Última revisión:  4 agosto 2026
-Back to overview
 
 ## Índice
 - Introducción
