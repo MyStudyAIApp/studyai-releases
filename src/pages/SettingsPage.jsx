@@ -587,6 +587,32 @@ export default function SettingsPage() {
     }
   }
 
+  // ── Derecho de desistimiento (solo web) ─────────────────────────────────
+  const [showWithdrawal, setShowWithdrawal]     = useState(false)
+  const [withdrawalStep, setWithdrawalStep]     = useState(1) // 1: declaración, 2: confirmación, 3: hecho
+  const [withdrawalText, setWithdrawalText]     = useState('')
+  const [withdrawalSending, setWithdrawalSending] = useState(false)
+  const [withdrawalDoneAt, setWithdrawalDoneAt] = useState(null)
+
+  function openWithdrawalModal() {
+    setWithdrawalStep(1)
+    setWithdrawalText(`Comunico mi intención de desistir de mi contrato/compra con MyStudy AI (cuenta ${user?.email}).`)
+    setShowWithdrawal(true)
+  }
+
+  async function handleConfirmWithdrawal() {
+    setWithdrawalSending(true)
+    try {
+      const res = await api('POST', '/billing/withdrawal', { declaration: withdrawalText })
+      setWithdrawalDoneAt(res.timestamp)
+      setWithdrawalStep(3)
+    } catch (e) {
+      addToast(e.message || 'No se pudo enviar la solicitud', 'error')
+    } finally {
+      setWithdrawalSending(false)
+    }
+  }
+
   // ── Copias de seguridad (solo escritorio) ─────────────────────────────────
   const [backupStatus,   setBackupStatus]   = useState(null)   // { lastBackup, history, dbSizeMB, uploadsMB }
   const [backupBusy,     setBackupBusy]     = useState(false)  // haciendo copia manual
@@ -902,6 +928,18 @@ export default function SettingsPage() {
               className="text-sm text-slate-400 hover:text-slate-200 underline disabled:opacity-40"
             >{billingBusy === 'portal' ? 'Abriendo…' : 'Gestionar suscripción / facturas'}</button>
           </div>
+        </CollapsibleCard>
+      )}
+
+      {/* ── Derecho de desistimiento (solo web) ────────────────────────── */}
+      {IS_WEB && (
+        <CollapsibleCard icon="↩️" title="Derecho de desistimiento" defaultOpen={false}>
+          <p className="text-sm text-slate-400 mb-3">
+            Si acaba de contratar un plan de pago o un bono, tiene derecho a desistir del contrato en los 14 días siguientes, sin necesidad de justificación. Más detalles en los <Link to="/terminos" target="_blank" className="underline">Términos y Condiciones</Link>.
+          </p>
+          <button onClick={openWithdrawalModal} className="btn-secondary btn-sm">
+            Ejercer mi derecho de desistimiento
+          </button>
         </CollapsibleCard>
       )}
 
@@ -1492,6 +1530,48 @@ export default function SettingsPage() {
             </button>
           </div>
         </div>
+      </Modal>
+
+      {/* ── Modal: derecho de desistimiento ─────────────────────────────── */}
+      <Modal open={showWithdrawal} onClose={() => !withdrawalSending && setShowWithdrawal(false)} title="Derecho de desistimiento" size="sm">
+        {withdrawalStep === 1 && (
+          <div className="space-y-3">
+            <p className="text-sm text-slate-400">Puede editar el texto o dejarlo tal cual. Al continuar, se le pedirá una confirmación final.</p>
+            <textarea
+              value={withdrawalText}
+              onChange={(e) => setWithdrawalText(e.target.value)}
+              rows={5}
+              className="input w-full"
+            />
+            <div className="flex gap-2 justify-end">
+              <button onClick={() => setShowWithdrawal(false)} className="btn-secondary">Cancelar</button>
+              <button onClick={() => setWithdrawalStep(2)} disabled={!withdrawalText.trim()} className="btn-primary disabled:opacity-40">Continuar</button>
+            </div>
+          </div>
+        )}
+        {withdrawalStep === 2 && (
+          <div className="space-y-3">
+            <p className="text-sm text-slate-200 font-semibold">¿Confirma que desea desistir de su contrato/compra?</p>
+            <p className="text-xs text-slate-500">Esta acción se registrará con la fecha y hora actuales, y recibirá un acuse de recibo por email. No se le cobrará nada por ejercer este derecho.</p>
+            <div className="bg-slate-900 rounded-lg p-3 text-xs text-slate-400 whitespace-pre-wrap">{withdrawalText}</div>
+            <div className="flex gap-2 justify-end">
+              <button onClick={() => setWithdrawalStep(1)} disabled={withdrawalSending} className="btn-secondary disabled:opacity-40">Volver</button>
+              <button onClick={handleConfirmWithdrawal} disabled={withdrawalSending} className="btn-primary disabled:opacity-40">
+                {withdrawalSending ? 'Enviando…' : 'Sí, desistir'}
+              </button>
+            </div>
+          </div>
+        )}
+        {withdrawalStep === 3 && (
+          <div className="space-y-3 text-center py-2">
+            <p className="text-2xl">✅</p>
+            <p className="text-sm text-slate-200 font-semibold">Solicitud registrada</p>
+            <p className="text-xs text-slate-400">
+              {withdrawalDoneAt && new Date(withdrawalDoneAt).toLocaleString('es-ES')} — le hemos enviado un acuse de recibo a {user?.email}.
+            </p>
+            <button onClick={() => setShowWithdrawal(false)} className="btn-secondary mt-2">Cerrar</button>
+          </div>
+        )}
       </Modal>
 
       {/* ── Enlaces legales ──────────────────────────────────────────── */}
