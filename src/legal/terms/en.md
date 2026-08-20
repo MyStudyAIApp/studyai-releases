@@ -121,7 +121,7 @@ The characteristics of the chosen Product will be outlined during the purchasing
 - **Free plan**: free access with a quota of 10 content generations per month (summaries, exams, flashcards, etc.) and 10 minutes/month of voice/vision features (transcription, podcasts, solving exercises from a photo).
 - **Free trial**: the first 7 days after registration, the account has Pro-equivalent access at no cost.
 - **Pro plan (€15/month, recurring subscription)**: unlimited content generations; 20 hours/month of voice/vision features.
-- **One-time top-ups**: to extend the voice/vision quota without changing plan — "+10 hours of transcription" (€3) and "+10 podcasts" (€7). They can only be purchased while the account has an active Pro plan.
+- **One-time top-ups**: to extend the voice/vision quota without changing plan — "+10 hours of transcription" (€3) and "+10 podcasts" (€7). Each top-up extends the voice/vision minute allowance by the stated amount. They can only be purchased while the account has an active Pro plan.
 
 **How the cycle is counted.** Quotas renew every month counted from the date the plan was taken out or renewed, not by calendar months. For example, a subscription taken out on the 26th runs from the 26th of one month to the 25th of the next. For accounts without a subscription, the cycle is counted from the account's registration date. Where the start day does not exist in the closing month, the cycle ends on the last day of that month.
 
