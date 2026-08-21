@@ -336,7 +336,26 @@ export default function LoginPage() {
           <p className="text-slate-400 mt-2">Tu asistente de estudio</p>
         </div>
 
+        {/* Registro cerrado SOLO en web: la fase beta es por invitacion y no
+            interesa que alguien que llegue por casualidad a mystudyai.eu se
+            cree una cuenta. En movil no aplica -- esas apps no son publicas,
+            asi que ahi no hay nadie que pueda llegar de rebote. */}
+        {IS_WEB && (
+          <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3">
+            <p className="text-sm font-semibold text-amber-300 mb-1">Beta cerrada</p>
+            <p className="text-xs text-slate-300">
+              MyStudy AI está en fase de pruebas y el registro está cerrado por ahora.
+              Si ya tienes cuenta, inicia sesión abajo. ¿Te interesa participar?
+              Escríbenos a{' '}
+              <a href="mailto:support@mystudyai.eu" className="text-amber-300 underline">
+                support@mystudyai.eu
+              </a>.
+            </p>
+          </div>
+        )}
+
         {/* Tabs Login / Registro */}
+        {!IS_WEB && (
         <div className="flex rounded-xl bg-slate-700/50 p-1 mb-6">
           <button
             onClick={() => { setMode('login'); setError(null) }}
@@ -359,6 +378,7 @@ export default function LoginPage() {
             Crear cuenta
           </button>
         </div>
+        )}
 
         {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-4">
