@@ -174,7 +174,11 @@ export const useAppStore = create(
     }),
     {
       name: 'studyai-store',
-      partialize: (s) => ({ ttsVoicesPerLang: s.ttsVoicesPerLang, ttsRate: s.ttsRate, tutorTtsRate: s.tutorTtsRate, langsTtsRate: s.langsTtsRate, dailyGoalMinutes: s.dailyGoalMinutes, responseLang: s.responseLang }),
+      // planTier se persiste solo para pintar la insignia al instante en la
+      // siguiente carga (al volver de Stripe se veia "Free" un momento antes de
+      // que /usage/summary respondiera). Es un valor de adorno: /usage/summary
+      // lo corrige en cuanto llega y el cupo real siempre lo decide el backend.
+      partialize: (s) => ({ ttsVoicesPerLang: s.ttsVoicesPerLang, ttsRate: s.ttsRate, tutorTtsRate: s.tutorTtsRate, langsTtsRate: s.langsTtsRate, dailyGoalMinutes: s.dailyGoalMinutes, responseLang: s.responseLang, planTier: s.planTier }),
     }
   )
 )
