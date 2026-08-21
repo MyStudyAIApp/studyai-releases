@@ -284,3 +284,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   height: auto;
   width: auto;
 }
+
+/* ── Barra de estado (edge-to-edge) ────────────────────────────────────────
+   Desde Android 15 el sistema pinta el contenido DEBAJO de la barra de
+   estado, y con targetSdk 36 ya no se puede desactivar: sin esto la cabecera
+   de cada pantalla queda medio tapada dentro de las apps.
+
+   Va aqui una sola vez en vez de en las 11 pantallas moviles. En navegador
+   env() vale 0px (la barra la gestiona el propio navegador), asi que la web
+   no cambia en nada. La segunda regla descuenta ese hueco de min-h-screen
+   para que la pagina no crezca de mas y aparezca scroll donde no lo habia. */
+body {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.min-h-screen {
+  min-height: calc(100vh - env(safe-area-inset-top, 0px));
+}
