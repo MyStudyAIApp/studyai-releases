@@ -297,6 +297,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 body {
   padding-top: env(safe-area-inset-top, 0px);
 }
+/* Ese hueco lo pinta el fondo del body, que sin color propio dejaba ver el
+   gris por defecto del WebView: una franja gris sobre la cabecera azul. */
+html, body {
+  background-color: #0f172a; /* slate-900, el fondo de la app */
+}
 .min-h-screen {
   min-height: calc(100vh - env(safe-area-inset-top, 0px));
 }
