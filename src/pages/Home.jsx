@@ -39,11 +39,40 @@ export default function Home() {
     Billing.queryBonoProducts().then(setBonoPrices).catch(() => {})
   }, [planTier])
 
+  // Google Play puede tardar en responder (o no responder) la primera vez que
+  // se compra tras actualizar la app: Play Store esta reconciliando la version
+  // nueva y la busqueda del producto se queda esperando. El puente nativo no
+  // devuelve ni exito ni error, asi que sin esto el usuario ve el circulito
+  // girando para siempre, sin explicacion y sin forma de salir.
+  // ⚠️ Este limite NO cancela la compra: solo deja de esperarla. Si por debajo
+  // llegara a completarse, el cargo es real. Por eso el mensaje NO invita a
+  // reintentar -- hacerlo podria cobrar dos veces (los bonos son consumibles,
+  // Google deja comprarlos otra vez). Lo pagado no se pierde: el bono lo
+  // concede el webhook de RevenueCat en el backend, no esta pantalla.
+  // El plazo es largo a proposito para que solo salte en cuelgues de verdad y
+  // no en una compra lenta pero correcta.
+  const ESPERA_MAX_PAGO_MS = 90_000
+
+  function conTiempoLimite(promesa) {
+    return Promise.race([
+      promesa,
+      new Promise((_, rechazar) =>
+        setTimeout(
+          () => rechazar(new Error(
+            'Google Play está tardando en responder. Si llegaste a confirmar el pago, ' +
+            'espera unos minutos: se añadirá solo. No vuelvas a comprar sin comprobarlo antes.',
+          )),
+          ESPERA_MAX_PAGO_MS,
+        ),
+      ),
+    ])
+  }
+
   async function handleGoPro() {
     setPurchasing(true)
     setPurchaseError(null)
     try {
-      const result = await Billing.purchase({ accountId: user.id })
+      const result = await conTiempoLimite(Billing.purchase({ accountId: user.id }))
       if (!result.active) throw new Error('No se recibió confirmación de la compra')
       await api('POST', '/billing/verify-purchase')
       setPlanTier('pro')
@@ -58,7 +87,7 @@ export default function Home() {
     setBuyingBono(category)
     setBonoMessage(null)
     try {
-      await Billing.purchaseBono({ category, accountId: user.id })
+      await conTiempoLimite(Billing.purchaseBono({ category, accountId: user.id }))
       setBonoMessage({ type: 'ok', text: 'Compra completada — el bono se añadirá en unos segundos.' })
     } catch (e) {
       setBonoMessage({ type: 'error', text: e?.message || 'No se pudo completar la compra' })
