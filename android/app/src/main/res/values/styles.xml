@@ -13,6 +13,10 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:background">@null</item>
+        <!-- Sin esto el sistema pinta su gris por defecto (#303030) en el
+             hueco que el edge-to-edge deja bajo la barra de estado y sobre
+             la de navegacion: dos franjas grises sobre el azul de la app. -->
+        <item name="android:windowBackground">@color/appBackground</item>
     </style>
 
 
