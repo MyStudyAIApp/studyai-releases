@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppStore, api } from '../../store/appStore'
 import { useTranslation } from 'react-i18next'
 
@@ -6,6 +6,15 @@ export default function BackendBanner() {
   const { t } = useTranslation()
   const { backendError, setBackendReady, setBackendError } = useAppStore()
   const [retrying, setRetrying] = useState(false)
+  // El aviso solo tiene sentido cuando el arranque se hace notar. En la web el
+  // /health responde en decimas y el banner aparecia y desaparecia en cada
+  // recarga, dando sensacion de app rota. Si tarda mas de esto (backend
+  // dormido, Electron levantando el servicio local) si conviene avisar.
+  const [slow, setSlow] = useState(false)
+  useEffect(() => {
+    const t = setTimeout(() => setSlow(true), 1200)
+    return () => clearTimeout(t)
+  }, [])
 
   async function handleRetry() {
     setRetrying(true)
@@ -19,6 +28,8 @@ export default function BackendBanner() {
       setRetrying(false)
     }
   }
+
+  if (!slow && !backendError) return null
 
   return (
     <div className="bg-amber-950/60 border-b border-amber-700/50 px-4 py-2 flex items-center gap-3 text-sm text-amber-200">
