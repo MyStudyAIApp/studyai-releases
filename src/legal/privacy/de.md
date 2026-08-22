@@ -95,24 +95,23 @@ Supabase ist ein Hosting- und Backend-Dienst von Supabase, Inc.
 - Supabase, Inc. (Europa) – Datenschutzerklärung
 
 ### GroqCloud
-Unternehmen: Groq, LLC u.a.
-Ort der Verarbeitung: USA u.a.
-GroqCloud ist ein KI-Inferenzdienst von Groq, LLC, Groq UK Limited oder Groq Limited, je nachdem, wie der Anbieter die Datenverarbeitung organisiert, und wird intern vom Anbieter als Large-Language-Model(LLM)-Engine seines Business-Intelligence-Tools genutzt. Der Dienst analysiert Support-Kommunikation der Nutzer und Produktnutzungsdaten, um Geschäftserkenntnisse zu gewinnen. Dies beinhaltet eine Profilerstellung, jedoch keine ausschließlich auf automatisierter Verarbeitung beruhende Entscheidung, die rechtliche Wirkung entfaltet oder den Nutzer in ähnlicher Weise erheblich beeinträchtigt. Der Dienst ist nicht in diese Anwendung integriert.
+Unternehmen: Groq, LLC
+Ort der Verarbeitung: USA
+GroqCloud ist ein KI-Inferenzdienst (Groq, LLC, USA), der ausschließlich dazu dient, die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell). Die Audiodaten werden an den Dienst übermittelt, der die Transkription zurückgibt; weder die Audiodaten noch die Transkription werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert lokal auf dem Gerät, ohne Daten zu übermitteln.
 
 ### Verarbeitete personenbezogene Daten:
-- Nutzungsdaten
+- Vom Nutzer zur Transkription übermittelte Audioaufnahmen
+- Aus der Transkription resultierender Text
+- Nutzungsdaten (Dauer der Audioaufnahme)
 - IP-Adresse
-- Tracker
 
 ### Dienst bereitgestellt von:
 - Groq, LLC (USA) – Datenschutzerklärung
-- Groq UK Limited (Vereinigtes Königreich, Liechtenstein, Norwegen, Island) – Datenschutzerklärung
-- Groq Limited (Saudi-Arabien) – Datenschutzerklärung
 
 ### Microsoft Azure
 Unternehmen: Microsoft Corporation
 Ort der Verarbeitung: USA
-Microsoft Azure ist ein Hosting-Dienst von Microsoft Corporation.
+Azure AI Speech (Microsoft Corporation) wird zur Umwandlung von Text in Sprache verwendet: Der Text, den der Nutzer anhören möchte, wird übermittelt und der Dienst gibt die entsprechende Audioausgabe zurück. Es werden keine Aufnahmen des Nutzers an diesen Dienst übermittelt.
 
 ### Verarbeitete personenbezogene Daten:
 - verschiedene in der Datenschutzerklärung des Dienstes aufgeführte Datenarten

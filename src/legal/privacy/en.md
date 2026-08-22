@@ -84,24 +84,23 @@ Supabase is a hosting and backend service provided by Supabase, Inc.
 - Supabase, Inc. (Europe) – Privacy Policy
 
 ### GroqCloud
-Company: Groq, LLC and affiliates
-Place of processing: USA and other locations
-GroqCloud is an AI inference service provided by Groq, LLC, Groq UK Limited or Groq Limited, depending on how the Owner manages Data processing, and used internally by the Owner as the large language model (LLM) engine of its business intelligence tool. The service analyzes User support communications and product usage data to derive business insights. This involves profiling, but no decision based solely on automated processing that produces legal effects or similarly significant effects for Users. This service is not integrated into this Application.
+Company: Groq, LLC
+Place of processing: USA
+GroqCloud is an AI inference service (Groq, LLC, USA) used solely to transcribe into text the audio recordings made by the User within this Application (Whisper model). The audio is sent to the service, which returns the transcription; neither the audio nor the transcription is used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes on the device itself, without sending anything.
 
 ### Personal Data processed:
-- Usage Data
+- Audio recordings submitted by the User for transcription
+- Text resulting from the transcription
+- Usage Data (audio duration)
 - IP address
-- Trackers
 
 ### Service provided by:
 - Groq, LLC (USA) – Privacy Policy
-- Groq UK Limited (UK, Liechtenstein, Norway, Iceland) – Privacy Policy
-- Groq Limited (Saudi Arabia) – Privacy Policy
 
 ### Microsoft Azure
 Company: Microsoft Corporation
 Place of processing: USA
-Microsoft Azure is a hosting service provided by Microsoft Corporation.
+Azure AI Speech (Microsoft Corporation) is used to convert text into speech: the text the User asks to listen to is sent and the service returns the corresponding audio. No User recording is sent to this service.
 
 ### Personal Data processed:
 - Various types of Data as specified in the service's privacy policy

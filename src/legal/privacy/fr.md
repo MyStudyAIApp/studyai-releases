@@ -95,24 +95,23 @@ Supabase est un service d'hébergement et de backend fourni par Supabase, Inc.
 - Supabase, Inc. (Europe) – Politique de confidentialité
 
 ### GroqCloud
-Société : Groq, LLC et affiliés
-Lieu de traitement : États-Unis et autres
-GroqCloud est un service d'inférence IA fourni par Groq, LLC, Groq UK Limited ou Groq Limited, selon la manière dont le Propriétaire gère le traitement des Données, utilisé en interne par le Propriétaire comme moteur de modèle de langage (LLM) de son outil d'intelligence d'affaires. Le service analyse les communications d'assistance des Utilisateurs et les données d'usage du produit afin d'en tirer des informations commerciales. Cela implique un profilage, mais aucune décision fondée uniquement sur un traitement automatisé produisant des effets juridiques ou affectant significativement les Utilisateurs de manière similaire. Ce service n'est pas intégré à cette Application.
+Société : Groq, LLC
+Lieu de traitement : États-Unis
+GroqCloud est un service d’inférence IA (Groq, LLC, États-Unis) utilisé uniquement pour transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper). L’audio est transmis au service, qui renvoie la transcription ; ni l’audio ni la transcription ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription sur l’appareil lui-même, sans rien transmettre.
 
 ### Données personnelles traitées :
-- Données d'usage
+- Enregistrements audio transmis par l’Utilisateur pour transcription
+- Texte issu de la transcription
+- Données d’usage (durée de l’audio)
 - Adresse IP
-- Traceurs
 
 ### Service fourni par :
 - Groq, LLC (États-Unis) – Politique de confidentialité
-- Groq UK Limited (Royaume-Uni, Liechtenstein, Norvège, Islande) – Politique de confidentialité
-- Groq Limited (Arabie Saoudite) – Politique de confidentialité
 
 ### Microsoft Azure
 Société : Microsoft Corporation
 Lieu de traitement : États-Unis
-Microsoft Azure est un service d'hébergement fourni par Microsoft Corporation.
+Azure AI Speech (Microsoft Corporation) est utilisé pour convertir du texte en voix : le texte que l’Utilisateur souhaite écouter est transmis et le service renvoie l’audio correspondant. Aucun enregistrement de l’Utilisateur n’est transmis à ce service.
 
 ### Données personnelles traitées :
 - diverses catégories de Données précisées dans la politique de confidentialité du service

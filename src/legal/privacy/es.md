@@ -86,7 +86,7 @@ Algunos servicios de los enumerados más adelante, en su caso, pueden funcionar 
 ### Supabase
 Empresa: Supabase, Inc.
 Lugar de tratamiento: Europa
-Datos Personales tratados: Datos de uso +2
+Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
 Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
 
 ### Datos Personales tratados:
@@ -100,33 +100,19 @@ Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
                               – Política de privacidad
 
 ### GroqCloud
-Empresa: Groq, LLC +2
-Lugar de tratamiento: EE.UU. +5
-Datos Personales tratados: Datos de uso +2
-GroqCloud es un servicio de inferencia de IA proporcionado por Groq, LLC, Groq UK Limited o por Groq Limited, dependiendo de cómo gestione el Titular el tratamiento de Datos, y utilizado internamente por el Titular como motor de modelo de lenguaje de gran tamaño (LLM) de su herramienta de inteligencia empresarial. El servicio analiza las comunicaciones de asistencia de los Usuarios y los datos de uso del producto para obtener información empresarial. Esto implica la elaboración de perfiles, pero ninguna decisión basada únicamente en el tratamiento automatizado que produzca efectos jurídicos o efectos significativos similares para los Usuarios. El servicio no está integrado en esta Aplicación.
+Empresa: Groq, LLC
+Lugar de tratamiento: EE.UU.
+Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
+GroqCloud es un servicio de inferencia de IA (Groq, LLC, EE.UU.) utilizado únicamente para transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper). El audio se envía al servicio, que devuelve la transcripción; ni el audio ni la transcripción se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe en el propio dispositivo, sin enviar nada.
 
 ### Datos Personales tratados:
-- Datos de uso
+- Grabaciones de audio enviadas por el Usuario para su transcripción
+- Texto resultante de la transcripción
+- Datos de uso (duración del audio)
 - Dirección IP
-- Rastreadores
 
 ### Servicio prestado por:
 - Groq, LLC (EE.UU.)
-
-                              – Política de privacidad
-- Groq UK Limited (Reino Unido)
-
-                              – Política de privacidad
-- Groq UK Limited (Liechtenstein)
-
-                              – Política de privacidad
-- Groq UK Limited (Noruega)
-
-                              – Política de privacidad
-- Groq UK Limited (Islandia)
-
-                              – Política de privacidad
-- Groq Limited (Arabia Saudí)
 
                               – Política de privacidad
 
@@ -134,7 +120,7 @@ GroqCloud es un servicio de inferencia de IA proporcionado por Groq, LLC, Groq U
 Empresa: Microsoft Corporation
 Lugar de tratamiento: EE.UU.
 Datos Personales tratados: distintas clases de Datos, según se especifica en la Política de Privacidad del servicio
-Microsoft Azure es un servicio de hosting prestado por Microsoft Corporation.
+Se utiliza Azure AI Speech (Microsoft Corporation) para convertir texto en voz: se envía el texto que el Usuario pide escuchar y el servicio devuelve el audio correspondiente. No se envía ninguna grabación del Usuario a este servicio.
 
 ### Datos Personales tratados:
 - distintas clases de Datos, según se especifica en la Política de Privacidad del servicio
