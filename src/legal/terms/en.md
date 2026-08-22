@@ -137,7 +137,6 @@ The purchasing process includes these steps:
 - Users must indicate the desired Product by selecting it, including, where possible, quantity and specific characteristics, to make it appear in the purchase selection.
 - Users may review their purchase selection, modify, remove or add items.
 - Users will be required to specify their billing address, contact details and a payment method of their choice.
-- If the purchase results in a product being shipped, Users may need to indicate a shipping address.
 - During the purchasing process, Users may, at any time, modify, correct or change the information provided, or altogether abort the purchasing process with no consequence.
 - After providing all required information, Users must carefully review the order and, subsequently, may proceed to checkout.
 To submit the order, Users must accept these Terms and use the respective button or mechanism on this Application, hereby committing to pay the agreed-upon price.

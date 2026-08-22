@@ -135,7 +135,6 @@ Alle Schritte von der Auswahl eines Produkts bis hin zur Aufgabe der Bestellung 
 - Der Nutzer sucht das gewünschte Produkt aus dem Sortiment aus und gibt, wo vorgesehen, die gewünschte Menge oder Eigenschaften an, damit das Produkt in der Produktauswahl erscheint.
 - Der Nutzer kann die Produktauswahl überprüfen und Produkte ändern, entfernen oder hinzufügen.
 - Nutzer müssen ihre Rechnungsadresse, Kontaktdaten und eine Zahlungsmethode ihrer Wahl angeben.
-- Führt der Kauf zum Versand eines Produkts, muss der Nutzer möglicherweise eine Lieferadresse angeben.
 - Während des Kaufvorgangs können Nutzer die angegebenen Informationen jederzeit ändern oder korrigieren oder den Kaufvorgang ohne Folgen ganz abbrechen.
 - Nachdem sie alle erforderlichen Informationen angegeben haben, müssen die Nutzer ihre Bestellung sorgfältig überprüfen und können anschließend zum checkout gehen.
 Um die Bestellung aufzugeben, muss der Nutzer diese AGB akzeptieren und den entsprechenden Button oder Mechanismus auf diese Anwendung verwenden. Hiermit verpflichtet sich der Nutzer, den vereinbarten Kaufpreis zu zahlen.
