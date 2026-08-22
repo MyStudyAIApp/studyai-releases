@@ -177,6 +177,23 @@ Service de traitement des paiements (Stripe, Inc., États-Unis), utilisé exclus
 - Données de facturation (adresse, pays) et historique d'achats
 - Données de carte ou de moyen de paiement (traitées directement par Stripe, jamais par cette Application)
 
+### Google Play Billing
+Système de paiement des applications Android (Google Ireland Limited, Irlande, pour les Utilisateurs de l’Espace économique européen). Il s’agit du seul moyen de paiement disponible au sein des applications mobiles. Google agit en qualité de vendeur des contenus numériques achetés dans l’application, collecte et traite directement les données de paiement de l’Utilisateur et lui délivre le reçu correspondant. Cette Application ne reçoit ni ne conserve jamais les données de paiement : elle reçoit uniquement la confirmation que l’achat a été finalisé.
+
+### Données personnelles traitées :
+- Identifiant du compte Google de l’Utilisateur
+- Historique des achats et des abonnements
+- Données de paiement (traitées directement par Google, jamais par cette Application)
+
+### BeeL
+Service de facturation électronique (BeeL, Espagne), utilisé pour émettre la facture légale de chaque paiement conformément à la réglementation espagnole sur la facturation vérifiable (VeriFactu). Il traite les données de facturation nécessaires à l’émission et à la conservation de ces factures.
+
+### Données personnelles traitées :
+- Nom ou raison sociale et numéro d’identification fiscale, lorsque l’Utilisateur les fournit
+- Adresse de facturation et pays
+- Adresse e-mail
+- Montant, objet et date de chaque opération
+
 ### Publicité
 Ce type de service permet l'utilisation des Données des Utilisateurs à des fins de communication publicitaire. Ces communications sont affichées sous forme de bannières et d'autres publicités sur cette Application, éventuellement basées sur les intérêts des Utilisateurs. Cela ne signifie pas que toutes les Données personnelles sont utilisées à cette fin. Certains des services listés ci-dessous peuvent utiliser des Traceurs pour identifier les Utilisateurs ou recourir au retargeting comportemental, c'est-à-dire afficher des publicités adaptées aux intérêts et au comportement de l'Utilisateur. Pour en savoir plus, veuillez consulter les politiques de confidentialité des services concernés. Ces services permettent généralement aux Utilisateurs de refuser ce suivi.
 Meta Pixel et TikTok Pixel ne sont pas actuellement actifs sur cette Application. S'ils sont activés à l'avenir, ils ne fonctionneront qu'après le consentement explicite et préalable de l'Utilisateur via la bannière de gestion des cookies, et seront automatiquement désactivés si l'Utilisateur indique être mineur. Cette Application ne cible pas les mineurs avec de la publicité personnalisée.

@@ -104,29 +104,25 @@ GroqCloud ist ein KI-Inferenzdienst, der von Groq, LLC, Groq UK Limited oder von
 ### Marketing
 Diese Anwendung verwendet Tracker, um personalisierte Werbung oder Marketinginhalte auszuliefern und deren Leistung zu messen.
 
-### Tracker, die direkt vom Eigentümer verwaltet werden.
+### Von Dritten verwaltete Tracker
+
+Meta Pixel und TikTok Pixel sind derzeit in dieser Anwendung nicht aktiv. Sollten sie künftig aktiviert werden, laufen sie ausschließlich nach vorheriger, ausdrücklicher Einwilligung des Nutzers über das Cookie-Verwaltungsbanner.
 
 ### Meta Pixel (Facebook Ads)
-Firma: diese Anwendung
 Verarbeitete personenbezogene Daten: Tracker
-Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Conversion-Tracking-Pixel von Meta (Facebook/Instagram Ads), verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
 
 ### Verarbeitete personenbezogene Daten:
 - Tracker
 
-### Dienst bereitgestellt von:
-- diese Anwendung
 
 ### TikTok Pixel (TikTok Ads)
-Firma: diese Anwendung
 Verarbeitete personenbezogene Daten: Tracker
-Píxel de seguimiento de conversiones de TikTok Ads, usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Conversion-Tracking-Pixel von TikTok Ads, verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
 
 ### Verarbeitete personenbezogene Daten:
 - Tracker
 
-### Dienst bereitgestellt von:
-- diese Anwendung
 
 ## Einstellungen verwalten und Einwilligungen erteilen oder widerrufen
 Wenn die Verwendung von Trackern auf einer Einwilligung beruht, können die Nutzer diese Einwilligung erteilen oder widerrufen, indem sie ihre Einstellungen über die entsprechende Datenschutzauswahltafel auf diese Anwendung festelegen oder aktualisieren.

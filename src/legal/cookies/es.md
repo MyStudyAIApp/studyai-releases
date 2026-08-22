@@ -106,6 +106,8 @@ Esta Aplicación utiliza Rastreadores para ofrecer anuncios personalizados o con
 
 ### Rastreadores gestionados por terceros
 
+Meta Pixel y TikTok Pixel no están activos actualmente en esta Aplicación. Si en el futuro se activan, su ejecución quedará condicionada al consentimiento explícito y previo del Usuario a través del banner de gestión de cookies.
+
 ### Meta Pixel (Facebook Ads)
 Datos Personales tratados: Rastreadores
 Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.

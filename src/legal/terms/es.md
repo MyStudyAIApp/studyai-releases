@@ -132,16 +132,15 @@ Las características del Producto escogido se describirán durante el proceso de
 Todos los cupos anteriores incluyen además un límite de gasto real por Usuario como medida de protección frente a usos abusivos o automatizados, independiente del cupo por función.
 Los precios indicados no incluyen impuestos aplicables (IVA/IGIC), que se calculan y muestran durante el proceso de pago según la ubicación del Usuario.
 
-### Purchasing process
-Any steps taken from choosing a Product to order submission form part of the purchasing process.
-The purchasing process includes these steps:
-- Users must indicate the desired Product by selecting it, including, where possible, quantity and specific characteristics, to make it appear in the purchase selection.
-- Users may review their purchase selection, modify, remove or add items.
-- Users will be required to specify their billing address, contact details and a payment method of their choice.
-- If the purchase results in a product being shipped, Users may need to indicate a shipping address.
-- During the purchasing process, Users may, at any time, modify, correct or change the information provided, or altogether abort the purchasing process with no consequence.
-- After providing all required information, Users must carefully review the order and, subsequently, may proceed to checkout.
-To submit the order, Users must accept these Terms and use the respective button or mechanism on esta Aplicación, hereby committing to pay the agreed-upon price.
+### Proceso de compra
+Forman parte del proceso de compra todos los pasos que van desde la elección de un Producto hasta el envío del pedido.
+El proceso de compra comprende los siguientes pasos:
+- Los Usuarios deberán indicar el Producto deseado seleccionándolo y, cuando sea posible, especificando la cantidad y sus características concretas, de modo que aparezca en la selección de compra.
+- Los Usuarios podrán revisar su selección de compra, así como modificarla, eliminar elementos o añadirlos.
+- Se solicitará a los Usuarios que indiquen su dirección de facturación, sus datos de contacto y el método de pago que elijan.
+- Durante el proceso de compra, los Usuarios podrán en cualquier momento modificar, corregir o cambiar la información facilitada, o bien interrumpir por completo el proceso de compra sin consecuencia alguna.
+- Una vez facilitada toda la información necesaria, los Usuarios deberán revisar el pedido con atención y, a continuación, podrán proceder al pago.
+Para enviar el pedido, los Usuarios deberán aceptar las presentes Condiciones y utilizar el botón o mecanismo correspondiente en esta Aplicación, comprometiéndose con ello a abonar el precio acordado.
 
 ### Envío del pedido
 Cuando los Usuarios realizan un pedido, son de aplicación las siguientes cláusulas:
@@ -225,24 +224,24 @@ Dicho reembolso se realizará sin demoras indebidas y, en cualquier caso, como m
 Cuando un Usuario ejercite el derecho de desistimiento tras haber solicitado que el servicio sea prestado antes de la expiración del plazo de desistimiento, el Usuario deberá abonar al Titular un importe que sea proporcional a la parte del servicio que se haya prestado.
 Dicho pago se calculará sobre la base de la tarifa acordada en el contrato y será proporcional a la parte del servicio que se haya prestado hasta el momento en que el Usuario desista, en comparación con la cobertura completa del contrato.
 
-### UK User rights
+### Derechos del Usuario del Reino Unido
 
-### Right to cancel
-Unless exceptions apply, Users who are Consumers in the United Kingdom have a legal right of cancellation under UK law and may be eligible to withdraw from contracts made online (distance contracts) within the period specified below (generally 14 days), for any reason and without justification.
-Users that do not qualify as Consumers, cannot benefit from the rights described in this section. Users can learn more about the cancellation conditions within this section.
+### Derecho de cancelación
+Salvo que resulte aplicable alguna excepción, los Usuarios que sean Consumidores en el Reino Unido disponen de un derecho legal de cancelación conforme a la legislación británica y podrán desistir de los contratos celebrados en línea (contratos a distancia) dentro del plazo que se indica más abajo (con carácter general, 14 días), por cualquier motivo y sin necesidad de justificación.
+Los Usuarios que no tengan la condición de Consumidores no podrán acogerse a los derechos descritos en esta sección. Los Usuarios pueden consultar en esta misma sección las condiciones de cancelación.
 
-### Exercising the right to cancel
-To exercise their right to cancel, Users must send to the Owner an unequivocal statement of their intention to withdraw from the contract. To this end, Users may use the model withdrawal form available from within the “definitions” section of this document. Users are, however, free to express their intention to withdraw from the contract by making an unequivocal statement in any other suitable way. In order to meet the deadline within which they can exercise such right, Users must send the withdrawal notice before the cancellation period expires.
-When does the cancellation period expire?
-- Regarding the purchase of a service , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
-- In case of purchase of a digital content not supplied in a tangible medium , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
+### Ejercicio del derecho de cancelación
+Para ejercer su derecho de cancelación, los Usuarios deberán remitir al Titular una declaración inequívoca de su intención de desistir del contrato. A tal efecto, podrán utilizar el modelo de formulario de desistimiento disponible en la sección «definiciones» del presente documento. No obstante, los Usuarios son libres de manifestar su intención de desistir del contrato mediante una declaración inequívoca hecha por cualquier otro medio adecuado. Para respetar el plazo del que disponen para ejercer este derecho, los Usuarios deberán enviar la comunicación de desistimiento antes de que expire el plazo de cancelación.
+¿Cuándo expira el plazo de cancelación?
+- En el caso de la contratación de un servicio, el plazo de cancelación expira a los 14 días del día en que se celebre el contrato, salvo que el Usuario haya renunciado al derecho de cancelación.
+- En el caso de la adquisición de contenido digital no suministrado en un soporte tangible, el plazo de cancelación expira a los 14 días del día en que se celebre el contrato, salvo que el Usuario haya renunciado al derecho de cancelación.
 
-### Effects of cancellation
-Users who correctly withdraw from a contract will be reimbursed by the Owner for all payments made to the Owner, including, if any, those covering the costs of delivery.
-However, any additional costs resulting from the choice of a particular delivery method other than the least expensive type of standard delivery offered by the Owner, will not be reimbursed.
-Such reimbursement shall be made without undue delay and, in any event, no later than 14 days from the day on which the Owner is informed of the User’s decision to withdraw from the contract. Unless otherwise agreed with the User, reimbursements will be made using the same means of payment as used to process the initial transaction. In any event, the User shall not incur any costs or fees as a result of such reimbursement.
-Where a User exercises the right to cancel after having requested that the service be performed before the cancellation period expires, the User shall pay to the Owner an amount which is in proportion to the part of service provided.
-Such payment shall be calculated based on the fee contractually agreed upon, and be proportional to the part of service provided until the time the User withdraws, compared with the full coverage of the contract.
+### Efectos de la cancelación
+Los Usuarios que desistan correctamente de un contrato serán reembolsados por el Titular de todos los pagos realizados al Titular, incluidos, en su caso, los que cubran los costes de entrega.
+No obstante, no se reembolsarán los costes adicionales derivados de la elección de una modalidad de entrega distinta de la modalidad estándar menos costosa ofrecida por el Titular.
+Dicho reembolso se realizará sin demoras indebidas y, en cualquier caso, como máximo a los 14 días desde el día en que se informe al Titular de la decisión del Usuario de desistir del contrato. Salvo que se acuerde otra cosa con el Usuario, los reembolsos se efectuarán utilizando el mismo medio de pago empleado para tramitar la transacción inicial. En ningún caso el Usuario incurrirá en coste o comisión alguna como consecuencia de dicho reembolso.
+Cuando un Usuario ejercite el derecho de cancelación después de haber solicitado que el servicio se preste antes de que expire el plazo de cancelación, deberá abonar al Titular un importe proporcional a la parte del servicio ya prestada.
+Dicho pago se calculará sobre la base de la tarifa acordada en el contrato y será proporcional a la parte del servicio prestada hasta el momento en que el Usuario desista, en comparación con la cobertura completa del contrato.
 
 ### Derechos del Usuario brasileño
 

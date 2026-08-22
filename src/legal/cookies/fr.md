@@ -104,29 +104,25 @@ GroqCloud est un service d'inférence IA fourni par Groq, LLC, Groq UK Limited o
 ### Marketing
 Cette Application utilise des Traqueurs pour fournir des publicités personnalisées ou un contenu de marketing personnalisé, et mesurer leur performance.
 
-### Traqueurs gérés directement par le Propriétaire
+### Traqueurs gérés par des tiers
+
+Meta Pixel et TikTok Pixel ne sont pas actuellement actifs sur cette Application. S’ils sont activés à l’avenir, ils ne fonctionneront qu’après le consentement explicite et préalable de l’Utilisateur via la bannière de gestion des cookies.
 
 ### Meta Pixel (Facebook Ads)
-Entreprise: cette Application
 Données personnelles traitées : Traqueurs
-Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Pixel de suivi des conversions de Meta (Facebook/Instagram Ads), utilisé pour mesurer l’efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
 
 ### Données personnelles traitées :
 - Traqueurs
 
-### Service fourni par:
-- cette Application
 
 ### TikTok Pixel (TikTok Ads)
-Entreprise: cette Application
 Données personnelles traitées : Traqueurs
-Píxel de seguimiento de conversiones de TikTok Ads, usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Pixel de suivi des conversions de TikTok Ads, utilisé pour mesurer l’efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
 
 ### Données personnelles traitées :
 - Traqueurs
 
-### Service fourni par:
-- cette Application
 
 ## Comment gérer les préférences et donner ou retirer son consentement sur cette Application
 Lorsque l’utilisation des Traqueurs repose sur le consentement de l’utilisateur, celui-ci peut donner ou retirer son consentement en définissant ou en mettant à jour ses préférences dans le panneau des choix en matière de confidentialité correspondant, disponible sur cette Application.

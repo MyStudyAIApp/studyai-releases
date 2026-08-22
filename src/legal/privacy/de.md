@@ -177,6 +177,23 @@ Zahlungsabwicklungsdienst (Stripe, Inc., USA), ausschließlich für Zahlungen au
 - Rechnungsdaten (Adresse, Land) und Kaufhistorie
 - Karten- oder Zahlungsdaten (direkt von Stripe verarbeitet, niemals von dieser Anwendung)
 
+### Google Play Billing
+Zahlungssystem der Android-Anwendungen (Google Ireland Limited, Irland, für Nutzer im Europäischen Wirtschaftsraum). Es ist die einzige Zahlungsmöglichkeit innerhalb der mobilen Anwendungen. Google tritt als Verkäufer der in der App erworbenen digitalen Inhalte auf, erhebt und verarbeitet die Zahlungsdaten des Nutzers unmittelbar und stellt ihm den entsprechenden Beleg aus. Diese Anwendung erhält und speichert keine Zahlungsdaten, sondern lediglich die Bestätigung, dass der Kauf abgeschlossen wurde.
+
+### Verarbeitete personenbezogene Daten:
+- Kennung des Google-Kontos des Nutzers
+- Kauf- und Abonnementverlauf
+- Zahlungsdaten (unmittelbar von Google verarbeitet, nie von dieser Anwendung)
+
+### BeeL
+Dienst für elektronische Rechnungsstellung (BeeL, Spanien), verwendet zur Ausstellung der gesetzlichen Rechnung für jede Zahlung nach den spanischen Vorschriften zur verifizierbaren Rechnungsstellung (VeriFactu). Verarbeitet die zur Ausstellung und Aufbewahrung dieser Rechnungen erforderlichen Rechnungsdaten.
+
+### Verarbeitete personenbezogene Daten:
+- Name bzw. Firmenname und Steuernummer, soweit vom Nutzer angegeben
+- Rechnungsanschrift und Land
+- E-Mail-Adresse
+- Betrag, Gegenstand und Datum des jeweiligen Vorgangs
+
 ### Werbung
 Diese Art von Dienst ermöglicht die Nutzung von Nutzerdaten für Zwecke der Werbekommunikation. Diese Kommunikation erfolgt in Form von Bannern und anderen Werbeanzeigen auf dieser Anwendung, möglicherweise basierend auf den Interessen der Nutzer. Dies bedeutet nicht, dass alle personenbezogenen Daten zu diesem Zweck verwendet werden. Einige der unten aufgeführten Dienste können Tracker verwenden, um Nutzer zu identifizieren oder Behavioral-Retargeting einzusetzen, d. h. auf die Interessen und das Verhalten des Nutzers zugeschnittene Werbung anzuzeigen. Weitere Informationen finden sich in den Datenschutzerklärungen der jeweiligen Dienste. Solche Dienste erlauben den Nutzern in der Regel, dieses Tracking abzulehnen.
 Meta Pixel und TikTok Pixel sind derzeit in dieser Anwendung nicht aktiv. Sollten sie künftig aktiviert werden, laufen sie ausschließlich nach vorheriger, ausdrücklicher Einwilligung des Nutzers über das Cookie-Verwaltungsbanner und werden automatisch deaktiviert, wenn der Nutzer angibt, minderjährig zu sein. Diese Anwendung richtet keine personalisierte Werbung an Minderjährige.

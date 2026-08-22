@@ -210,6 +210,23 @@ Servicio de procesamiento de pagos (Stripe, Inc., EE.UU.), usado exclusivamente 
 - Datos de facturación (dirección, país) e historial de compras
 - Datos de la tarjeta o método de pago (tratados directamente por Stripe, nunca por esta Aplicación)
 
+### Google Play Billing
+Sistema de pagos de las aplicaciones Android (Google Ireland Limited, Irlanda, para Usuarios del Espacio Económico Europeo). Es la única vía de pago disponible dentro de las aplicaciones móviles. Google actúa como vendedor de los contenidos digitales adquiridos en la aplicación, recoge y trata directamente los datos de pago del Usuario y le emite el correspondiente recibo. Esta Aplicación nunca recibe ni almacena los datos de pago: únicamente recibe la confirmación de que la compra se ha completado.
+
+### Datos Personales tratados:
+- Identificador de la cuenta de Google del Usuario
+- Historial de compras y suscripciones
+- Datos de pago (tratados directamente por Google, nunca por esta Aplicación)
+
+### BeeL
+Servicio de facturación electrónica (BeeL, España), utilizado para emitir la factura legal de cada cobro conforme a la normativa española de facturación verificable (VeriFactu). Trata los datos de facturación necesarios para emitir y conservar dichas facturas.
+
+### Datos Personales tratados:
+- Nombre o razón social y NIF, cuando el Usuario los facilite
+- Dirección de facturación y país
+- Correo electrónico
+- Importe, concepto y fecha de cada operación
+
 ### Publicidad
 Meta Pixel y TikTok Pixel no están activos actualmente en esta Aplicación. Si en el futuro se activan, su ejecución quedará condicionada al consentimiento explícito y previo del Usuario a través del banner de gestión de cookies, y se desactivarán automáticamente si el Usuario indica ser menor de edad. Esta Aplicación no dirige publicidad personalizada a menores de edad.
 Este tipo de servicio permite que se utilicen los Datos de los Usuarios para fines de comunicación publicitaria. Estas comunicaciones se muestran en forma de banners y otros anuncios en esta Aplicación, posiblemente basados en los intereses de los Usuarios. Esto no significa que todos los Datos Personales sean utilizados para esta finalidad. La información y condiciones de uso se detallan más adelante. Algunos de los servicios enumerados a continuación pueden emplear Rastreadores para identificar a los Usuarios, behavioral retargeting, es decir, mostrar anuncios publicitarios personalizados en base a los intereses y al comportamiento del Usuario, o para medir el rendimiento de los anuncios. Para obtener más información, por favor verifique las políticas de privacidad de los servicios correspondientes. Los servicios de este tipo normalmente permiten a los Usuarios inhabilitar dicho seguimiento. Los Usuarios pueden averiguar cómo inhabilitar la publicidad basada en intereses de forma más general visitando la sección sobre autoexclusión del presente documento.

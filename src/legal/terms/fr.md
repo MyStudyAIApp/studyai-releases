@@ -133,16 +133,15 @@ Les caractéristiques du Produit choisi seront décrites lors du processus d’a
 Tous les quotas ci-dessus sont en outre soumis à un plafond de dépense réel par Utilisateur, en protection contre un usage abusif ou automatisé, indépendant du quota par fonctionnalité.
 Les prix indiqués n'incluent pas les taxes applicables (TVA/IGIC), calculées et affichées lors du paiement selon la localisation de l'Utilisateur.
 
-### Purchasing process
-Any steps taken from choosing a Product to order submission form part of the purchasing process.
-The purchasing process includes these steps:
-- Users must indicate the desired Product by selecting it, including, where possible, quantity and specific characteristics, to make it appear in the purchase selection.
-- Users may review their purchase selection, modify, remove or add items.
-- Users will be required to specify their billing address, contact details and a payment method of their choice.
-- If the purchase results in a product being shipped, Users may need to indicate a shipping address.
-- During the purchasing process, Users may, at any time, modify, correct or change the information provided, or altogether abort the purchasing process with no consequence.
-- After providing all required information, Users must carefully review the order and, subsequently, may proceed to checkout.
-To submit the order, Users must accept these Terms and use the respective button or mechanism on cette Application, hereby committing to pay the agreed-upon price.
+### Processus d'achat
+Toutes les étapes allant du choix d'un Produit à la soumission de la commande font partie du processus d'achat.
+Le processus d'achat comprend les étapes suivantes :
+- Les Utilisateurs doivent indiquer le Produit souhaité en le sélectionnant et, lorsque cela est possible, en précisant la quantité et ses caractéristiques particulières, afin qu'il apparaisse dans la sélection d'achat.
+- Les Utilisateurs peuvent vérifier leur sélection d'achat, la modifier, en retirer ou y ajouter des éléments.
+- Il sera demandé aux Utilisateurs d'indiquer leur adresse de facturation, leurs coordonnées et le moyen de paiement de leur choix.
+- Au cours du processus d'achat, les Utilisateurs peuvent à tout moment modifier, corriger ou changer les informations fournies, ou interrompre entièrement le processus d'achat sans aucune conséquence.
+- Une fois toutes les informations requises fournies, les Utilisateurs doivent vérifier attentivement la commande, puis peuvent procéder au paiement.
+Pour soumettre la commande, les Utilisateurs doivent accepter les présentes Conditions et utiliser le bouton ou le mécanisme correspondant sur cette Application, s'engageant ainsi à payer le prix convenu.
 
 ### Passation de commande
 Lorsque l’Utilisateur passe une commande, ce qui suit s’applique :
@@ -226,24 +225,24 @@ Un tel remboursement sera fait sans délai injustifié et, dans tous les cas, pa
 Où l’Utilisateur exerce le droit de rétractation après avoir demandé que le service soit exercé avant l’expiration de la période de rétractation, l’Utilisateur versera une somme au Porpriétaire qui sera proportionnelle à la partir du service fourni.
 Un tel paiement sera calculé sur la base d’un frais fixé d’un commun accord, et proportionnel à la partie du service fourni jusqu’au moment où l’Utilisateur se retire, comparé à la couverture complète du contrat.
 
-### UK User rights
+### Droits de l’Utilisateur au Royaume-Uni
 
-### Right to cancel
-Unless exceptions apply, Users who are Consumers in the United Kingdom have a legal right of cancellation under UK law and may be eligible to withdraw from contracts made online (distance contracts) within the period specified below (generally 14 days), for any reason and without justification.
-Users that do not qualify as Consumers, cannot benefit from the rights described in this section. Users can learn more about the cancellation conditions within this section.
+### Droit d’annulation
+Sauf exception applicable, les Utilisateurs qui sont des Consommateurs au Royaume-Uni disposent d’un droit légal d’annulation en vertu du droit britannique et peuvent se rétracter des contrats conclus en ligne (contrats à distance) dans le délai précisé ci-dessous (en général 14 jours), pour quelque motif que ce soit et sans justification.
+Les Utilisateurs qui ne sont pas des Consommateurs ne peuvent pas bénéficier des droits décrits dans la présente section. Les Utilisateurs trouveront dans cette même section les conditions d’annulation.
 
-### Exercising the right to cancel
-To exercise their right to cancel, Users must send to the Owner an unequivocal statement of their intention to withdraw from the contract. To this end, Users may use the model withdrawal form available from within the “definitions” section of this document. Users are, however, free to express their intention to withdraw from the contract by making an unequivocal statement in any other suitable way. In order to meet the deadline within which they can exercise such right, Users must send the withdrawal notice before the cancellation period expires.
-When does the cancellation period expire?
-- Regarding the purchase of a service , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
-- In case of purchase of a digital content not supplied in a tangible medium , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
+### Exercice du droit d’annulation
+Pour exercer leur droit d’annulation, les Utilisateurs doivent adresser au Propriétaire une déclaration dénuée d’ambiguïté exprimant leur volonté de se rétracter du contrat. À cette fin, ils peuvent utiliser le modèle de formulaire de rétractation disponible dans la section « définitions » du présent document. Les Utilisateurs demeurent toutefois libres d’exprimer leur volonté de se rétracter par une déclaration dénuée d’ambiguïté faite par tout autre moyen approprié. Pour respecter le délai dont ils disposent pour exercer ce droit, les Utilisateurs doivent envoyer la notification de rétractation avant l’expiration du délai d’annulation.
+Quand le délai d’annulation expire-t-il ?
+- Pour l’achat d’un service, le délai d’annulation expire 14 jours après le jour de la conclusion du contrat, sauf si l’Utilisateur a renoncé au droit d’annulation.
+- Pour l’achat d’un contenu numérique non fourni sur un support matériel, le délai d’annulation expire 14 jours après le jour de la conclusion du contrat, sauf si l’Utilisateur a renoncé au droit d’annulation.
 
-### Effects of cancellation
-Users who correctly withdraw from a contract will be reimbursed by the Owner for all payments made to the Owner, including, if any, those covering the costs of delivery.
-However, any additional costs resulting from the choice of a particular delivery method other than the least expensive type of standard delivery offered by the Owner, will not be reimbursed.
-Such reimbursement shall be made without undue delay and, in any event, no later than 14 days from the day on which the Owner is informed of the User’s decision to withdraw from the contract. Unless otherwise agreed with the User, reimbursements will be made using the same means of payment as used to process the initial transaction. In any event, the User shall not incur any costs or fees as a result of such reimbursement.
-Where a User exercises the right to cancel after having requested that the service be performed before the cancellation period expires, the User shall pay to the Owner an amount which is in proportion to the part of service provided.
-Such payment shall be calculated based on the fee contractually agreed upon, and be proportional to the part of service provided until the time the User withdraws, compared with the full coverage of the contract.
+### Effets de l’annulation
+Les Utilisateurs qui se rétractent valablement d’un contrat seront remboursés par le Propriétaire de tous les paiements effectués au profit de celui-ci, y compris, le cas échéant, ceux couvrant les frais de livraison.
+Toutefois, les frais supplémentaires résultant du choix d’un mode de livraison autre que le mode standard le moins coûteux proposé par le Propriétaire ne seront pas remboursés.
+Ce remboursement sera effectué sans retard injustifié et, en tout état de cause, au plus tard 14 jours à compter du jour où le Propriétaire est informé de la décision de l’Utilisateur de se rétracter du contrat. Sauf accord contraire avec l’Utilisateur, les remboursements seront effectués en utilisant le même moyen de paiement que celui employé pour la transaction initiale. En aucun cas l’Utilisateur ne supportera de frais ou de commissions du fait de ce remboursement.
+Lorsqu’un Utilisateur exerce son droit d’annulation après avoir demandé que le service soit exécuté avant l’expiration du délai d’annulation, il doit verser au Propriétaire un montant proportionnel à la part du service déjà fournie.
+Ce paiement est calculé sur la base du tarif convenu au contrat et proportionnellement à la part du service fournie jusqu’au moment de la rétractation de l’Utilisateur, par rapport à l’étendue totale du contrat.
 
 ### Droits de l’Utilisateur brésilien
 

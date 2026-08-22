@@ -222,24 +222,24 @@ Die Rückerstattung erfolgt unverzüglich, spätestens jedoch 14 Tage nach dem T
 Übt ein Nutzer das Widerrufsrecht aus, nachdem er vor Ablauf der Widerrufsfrist die Ausführung der Dienstleistung verlangt hat, so hat er dem Anbieter einen Betrag zu zahlen, der verhältnismäßig dem Teil der erbrachten Leistung entspricht.
 Dieser Betrag wird auf Grundlage des vertraglich vereinbarten Gesamtpreises berechnet und entspricht verhältnismäßig dem, was bis zu dem Zeitpunkt des Widerrufs im Vergleich zum Gesamtumfang der vertraglich vereinbarten Leistungen geleistet worden ist.
 
-### UK User rights
+### Rechte von Nutzern im Vereinigten Königreich
 
-### Right to cancel
-Unless exceptions apply, Users who are Consumers in the United Kingdom have a legal right of cancellation under UK law and may be eligible to withdraw from contracts made online (distance contracts) within the period specified below (generally 14 days), for any reason and without justification.
-Users that do not qualify as Consumers, cannot benefit from the rights described in this section. Users can learn more about the cancellation conditions within this section.
+### Widerrufsrecht
+Sofern keine Ausnahmen greifen, steht Nutzern, die Verbraucher im Vereinigten Königreich sind, nach britischem Recht ein gesetzliches Widerrufsrecht zu. Sie können online geschlossene Verträge (Fernabsatzverträge) innerhalb der unten genannten Frist (in der Regel 14 Tage) ohne Angabe von Gründen widerrufen.
+Nutzer, die keine Verbraucher sind, können sich nicht auf die in diesem Abschnitt beschriebenen Rechte berufen. Die Widerrufsbedingungen sind in diesem Abschnitt näher erläutert.
 
-### Exercising the right to cancel
-To exercise their right to cancel, Users must send to the Owner an unequivocal statement of their intention to withdraw from the contract. To this end, Users may use the model withdrawal form available from within the “definitions” section of this document. Users are, however, free to express their intention to withdraw from the contract by making an unequivocal statement in any other suitable way. In order to meet the deadline within which they can exercise such right, Users must send the withdrawal notice before the cancellation period expires.
-When does the cancellation period expire?
-- Regarding the purchase of a service , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
-- In case of purchase of a digital content not supplied in a tangible medium , the cancellation period expires 14 days after the day that the contract is entered into, unless the User has waived the right to cancel.
+### Ausübung des Widerrufsrechts
+Zur Ausübung des Widerrufsrechts müssen Nutzer dem Anbieter eine eindeutige Erklärung über ihren Entschluss, den Vertrag zu widerrufen, übermitteln. Hierfür können sie das Muster-Widerrufsformular verwenden, das im Abschnitt „Definitionen“ dieses Dokuments bereitgestellt wird. Es steht den Nutzern jedoch frei, ihren Widerruf durch eine eindeutige Erklärung auf jedem anderen geeigneten Weg zu erklären. Zur Wahrung der Widerrufsfrist genügt es, dass die Widerrufserklärung vor Ablauf der Frist abgesendet wird.
+Wann endet die Widerrufsfrist?
+- Beim Kauf einer Dienstleistung endet die Widerrufsfrist 14 Tage nach dem Tag des Vertragsschlusses, sofern der Nutzer nicht auf das Widerrufsrecht verzichtet hat.
+- Beim Kauf digitaler Inhalte, die nicht auf einem körperlichen Datenträger geliefert werden, endet die Widerrufsfrist 14 Tage nach dem Tag des Vertragsschlusses, sofern der Nutzer nicht auf das Widerrufsrecht verzichtet hat.
 
-### Effects of cancellation
-Users who correctly withdraw from a contract will be reimbursed by the Owner for all payments made to the Owner, including, if any, those covering the costs of delivery.
-However, any additional costs resulting from the choice of a particular delivery method other than the least expensive type of standard delivery offered by the Owner, will not be reimbursed.
-Such reimbursement shall be made without undue delay and, in any event, no later than 14 days from the day on which the Owner is informed of the User’s decision to withdraw from the contract. Unless otherwise agreed with the User, reimbursements will be made using the same means of payment as used to process the initial transaction. In any event, the User shall not incur any costs or fees as a result of such reimbursement.
-Where a User exercises the right to cancel after having requested that the service be performed before the cancellation period expires, the User shall pay to the Owner an amount which is in proportion to the part of service provided.
-Such payment shall be calculated based on the fee contractually agreed upon, and be proportional to the part of service provided until the time the User withdraws, compared with the full coverage of the contract.
+### Folgen des Widerrufs
+Nutzer, die wirksam von einem Vertrag zurücktreten, erhalten vom Anbieter alle geleisteten Zahlungen zurück, gegebenenfalls einschließlich der Lieferkosten.
+Zusätzliche Kosten, die dadurch entstehen, dass eine andere Art der Lieferung als die vom Anbieter angebotene günstigste Standardlieferung gewählt wurde, werden jedoch nicht erstattet.
+Die Rückzahlung erfolgt unverzüglich und in jedem Fall spätestens 14 Tage ab dem Tag, an dem der Anbieter über den Widerruf des Nutzers unterrichtet wurde. Sofern mit dem Nutzer nichts anderes vereinbart wurde, erfolgt die Rückzahlung mit demselben Zahlungsmittel, das bei der ursprünglichen Transaktion eingesetzt wurde. Dem Nutzer entstehen durch diese Rückzahlung in keinem Fall Kosten oder Gebühren.
+Übt ein Nutzer das Widerrufsrecht aus, nachdem er verlangt hat, dass die Dienstleistung bereits vor Ablauf der Widerrufsfrist erbracht wird, hat er dem Anbieter einen Betrag zu zahlen, der dem bereits erbrachten Teil der Dienstleistung entspricht.
+Dieser Betrag wird auf Grundlage des vertraglich vereinbarten Entgelts berechnet und entspricht dem Anteil der bis zum Widerruf erbrachten Leistung im Verhältnis zum Gesamtumfang des Vertrags.
 
 ### Rechte des brasilianischen Nutzers
 

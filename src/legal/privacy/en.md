@@ -166,6 +166,23 @@ Payment processing service (Stripe, Inc., USA), used exclusively for payments ma
 - Billing data (address, country) and purchase history
 - Card or payment method data (processed directly by Stripe, never by this Application)
 
+### Google Play Billing
+Payment system for the Android applications (Google Ireland Limited, Ireland, for Users in the European Economic Area). It is the only payment method available inside the mobile applications. Google acts as the seller of the digital content purchased in the app, directly collects and processes the User’s payment data and issues the corresponding receipt. This Application never receives or stores payment data: it only receives confirmation that the purchase has been completed.
+
+### Personal Data processed:
+- User’s Google account identifier
+- Purchase and subscription history
+- Payment data (processed directly by Google, never by this Application)
+
+### BeeL
+Electronic invoicing service (BeeL, Spain), used to issue the legal invoice for each payment in accordance with Spanish verifiable invoicing rules (VeriFactu). It processes the billing data required to issue and retain those invoices.
+
+### Personal Data processed:
+- Name or company name and tax identification number, where provided by the User
+- Billing address and country
+- Email address
+- Amount, description and date of each transaction
+
 ### Advertising
 This type of service allows User Data to be utilized for advertising communication purposes. These communications are displayed in the form of banners and other advertisements on this Application, possibly based on User interests. This does not mean that all Personal Data are used for this purpose. Information and conditions of use are shown below. Some of the services listed below may use Trackers to identify Users or they may use the behavioral retargeting technique, i.e. displaying ads tailored to the User’s interests and behavior, including those detected outside this Application. For more information, please check the privacy policies of the relevant services. Services of this kind usually allow Users to opt out of such tracking. Users may learn how to opt out of interest-based advertising more generally by visiting the relevant opt-out section in this document.
 This type of service allows User Data to be utilized for advertising communication purposes. These communications are displayed in the form of banners and other advertisements on this Application, possibly based on User interests. This does not mean that all Personal Data are used for this purpose. Information and conditions of use are shown below. Some of the services listed below may use Trackers to identify Users or they may use the behavioral retargeting technique, i.e. displaying ads tailored to the User’s interests and behavior, including those detected outside this Application. For more information, please check the privacy policies of the relevant services. Services of this kind usually allow Users to opt out of such tracking. Users may learn how to opt out of interest-based advertising more generally by visiting the relevant opt-out section in this document.

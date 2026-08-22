@@ -104,29 +104,25 @@ GroqCloud is an AI inference service provided by Groq, LLC, Groq UK Limited or b
 ### Marketing
 This Application uses Trackers to deliver personalized ads or marketing content, and to measure their performance.
 
-### Trackers managed directly by the Owner
+### Trackers managed by third parties
+
+Meta Pixel and TikTok Pixel are not currently active on this Application. If activated in the future, they will only run after the User’s prior, explicit consent given through the cookie management banner.
 
 ### Meta Pixel (Facebook Ads)
-Company: this Application
 Personal Data processed: Trackers
-Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Conversion tracking pixel from Meta (Facebook/Instagram Ads), used to measure the effectiveness of advertising campaigns and show personalized ads to those who have already visited the site.
 
 ### Personal Data processed:
 - Trackers
 
-### Service provided by:
-- this Application
 
 ### TikTok Pixel (TikTok Ads)
-Company: this Application
 Personal Data processed: Trackers
-Píxel de seguimiento de conversiones de TikTok Ads, usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+Conversion tracking pixel from TikTok Ads, used to measure the effectiveness of advertising campaigns and show personalized ads to those who have already visited the site.
 
 ### Personal Data processed:
 - Trackers
 
-### Service provided by:
-- this Application
 
 ## How to manage preferences and provide or withdraw consent on this Application
 Whenever the use of Trackers is based on consent, users can provide or withdraw such consent by setting or updating their preferences via the relevant privacy choices panel available on this Application.
