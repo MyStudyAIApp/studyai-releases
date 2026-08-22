@@ -84,9 +84,9 @@ Supabase is a hosting and backend service provided by Supabase, Inc.
 - Supabase, Inc. (Europe) – Privacy Policy
 
 ### GroqCloud
-Company: Groq, LLC
-Place of processing: USA
-GroqCloud is an AI inference service (Groq, LLC, USA) used solely to transcribe into text the audio recordings made by the User within this Application (Whisper model). The audio is sent to the service, which returns the transcription; neither the audio nor the transcription is used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes on the device itself, without sending anything.
+Company: Groq UK Limited (United Kingdom)
+Place of processing: USA and other countries
+GroqCloud is an AI inference service used solely to transcribe into text the audio recordings made by the User within this Application (Whisper model). The audio is sent to the service, which returns the transcription; neither the audio nor the transcription is used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes on the device itself, without sending anything.
 
 ### Personal Data processed:
 - Audio recordings submitted by the User for transcription
@@ -95,7 +95,7 @@ GroqCloud is an AI inference service (Groq, LLC, USA) used solely to transcribe 
 - IP address
 
 ### Service provided by:
-- Groq, LLC (USA) – Privacy Policy
+- Groq UK Limited (United Kingdom), the contracting entity for customers in the European Economic Area. Processing takes place in the USA and other countries, covered by the EU Standard Contractual Clauses and the UK International Data Transfer Addendum, automatically incorporated into Groq’s data processing addendum. – Privacy Policy
 
 ### Microsoft Azure
 Company: Microsoft Corporation

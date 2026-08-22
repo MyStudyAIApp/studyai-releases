@@ -95,9 +95,9 @@ Supabase est un service d'hébergement et de backend fourni par Supabase, Inc.
 - Supabase, Inc. (Europe) – Politique de confidentialité
 
 ### GroqCloud
-Société : Groq, LLC
-Lieu de traitement : États-Unis
-GroqCloud est un service d’inférence IA (Groq, LLC, États-Unis) utilisé uniquement pour transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper). L’audio est transmis au service, qui renvoie la transcription ; ni l’audio ni la transcription ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription sur l’appareil lui-même, sans rien transmettre.
+Société : Groq UK Limited (Royaume-Uni)
+Lieu de traitement : États-Unis et autres pays
+GroqCloud est un service d’inférence IA utilisé uniquement pour transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper). L’audio est transmis au service, qui renvoie la transcription ; ni l’audio ni la transcription ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription sur l’appareil lui-même, sans rien transmettre.
 
 ### Données personnelles traitées :
 - Enregistrements audio transmis par l’Utilisateur pour transcription
@@ -106,7 +106,7 @@ GroqCloud est un service d’inférence IA (Groq, LLC, États-Unis) utilisé uni
 - Adresse IP
 
 ### Service fourni par :
-- Groq, LLC (États-Unis) – Politique de confidentialité
+- Groq UK Limited (Royaume-Uni), entité contractante pour les clients de l’Espace économique européen. Le traitement a lieu aux États-Unis et dans d’autres pays, encadré par les clauses contractuelles types de l’UE et l’Addendum britannique de transfert international de données, automatiquement intégrés à l’accord de traitement des données de Groq. – Politique de confidentialité
 
 ### Microsoft Azure
 Société : Microsoft Corporation

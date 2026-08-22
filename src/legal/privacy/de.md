@@ -95,9 +95,9 @@ Supabase ist ein Hosting- und Backend-Dienst von Supabase, Inc.
 - Supabase, Inc. (Europa) – Datenschutzerklärung
 
 ### GroqCloud
-Unternehmen: Groq, LLC
-Ort der Verarbeitung: USA
-GroqCloud ist ein KI-Inferenzdienst (Groq, LLC, USA), der ausschließlich dazu dient, die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell). Die Audiodaten werden an den Dienst übermittelt, der die Transkription zurückgibt; weder die Audiodaten noch die Transkription werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert lokal auf dem Gerät, ohne Daten zu übermitteln.
+Unternehmen: Groq UK Limited (Vereinigtes Königreich)
+Ort der Verarbeitung: USA und weitere Länder
+GroqCloud ist ein KI-Inferenzdienst, der ausschließlich dazu dient, die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell). Die Audiodaten werden an den Dienst übermittelt, der die Transkription zurückgibt; weder die Audiodaten noch die Transkription werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert lokal auf dem Gerät, ohne Daten zu übermitteln.
 
 ### Verarbeitete personenbezogene Daten:
 - Vom Nutzer zur Transkription übermittelte Audioaufnahmen
@@ -106,7 +106,7 @@ GroqCloud ist ein KI-Inferenzdienst (Groq, LLC, USA), der ausschließlich dazu d
 - IP-Adresse
 
 ### Dienst bereitgestellt von:
-- Groq, LLC (USA) – Datenschutzerklärung
+- Groq UK Limited (Vereinigtes Königreich), Vertragspartner für Kunden im Europäischen Wirtschaftsraum. Die Verarbeitung erfolgt in den USA und weiteren Ländern, abgesichert durch die EU-Standardvertragsklauseln und das britische International Data Transfer Addendum, die automatisch Bestandteil des Auftragsverarbeitungsvertrags von Groq sind. – Datenschutzerklärung
 
 ### Microsoft Azure
 Unternehmen: Microsoft Corporation

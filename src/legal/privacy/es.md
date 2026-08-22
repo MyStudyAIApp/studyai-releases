@@ -100,10 +100,10 @@ Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
                               – Política de privacidad
 
 ### GroqCloud
-Empresa: Groq, LLC
-Lugar de tratamiento: EE.UU.
+Empresa: Groq UK Limited (Reino Unido)
+Lugar de tratamiento: EE.UU. y otros países
 Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
-GroqCloud es un servicio de inferencia de IA (Groq, LLC, EE.UU.) utilizado únicamente para transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper). El audio se envía al servicio, que devuelve la transcripción; ni el audio ni la transcripción se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe en el propio dispositivo, sin enviar nada.
+GroqCloud es un servicio de inferencia de IA utilizado únicamente para transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper). El audio se envía al servicio, que devuelve la transcripción; ni el audio ni la transcripción se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe en el propio dispositivo, sin enviar nada.
 
 ### Datos Personales tratados:
 - Grabaciones de audio enviadas por el Usuario para su transcripción
@@ -112,7 +112,7 @@ GroqCloud es un servicio de inferencia de IA (Groq, LLC, EE.UU.) utilizado únic
 - Dirección IP
 
 ### Servicio prestado por:
-- Groq, LLC (EE.UU.)
+- Groq UK Limited (Reino Unido), entidad contratante para clientes del Espacio Económico Europeo. El tratamiento se realiza en EE.UU. y otros países, amparado por las cláusulas contractuales tipo de la UE y el Anexo de Transferencia Internacional de Datos del Reino Unido, incorporados automáticamente en el acuerdo de tratamiento de datos de Groq.
 
                               – Política de privacidad
 
