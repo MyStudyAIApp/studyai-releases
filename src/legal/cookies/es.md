@@ -65,42 +65,6 @@ La modalidad de integración de Cloudflare prevé que filtre todo el tráfico de
 - _cfuvid: indefinida
 - cf_clearance: 30 minutos
 
-### Medición
-Esta Aplicación utiliza Rastreadores para medir el tráfico y analizar el comportamiento de los Usuarios con el fin de mejorar el Servicio.
-
-### Rastreadores gestionados por terceros
-
-### GroqCloud
-Empresa: Groq, LLC +2
-Lugar de tratamiento: EE.UU. +5
-Datos Personales tratados: Datos de uso +2
-GroqCloud es un servicio de inferencia de IA proporcionado por Groq, LLC, Groq UK Limited o por Groq Limited, dependiendo de cómo gestione el Titular el tratamiento de Datos, y utilizado internamente por el Titular como motor de modelo de lenguaje de gran tamaño (LLM) de su herramienta de inteligencia empresarial. El servicio analiza las comunicaciones de asistencia de los Usuarios y los datos de uso del producto para obtener información empresarial. Esto implica la elaboración de perfiles, pero ninguna decisión basada únicamente en el tratamiento automatizado que produzca efectos jurídicos o efectos significativos similares para los Usuarios. El servicio no está integrado en esta Aplicación.
-
-### Datos Personales tratados:
-- Datos de uso
-- Dirección IP
-- Rastreadores
-
-### Servicio prestado por:
-- Groq, LLC (EE.UU.)
-                    
-                      – Política de privacidad
-- Groq UK Limited (Reino Unido)
-                    
-                      – Política de privacidad
-- Groq UK Limited (Liechtenstein)
-                    
-                      – Política de privacidad
-- Groq UK Limited (Noruega)
-                    
-                      – Política de privacidad
-- Groq UK Limited (Islandia)
-                    
-                      – Política de privacidad
-- Groq Limited (Arabia Saudí)
-                    
-                      – Política de privacidad
-
 ### Marketing
 Esta Aplicación utiliza Rastreadores para ofrecer anuncios personalizados o contenidos de marketing, y para medir su rendimiento.
 

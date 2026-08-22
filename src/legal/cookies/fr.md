@@ -65,42 +65,6 @@ La façon dont Cloudflare est intégré signifie qu'il filtre l'ensemble du traf
 - _cfuvid: indéfinie
 - cf_clearance: 30 minutes
 
-### Mesure
-Cette Application utilise des Traqueurs pour mesurer le trafic et analyser le comportement de l’Utilisateur afin d’améliorer le Service.
-
-### Traqueurs gérés par des tiers
-
-### GroqCloud
-Entreprise: Groq, LLC +2
-Lieu de traitement : États-Unis +5
-Données personnelles traitées : adresse IP +2
-GroqCloud est un service d'inférence IA fourni par Groq, LLC, Groq UK Limited ou par Groq Limited, selon la façon dont le Propriétaire gère le traitement des Données, et utilisé en interne par le Propriétaire en tant que moteur de modèle de langage de grande taille (LLM) de son outil de business intelligence. Le service analyse les communications d'assistance des Utilisateurs et les données d'utilisation du produit afin d'en tirer des informations commerciales. Cela implique un profilage, mais aucune décision fondée exclusivement sur un traitement automatisé produisant des effets juridiques ou des effets significatifs similaires pour les Utilisateurs. Le service n'est pas intégré à cette Application.
-
-### Données personnelles traitées :
-- adresse IP
-- Données d'utilisation
-- Traqueurs
-
-### Service fourni par:
-- Groq, LLC (États-Unis)
-                    
-                      – Politique de confidentialité
-- Groq UK Limited (Royaume-Uni)
-                    
-                      – Politique de confidentialité
-- Groq UK Limited (Liechtenstein)
-                    
-                      – Politique de confidentialité
-- Groq UK Limited (Norvège)
-                    
-                      – Politique de confidentialité
-- Groq UK Limited (Islande)
-                    
-                      – Politique de confidentialité
-- Groq Limited (Arabie saoudite)
-                    
-                      – Politique de confidentialité
-
 ### Marketing
 Cette Application utilise des Traqueurs pour fournir des publicités personnalisées ou un contenu de marketing personnalisé, et mesurer leur performance.
 

@@ -65,42 +65,6 @@ The way Cloudflare is integrated means that it filters all the traffic through t
 - _cfuvid: indefinite
 - cf_clearance: 30 minutes
 
-### Measurement
-This Application uses Trackers to measure traffic and analyze User behavior to improve the Service.
-
-### Trackers managed by third parties
-
-### GroqCloud
-Company: Groq, LLC +2
-Place of processing: United States +5
-Personal Data processed: IP address +2
-GroqCloud is an AI inference service provided by Groq, LLC, Groq UK Limited or by Groq Limited, depending on how the Owner manages the Data processing, and used internally by the Owner as the large language model (LLM) engine of its business intelligence tool. The service analyzes Users' support communications and product usage data to derive business insights. This involves profiling but no decisions based solely on automated processing that produce legal or similarly significant effects for Users. The service is not embedded in this Application.
-
-### Personal Data processed:
-- IP address
-- Trackers
-- Usage Data
-
-### Service provided by:
-- Groq, LLC (United States)
-                    
-                      – Privacy Policy
-- Groq UK Limited (United Kingdom)
-                    
-                      – Privacy Policy
-- Groq UK Limited (Liechtenstein)
-                    
-                      – Privacy Policy
-- Groq UK Limited (Norway)
-                    
-                      – Privacy Policy
-- Groq UK Limited (Iceland)
-                    
-                      – Privacy Policy
-- Groq Limited (Saudi Arabia)
-                    
-                      – Privacy Policy
-
 ### Marketing
 This Application uses Trackers to deliver personalized ads or marketing content, and to measure their performance.
 

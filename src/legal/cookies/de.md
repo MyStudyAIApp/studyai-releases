@@ -65,42 +65,6 @@ Durch die Art und Weise, wie die Funktionen von Cloudflare integriert sind, filt
 - _cfuvid: unbestimmte
 - cf_clearance: 30 Minuten
 
-### Erfolgsmessung
-Diese Anwendung verwendet Tracker, um den Onlinetraffic zu messen und das Nutzerverhalten zu analysieren, und damit den Dienst zu verbessern.
-
-### Von Dritten verwaltete Tracker
-
-### GroqCloud
-Firma: Groq, LLC +2
-Verarbeitungsort: Vereinigte Staaten +5
-Verarbeitete personenbezogene Daten: IP-Adresse +2
-GroqCloud ist ein KI-Inferenzdienst, der von Groq, LLC, Groq UK Limited oder von Groq Limited, je nachdem, wie der Anbieter die Datenverarbeitung verwaltet, bereitgestellt und intern vom Anbieter als Large-Language-Model (LLM)-Engine seines Business-Intelligence-Tools verwendet wird. Der Dienst analysiert die Support-Kommunikation der Nutzer und Produktnutzungsdaten, um Geschäftseinblicke zu gewinnen. Dies umfasst Profiling, jedoch keine Entscheidungen, die ausschließlich auf einer automatisierten Verarbeitung beruhen und die rechtliche oder in ähnlicher Weise erhebliche Auswirkungen auf die Nutzer haben. Der Dienst ist nicht in diese Anwendung eingebunden.
-
-### Verarbeitete personenbezogene Daten:
-- IP-Adresse
-- Nutzungsdaten
-- Tracker
-
-### Dienst bereitgestellt von:
-- Groq, LLC (Vereinigte Staaten)
-                    
-                      – Datenschutzerklärung
-- Groq UK Limited (Vereinigtes Königreich)
-                    
-                      – Datenschutzerklärung
-- Groq UK Limited (Liechtenstein)
-                    
-                      – Datenschutzerklärung
-- Groq UK Limited (Norwegen)
-                    
-                      – Datenschutzerklärung
-- Groq UK Limited (Island)
-                    
-                      – Datenschutzerklärung
-- Groq Limited (Saudi-Arabien)
-                    
-                      – Datenschutzerklärung
-
 ### Marketing
 Diese Anwendung verwendet Tracker, um personalisierte Werbung oder Marketinginhalte auszuliefern und deren Leistung zu messen.
 
