@@ -218,6 +218,13 @@ export default function LoginPage() {
         setError('Ya existe una cuenta con ese email. Inicia sesión.')
       else if (msg.includes('Password should be at least'))
         setError('La contraseña debe tener al menos 6 caracteres.')
+      // El registro se cierra en Supabase (Authentication -> "Allow new users
+      // to sign up"), no en la interfaz: ocultar el formulario no impedia nada,
+      // y de hecho por el boton de Google se colaron dos cuentas. Cuando esta
+      // cerrado, Supabase responde con estos mensajes: hay que traducirlos a
+      // algo que el usuario entienda.
+      else if (msg.includes('Signups not allowed') || msg.includes('signup is disabled') || msg.includes('Sign ups not allowed'))
+        setError('El registro está cerrado durante la fase beta. Escríbenos a support@mystudyai.eu si quieres participar.')
       else if (mode === 'register' && msg.includes('Database error saving new user'))
         setError('Código de invitación no válido, caducado o ya usado.')
       else
@@ -355,7 +362,6 @@ export default function LoginPage() {
         )}
 
         {/* Tabs Login / Registro */}
-        {!IS_WEB && (
         <div className="flex rounded-xl bg-slate-700/50 p-1 mb-6">
           <button
             onClick={() => { setMode('login'); setError(null) }}
@@ -378,7 +384,6 @@ export default function LoginPage() {
             Crear cuenta
           </button>
         </div>
-        )}
 
         {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-4">
