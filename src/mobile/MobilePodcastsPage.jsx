@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Capacitor } from '@capacitor/core'
 import { Filesystem, Directory } from '@capacitor/filesystem'
+import { guardarDescarga, mensajeDeGuardado } from '../lib/guardarEnElMovil'
 import { Preferences } from '@capacitor/preferences'
 import { useNavigate } from 'react-router-dom'
 import { api, useAppStore } from '../store/appStore'
@@ -56,10 +57,10 @@ export default function MobilePodcastsPage() {
       })
 
       const path = `podcast_${item.id}.mp3`
-      await Filesystem.writeFile({ path, data: base64, directory: Directory.Data })
-      const { uri } = await Filesystem.getUri({ path, directory: Directory.Data })
+      const guardado = await guardarDescarga({ path, data: base64 })
+      const uri = guardado.uri
 
-      const entry = { id: item.id, title: item.title, path, uri, downloadedAt: Date.now() }
+      const entry = { id: item.id, title: item.title, path, uri, directory: guardado.directory, downloadedAt: Date.now() }
       const newLocal = [entry, ...downloaded]
       await writeLocalIndex(newLocal)
       setDownloaded(newLocal)
@@ -78,7 +79,9 @@ export default function MobilePodcastsPage() {
 
   async function borrar(entry) {
     try {
-      await Filesystem.deleteFile({ path: entry.path, directory: Directory.Data })
+      // Los episodios guardados antes del 23/8/2026 estan en la carpeta privada;
+      // los nuevos, en Documentos. El indice guarda cual, con Data por defecto.
+      await Filesystem.deleteFile({ path: entry.path, directory: entry.directory || Directory.Data })
     } catch { /* ya no existía */ }
     const newLocal = downloaded.filter(d => d.id !== entry.id)
     await writeLocalIndex(newLocal)

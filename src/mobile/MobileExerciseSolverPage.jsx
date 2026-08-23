@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
+import { guardarDescarga, mensajeDeGuardado } from '../lib/guardarEnElMovil'
 import { Preferences } from '@capacitor/preferences'
 import { useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
@@ -90,12 +91,12 @@ export default function MobileExerciseSolverPage() {
     setBusyDownloadId(doc.id)
     try {
       const path = `exercise_${doc.id}.txt`
-      await Filesystem.writeFile({ path, data: doc.text_content, directory: Directory.Data, encoding: Encoding.UTF8 })
+      const guardado = await guardarDescarga({ path, data: doc.text_content, encoding: Encoding.UTF8 })
       const list = await readDownloadIndex()
-      const entry = { id: doc.id, title: doc.title, path, downloadedAt: Date.now() }
+      const entry = { id: doc.id, title: doc.title, path, directory: guardado.directory, downloadedAt: Date.now() }
       await Preferences.set({ key: DOWNLOAD_INDEX_KEY, value: JSON.stringify([entry, ...list.filter(d => d.id !== doc.id)]) })
       setDownloadedIds(prev => new Set(prev).add(doc.id))
-      addToast('Guardado en el móvil', 'success')
+      addToast(mensajeDeGuardado(guardado, 'El ejercicio'), 'success', 6000)
       // Igual que en Biblioteca/escritorio: marcarlo como descargado oculta
       // el aviso "se borra en X días" (aquí, y en otras plataformas se
       // mantiene indicando que la copia está en el móvil) -- el borrado real

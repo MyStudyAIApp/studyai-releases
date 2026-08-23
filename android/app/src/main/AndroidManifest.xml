@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -60,4 +61,14 @@
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="true" />
+
+    <!-- Apuntando a Android 11+ hay que declarar que consultamos el servicio de
+         texto a voz del sistema; sin esto no se pueden enumerar los motores
+         instalados ni abrir la pantalla donde se instalan voces. La lectura en
+         voz alta la hace el propio dispositivo desde el 23/8/2026. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
 </manifest>
