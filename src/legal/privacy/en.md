@@ -100,7 +100,7 @@ GroqCloud is an AI inference service used solely to transcribe into text the aud
 ### Microsoft Azure
 Company: Microsoft Corporation
 Place of processing: USA
-Azure AI Speech (Microsoft Corporation) is used to convert text into speech: the text the User asks to listen to is sent and the service returns the corresponding audio. No User recording is sent to this service.
+Azure AI Speech (Microsoft Corporation) is used solely to generate downloadable podcasts: the script produced from the User's document is sent and the service returns the audio file. Ordinary read-aloud does NOT go through this service: it is performed by the speech engine of the User's own device, so that text never leaves the device. No User recording is sent here either.
 
 ### Personal Data processed:
 - Various types of Data as specified in the service's privacy policy

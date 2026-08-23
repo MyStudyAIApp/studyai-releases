@@ -118,10 +118,11 @@ While Products on this Application are presented with the greatest accuracy tech
 The characteristics of the chosen Product will be outlined during the purchasing process.
 
 ### Plans, usage quotas and top-ups
-- **Free plan**: free access with a quota of 10 content generations per month (summaries, exams, flashcards, etc.) and 10 minutes/month of voice/vision features (transcription, podcasts, solving exercises from a photo).
+- **Free plan**: free access with a quota of 10 content generations per month (summaries, exams, flashcards, etc.), 1 podcast per month and 10 minutes/month of transcription and image analysis.
 - **Free trial**: the first 7 days after registration, the account has Pro-equivalent access at no cost.
-- **Pro plan (€15/month, recurring subscription)**: unlimited content generations; **20 hours/month of transcription** (turning recorded audio into text) and **90 minutes/month of read-aloud**, which include generated podcasts.
-- **One-time top-ups**: to extend the voice/vision quota without changing plan — "+10 hours of transcription" (€3) and "+10 podcasts" (€7). Each top-up extends the voice/vision minute allowance by the stated amount. They can only be purchased while the account has an active Pro plan.
+- **Pro plan (€15/month, recurring subscription)**: unlimited content generations; **20 podcasts per month** and **20 hours/month of transcription** (turning recorded audio into text).
+- **Read-aloud: unlimited and free on every plan.** It is performed by the speech engine of the User's own device, so it uses no quota and the text is not sent to any third party. The available voices depend on the device: this Application does not guarantee that voices exist for every language on every device.
+- **One-time top-ups**: to extend your quotas without changing plan — "+10 hours of transcription" (€3) and "+10 podcasts" (€7). Each top-up extends the quota named in it by the stated amount. They can only be purchased while the account has an active Pro plan.
 
 **How the cycle is counted.** Quotas renew every month counted from the date the plan was taken out or renewed, not by calendar months. For example, a subscription taken out on the 26th runs from the 26th of one month to the 25th of the next. For accounts without a subscription, the cycle is counted from the account's registration date. Where the start day does not exist in the closing month, the cycle ends on the last day of that month.
 

@@ -117,10 +117,11 @@ Obwohl Produkte über diese Anwendung mit der technisch größtmöglichen Sorgfa
 Die Merkmale des ausgewählten Produkts werden im Laufe des Kaufvorgangs erläutert.
 
 ### Pläne, Nutzungskontingente und Zusatzpakete
-- **Free-Plan**: kostenloser Zugang mit einem Kontingent von 10 Inhaltsgenerierungen pro Monat (Zusammenfassungen, Prüfungen, Karteikarten usw.) und 10 Minuten/Monat für Sprach-/Bildfunktionen (Transkription, Podcasts, Aufgabenlösung per Foto).
+- **Free-Plan**: kostenloser Zugang mit einem Kontingent von 10 Inhaltsgenerierungen pro Monat (Zusammenfassungen, Prüfungen, Karteikarten usw.), 1 Podcast pro Monat und 10 Minuten/Monat Transkription und Bildanalyse.
 - **Kostenlose Testphase**: die ersten 7 Tage nach der Registrierung hat das Konto Pro-Zugang ohne Kosten.
-- **Pro-Plan (15 €/Monat, wiederkehrendes Abonnement)**: unbegrenzte Inhaltsgenerierungen; **20 Stunden/Monat Transkription** (Umwandlung von Audioaufnahmen in Text) und **90 Minuten/Monat Vorlesefunktion**, die die erzeugten Podcasts einschließen.
-- **Einmalige Zusatzpakete**: zur Erweiterung des Sprach-/Bildkontingents ohne Planwechsel — „+10 Stunden Transkription" (3 €) und „+10 Podcasts" (7 €). Jedes Zusatzpaket erweitert das Minutenkontingent für Sprache/Bild um die angegebene Menge. Sie können nur erworben werden, solange das Konto über einen aktiven Pro-Plan verfügt.
+- **Pro-Plan (15 €/Monat, wiederkehrendes Abonnement)**: unbegrenzte Inhaltsgenerierungen; **20 Podcasts pro Monat** und **20 Stunden/Monat Transkription** (Umwandlung von Audioaufnahmen in Text).
+- **Vorlesefunktion: unbegrenzt und kostenlos in allen Plänen.** Sie wird von der Sprachausgabe des Geräts des Nutzers ausgeführt, verbraucht daher kein Kontingent, und der Text wird an keinen Dritten übermittelt. Die verfügbaren Stimmen hängen vom Gerät ab: diese Anwendung garantiert nicht, dass auf jedem Gerät Stimmen für alle Sprachen vorhanden sind.
+- **Einmalige Zusatzpakete**: zur Erweiterung der Kontingente ohne Planwechsel — „+10 Stunden Transkription" (3 €) und „+10 Podcasts" (7 €). Jedes Zusatzpaket erweitert genau das Kontingent, das es im Namen trägt, um die angegebene Menge. Sie können nur erworben werden, solange das Konto über einen aktiven Pro-Plan verfügt.
 
 **Wie der Zyklus gezählt wird.** Die Kontingente erneuern sich monatlich, gerechnet ab dem Datum des Vertragsabschlusses bzw. der Verlängerung des Plans, nicht nach Kalendermonaten. Ein am 26. abgeschlossenes Abonnement läuft beispielsweise vom 26. eines Monats bis zum 25. des Folgemonats. Bei Konten ohne Abonnement wird der Zyklus ab dem Datum der Kontoerstellung gezählt. Existiert der Starttag im Endmonat nicht, endet der Zyklus am letzten Tag dieses Monats.
 

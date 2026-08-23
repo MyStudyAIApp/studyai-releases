@@ -111,7 +111,7 @@ GroqCloud est un service d’inférence IA utilisé uniquement pour transcrire e
 ### Microsoft Azure
 Société : Microsoft Corporation
 Lieu de traitement : États-Unis
-Azure AI Speech (Microsoft Corporation) est utilisé pour convertir du texte en voix : le texte que l’Utilisateur souhaite écouter est transmis et le service renvoie l’audio correspondant. Aucun enregistrement de l’Utilisateur n’est transmis à ce service.
+Azure AI Speech (Microsoft Corporation) est utilisé uniquement pour générer les podcasts téléchargeables : le script élaboré à partir du document de l’Utilisateur est transmis et le service renvoie le fichier audio. La lecture à voix haute ordinaire NE passe PAS par ce service : elle est assurée par le moteur vocal de l’appareil de l’Utilisateur, ce texte ne quitte donc pas l’appareil. Aucun enregistrement de l’Utilisateur n’est transmis ici non plus.
 
 ### Données personnelles traitées :
 - diverses catégories de Données précisées dans la politique de confidentialité du service

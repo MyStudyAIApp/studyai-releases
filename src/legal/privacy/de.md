@@ -111,7 +111,7 @@ GroqCloud ist ein KI-Inferenzdienst, der ausschließlich dazu dient, die vom Nut
 ### Microsoft Azure
 Unternehmen: Microsoft Corporation
 Ort der Verarbeitung: USA
-Azure AI Speech (Microsoft Corporation) wird zur Umwandlung von Text in Sprache verwendet: Der Text, den der Nutzer anhören möchte, wird übermittelt und der Dienst gibt die entsprechende Audioausgabe zurück. Es werden keine Aufnahmen des Nutzers an diesen Dienst übermittelt.
+Azure AI Speech (Microsoft Corporation) wird ausschließlich zur Erzeugung der herunterladbaren Podcasts verwendet: übermittelt wird das aus dem Dokument des Nutzers erstellte Skript, und der Dienst liefert die Audiodatei zurück. Die normale Vorlesefunktion läuft NICHT über diesen Dienst: sie wird von der Sprachausgabe des Geräts des Nutzers ausgeführt, dieser Text verlässt das Gerät also nicht. Auch hier werden keine Aufnahmen des Nutzers übermittelt.
 
 ### Verarbeitete personenbezogene Daten:
 - verschiedene in der Datenschutzerklärung des Dienstes aufgeführte Datenarten
