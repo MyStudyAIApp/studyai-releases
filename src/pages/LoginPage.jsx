@@ -225,8 +225,12 @@ export default function LoginPage() {
       // algo que el usuario entienda.
       else if (msg.includes('Signups not allowed') || msg.includes('signup is disabled') || msg.includes('Sign ups not allowed'))
         setError('El registro está cerrado durante la fase beta. Escríbenos a support@mystudyai.eu si quieres participar.')
-      else if (mode === 'register' && msg.includes('Database error saving new user'))
-        setError('Código de invitación no válido, caducado o ya usado.')
+      // El cierre de la beta vive en la base de datos (trigger
+      // comprobar_invitacion_beta sobre auth.users, con la lista
+      // public.beta_invitados). Cuando rechaza, Supabase devuelve este mensaje
+      // generico, asi que hay que traducirlo aqui.
+      else if (msg.includes('Database error saving new user'))
+        setError('El registro está cerrado durante la fase beta. Escríbenos a support@mystudyai.eu si quieres participar.')
       else
         setError(msg || 'Ha ocurrido un error. Inténtalo de nuevo.')
       // El token de Turnstile es de un solo uso -- si el intento falló hay que
