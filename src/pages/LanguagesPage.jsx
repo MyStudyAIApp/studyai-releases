@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { useAppStore, api, getAuthHeader, getLocalAuthHeader, handleUnauthorized } from '../store/appStore'
+import { useAppStore, api, getAuthHeader, getLocalAuthHeader, handleUnauthorized, IS_MOBILE } from '../store/appStore'
 import { useTranslation } from 'react-i18next'
+import { hablar, parar as pararVoz, elegirVoz, abrirInstalacionDeVoces } from '../lib/deviceTts'
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -57,19 +58,24 @@ const LEVEL_CLS = {
   C2: { ring: 'border-rose-600 bg-rose-900/30',       text: 'text-rose-400' },
 }
 
-const CONV_VOICES = {
-  english:    'en-GB-SoniaNeural',
-  french:     'fr-FR-DeniseNeural',
-  german:     'de-DE-KatjaNeural',
-  italian:    'it-IT-ElsaNeural',
-  portuguese: 'pt-PT-RaquelNeural',
-  spanish:    'es-ES-ElviraNeural',
-  chinese:    'zh-CN-XiaoxiaoNeural',
-  japanese:   'ja-JP-NanamiNeural',
-  arabic:     'ar-SA-ZariyahNeural',
-  russian:    'ru-RU-SvetlanaNeural',
-  polish:     'pl-PL-ZofiaNeural',
-  latin:      'it-IT-ElsaNeural',
+// Idioma que se le pide al dispositivo para cada asignatura. Antes esto era un
+// catalogo de voces concretas de Azure; ahora la voz la elige el aparato entre
+// las que tenga instaladas para ese idioma.
+// El latin no existe como voz en ningun sistema: se lee con voz italiana, que
+// es la pronunciacion mas cercana de las disponibles.
+const CONV_LANGS = {
+  english:    'en-GB',
+  french:     'fr-FR',
+  german:     'de-DE',
+  italian:    'it-IT',
+  portuguese: 'pt-PT',
+  spanish:    'es-ES',
+  chinese:    'zh-CN',
+  japanese:   'ja-JP',
+  arabic:     'ar-SA',
+  russian:    'ru-RU',
+  polish:     'pl-PL',
+  latin:      'it-IT',
 }
 
 const WHISPER_LANGS = {
@@ -297,7 +303,6 @@ export default function LanguagesPage() {
   const [listenFeedback, setListenFeedback]   = useState('')
   const [listenEvaluating, setListenEvaluating] = useState(false)
   const [vfSelections, setVfSelections]       = useState([])     // [{vf: null|'v'|'f', justif: ''}]
-  const listenAudioRef = useRef(null)
 
   // Opciones de sesión
   const [ttsSpeed, setTtsSpeed]         = useState('fast')        // 'slow'|'fast'|'vfast'|'lightning'
@@ -328,7 +333,6 @@ export default function LanguagesPage() {
                                         // después de haber salido de esta pantalla
   const mediaRef       = useRef(null)
   const chunksRef      = useRef([])
-  const audioRef       = useRef(null)
   const messagesEndRef = useRef(null)
   const canvasRef      = useRef(null)
   const analyserRef    = useRef(null)
@@ -393,7 +397,7 @@ export default function LanguagesPage() {
       stopAudioViz()
       stopBargeIn()
       releaseVoiceStream()
-      audioRef.current?.pause()
+      pararVoz()
     }
   }, [])
 
@@ -515,8 +519,7 @@ export default function LanguagesPage() {
             // de siempre, así que no hay que pedir permiso ni esperar nada
             stopBargeIn()
             speakSeqRef.current++          // invalida el bucle de frases
-            audioRef.current?.pause()
-            audioRef.current = null
+            pararVoz()
             setSpeaking(false)
             startRecording()
             return
@@ -559,37 +562,23 @@ export default function LanguagesPage() {
     return chunks.filter(Boolean)
   }
 
-  async function fetchSpeechChunk(text, voice) {
-    const [authHeader, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
-    const res = await fetch(`${apiBase}/tts/speak`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
-      body: JSON.stringify({ text, voice, rate: langsTtsRateRef.current }),
-    })
-    if (!res.ok) throw new Error()
-    const blob = await res.blob()
-    return URL.createObjectURL(blob)
-  }
-
-  // Reproduce un trozo y resuelve cuando termina (onpause cubre el corte
-  // manual del barge-in, que pausa audioRef.current directamente sin
-  // disparar 'ended' -- sin esto el await se queda colgado para siempre)
-  function playSpeechChunk(url) {
-    return new Promise((resolve) => {
-      let done = false
-      const finish = () => { if (done) return; done = true; URL.revokeObjectURL(url); resolve() }
-      const audio = new Audio(url)
-      audioRef.current = audio
-      audio.onended = finish
-      audio.onerror = finish
-      audio.onpause = finish
-      audio.play().catch(finish)
-    })
+  // En Idiomas SI es probable que falte la voz: se habla aleman, japones o
+  // ruso, y el aparato solo tiene lo que tenga instalado. Se avisa en vez de
+  // quedarse mudo sin explicacion. En Android se le puede mandar directamente
+  // a la pantalla del sistema para instalarla; en web no hay forma (probado).
+  function avisarVozQueFalta(lang) {
+    const nombre = new Intl.DisplayNames(['es'], { type: 'language' }).of(lang.split('-')[0]) || lang
+    if (IS_MOBILE) {
+      addToast(`Tu dispositivo no tiene voz en ${nombre}. Puedes instalarla desde los ajustes de tu móvil.`, 'warning', 8000)
+      abrirInstalacionDeVoces()
+    } else {
+      addToast(`Tu dispositivo no tiene voz en ${nombre}. Instálala desde los ajustes de tu sistema para escuchar esta lección.`, 'warning', 8000)
+    }
   }
 
   async function speakAI(text) {
-    const voice = CONV_VOICES[languageRef.current]
-    if (!voice) {
+    const lang = CONV_LANGS[languageRef.current]
+    if (!lang) {
       if (activeRef.current) setTimeout(() => startRecording(), 200)
       return
     }
@@ -603,25 +592,20 @@ export default function LanguagesPage() {
     setSpeaking(true)
 
     try {
-      let nextChunkPromise = fetchSpeechChunk(chunks[0], voice)
+      const voz = await elegirVoz(lang)
+      if (!voz) { avisarVozQueFalta(lang); return }
       let bargeInStarted = false
       for (let i = 0; i < chunks.length; i++) {
         if (speakSeqRef.current !== seq || !mountedRef.current) return   // barge-in llegó antes, o ya salimos de la pantalla
-        const url = await nextChunkPromise
-        // en cuanto tenemos el audio de esta frase, ya pedimos la siguiente
-        // en paralelo -- así no hay hueco de silencio entre frase y frase
-        if (i + 1 < chunks.length) nextChunkPromise = fetchSpeechChunk(chunks[i + 1], voice)
-        if (speakSeqRef.current !== seq || !mountedRef.current) { URL.revokeObjectURL(url); return }
         // el barge-in se arma con la primera frase ya sonando (igual que
         // antes), no hace falta repetirlo en cada frase siguiente
         if (!bargeInStarted && activeRef.current) { startBargeIn(); bargeInStarted = true }
-        await playSpeechChunk(url)
+        await hablar(chunks[i], { lang, voz, rate: langsTtsRateRef.current })
       }
     } catch {
       // TTS falló silenciosamente
     } finally {
       if (speakSeqRef.current === seq) {
-        audioRef.current = null
         setSpeaking(false)
         stopBargeIn()
         // startRecording() reutiliza el stream persistente -- arranque
@@ -823,8 +807,7 @@ export default function LanguagesPage() {
       stopRecording()
       stopBargeIn()
       releaseVoiceStream()
-      audioRef.current?.pause()
-      audioRef.current = null
+      pararVoz()
       setSpeaking(false)
     } else {
       activeRef.current = true
@@ -843,8 +826,7 @@ export default function LanguagesPage() {
     activeRef.current = false
     stopRecording()
     stopBargeIn()
-    audioRef.current?.pause()
-    audioRef.current = null
+    pararVoz()
     setSpeaking(false)
     // Enviar
     activeRef.current = true
@@ -856,8 +838,7 @@ export default function LanguagesPage() {
     stopRecording()
     stopBargeIn()
     releaseVoiceStream()
-    audioRef.current?.pause()
-    audioRef.current = null
+    pararVoz()
     setSpeaking(false)
     setRecording(false)
     setProcessing(false)
@@ -986,32 +967,25 @@ export default function LanguagesPage() {
   }
 
   async function speakListenText(text) {
-    const voice = CONV_VOICES[language]
+    const lang = CONV_LANGS[language]
     setSpeaking(true)
     setListenPlays(p => p + 1)
     try {
-      const [authHeader, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
-      const res = await fetch(`${apiBase}/tts/speak`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
-        body: JSON.stringify({ text, voice, rate: langsTtsRateRef.current }),
-      })
-      if (!res.ok) throw new Error()
-      const url = URL.createObjectURL(await res.blob())
-      const a = new Audio(url)
-      listenAudioRef.current = a
-      a.onended = () => { URL.revokeObjectURL(url); listenAudioRef.current = null; setSpeaking(false) }
-      a.onerror = () => { URL.revokeObjectURL(url); listenAudioRef.current = null; setSpeaking(false) }
-      a.play()
+      const voz = await elegirVoz(lang)
+      if (!voz) { avisarVozQueFalta(lang); return }
+      await hablar(text, { lang, voz, rate: langsTtsRateRef.current })
     } catch {
+      // el usuario paró, o el aparato no pudo: no hay nada que explicar aquí
+    } finally {
       setSpeaking(false)
     }
   }
 
   function stopListenAudio() {
-    if (listenAudioRef.current) { listenAudioRef.current.pause(); listenAudioRef.current = null }
+    pararVoz()
     setSpeaking(false)
   }
+
 
   async function evaluateListening() {
     if (questionType === 'verdadero_falso') {

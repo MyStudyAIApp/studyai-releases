@@ -3,6 +3,7 @@ import { useAppStore, api, getAuthHeader, getLocalAuthHeader, handleUnauthorized
 import TutorAvatar from '../components/Tutor/TutorAvatar'
 import TutorWhiteboard from '../components/Tutor/TutorWhiteboard'
 import { useTranslation } from 'react-i18next'
+import { hablar, parar as pararVoz, elegirVoz, detectarIdioma } from '../lib/deviceTts'
 const TUTOR_NAME = () => localStorage.getItem('tutor_name') || 'Tutor'
 
 // Indicador de "está escribiendo..."
@@ -70,7 +71,6 @@ export default function TutorPage() {
                                           // sendMessage/handleRecordingStop (la cadena de callbacks de
                                           // voz se encadena a sí misma y "congela" el snapshot de
                                           // `messages` del render en que se creó si se lee directamente)
-  const audioRef       = useRef(null)
   const mountedRef      = useRef(true)   // false en cuanto se desmonta -- evita que una respuesta
                                           // async (transcripción, TTS) que llega tarde siga hablando
                                           // o escuchando después de haber salido de esta pantalla
@@ -235,8 +235,7 @@ export default function TutorPage() {
             bargeInTriggeredRef.current = true  // avisa a speakTutor: si su audio aún no
                                                  // estaba listo, que NO lo reproduzca encima
             stopBargeIn()
-            audioRef.current?.pause()
-            audioRef.current = null
+            pararVoz()
             setSpeaking(false)
             setTutorState('idle')
             startRecording()
@@ -281,46 +280,18 @@ export default function TutorPage() {
     return chunks.filter(Boolean)
   }
 
-  // Pide el audio de un trozo de texto al backend (ahora en streaming, ver
-  // /tts/speak en web_main.py -- ya no espera a generar el MP3 completo en
-  // disco antes de responder) y devuelve una URL de blob lista para reproducir.
-  async function fetchSpeechChunk(text) {
-    const [authHeader, localHeader] = await Promise.all([getAuthHeader(), getLocalAuthHeader()])
-    const res = await fetch(`${apiBase}/tts/speak`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
-      body: JSON.stringify({
-        text,
-        rate: tutorTtsRate,
-        voices_per_lang: {
-          es: 'es-ES-ElviraNeural',
-          en: 'en-GB-SoniaNeural',
-          fr: 'fr-FR-DeniseNeural',
-          de: 'de-DE-KatjaNeural',
-          it: 'it-IT-ElsaNeural',
-        },
-      }),
-    })
-    if (!res.ok) throw new Error()
-    const blob = await res.blob()
-    return URL.createObjectURL(blob)
-  }
-
-  // Reproduce un trozo y resuelve cuando termina (o si se interrumpe/desmonta)
-  function playSpeechChunk(url) {
-    return new Promise((resolve) => {
-      let done = false
-      const finish = () => { if (done) return; done = true; URL.revokeObjectURL(url); resolve() }
-      const audio = new Audio(url)
-      audioRef.current = audio
-      audio.onended = finish
-      audio.onerror = finish
-      // el barge-in interrumpe pausando audioRef.current directamente (no
-      // dispara 'ended') -- sin este handler, el await de playSpeechChunk se
-      // queda colgado para siempre y la frase nunca libera su blob URL
-      audio.onpause = finish
-      audio.play().catch(finish)
-    })
+  // Lee un trozo con la voz del PROPIO dispositivo. Antes se pedia el audio a
+  // /tts/speak (Azure): costaba dinero, consumia cupo y habia que precargar la
+  // frase siguiente para que no se notara el hueco de red. Hablando el aparato
+  // no hay espera, asi que la tuberia de precarga sobra.
+  //
+  // El idioma se detecta del propio texto: el tutor responde en el idioma en
+  // que se le pregunta, y el dispositivo elige su mejor voz para ese idioma.
+  async function hablarTrozo(texto) {
+    const lang = detectarIdioma(texto)
+    const voz = await elegirVoz(lang)
+    if (!voz) throw new Error('sin voz para ' + lang)
+    await hablar(texto, { lang, voz, rate: tutorTtsRate })
   }
 
   // Reproducir TTS de la respuesta del tutor -- frase a frase, con la
@@ -338,18 +309,12 @@ export default function TutorPage() {
       // audio, lo detecta en ~50-100ms y graba al instante.
       if (voiceActiveRef.current) startBargeIn()
 
-      let nextChunkPromise = fetchSpeechChunk(chunks[0])
       for (let i = 0; i < chunks.length; i++) {
-        // GUARDA: si mientras se generaba el audio ya empezaste a hablar (el
-        // detector te pilló y ya está grabando), NO reproducimos el audio del
-        // tutor por encima -- sería una voz "fantasma" sonando mientras grabamos
+        // GUARDA: si ya empezaste a hablar (el detector te pilló y está
+        // grabando), NO seguimos leyendo por encima -- sería una voz
+        // "fantasma" sonando mientras grabamos.
         if (bargeInTriggeredRef.current || !mountedRef.current) return
-        const url = await nextChunkPromise
-        // en cuanto tenemos el audio de esta frase, ya pedimos la siguiente
-        // en paralelo -- así no hay hueco de silencio entre frase y frase
-        if (i + 1 < chunks.length) nextChunkPromise = fetchSpeechChunk(chunks[i + 1])
-        if (bargeInTriggeredRef.current || !mountedRef.current) { URL.revokeObjectURL(url); return }
-        await playSpeechChunk(url)
+        await hablarTrozo(chunks[i])
       }
       setSpeaking(false)
       setTutorState('idle')
@@ -370,8 +335,7 @@ export default function TutorPage() {
 
   function stopSpeaking() {
     stopBargeIn()
-    audioRef.current?.pause()
-    audioRef.current = null
+    pararVoz()
     setSpeaking(false)
     setTutorState('idle')
   }

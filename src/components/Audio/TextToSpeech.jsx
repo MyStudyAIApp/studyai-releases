@@ -1,110 +1,92 @@
 import { useState, useRef, useEffect } from 'react'
-import { useAppStore, getAuthHeader, getLocalAuthHeader } from '../../store/appStore'
+import { useAppStore } from '../../store/appStore'
+import { hablar, parar, elegirVoz, hayVozEnElDispositivo } from '../../lib/deviceTts'
 
 /**
- * TextToSpeech — plays text or a list of text chunks in sequence.
+ * TextToSpeech — lee texto en voz alta con el motor del PROPIO dispositivo.
+ *
+ * Antes pedía el audio a /tts/speak (Azure), que costaba dinero y consumía
+ * cupo. Ahora habla el aparato: gratis, sin límite y sin enviar el texto a
+ * ningún tercero. Azure se reserva para los podcasts descargables, que el
+ * navegador no puede generar.
  *
  * Props:
- *   text    — single string (for summaries/results)
- *   chunks  — string[] (for full documents, auto-advances)
- *   label   — optional button label (default: emoji only)
+ *   text    — cadena suelta (resúmenes, resultados)
+ *   chunks  — string[] (documentos largos, se leen seguidos)
+ *   label   — texto opcional del botón (por defecto solo el icono)
+ *   lang    — idioma del contenido (por defecto español)
  */
-export default function TextToSpeech({ text, chunks, label }) {
-  const { apiBase, addToast, ttsVoicesPerLang, ttsRate } = useAppStore()
+export default function TextToSpeech({ text, chunks, label, lang = 'es-ES' }) {
+  const { addToast, ttsVoicesPerLang, ttsRate } = useAppStore()
 
   const [playing, setPlaying]         = useState(false)
-  const [loading, setLoading]         = useState(false)
   const [chunkIdx, setChunkIdx]       = useState(0)
   const [totalChunks, setTotalChunks] = useState(0)
-  const audioRef = useRef(null)
-  const stoppedRef = useRef(false)   // true when user manually stopped
+  const stoppedRef = useRef(false)
 
-  // Build the list of chunks to play
-  function getChunks() {
-    if (chunks?.length) return chunks
-    if (text?.trim())   return [text]
-    return []
-  }
+  const disponible = hayVozEnElDispositivo()
 
-  // Stop and reset everything
   function stop() {
     stoppedRef.current = true
-    if (audioRef.current) {
-      audioRef.current.pause()
-      audioRef.current = null
-    }
+    parar()
     setPlaying(false)
-    setLoading(false)
     setChunkIdx(0)
   }
 
-  // Fetch audio for one chunk and play it, then auto-advance
-  async function playChunk(allChunks, idx) {
-    if (stoppedRef.current || idx >= allChunks.length) {
-      setPlaying(false)
-      setLoading(false)
-      setChunkIdx(0)
-      return
-    }
-    setChunkIdx(idx)
-    setLoading(true)
-    try {
-      const authHeader = await getAuthHeader()
-      const localHeader = await getLocalAuthHeader()
-      const res = await fetch(`${apiBase}/tts/speak`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
-        body: JSON.stringify({
-          text: allChunks[idx],
-          voices_per_lang: ttsVoicesPerLang,
-          rate: ttsRate,
-        }),
-      })
-      if (!res.ok) throw new Error('TTS no disponible')
-      const blob = await res.blob()
-      const url  = URL.createObjectURL(blob)
-      const a    = new Audio(url)
-      audioRef.current = a
-      setLoading(false)
-      setPlaying(true)
-      a.onended = () => {
-        if (!stoppedRef.current) playChunk(allChunks, idx + 1)
-      }
-      a.onerror = () => {
-        addToast('Error reproduciendo audio', 'error')
-        stop()
-      }
-      a.play()
-    } catch (e) {
-      addToast(e.message, 'warning')
-      stop()
-    }
+  function getTexto() {
+    if (chunks?.length) return chunks.join(' ')
+    return text?.trim() || ''
   }
 
   async function handleClick() {
-    if (playing || loading) { stop(); return }
-    const all = getChunks()
-    if (!all.length) return
+    if (playing) { stop(); return }
+
+    const contenido = getTexto()
+    if (!contenido) return
+
+    if (!disponible) {
+      addToast('Este dispositivo no tiene voz instalada para leer en voz alta', 'warning')
+      return
+    }
+
     stoppedRef.current = false
-    setTotalChunks(all.length)
-    setChunkIdx(0)
-    playChunk(all, 0)
+    setPlaying(true)
+    try {
+      const voz = await elegirVoz(lang, ttsVoicesPerLang)
+      if (!voz) {
+        addToast('No hay ninguna voz instalada para este idioma en tu dispositivo', 'warning')
+        stop()
+        return
+      }
+      await hablar(contenido, {
+        lang,
+        voz,
+        rate: ttsRate,
+        onProgress: (i, total) => {
+          setChunkIdx(i)
+          setTotalChunks(total)
+        },
+      })
+    } catch (e) {
+      if (!stoppedRef.current) addToast(e.message, 'warning')
+    } finally {
+      if (!stoppedRef.current) { setPlaying(false); setChunkIdx(0) }
+    }
   }
 
-  // Clean up on unmount
   useEffect(() => () => stop(), [])
 
-  const all    = getChunks()
-  const isMulti = all.length > 1
-  const icon   = loading ? '⏳' : playing ? '⏹' : '🔊'
-  const tip    = loading ? 'Cargando audio...'
-               : playing ? (isMulti ? `Detener (parte ${chunkIdx + 1}/${totalChunks})` : 'Detener lectura')
-               : 'Leer en voz alta'
+  const hayContenido = !!getTexto()
+  const isMulti = totalChunks > 1
+  const icon = playing ? '⏹' : '🔊'
+  const tip  = !disponible ? 'Tu dispositivo no tiene voz instalada'
+             : playing ? (isMulti ? `Detener (parte ${chunkIdx + 1}/${totalChunks})` : 'Detener lectura')
+             : 'Leer en voz alta'
 
   return (
     <button
       onClick={handleClick}
-      disabled={!all.length}
+      disabled={!hayContenido}
       className={`btn-secondary btn-sm text-base transition-colors flex items-center gap-1.5 ${
         playing ? 'text-primary-300 border-primary-500 bg-primary-900/20' : ''
       }`}
