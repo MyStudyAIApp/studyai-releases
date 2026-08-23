@@ -76,12 +76,33 @@ export async function elegirVoz(lang, preferidasPorIdioma = {}) {
 }
 
 /**
+ * Quita lo que no se debe pronunciar.
+ *
+ * El motor del dispositivo lee el NOMBRE de cada emoji ("sol con cara"), cosa
+ * que Azure no hacía. El tutor usa emojis con naturalidad, así que sin esto la
+ * lectura se llena de ruido. También se quitan las marcas de Markdown, que el
+ * modelo emite a menudo y se leerían como asteriscos y almohadillas.
+ */
+export function limpiarParaHablar(texto) {
+  return String(texto)
+    // emojis, pictogramas, banderas y sus modificadores
+    .replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]/gu, ' ')
+    .replace(/[\u{1F3FB}-\u{1F3FF}\u{FE0F}\u{200D}\u{20E3}]/gu, '')
+    // énfasis y encabezados de Markdown (los guiones bajos solo si envuelven
+    // palabras: en medio de una, forman parte del término)
+    .replace(/[*`#]+/g, ' ')
+    .replace(/(^|\s)_+|_+(?=\s|$)/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+/**
  * Trocea por frases. Chrome corta los textos largos a mitad y deja de emitir
  * 'end', así que hablar de golpe un resumen entero no es fiable. Se parte por
  * puntuación y solo se trocea a lo bruto si una frase suelta es enorme.
  */
 export function trocear(texto, max = CORTE_MAX) {
-  const frases = String(texto).replace(/\s+/g, ' ').trim().match(/[^.!?…]+[.!?…]*\s*/g) || []
+  const frases = limpiarParaHablar(texto).match(/[^.!?…]+[.!?…]*\s*/g) || []
   const trozos = []
   let actual = ''
 

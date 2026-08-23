@@ -6,7 +6,24 @@
  * idioma, convertir el ritmo). Hablar de verdad hay que probarlo en el aparato.
  */
 import assert from 'node:assert'
-import { trocear, detectarIdioma, ritmoANumero } from './deviceTts.js'
+import { trocear, detectarIdioma, ritmoANumero, limpiarParaHablar } from './deviceTts.js'
+
+// --- limpiar: el motor lee el NOMBRE de cada emoji en voz alta -------------
+assert.strictEqual(
+  limpiarParaHablar('¡Buenos días! ☀️ Vamos con la lección 📚'),
+  '¡Buenos días! Vamos con la lección',
+  'los emojis no deben llegar al motor de voz',
+)
+assert.strictEqual(limpiarParaHablar('Genial 👍🏽 seguimos'), 'Genial seguimos',
+  'los modificadores de tono de piel tampoco')
+assert.strictEqual(limpiarParaHablar('La **mitosis** es un `proceso`'), 'La mitosis es un proceso',
+  'las marcas de Markdown se leerían como asteriscos')
+assert.strictEqual(limpiarParaHablar('## Resumen'), 'Resumen')
+// pero no se puede romper el texto normal
+assert.strictEqual(limpiarParaHablar('El pH del agua es 7,0 (neutro)'), 'El pH del agua es 7,0 (neutro)')
+assert.strictEqual(limpiarParaHablar('La variable stock_total vale 3'), 'La variable stock_total vale 3',
+  'un guion bajo dentro de una palabra forma parte del término')
+assert.strictEqual(limpiarParaHablar('¿Qué es? ¡Mira: 3 + 2 = 5!'), '¿Qué es? ¡Mira: 3 + 2 = 5!')
 
 // --- trocear: Chrome corta los textos largos, hay que partir por frases ---
 const largo = 'La mitosis consta de cuatro fases bien diferenciadas. La primera es la profase, '
@@ -48,4 +65,4 @@ assert.strictEqual(ritmoANumero(undefined), 1, 'sin valor, ritmo normal')
 assert.strictEqual(ritmoANumero('+500%'), 2, 'se limita al máximo que admite el navegador')
 assert.strictEqual(ritmoANumero('-90%'), 0.5, 'se limita al mínimo')
 
-console.log('OK — trocear, detectarIdioma y ritmoANumero se comportan')
+console.log('OK — limpiarParaHablar, trocear, detectarIdioma y ritmoANumero se comportan')
