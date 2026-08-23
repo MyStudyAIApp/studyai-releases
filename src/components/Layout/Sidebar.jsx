@@ -105,7 +105,8 @@ export default function Sidebar() {
           <div className="space-y-1.5">
             {[
               { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
-              { label: 'Voz / visión (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+              { label: 'Podcasts', used: usage.podcasts_used, max: usage.podcasts_max },
+              { label: 'Transcripción (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
             ].map(({ label, used, max }) => (
               <div key={label}>
                 <div className="flex items-center justify-between text-[11px] mb-0.5">

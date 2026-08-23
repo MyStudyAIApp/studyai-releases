@@ -246,7 +246,7 @@ export default function MobileSettingsPage() {
                 <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
               </div>
               <p className="text-xs text-slate-400 mb-4">
-                Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+                Más generaciones, más podcasts y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
               </p>
               <button
                 onClick={handleGoPro}

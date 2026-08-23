@@ -125,10 +125,18 @@ export const useAppStore = create(
       // aparte) se sincronizan con la nube — ver src/services/settingsSync.js.
       // _applyingRemote evita que aplicar lo que acaba de llegar de la nube
       // dispare a su vez un push de vuelta (bucle inútil, aunque inofensivo).
-      ttsVoicesPerLang: {
-        es: 'es-ES-ElviraNeural',
-        en: 'en-US-EmmaNeural',
-        fr: 'fr-FR-DeniseNeural',
+      // Voz preferida para LEER en voz alta, por idioma. Desde el 23/8/2026
+      // guarda nombres de voces del PROPIO dispositivo (las de
+      // speechSynthesis), no del catálogo de Azure: cada aparato tiene las
+      // suyas, así que empieza vacío y se rellena cuando el usuario elige.
+      ttsVoicesPerLang: {},
+      // Voz de los PODCASTS. Esta sí es de Azure y es la misma para todos: el
+      // podcast se genera en el servidor porque el navegador no sabe producir
+      // un fichero de audio descargable. Va aparte de la de leer justo por eso.
+      podcastVoice: 'es-ES-ElviraNeural',
+      setPodcastVoice: (v) => {
+        set({ podcastVoice: v })
+        if (!get()._applyingRemote) pushSettings({ podcastVoice: v })
       },
       ttsRate: '+10%',
       tutorTtsRate: '+25%',
@@ -164,6 +172,7 @@ export const useAppStore = create(
       applySyncedSettings: (s) => {
         set({ _applyingRemote: true })
         if (s.ttsVoicesPerLang) set(prev => ({ ttsVoicesPerLang: { ...prev.ttsVoicesPerLang, ...s.ttsVoicesPerLang } }))
+        if (s.podcastVoice) set({ podcastVoice: s.podcastVoice })
         if (s.ttsRate)          set({ ttsRate: s.ttsRate })
         if (s.tutorTtsRate)     set({ tutorTtsRate: s.tutorTtsRate })
         if (s.langsTtsRate)     set({ langsTtsRate: s.langsTtsRate })
@@ -178,7 +187,7 @@ export const useAppStore = create(
       // siguiente carga (al volver de Stripe se veia "Free" un momento antes de
       // que /usage/summary respondiera). Es un valor de adorno: /usage/summary
       // lo corrige en cuanto llega y el cupo real siempre lo decide el backend.
-      partialize: (s) => ({ ttsVoicesPerLang: s.ttsVoicesPerLang, ttsRate: s.ttsRate, tutorTtsRate: s.tutorTtsRate, langsTtsRate: s.langsTtsRate, dailyGoalMinutes: s.dailyGoalMinutes, responseLang: s.responseLang, planTier: s.planTier }),
+      partialize: (s) => ({ ttsVoicesPerLang: s.ttsVoicesPerLang, ttsRate: s.ttsRate, tutorTtsRate: s.tutorTtsRate, langsTtsRate: s.langsTtsRate, dailyGoalMinutes: s.dailyGoalMinutes, responseLang: s.responseLang, planTier: s.planTier, podcastVoice: s.podcastVoice }),
     }
   )
 )

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAppStore, api, IS_WEB, IS_ELECTRON, getAuthHeader, getLocalAuthHeader } from '../store/appStore'
 import { useTranslation } from 'react-i18next'
+import DeviceVoicePicker from '../components/Audio/DeviceVoicePicker'
 import { SUPPORTED_LANGS } from '../i18n'
 
 // Idiomas disponibles para el CONTENIDO generado por la IA (resúmenes, fichas,
@@ -50,7 +51,11 @@ const TUTORIAL_SECTION_ICONS = {
 // lo obtiene de GitHub o usa la lista embebida). Ver loadOllamaStatus().
 
 // ── Voces disponibles agrupadas por idioma ────────────────────────────────
-const TTS_LANG_GROUPS = [
+// Catálogo de voces de Azure. Desde el 23/8/2026 solo se usa para los
+// PODCASTS: la lectura en voz alta la hace el dispositivo del usuario con sus
+// propias voces (ver DeviceVoicePicker). El podcast se genera en el servidor
+// porque el navegador no sabe producir un fichero de audio descargable.
+const PODCAST_VOICE_GROUPS = [
   {
     lang: 'es',
     flag: '🇪🇸',
@@ -444,7 +449,7 @@ export default function SettingsPage() {
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const { addToast, ttsVoicesPerLang, ttsRate, setTtsVoiceForLang, setTtsRate, tutorTtsRate, setTutorTtsRate, langsTtsRate, setLangsTtsRate, apiBase, dailyGoalMinutes, setDailyGoalMinutes, responseLang, setResponseLang } = useAppStore()
+  const { addToast, ttsVoicesPerLang, ttsRate, setTtsVoiceForLang, setTtsRate, podcastVoice, setPodcastVoice, tutorTtsRate, setTutorTtsRate, langsTtsRate, setLangsTtsRate, apiBase, dailyGoalMinutes, setDailyGoalMinutes, responseLang, setResponseLang } = useAppStore()
 
   const [exporting, setExporting]               = useState(false)
   const [resetting, setResetting]               = useState(false)
@@ -1013,34 +1018,40 @@ export default function SettingsPage() {
         defaultOpen={false}
       >
         <div className="space-y-5">
-          {/* Voces por idioma */}
-          {TTS_LANG_GROUPS.map(group => (
-            <div key={group.lang}>
-              <label className="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider flex items-center gap-1.5">
-                <span>{group.flag}</span> {group.label}
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {group.voices.map(v => {
-                  const active = (ttsVoicesPerLang?.[group.lang] ?? '') === v.value
-                  return (
-                    <button
-                      key={v.value}
-                      onClick={() => setTtsVoiceForLang(group.lang, v.value)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs text-left transition-all ${
-                        active
-                          ? 'border-primary-500 bg-primary-900/40 text-primary-200'
-                          : 'border-slate-700 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-700/40'
-                      }`}
-                    >
-                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${active ? 'bg-primary-400' : 'bg-slate-600'}`} />
-                      <span className="flex-1">{v.label}</span>
-                      {active && <span className="text-primary-400">✓</span>}
-                    </button>
-                  )
-                })}
-              </div>
+          {/* ── Voz para LEER en voz alta: la del propio dispositivo ── */}
+          <div>
+            <h4 className="text-sm font-semibold text-slate-200 mb-1">Voz para leer en voz alta</h4>
+            <DeviceVoicePicker />
+          </div>
+
+          {/* ── Voz de los PODCASTS: Azure, igual en todos los aparatos ── */}
+          <div className="pt-4 border-t border-slate-700/60">
+            <h4 className="text-sm font-semibold text-slate-200 mb-1">Voz de los podcasts</h4>
+            <p className="text-xs text-slate-400 mb-3">
+              Los podcasts se generan como un archivo que puedes descargar y escuchar sin
+              conexión, así que su voz no depende del dispositivo: suena igual en todos.
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              {(PODCAST_VOICE_GROUPS.find(g => g.lang === 'es')?.voices || []).map(v => {
+                const active = podcastVoice === v.value
+                return (
+                  <button
+                    key={v.value}
+                    onClick={() => setPodcastVoice(v.value)}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs text-left transition-all ${
+                      active
+                        ? 'border-primary-500 bg-primary-900/40 text-primary-200'
+                        : 'border-slate-700 bg-slate-800/40 text-slate-300 hover:border-slate-600 hover:bg-slate-700/40'
+                    }`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${active ? 'bg-primary-400' : 'bg-slate-600'}`} />
+                    <span className="flex-1">{v.label}</span>
+                    {active && <span className="text-primary-400">✓</span>}
+                  </button>
+                )
+              })}
             </div>
-          ))}
+          </div>
 
           {/* Velocidad lectura de documentos */}
           <div>

@@ -15,7 +15,7 @@ export default function MobileLibraryPage() {
   const [activeSubject, setActiveSubject] = useState(null)
   const [topics, setTopics]     = useState([])
   const [activeTopic, setActiveTopic] = useState(null)
-  const { addToast, ttsVoicesPerLang } = useAppStore()
+  const { addToast, podcastVoice } = useAppStore()
   const navigate = useNavigate()
 
   const load = useCallback(async () => {
@@ -76,7 +76,6 @@ export default function MobileLibraryPage() {
     if (generatingPodcastId) return
     setGeneratingPodcastId(doc.id)
     try {
-      const podcastVoice = ttsVoicesPerLang?.es || 'es-ES-ElviraNeural'
       await api('POST', `/documents/${doc.id}/podcast/send-to-mobile?voice=${encodeURIComponent(podcastVoice)}`)
       addToast('Podcast generado — ve a "Mis podcasts" para descargarlo', 'success')
     } catch {

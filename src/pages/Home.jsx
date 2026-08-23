@@ -533,7 +533,8 @@ export default function Home() {
           <div className="card space-y-3">
             {[
               { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
-              { label: 'Voz y análisis de imagen (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+              { label: 'Podcasts', used: usage.podcasts_used, max: usage.podcasts_max },
+              { label: 'Transcripción y análisis de imagen (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
             ].map(({ label, used, max }) => (
               <div key={label}>
                 <div className="flex items-center justify-between text-xs mb-1">
@@ -593,7 +594,7 @@ export default function Home() {
               <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
             </div>
             <p className="text-xs text-slate-400 mb-4">
-              Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+              Más generaciones, más podcasts y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
             </p>
             <button
               onClick={handleGoPro}
@@ -648,7 +649,7 @@ export default function Home() {
               <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
             </div>
             <p className="text-xs text-slate-400 mb-4">
-              Más generaciones, más minutos de voz y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+              Más generaciones, más podcasts y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
             </p>
             <label className="flex items-center gap-2 text-xs text-slate-400 mb-3">
               <input type="checkbox" checked={canarias} onChange={(e) => toggleCanarias(e.target.checked)} />

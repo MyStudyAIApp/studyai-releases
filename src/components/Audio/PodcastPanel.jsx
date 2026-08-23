@@ -10,13 +10,12 @@ import { WEB_API } from '../../lib/supabase'
 // hace lo mismo directamente), así que aquí solo hay dos casos: en el propio
 // escritorio/web se puede además descargar directamente al ordenador.
 export default function PodcastPanel({ doc, onClose }) {
-  const { apiBase, addToast, ttsVoicesPerLang } = useAppStore()
+  const { apiBase, addToast, podcastVoice } = useAppStore()
   const [downloading, setDownloading] = useState(false)
   const [sending, setSending] = useState(false)
   // El guion del podcast siempre se genera en español -- usamos la voz que
   // el usuario tenga elegida en Ajustes para español, así suena igual que
   // el resto de lecturas en voz alta de la app.
-  const podcastVoice = ttsVoicesPerLang?.es || 'es-ES-ElviraNeural'
 
   async function downloadHere() {
     setDownloading(true)

@@ -3,7 +3,8 @@ import Modal from './Modal'
 
 const CATEGORY_LABELS = {
   generation: 'generaciones (resúmenes, fichas, exámenes...)',
-  voice_minutes: 'minutos de voz/visión (apuntes de voz, idiomas, resolver ejercicio)',
+  podcasts: 'podcasts',
+  voice_minutes: 'minutos de transcripción/visión (apuntes de voz, idiomas, resolver ejercicio)',
   cost_cap: 'límite de seguridad de la cuenta',
 }
 
