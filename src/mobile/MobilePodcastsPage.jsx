@@ -69,7 +69,7 @@ export default function MobilePodcastsPage() {
       // Confirmar recogida — libera el buzón temporal en Supabase.
       await api('POST', `/podcasts/${item.id}/fetched`).catch(() => {})
 
-      addToast('Podcast guardado en tu móvil', 'success')
+      addToast(mensajeDeGuardado(guardado, 'El podcast'), 'success', 6000)
     } catch (e) {
       addToast(`No se pudo descargar: ${e.message}`, 'error')
     } finally {
