@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useAppStore, api, getAuthHeader, getLocalAuthHeader, handleUnauthorized, IS_MOBILE } from '../store/appStore'
 import { useTranslation } from 'react-i18next'
-import { hablar, parar as pararVoz, elegirVoz, abrirInstalacionDeVoces } from '../lib/deviceTts'
+import { hablar, parar as pararVoz, elegirVoz, abrirInstalacionDeVoces, idiomasDisponibles } from '../lib/deviceTts'
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -280,6 +280,11 @@ export default function LanguagesPage() {
 
   // Config
   const [language, setLanguage] = useState('english')
+  // Idiomas que el aparato puede pronunciar. Se pregunta en vez de decidirlo
+  // nosotros: un movil con japones instalado lo ofrece y un Chrome de Windows
+  // sin el, no. Asi no hay dos listas que mantener (web y app) ni idiomas que
+  // se queden mudos sin avisar. null mientras se averigua.
+  const [idiomasDelAparato, setIdiomasDelAparato] = useState(null)
   const [level, setLevel]       = useState('B1')
   const [topic, setTopic]       = useState('free')
   const [mode, setMode]         = useState('exam')
@@ -362,6 +367,22 @@ export default function LanguagesPage() {
 
   // Sincronizar refs con state
   // La velocidad local (ttsSpeed) tiene prioridad sobre la global (langsTtsRate)
+  useEffect(() => {
+    let vivo = true
+    idiomasDisponibles().then(disponibles => {
+      if (!vivo) return
+      setIdiomasDelAparato(disponibles)
+      // Si el idioma por defecto (inglés) no lo habla este aparato, se pasa al
+      // primero que sí -- si no, quedaría elegido uno que ni siquiera se ve.
+      const base = id => (CONV_LANGS[id] || '').split('-')[0].toLowerCase()
+      if (!disponibles.includes(base(language))) {
+        const alternativa = LANGUAGES.find(l => disponibles.includes(base(l.id)))
+        if (alternativa) setLanguage(alternativa.id)
+      }
+    })
+    return () => { vivo = false }
+  }, [])
+
   useEffect(() => { langsTtsRateRef.current = langsTtsRate ?? '+12%' }, [langsTtsRate])
   useEffect(() => {
     const rate = SPEED_OPTIONS.find(s => s.id === ttsSpeed)?.rate ?? '+25%'
@@ -560,6 +581,14 @@ export default function LanguagesPage() {
     }
     if (current.trim()) chunks.push(current.trim())
     return chunks.filter(Boolean)
+  }
+
+  // Un idioma solo se ofrece si el aparato sabe pronunciarlo. Mientras se
+  // averigua (null) se muestran todos, para no parpadear.
+  function puedeHablarse(id) {
+    if (!idiomasDelAparato) return true
+    const lang = CONV_LANGS[id]
+    return !lang || idiomasDelAparato.includes(lang.split('-')[0].toLowerCase())
   }
 
   // En Idiomas SI es probable que falte la voz: se habla aleman, japones o
@@ -1215,8 +1244,15 @@ export default function LanguagesPage() {
       {/* Idioma */}
       <div className="card space-y-3">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('languages.langTitle')}</p>
+        {idiomasDelAparato && !LANGUAGES.some(l => puedeHablarse(l.id)) && (
+          <p className="text-sm text-amber-300">
+            Tu dispositivo no tiene ninguna voz instalada, así que las conversaciones
+            habladas no funcionarán. Instala al menos una voz para empezar.
+          </p>
+        )}
+
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {LANGUAGES.map(lang => (
+          {LANGUAGES.filter(l => puedeHablarse(l.id)).map(lang => (
             <button key={lang.id} onClick={() => setLanguage(lang.id)}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border-2 transition-all min-w-0 ${
                 language === lang.id
@@ -1228,6 +1264,35 @@ export default function LanguagesPage() {
             </button>
           ))}
         </div>
+
+        {/* Los que este aparato no puede pronunciar. Se muestran igualmente,
+            apagados: es mas honesto que hacerlos desaparecer sin explicacion,
+            y en movil se puede instalar la voz ahi mismo. */}
+        {idiomasDelAparato && LANGUAGES.some(l => !puedeHablarse(l.id)) && (
+          <div className="pt-2 border-t border-slate-700/60 space-y-2">
+            <p className="text-xs text-slate-500">
+              Tu dispositivo no tiene voz para estos idiomas, así que no puede leerlos en alto:
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {LANGUAGES.filter(l => !puedeHablarse(l.id)).map(lang => (
+                <span key={lang.id}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-500 text-xs">
+                  <span className="opacity-50">{lang.flag}</span>
+                  <span>{lang.label}</span>
+                </span>
+              ))}
+            </div>
+            {IS_MOBILE ? (
+              <button onClick={abrirInstalacionDeVoces} className="text-xs text-primary-400 underline">
+                Instalar voces en mi dispositivo
+              </button>
+            ) : (
+              <p className="text-xs text-slate-500">
+                Puedes añadirlas desde los ajustes de voz de tu sistema operativo.
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Nivel */}
