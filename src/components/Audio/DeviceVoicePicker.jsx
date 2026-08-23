@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAppStore, IS_MOBILE } from '../../store/appStore'
-import { cargarVoces, hablar, parar, abrirInstalacionDeVoces } from '../../lib/deviceTts'
+import { cargarVoces, hablar, parar, abrirInstalacionDeVoces, motivoSinVoces } from '../../lib/deviceTts'
 
 /**
  * Elige la voz con la que el DISPOSITIVO lee en voz alta, por idioma.
@@ -65,6 +65,11 @@ export default function DeviceVoicePicker() {
           Tu dispositivo no tiene ninguna voz instalada, así que la lectura en voz alta
           no funcionará.
         </p>
+        {/* El motivo tecnico ayuda a distinguir "no hay voces" de "el motor no
+            respondio", que se arreglan de formas muy distintas. */}
+        {motivoSinVoces && (
+          <p className="text-xs text-slate-500">Detalle: {motivoSinVoces}</p>
+        )}
         {IS_MOBILE && (
           <button onClick={abrirInstalacionDeVoces} className="btn-secondary btn-sm">
             Instalar voces

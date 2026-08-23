@@ -37,26 +37,77 @@ export const hayVozEnElDispositivo = () => esNativo() || hayWebSpeech()
 
 let cacheNativa = null
 
+/** "es-ES" → "Español (España)", para poder poner nombre a una voz cuando el
+ *  plugin solo nos da el código de idioma. */
+function nombreDeIdioma(lang) {
+  try {
+    return new Intl.DisplayNames(['es'], { type: 'language' }).of(lang) || lang
+  } catch {
+    return lang
+  }
+}
+
 /**
  * Devuelve las voces disponibles, con la misma forma en las dos plataformas:
  * { name, lang, localService }.
  */
+/** Última razón por la que no se pudieron cargar voces, para poder decírsela
+ *  al usuario en vez de dejarle mirando un "buscando…" eterno. */
+export let motivoSinVoces = null
+
+/** El plugin nativo puede quedarse sin responder si el motor del sistema aún
+ *  no ha terminado de arrancar. Sin este límite, la pantalla se queda colgada
+ *  en "Buscando las voces de tu dispositivo…" para siempre (visto en un
+ *  Pixel 8 Pro el 23/8/2026). */
+function conLimite(promesa, ms, etiqueta) {
+  return Promise.race([
+    promesa,
+    new Promise((_, rechazar) => setTimeout(() => rechazar(new Error(`${etiqueta} no respondió`)), ms)),
+  ])
+}
+
 export async function cargarVoces(timeoutMs = 3000) {
   if (esNativo()) {
     if (cacheNativa) return cacheNativa
+    motivoSinVoces = null
+    let tts
     try {
-      const tts = await plugin()
-      const { voices } = await tts.getSupportedVoices()
-      // El plugin devuelve el índice implícito por posición: es lo que hay que
-      // pasarle luego en speak({ voice }), así que se guarda aquí.
-      cacheNativa = (voices || []).map((v, indice) => ({
-        name: v.name || v.voiceURI || `Voz ${indice + 1}`,
-        lang: v.lang || '',
-        localService: v.localService !== false,
-        indice,
+      tts = await conLimite(plugin(), timeoutMs, 'el módulo de voz')
+    } catch (e) {
+      motivoSinVoces = e.message
+      return []
+    }
+
+    // 1) Lo ideal: la lista de voces con nombre. El plugin las identifica por
+    //    su posición, así que se guarda el índice para pasárselo a speak().
+    try {
+      const { voices } = await conLimite(tts.getSupportedVoices(), timeoutMs, 'la lista de voces')
+      if (voices?.length) {
+        cacheNativa = voices.map((v, indice) => ({
+          name: v.name || v.voiceURI || `Voz ${indice + 1}`,
+          lang: v.lang || '',
+          localService: v.localService !== false,
+          indice,
+        }))
+        return cacheNativa
+      }
+    } catch (e) {
+      motivoSinVoces = e.message
+    }
+
+    // 2) Respaldo: solo los idiomas. Basta para hablar (speak acepta 'lang'
+    //    sin elegir voz concreta) y para saber qué idiomas ofrecer.
+    try {
+      const { languages } = await conLimite(tts.getSupportedLanguages(), timeoutMs, 'la lista de idiomas')
+      cacheNativa = (languages || []).map(lang => ({
+        name: nombreDeIdioma(lang),
+        lang,
+        localService: true,
       }))
+      if (cacheNativa.length) motivoSinVoces = null
       return cacheNativa
-    } catch {
+    } catch (e) {
+      motivoSinVoces = e.message
       return []
     }
   }
