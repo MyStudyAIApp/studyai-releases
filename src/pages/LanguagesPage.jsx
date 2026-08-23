@@ -16,7 +16,10 @@ const LANGUAGES = [
   { id: 'japanese',   flag: '🇯🇵', label: '日本語' },
   { id: 'arabic',     flag: '🇸🇦', label: 'العربية' },
   { id: 'russian',    flag: '🇷🇺', label: 'Русский' },
-  { id: 'latin',      flag: '🏛️',  label: 'Latín' },
+  // No existe voz de latin en ningun sistema: se lee con voz italiana, que es
+  // la pronunciacion mas cercana (la eclesiastica). Se dice en la etiqueta para
+  // que quien estudie latin clasico sepa lo que va a oir.
+  { id: 'latin',      flag: '🏛️',  label: 'Latín · voz italiana' },
   { id: 'polish',     flag: '🇵🇱', label: 'Polski' },
 ]
 
