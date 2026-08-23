@@ -119,7 +119,7 @@ Die Merkmale des ausgewählten Produkts werden im Laufe des Kaufvorgangs erläut
 ### Pläne, Nutzungskontingente und Zusatzpakete
 - **Free-Plan**: kostenloser Zugang mit einem Kontingent von 10 Inhaltsgenerierungen pro Monat (Zusammenfassungen, Prüfungen, Karteikarten usw.) und 10 Minuten/Monat für Sprach-/Bildfunktionen (Transkription, Podcasts, Aufgabenlösung per Foto).
 - **Kostenlose Testphase**: die ersten 7 Tage nach der Registrierung hat das Konto Pro-Zugang ohne Kosten.
-- **Pro-Plan (15 €/Monat, wiederkehrendes Abonnement)**: unbegrenzte Inhaltsgenerierungen; 20 Stunden/Monat für Sprach-/Bildfunktionen.
+- **Pro-Plan (15 €/Monat, wiederkehrendes Abonnement)**: unbegrenzte Inhaltsgenerierungen; **20 Stunden/Monat Transkription** (Umwandlung von Audioaufnahmen in Text) und **90 Minuten/Monat Vorlesefunktion**, die die erzeugten Podcasts einschließen.
 - **Einmalige Zusatzpakete**: zur Erweiterung des Sprach-/Bildkontingents ohne Planwechsel — „+10 Stunden Transkription" (3 €) und „+10 Podcasts" (7 €). Jedes Zusatzpaket erweitert das Minutenkontingent für Sprache/Bild um die angegebene Menge. Sie können nur erworben werden, solange das Konto über einen aktiven Pro-Plan verfügt.
 
 **Wie der Zyklus gezählt wird.** Die Kontingente erneuern sich monatlich, gerechnet ab dem Datum des Vertragsabschlusses bzw. der Verlängerung des Plans, nicht nach Kalendermonaten. Ein am 26. abgeschlossenes Abonnement läuft beispielsweise vom 26. eines Monats bis zum 25. des Folgemonats. Bei Konten ohne Abonnement wird der Zyklus ab dem Datum der Kontoerstellung gezählt. Existiert der Starttag im Endmonat nicht, endet der Zyklus am letzten Tag dieses Monats.

@@ -120,7 +120,7 @@ Las características del Producto escogido se describirán durante el proceso de
 ### Planes, cuotas de uso y bonos
 - **Plan Free**: acceso gratuito con un cupo de 10 generaciones de contenido al mes (resúmenes, exámenes, fichas, etc.) y 10 minutos/mes de funciones de voz/visión (transcripción, podcasts, resolución de ejercicios por foto).
 - **Prueba gratis**: los 7 primeros días desde el registro, la cuenta tiene acceso equivalente al plan Pro sin coste.
-- **Plan Pro (15€/mes, suscripción recurrente)**: sin límite de generaciones de contenido; 20 horas/mes de funciones de voz/visión.
+- **Plan Pro (15€/mes, suscripción recurrente)**: sin límite de generaciones de contenido; **20 horas/mes de transcripción** (pasar audio grabado a texto) y **90 minutos/mes de lectura en voz alta**, que incluyen los podcasts generados.
 - **Bonos de pago único**: para ampliar el cupo de voz/visión sin cambiar de plan — "+10 horas de transcripción" (3€) y "+10 podcasts" (7€). Cada bono amplía el cupo de minutos de voz/visión en la cantidad indicada. Solo pueden adquirirse mientras la cuenta tenga el plan Pro activo.
 
 **Cómo se cuenta el ciclo.** Los cupos se renuevan cada mes contado desde la fecha de contratación o de renovación del plan, no por meses naturales. Por ejemplo, una suscripción contratada el día 26 tiene su ciclo del día 26 de un mes al día 25 del siguiente. En las cuentas sin suscripción, el ciclo se cuenta desde la fecha de alta de la cuenta. Cuando el día de contratación no exista en el mes de vencimiento, el ciclo termina el último día de dicho mes.

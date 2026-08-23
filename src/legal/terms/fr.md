@@ -122,7 +122,7 @@ Les caractéristiques du Produit choisi seront décrites lors du processus d’a
 ### Formules, quotas d'utilisation et bonus
 - **Formule Free** : accès gratuit avec un quota de 10 générations de contenu par mois (résumés, examens, fiches, etc.) et 10 minutes/mois de fonctions vocales/vision (transcription, podcasts, résolution d'exercices par photo).
 - **Essai gratuit** : les 7 premiers jours après l'inscription, le compte a un accès équivalent à Pro sans frais.
-- **Formule Pro (15€/mois, abonnement récurrent)** : générations de contenu illimitées ; 20 heures/mois de fonctions vocales/vision.
+- **Formule Pro (15€/mois, abonnement récurrent)** : générations de contenu illimitées ; **20 heures/mois de transcription** (conversion des enregistrements audio en texte) et **90 minutes/mois de lecture à voix haute**, qui incluent les podcasts générés.
 - **Bonus à paiement unique** : pour étendre le quota vocal/vision sans changer de formule — « +10 heures de transcription » (3€) et « +10 podcasts » (7€). Chaque bonus étend le quota de minutes vocal/vision de la quantité indiquée. Ils ne peuvent être acquis que tant que le compte dispose d'une formule Pro active.
 
 **Comment le cycle est compté.** Les quotas se renouvellent chaque mois à compter de la date de souscription ou de renouvellement de la formule, et non par mois calendaires. Par exemple, un abonnement souscrit le 26 court du 26 d'un mois au 25 du suivant. Pour les comptes sans abonnement, le cycle est compté à partir de la date de création du compte. Lorsque le jour de souscription n'existe pas dans le mois d'échéance, le cycle se termine le dernier jour de ce mois.
