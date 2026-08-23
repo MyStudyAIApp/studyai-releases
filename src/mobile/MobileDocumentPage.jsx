@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import TextToSpeech from '../components/Audio/TextToSpeech'
 import { useParams, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
@@ -118,9 +119,17 @@ export default function MobileDocumentPage() {
               Texto extraído
             </p>
             {!!doc.text_content && (
-              <button onClick={copiarTexto} className="text-xs text-primary-400 active:text-primary-300">
-                Copiar
-              </button>
+              <div className="flex items-center gap-3">
+                {/* Leer en voz alta: hasta el 23/8/2026 solo estaba en web y
+                    escritorio porque costaba dinero y consumia cupo. Ahora lo
+                    hace el motor del propio movil, gratis y sin limite, y es
+                    justo donde mas se usa: escuchar los apuntes de camino a
+                    clase. */}
+                <TextToSpeech text={doc.text_content} label="Escuchar" />
+                <button onClick={copiarTexto} className="text-xs text-primary-400 active:text-primary-300">
+                  Copiar
+                </button>
+              </div>
             )}
           </div>
 

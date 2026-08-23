@@ -1,30 +1,71 @@
 /**
- * Lectura en voz alta con el motor del PROPIO dispositivo (SpeechSynthesis).
+ * Lectura en voz alta con el motor del PROPIO dispositivo.
  *
- * Sustituye a las llamadas a /tts/speak (Azure). Motivos:
- *  - Gratis: no consume cupo ni cuesta dinero, así que se puede ofrecer sin
- *    límite. Azure queda solo para generar los podcasts descargables, que es
- *    lo único que el navegador no sabe hacer (no puede producir un fichero).
- *  - Funciona sin conexión y no envía el texto a ningún tercero.
+ * Sustituye a las llamadas a Azure: es gratis, no consume cupo, funciona sin
+ * conexión y el texto no sale del aparato. Azure queda solo para generar los
+ * podcasts descargables, que es lo único que el dispositivo no sabe hacer
+ * (producir un fichero de audio).
  *
- * A cambio, las voces disponibles dependen del aparato: por eso todo lo de
- * abajo comprueba antes de hablar en vez de dar nada por supuesto.
+ * ⚠️ Hay DOS motores, y hace falta usar los dos:
+ *
+ *  - **Web y escritorio**: `speechSynthesis`, la API del navegador.
+ *  - **Apps Android**: el motor NATIVO, vía @capacitor-community/text-to-speech.
+ *    El WebView de Android **no implementa `speechSynthesis`**: existe el
+ *    objeto pero no devuelve voces ni habla. Se descubrió probando en un
+ *    Pixel 8 Pro el 23/8/2026, cuando la app decía "tu dispositivo no tiene
+ *    voces instaladas" teniéndolas.
+ *
+ * Todo lo de abajo elige el motor por su cuenta; quien lo llama no se entera.
  */
 
 const CORTE_MAX = 200   // caracteres por fragmento
 
-export const hayVozEnElDispositivo = () =>
+const esNativo = () =>
+  typeof window !== 'undefined' && !!window.Capacitor?.isNativePlatform?.()
+
+const hayWebSpeech = () =>
   typeof window !== 'undefined' && 'speechSynthesis' in window
 
-/**
- * Las voces se cargan de forma asíncrona y no todos los navegadores emiten
- * 'voiceschanged' de forma fiable, así que se sondea con un límite.
- */
-export function cargarVoces(timeoutMs = 3000) {
-  if (!hayVozEnElDispositivo()) return Promise.resolve([])
-  const ya = window.speechSynthesis.getVoices()
-  if (ya.length) return Promise.resolve(ya)
+async function plugin() {
+  const { TextToSpeech } = await import('@capacitor-community/text-to-speech')
+  return TextToSpeech
+}
 
+export const hayVozEnElDispositivo = () => esNativo() || hayWebSpeech()
+
+// ── Voces ──────────────────────────────────────────────────────────────────
+
+let cacheNativa = null
+
+/**
+ * Devuelve las voces disponibles, con la misma forma en las dos plataformas:
+ * { name, lang, localService }.
+ */
+export async function cargarVoces(timeoutMs = 3000) {
+  if (esNativo()) {
+    if (cacheNativa) return cacheNativa
+    try {
+      const tts = await plugin()
+      const { voices } = await tts.getSupportedVoices()
+      // El plugin devuelve el índice implícito por posición: es lo que hay que
+      // pasarle luego en speak({ voice }), así que se guarda aquí.
+      cacheNativa = (voices || []).map((v, indice) => ({
+        name: v.name || v.voiceURI || `Voz ${indice + 1}`,
+        lang: v.lang || '',
+        localService: v.localService !== false,
+        indice,
+      }))
+      return cacheNativa
+    } catch {
+      return []
+    }
+  }
+
+  if (!hayWebSpeech()) return []
+  const ya = window.speechSynthesis.getVoices()
+  if (ya.length) return ya
+
+  // En el navegador las voces llegan tarde y el evento no siempre se emite.
   return new Promise(resolve => {
     let resuelto = false
     const terminar = () => {
@@ -46,7 +87,7 @@ export function cargarVoces(timeoutMs = 3000) {
 /** Códigos de idioma disponibles, en minúsculas y sin región: ['es','en',...] */
 export async function idiomasDisponibles() {
   const voces = await cargarVoces()
-  return [...new Set(voces.map(v => v.lang.split('-')[0].toLowerCase()))]
+  return [...new Set(voces.map(v => (v.lang || '').split('-')[0].toLowerCase()).filter(Boolean))]
 }
 
 export async function hayVozPara(lang) {
@@ -70,10 +111,12 @@ export async function elegirVoz(lang, preferidasPorIdioma = {}) {
     const encontrada = voces.find(v => v.name === preferida)
     if (encontrada) return encontrada
   }
-  return voces.find(v => v.lang.toLowerCase() === (lang || '').toLowerCase())
-      || voces.find(v => v.lang.split('-')[0].toLowerCase() === base)
+  return voces.find(v => (v.lang || '').toLowerCase() === (lang || '').toLowerCase())
+      || voces.find(v => (v.lang || '').split('-')[0].toLowerCase() === base)
       || null
 }
+
+// ── Preparar el texto ──────────────────────────────────────────────────────
 
 /**
  * Quita lo que no se debe pronunciar.
@@ -85,11 +128,8 @@ export async function elegirVoz(lang, preferidasPorIdioma = {}) {
  */
 export function limpiarParaHablar(texto) {
   return String(texto)
-    // emojis, pictogramas, banderas y sus modificadores
     .replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}]/gu, ' ')
     .replace(/[\u{1F3FB}-\u{1F3FF}\u{FE0F}\u{200D}\u{20E3}]/gu, '')
-    // énfasis y encabezados de Markdown (los guiones bajos solo si envuelven
-    // palabras: en medio de una, forman parte del término)
     .replace(/[*`#]+/g, ' ')
     .replace(/(^|\s)_+|_+(?=\s|$)/g, '$1')
     .replace(/\s+/g, ' ')
@@ -123,7 +163,7 @@ export function trocear(texto, max = CORTE_MAX) {
   return trozos.filter(Boolean)
 }
 
-/** '+10%' | '10%' | 1.1 → 1.1 (lo que espera SpeechSynthesis) */
+/** '+10%' | '10%' | 1.1 → 1.1 (lo que esperan los dos motores) */
 export function ritmoANumero(rate) {
   if (typeof rate === 'number') return Math.min(2, Math.max(0.5, rate))
   const m = String(rate ?? '').match(/(-?\d+(?:\.\d+)?)\s*%/)
@@ -138,11 +178,11 @@ export function ritmoANumero(rate) {
  */
 const PISTAS = {
   en: /\b(the|and|you|that|with|this|from|have|what|your)\b/gi,
-  fr: /\b(le|la|les|des|est|une|dans|pour|vous|avec)\b/gi,
+  fr: /\b(le|les|des|est|une|dans|pour|vous|avec)\b/gi,
   de: /\b(der|die|das|und|ist|nicht|mit|ein|sie|auch)\b/gi,
-  it: /\b(che|non|per|una|sono|come|questo|anche|della)\b/gi,
-  pt: /\b(que|não|uma|com|para|você|isso|mais|como)\b/gi,
-  es: /\b(que|de|la|el|los|una|para|con|como|porque)\b/gi,
+  it: /\b(che|non|per|sono|come|questo|anche|della)\b/gi,
+  pt: /\b(não|uma|com|você|isso|mais|então|muito)\b/gi,
+  es: /\b(que|de|la|el|los|una|para|con|porque|está)\b/gi,
 }
 const REGION = { es: 'es-ES', en: 'en-GB', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', pt: 'pt-PT' }
 
@@ -157,49 +197,54 @@ export function detectarIdioma(texto, porDefecto = 'es-ES') {
   return mejor ? (REGION[mejor] || mejor) : porDefecto
 }
 
+// ── Hablar y parar ─────────────────────────────────────────────────────────
+
+let cancelado = false
+
 export function parar() {
-  if (hayVozEnElDispositivo()) window.speechSynthesis.cancel()
-}
-
-/**
- * Abre la pantalla del sistema donde se instalan voces. Solo funciona en las
- * apps Android: desde un navegador NO hay forma de llegar ahí (comprobado el
- * 23/8/2026 con ms-settings: en Chrome de Windows — no abre nada). En web solo
- * queda avisar al usuario por escrito.
- */
-export async function abrirInstalacionDeVoces() {
-  if (!window.Capacitor?.isNativePlatform?.()) return false
-  try {
-    const { TextToSpeech } = await import('@capacitor-community/text-to-speech')
-    await TextToSpeech.openInstall()
-    return true
-  } catch {
-    return false
+  cancelado = true
+  if (esNativo()) {
+    plugin().then(tts => tts.stop()).catch(() => {})
+    return
   }
+  if (hayWebSpeech()) window.speechSynthesis.cancel()
 }
 
 /**
- * Habla un texto entero. Devuelve una promesa que se resuelve al terminar y
- * se rechaza si el dispositivo no puede.
- *
- * onProgress(indice, total) permite pintar "parte 2/5" como hacía el
- * reproductor anterior.
+ * Habla un texto entero. Se resuelve al terminar y se rechaza si el aparato no
+ * puede. onProgress(indice, total) permite pintar "parte 2/5".
  */
-export function hablar(texto, { lang = 'es-ES', voz = null, rate = 1, onProgress } = {}) {
-  return new Promise((resolve, reject) => {
-    if (!hayVozEnElDispositivo()) {
-      reject(new Error('Este dispositivo no puede reproducir voz'))
-      return
-    }
-    const trozos = trocear(texto)
-    if (!trozos.length) { resolve(); return }
+export async function hablar(texto, { lang = 'es-ES', voz = null, rate = 1, onProgress } = {}) {
+  const trozos = trocear(texto)
+  if (!trozos.length) return
 
+  cancelado = false
+
+  if (esNativo()) {
+    const tts = await plugin()
+    await tts.stop().catch(() => {})
+    for (let i = 0; i < trozos.length; i++) {
+      if (cancelado) return
+      onProgress?.(i, trozos.length)
+      await tts.speak({
+        text: trozos[i],
+        lang: voz?.lang || lang,
+        rate: ritmoANumero(rate),
+        // El plugin identifica la voz por su posición en getSupportedVoices()
+        ...(typeof voz?.indice === 'number' ? { voice: voz.indice } : {}),
+      })
+    }
+    return
+  }
+
+  if (!hayWebSpeech()) throw new Error('Este dispositivo no puede reproducir voz')
+
+  return new Promise((resolve, reject) => {
     window.speechSynthesis.cancel()
     let i = 0
-    let cancelado = false
 
     const siguiente = () => {
-      if (cancelado) return
+      if (cancelado) { resolve(); return }
       if (i >= trozos.length) { resolve(); return }
       onProgress?.(i, trozos.length)
 
@@ -210,11 +255,27 @@ export function hablar(texto, { lang = 'es-ES', voz = null, rate = 1, onProgress
       u.onend = () => { i += 1; siguiente() }
       u.onerror = e => {
         // 'interrupted'/'canceled' salen al pulsar Parar: no son fallos.
-        if (e?.error === 'interrupted' || e?.error === 'canceled') { cancelado = true; resolve(); return }
+        if (e?.error === 'interrupted' || e?.error === 'canceled') { resolve(); return }
         reject(new Error('No se pudo reproducir la voz'))
       }
       window.speechSynthesis.speak(u)
     }
     siguiente()
   })
+}
+
+/**
+ * Abre la pantalla del sistema donde se instalan voces. Solo en las apps
+ * Android: desde un navegador NO hay forma de llegar ahí (comprobado el
+ * 23/8/2026 con ms-settings: en Chrome de Windows — no abre nada).
+ */
+export async function abrirInstalacionDeVoces() {
+  if (!esNativo()) return false
+  try {
+    const tts = await plugin()
+    await tts.openInstall()
+    return true
+  } catch {
+    return false
+  }
 }

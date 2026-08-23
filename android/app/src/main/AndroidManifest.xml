@@ -67,8 +67,19 @@
          instalados ni abrir la pantalla donde se instalan voces. La lectura en
          voz alta la hace el propio dispositivo desde el 23/8/2026. -->
     <queries>
+        <!-- Enumerar los motores de voz instalados -->
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+        <!-- Abrir la pantalla del sistema donde se instalan voces: es la que
+             usa openInstall() del plugin. Sin declararla aqui, en Android 11+
+             el intent no resuelve y el boton no hace absolutamente nada
+             (comprobado en un Pixel 8 Pro el 23/8/2026). -->
+        <intent>
+            <action android:name="android.speech.tts.engine.CHECK_TTS_DATA" />
+        </intent>
+        <intent>
+            <action android:name="android.speech.tts.engine.INSTALL_TTS_DATA" />
         </intent>
     </queries>
 </manifest>
