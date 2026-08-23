@@ -16,7 +16,7 @@ import { hablar, parar, elegirVoz, hayVozEnElDispositivo } from '../../lib/devic
  *   label   — texto opcional del botón (por defecto solo el icono)
  *   lang    — idioma del contenido (por defecto español)
  */
-export default function TextToSpeech({ text, chunks, label, lang = 'es-ES' }) {
+export default function TextToSpeech({ text, chunks, label, lang = 'es-ES', autoPlay = false }) {
   const { addToast, ttsVoicesPerLang, ttsRate } = useAppStore()
 
   const [playing, setPlaying]         = useState(false)
@@ -73,6 +73,17 @@ export default function TextToSpeech({ text, chunks, label, lang = 'es-ES' }) {
       if (!stoppedRef.current) { setPlaying(false); setChunkIdx(0) }
     }
   }
+
+  // Arrancar solo cuando quien nos usa ya tenia que cargar el texto antes
+  // (ver DocTTS): sin esto el primer toque cargaba en silencio y habia que
+  // pulsar OTRA vez para oir algo, asi que parecia que el boton no hacia nada.
+  const yaArrancado = useRef(false)
+  useEffect(() => {
+    if (autoPlay && !yaArrancado.current && getTexto()) {
+      yaArrancado.current = true
+      handleClick()
+    }
+  }, [autoPlay])
 
   useEffect(() => () => stop(), [])
 

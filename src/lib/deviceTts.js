@@ -18,7 +18,15 @@
  * Todo lo de abajo elige el motor por su cuenta; quien lo llama no se entera.
  */
 
-const CORTE_MAX = 200   // caracteres por fragmento
+import { TextToSpeech } from '@capacitor-community/text-to-speech'
+
+// Tamano de los trozos en los que se parte el texto antes de hablarlo.
+//
+// En el NAVEGADOR hay que trocear corto: Chrome deja de emitir 'end' con
+// textos largos y la lectura se queda a medias. En el motor NATIVO de Android
+// ese problema no existe y trocear corto solo introduce pausas audibles entre
+// bloque y bloque (lo noto el usuario probando), asi que ahi se manda mucho
+// mas de una vez.
 
 const esNativo = () =>
   typeof window !== 'undefined' && !!window.Capacitor?.isNativePlatform?.()
@@ -26,10 +34,17 @@ const esNativo = () =>
 const hayWebSpeech = () =>
   typeof window !== 'undefined' && 'speechSynthesis' in window
 
-async function plugin() {
-  const { TextToSpeech } = await import('@capacitor-community/text-to-speech')
-  return TextToSpeech
-}
+// ⚠️ NUNCA hacer `await` sobre un plugin de Capacitor.
+//
+// registerPlugin() devuelve un PROXY que, ante cualquier propiedad que se le
+// pida, responde con una funcion suponiendo que es un metodo nativo. Al hacer
+// `await`, JavaScript le pide `.then` para comprobar si es una promesa; el
+// proxy contesta que si, JavaScript la llama esperando que le avise... y nadie
+// le avisa jamas. La promesa se queda pendiente para siempre.
+//
+// Costo una tarde el 23/8/2026: la pantalla de voz decia "el modulo de voz no
+// respondio" mientras `typeof` confirmaba que el objeto estaba ahi. Se usa
+// directamente, sin await ni funcion intermedia.
 
 export const hayVozEnElDispositivo = () => esNativo() || hayWebSpeech()
 
@@ -70,25 +85,26 @@ export async function cargarVoces(timeoutMs = 3000) {
   if (esNativo()) {
     if (cacheNativa) return cacheNativa
     motivoSinVoces = null
-    let tts
-    try {
-      tts = await conLimite(plugin(), timeoutMs, 'el módulo de voz')
-    } catch (e) {
-      motivoSinVoces = e.message
-      return []
-    }
+    const tts = TextToSpeech   // sin await: ver el aviso de arriba
 
     // 1) Lo ideal: la lista de voces con nombre. El plugin las identifica por
     //    su posición, así que se guarda el índice para pasárselo a speak().
     try {
       const { voices } = await conLimite(tts.getSupportedVoices(), timeoutMs, 'la lista de voces')
       if (voices?.length) {
+        // Igual que arriba: el motor de Android repite voces por variante.
+        const vistas = new Set()
         cacheNativa = voices.map((v, indice) => ({
           name: v.name || v.voiceURI || `Voz ${indice + 1}`,
           lang: v.lang || '',
           localService: v.localService !== false,
           indice,
-        }))
+        })).filter(v => {
+          const clave = `${v.name}|${v.lang}`
+          if (vistas.has(clave)) return false
+          vistas.add(clave)
+          return true
+        })
         return cacheNativa
       }
     } catch (e) {
@@ -99,7 +115,14 @@ export async function cargarVoces(timeoutMs = 3000) {
     //    sin elegir voz concreta) y para saber qué idiomas ofrecer.
     try {
       const { languages } = await conLimite(tts.getSupportedLanguages(), timeoutMs, 'la lista de idiomas')
-      cacheNativa = (languages || []).map(lang => ({
+      // Google TTS devuelve una entrada por variante regional, con muchos
+      // repetidos: sin agrupar salian cientos de "frances Canada" identicos.
+      const vistos = new Set()
+      cacheNativa = (languages || []).filter(lang => {
+        if (!lang || vistos.has(lang)) return false
+        vistos.add(lang)
+        return true
+      }).map(lang => ({
         name: nombreDeIdioma(lang),
         lang,
         localService: true,
@@ -192,7 +215,8 @@ export function limpiarParaHablar(texto) {
  * 'end', así que hablar de golpe un resumen entero no es fiable. Se parte por
  * puntuación y solo se trocea a lo bruto si una frase suelta es enorme.
  */
-export function trocear(texto, max = CORTE_MAX) {
+export function trocear(texto, max = null) {
+  max = max ?? (esNativo() ? 2000 : 200)
   const frases = limpiarParaHablar(texto).match(/[^.!?…]+[.!?…]*\s*/g) || []
   const trozos = []
   let actual = ''
@@ -255,7 +279,7 @@ let cancelado = false
 export function parar() {
   cancelado = true
   if (esNativo()) {
-    plugin().then(tts => tts.stop()).catch(() => {})
+    TextToSpeech.stop().catch(() => {})
     return
   }
   if (hayWebSpeech()) window.speechSynthesis.cancel()
@@ -272,7 +296,7 @@ export async function hablar(texto, { lang = 'es-ES', voz = null, rate = 1, onPr
   cancelado = false
 
   if (esNativo()) {
-    const tts = await plugin()
+    const tts = TextToSpeech   // sin await: ver el aviso de arriba
     await tts.stop().catch(() => {})
     for (let i = 0; i < trozos.length; i++) {
       if (cancelado) return
@@ -322,11 +346,30 @@ export async function hablar(texto, { lang = 'es-ES', voz = null, rate = 1, onPr
  */
 export async function abrirInstalacionDeVoces() {
   if (!esNativo()) return false
+
+  // ⚠️ openInstall() del plugin busca la pantalla ACTION_CHECK_TTS_DATA y, si
+  // no la encuentra, NO HACE NADA -- y aun asi resuelve como si hubiera ido
+  // bien (visto en su codigo Java). En un Pixel 8 Pro no abre nada, asi que no
+  // basta con llamarlo: hay que comprobar si de verdad se abrio algo.
+  //
+  // Se detecta igual que en la web: si la app pierde el foco es que algo se
+  // puso delante. Si no, quien llama debe explicarle al usuario como llegar a
+  // mano.
+  let salio = false
+  const marcar = () => { salio = true }
+  window.addEventListener('blur', marcar, { once: true })
+  document.addEventListener('visibilitychange', marcar, { once: true })
+
   try {
-    const tts = await plugin()
-    await tts.openInstall()
-    return true
-  } catch {
-    return false
-  }
+    await TextToSpeech.openInstall()
+  } catch { /* el plugin casi nunca falla aqui: falla en silencio */ }
+
+  await new Promise(r => setTimeout(r, 1200))
+  window.removeEventListener('blur', marcar)
+  document.removeEventListener('visibilitychange', marcar)
+  return salio
 }
+
+/** Cómo llegar a mano, para cuando no se puede abrir la pantalla. */
+export const RUTA_AJUSTES_VOZ =
+  'Ajustes de Android → Sistema → Idiomas → Salida de texto a voz'

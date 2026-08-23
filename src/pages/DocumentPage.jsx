@@ -64,8 +64,10 @@ function DocTTS({ docId, chunks, onChunksLoaded }) {
     )
   }
 
-  // Chunks loaded — hand off to the full TextToSpeech component
-  return <TextToSpeech chunks={chunks} />
+  // Chunks loaded — hand off to the full TextToSpeech component.
+  // autoPlay: el usuario ya pulso una vez para cargar el texto; que tenga que
+  // volver a pulsar para que suene se percibe como que el boton no funciona.
+  return <TextToSpeech chunks={chunks} autoPlay />
 }
 
 function TextViewer({ docId, title, cachedText }) {
@@ -399,6 +401,13 @@ export default function DocumentPage() {
               <button onClick={() => navigate('/library')} className="btn-ghost btn-icon btn-sm"><IconArrowLeft size={16} /></button>
               <h2 className="font-semibold text-slate-100 truncate text-sm flex-1">{doc.title}</h2>
               {doc.subject_name && <span className="badge-blue shrink-0">{doc.subject_name}</span>}
+              {/* Leer en voz alta: estaba solo en la vista ancha, asi que en el
+                  movil el usuario veia el icono de podcast y ninguno para
+                  escuchar el texto. Ahora que la lectura la hace el propio
+                  aparato (gratis y sin cupo) es justo donde mas se usa. */}
+              <span className="shrink-0">
+                <DocTTS docId={doc.id} chunks={docChunks} onChunksLoaded={setDocChunks} />
+              </span>
               <button
                 onClick={() => setShowPodcastModal(true)}
                 className="btn-ghost btn-icon btn-sm shrink-0"
