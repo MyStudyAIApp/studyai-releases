@@ -1053,62 +1053,29 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* Velocidad lectura de documentos */}
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">{t('settings.tts.speedDocs')}</label>
-            <div className="flex flex-wrap gap-2">
-              {TTS_RATES.map(r => (
-                <button
-                  key={r.value}
-                  onClick={() => setTtsRate(r.value)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
-                    ttsRate === r.value
-                      ? 'border-primary-500 bg-primary-900/40 text-primary-200'
-                      : 'border-slate-700 bg-slate-800/40 text-slate-400 hover:border-slate-600'
-                  }`}
-                >
-                  {r.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Velocidad voz del Tutor */}
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">{t('settings.tts.speedTutor')}</label>
-            <div className="flex flex-wrap gap-2">
-              {TTS_RATES.map(r => (
-                <button
-                  key={r.value}
-                  onClick={() => setTutorTtsRate(r.value)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
-                    tutorTtsRate === r.value
-                      ? 'border-primary-500 bg-primary-900/40 text-primary-200'
-                      : 'border-slate-700 bg-slate-800/40 text-slate-400 hover:border-slate-600'
-                  }`}
-                >
-                  {r.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Velocidad conversación de Idiomas */}
-          <div>
-            <label className="block text-xs font-medium text-slate-400 mb-2 uppercase tracking-wider">{t('settings.tts.speedLangs')}</label>
-            <div className="flex flex-wrap gap-2">
-              {TTS_RATES.map(r => (
-                <button
-                  key={r.value}
-                  onClick={() => setLangsTtsRate(r.value)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
-                    (langsTtsRate ?? '+12%') === r.value
-                      ? 'border-primary-500 bg-primary-900/40 text-primary-200'
-                      : 'border-slate-700 bg-slate-800/40 text-slate-400 hover:border-slate-600'
-                  }`}
-                >
-                  {r.label}
-                </button>
+          {/* ── Velocidades ──────────────────────────────────────────
+              Las tres juntas y en desplegable: antes eran tres filas de
+              botones una debajo de otra y la tarjeta se hacía interminable. */}
+          <div className="pt-4 border-t border-slate-700/60">
+            <h4 className="text-sm font-semibold text-slate-200 mb-3">Velocidad de la voz</h4>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                { label: 'Al leer documentos', value: ttsRate,      set: setTtsRate },
+                { label: 'Tutor',              value: tutorTtsRate, set: setTutorTtsRate },
+                { label: 'Idiomas',            value: langsTtsRate, set: setLangsTtsRate },
+              ].map(v => (
+                <label key={v.label} className="block">
+                  <span className="block text-xs text-slate-400 mb-1">{v.label}</span>
+                  <select
+                    value={v.value}
+                    onChange={e => v.set(e.target.value)}
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200"
+                  >
+                    {TTS_RATES.map(r => (
+                      <option key={r.value} value={r.value}>{r.label}</option>
+                    ))}
+                  </select>
+                </label>
               ))}
             </div>
           </div>
