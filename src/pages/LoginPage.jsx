@@ -47,6 +47,14 @@ export default function LoginPage() {
   const [error, setError]       = useState(null)
   const [resetSent, setResetSent] = useState(false)
   const [acceptedTerms, setAcceptedTerms]   = useState(false)
+  // Región fiscal (solo compras web vía Stripe): se guarda en localStorage y
+  // useBillingRegion la sincroniza a profiles.settings en cuanto haya sesión
+  // -- signUp() todavía no la tiene, la confirmación por email es posterior.
+  const [billingRegion, setBillingRegion]   = useState('')
+  function chooseBillingRegion(value) {
+    setBillingRegion(value)
+    localStorage.setItem('billing_canarias_pending', value === 'canarias' ? '1' : '0')
+  }
   // Widget anti-bot compartido con MobileLoginPage (ver src/hooks/useTurnstile.js)
   const turnstile = useTurnstile(mode === 'login' || mode === 'register')
 
@@ -451,6 +459,24 @@ export default function LoginPage() {
             </div>
           )}
 
+          {/* Región fiscal (solo registro web, para aplicar IGIC o IVA en Stripe) */}
+          {mode === 'register' && IS_WEB && (
+            <div>
+              <label className="block text-sm text-slate-400 mb-1">¿Dónde resides?</label>
+              <div className="flex gap-2">
+                <button type="button" onClick={() => chooseBillingRegion('resto')}
+                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition ${
+                    billingRegion === 'resto' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
+                  }`}>Resto de España / extranjero</button>
+                <button type="button" onClick={() => chooseBillingRegion('canarias')}
+                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition ${
+                    billingRegion === 'canarias' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
+                  }`}>Canarias</button>
+              </div>
+              <p className="text-xs text-slate-500 mt-1">Se usa para aplicarte el impuesto correcto (IGIC en vez de IVA) si compras el plan Pro o bonos.</p>
+            </div>
+          )}
+
           {/* Verificación anti-bot (Cloudflare Turnstile) — login y registro */}
           {turnstile.enabled && (
             <div ref={turnstile.containerRef} />
@@ -491,7 +517,7 @@ export default function LoginPage() {
           {/* Botón enviar */}
           <button
             type="submit"
-            disabled={loading || (turnstile.enabled && !turnstile.token) || (mode === 'register' && (!acceptedTerms || password !== passwordConfirm))}
+            disabled={loading || (turnstile.enabled && !turnstile.token) || (mode === 'register' && (!acceptedTerms || password !== passwordConfirm || (IS_WEB && !billingRegion)))}
             className="w-full bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all shadow-lg"
           >
             {loading ? '...' : mode === 'login' ? 'Entrar' : 'Crear cuenta'}

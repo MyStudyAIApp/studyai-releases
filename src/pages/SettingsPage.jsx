@@ -21,6 +21,8 @@ import WhisperSetup from '../components/WhisperSetup'
 import WeeklyHoursWidget, { loadWeeklyHours, saveWeeklyHours } from '../components/Study/WeeklyHoursWidget'
 import FeedbackModal from '../components/UI/FeedbackModal'
 import Modal from '../components/UI/Modal'
+import CanariasPromptModal from '../components/UI/CanariasPromptModal'
+import { useBillingRegion } from '../hooks/useBillingRegion'
 import { subscribeToPush, unsubscribeFromPush, isPushSubscribed, isPushSupported } from '../services/pushNotifications'
 import { THEMES, getTheme, applyTheme } from '../services/themeService'
 import { pushSettings } from '../services/settingsSync'
@@ -557,11 +559,8 @@ export default function SettingsPage() {
   // ── Plan y facturación (Stripe, solo web) ──────────────────────────────
   const planTier = useAppStore(s => s.planTier)
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | 'portal' | null
-  const [canarias, setCanarias] = useState(() => localStorage.getItem('billing_canarias') === '1')
-  function toggleCanarias(checked) {
-    setCanarias(checked)
-    localStorage.setItem('billing_canarias', checked ? '1' : '0')
-  }
+  const { canarias, setCanarias } = useBillingRegion()
+  const [pendingCheckoutKind, setPendingCheckoutKind] = useState(null)
 
   const STRIPE_PRICES = {
     pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
@@ -585,14 +584,21 @@ export default function SettingsPage() {
   }, [])
 
   async function handleCheckout(kind) {
+    if (canarias === null) { setPendingCheckoutKind(kind); return }
     setBillingBusy(kind)
     try {
-      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind], canarias })
+      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
       window.location.href = res.url
     } catch (e) {
       addToast(e.message || 'No se pudo iniciar el pago', 'error')
       setBillingBusy(null)
     }
+  }
+  async function handleCanariasAnswered(value) {
+    await setCanarias(value)
+    const kind = pendingCheckoutKind
+    setPendingCheckoutKind(null)
+    if (kind) handleCheckout(kind)
   }
 
   async function handlePortal() {
@@ -913,10 +919,9 @@ export default function SettingsPage() {
       {/* ── Plan y facturación (solo web, Stripe) ──────────────────────── */}
       {IS_WEB && (
         <CollapsibleCard icon="💳" title="Plan y facturación" subtitle={planTier === 'pro' ? 'Pro' : planTier === 'trial' ? 'Prueba gratis' : 'Free'} defaultOpen={false}>
-          <label className="flex items-center gap-2 text-sm text-slate-400 pb-3 border-b border-slate-800 mb-3">
-            <input type="checkbox" checked={canarias} onChange={(e) => toggleCanarias(e.target.checked)} />
-            Resido en Canarias (se aplica IGIC en vez de IVA)
-          </label>
+          <p className="text-xs text-slate-500 pb-3 border-b border-slate-800 mb-3">
+            Región fiscal: {canarias === null ? 'sin definir (se preguntará al comprar)' : canarias ? 'Canarias (IGIC)' : 'Resto (IVA)'}
+          </p>
           {planTier !== 'pro' && (
             <div className="pb-3 border-b border-slate-800">
               <p className="text-sm text-slate-300 mb-2">Hazte Pro — 15€/mes, sin límite de generaciones.</p>
@@ -1547,6 +1552,10 @@ export default function SettingsPage() {
           </div>
         </div>
       </Modal>
+
+      {pendingCheckoutKind && (
+        <CanariasPromptModal onAnswer={handleCanariasAnswered} onClose={() => setPendingCheckoutKind(null)} />
+      )}
 
       {/* ── Modal: derecho de desistimiento ─────────────────────────────── */}
       <Modal open={showWithdrawal} onClose={() => !withdrawalSending && setShowWithdrawal(false)} title="Derecho de desistimiento" size="sm">

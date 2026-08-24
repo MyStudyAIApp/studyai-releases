@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAppStore, api, apiUpload, IS_MOBILE, IS_WEB } from '../store/appStore'
 import Spinner from '../components/UI/Spinner'
 import Modal from '../components/UI/Modal'
+import CanariasPromptModal from '../components/UI/CanariasPromptModal'
+import { useBillingRegion } from '../hooks/useBillingRegion'
 import ProgressBar from '../components/UI/ProgressBar'
 import Billing from '../lib/billingPlugin'
 import { useAuth } from '../contexts/AuthContext'
@@ -97,25 +99,29 @@ export default function Home() {
   }
   // ── Suscripción Pro / bonos (web, vía Stripe) ───────────────────────────
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | null
-  const [canarias, setCanarias] = useState(() => localStorage.getItem('billing_canarias') === '1')
-  function toggleCanarias(checked) {
-    setCanarias(checked)
-    localStorage.setItem('billing_canarias', checked ? '1' : '0')
-  }
+  const { canarias, setCanarias } = useBillingRegion()
+  const [pendingCheckoutKind, setPendingCheckoutKind] = useState(null)
   const STRIPE_PRICES = {
     pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
     transcription: 'price_1U6EFGBUwE5wbpTtPo2IKUr0',
     podcast:       'price_1U6EFHBUwE5wbpTt0fQuBaqD',
   }
   async function handleStripeCheckout(kind) {
+    if (canarias === null) { setPendingCheckoutKind(kind); return }
     setBillingBusy(kind)
     try {
-      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind], canarias })
+      const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
       window.location.href = res.url
     } catch (e) {
       addToast(e.message || 'No se pudo iniciar el pago', 'error')
       setBillingBusy(null)
     }
+  }
+  async function handleCanariasAnswered(value) {
+    await setCanarias(value)
+    const kind = pendingCheckoutKind
+    setPendingCheckoutKind(null)
+    if (kind) handleStripeCheckout(kind)
   }
 
   const [recentDocs, setRecentDocs] = useState([])
@@ -651,10 +657,6 @@ export default function Home() {
             <p className="text-xs text-slate-400 mb-4">
               Más generaciones, más podcasts y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
             </p>
-            <label className="flex items-center gap-2 text-xs text-slate-400 mb-3">
-              <input type="checkbox" checked={canarias} onChange={(e) => toggleCanarias(e.target.checked)} />
-              Resido en Canarias (se aplica IGIC en vez de IVA)
-            </label>
             <button
               onClick={() => handleStripeCheckout('pro')}
               disabled={!!billingBusy}
@@ -671,10 +673,6 @@ export default function Home() {
       {IS_WEB && planTier === 'pro' && (
         <section className="mb-8">
           <h3 className="section-title">Ampliar cupo de voz</h3>
-          <label className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-            <input type="checkbox" checked={canarias} onChange={(e) => toggleCanarias(e.target.checked)} />
-            Resido en Canarias (se aplica IGIC en vez de IVA)
-          </label>
           <div className="card divide-y divide-slate-800">
             {[
               { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra', price: '3€' },
@@ -906,6 +904,10 @@ export default function Home() {
           </div>
         </div>
       </Modal>
+
+      {pendingCheckoutKind && (
+        <CanariasPromptModal onAnswer={handleCanariasAnswered} onClose={() => setPendingCheckoutKind(null)} />
+      )}
     </div>
   )
 }
