@@ -131,7 +131,7 @@ The characteristics of the chosen Product will be outlined during the purchasing
 
 **Withdrawal from a top-up.** If the User exercises their right of withdrawal over a top-up whose balance has already been partly used, the amount to be refunded will be reduced in proportion to the part actually used.
 All quotas above are additionally subject to a real spending cap per User, as a protection against abusive or automated use, independent of the per-feature quota.
-Listed prices do not include applicable taxes (VAT/IGIC), which are calculated and shown during checkout based on the User's location.
+Listed prices do not include applicable taxes (VAT, or IGIC/IPSI if the User resides in the Canary Islands, Ceuta or Melilla), which are calculated and shown during checkout based on the location the User has indicated in their account.
 
 ### Purchasing process
 Any steps taken from choosing a Product to order submission form part of the purchasing process.

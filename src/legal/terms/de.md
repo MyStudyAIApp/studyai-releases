@@ -130,7 +130,7 @@ Die Merkmale des ausgewählten Produkts werden im Laufe des Kaufvorgangs erläut
 
 **Widerruf eines Zusatzpakets.** Übt der Nutzer sein Widerrufsrecht für ein Zusatzpaket aus, dessen Guthaben bereits teilweise verbraucht wurde, verringert sich der zu erstattende Betrag anteilig um den tatsächlich verbrauchten Teil.
 Für alle oben genannten Kontingente gilt zusätzlich eine reale Ausgabenobergrenze pro Nutzer als Schutz vor missbräuchlicher oder automatisierter Nutzung, unabhängig vom jeweiligen Funktionskontingent.
-Die angegebenen Preise verstehen sich ohne anwendbare Steuern (MwSt./IGIC), die während des Bezahlvorgangs je nach Standort des Nutzers berechnet und angezeigt werden.
+Die angegebenen Preise verstehen sich ohne anwendbare Steuern (MwSt., oder IGIC/IPSI bei Wohnsitz des Nutzers auf den Kanarischen Inseln, in Ceuta oder Melilla), die während des Bezahlvorgangs je nach dem vom Nutzer im Konto angegebenen Standort berechnet und angezeigt werden.
 
 ### Kaufvorgang
 Alle Schritte von der Auswahl eines Produkts bis hin zur Aufgabe der Bestellung sind Teil des Kaufvorganges. Der Kaufvorgang umfasst folgende Schritte:

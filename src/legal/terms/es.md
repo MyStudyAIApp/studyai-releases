@@ -132,7 +132,7 @@ Las características del Producto escogido se describirán durante el proceso de
 **Desistimiento de un bono.** Si el Usuario ejerce su derecho de desistimiento sobre un bono cuyo saldo ya hubiera consumido en parte, el importe a reembolsar se reducirá de forma proporcional a la parte efectivamente consumida.
 
 Todos los cupos anteriores incluyen además un límite de gasto real por Usuario como medida de protección frente a usos abusivos o automatizados, independiente del cupo por función.
-Los precios indicados no incluyen impuestos aplicables (IVA/IGIC), que se calculan y muestran durante el proceso de pago según la ubicación del Usuario.
+Los precios indicados no incluyen impuestos aplicables (IVA, o IGIC/IPSI si el Usuario reside en Canarias, Ceuta o Melilla), que se calculan y muestran durante el proceso de pago según la ubicación indicada por el Usuario en su cuenta.
 
 ### Proceso de compra
 Forman parte del proceso de compra todos los pasos que van desde la elección de un Producto hasta el envío del pedido.

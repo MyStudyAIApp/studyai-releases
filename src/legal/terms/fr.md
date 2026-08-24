@@ -133,7 +133,7 @@ Les caractéristiques du Produit choisi seront décrites lors du processus d’a
 
 **Rétractation portant sur un bonus.** Si l'Utilisateur exerce son droit de rétractation sur un bonus dont le solde a déjà été partiellement consommé, le montant à rembourser sera réduit proportionnellement à la part effectivement consommée.
 Tous les quotas ci-dessus sont en outre soumis à un plafond de dépense réel par Utilisateur, en protection contre un usage abusif ou automatisé, indépendant du quota par fonctionnalité.
-Les prix indiqués n'incluent pas les taxes applicables (TVA/IGIC), calculées et affichées lors du paiement selon la localisation de l'Utilisateur.
+Les prix indiqués n'incluent pas les taxes applicables (TVA, ou IGIC/IPSI si l'Utilisateur réside aux Îles Canaries, à Ceuta ou à Melilla), calculées et affichées lors du paiement selon la localisation indiquée par l'Utilisateur dans son compte.
 
 ### Processus d'achat
 Toutes les étapes allant du choix d'un Produit à la soumission de la commande font partie du processus d'achat.
