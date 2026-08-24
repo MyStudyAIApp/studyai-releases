@@ -53,7 +53,7 @@ export default function LoginPage() {
   const [billingRegion, setBillingRegion]   = useState('')
   function chooseBillingRegion(value) {
     setBillingRegion(value)
-    localStorage.setItem('billing_canarias_pending', value === 'canarias' ? '1' : '0')
+    localStorage.setItem('billing_region_pending', value)
   }
   // Widget anti-bot compartido con MobileLoginPage (ver src/hooks/useTurnstile.js)
   const turnstile = useTurnstile(mode === 'login' || mode === 'register')
@@ -463,17 +463,21 @@ export default function LoginPage() {
           {mode === 'register' && IS_WEB && (
             <div>
               <label className="block text-sm text-slate-400 mb-1">¿Dónde resides?</label>
-              <div className="flex gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 <button type="button" onClick={() => chooseBillingRegion('resto')}
-                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition ${
+                  className={`py-2.5 rounded-xl text-xs font-medium border transition ${
                     billingRegion === 'resto' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
-                  }`}>Resto de España / extranjero</button>
+                  }`}>Resto España / extranjero</button>
                 <button type="button" onClick={() => chooseBillingRegion('canarias')}
-                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium border transition ${
+                  className={`py-2.5 rounded-xl text-xs font-medium border transition ${
                     billingRegion === 'canarias' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
                   }`}>Canarias</button>
+                <button type="button" onClick={() => chooseBillingRegion('ceuta_melilla')}
+                  className={`py-2.5 rounded-xl text-xs font-medium border transition ${
+                    billingRegion === 'ceuta_melilla' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
+                  }`}>Ceuta / Melilla</button>
               </div>
-              <p className="text-xs text-slate-500 mt-1">Se usa para aplicarte el impuesto correcto (IGIC en vez de IVA) si compras el plan Pro o bonos.</p>
+              <p className="text-xs text-slate-500 mt-1">Se usa para aplicarte el impuesto correcto si compras el plan Pro o bonos.</p>
             </div>
           )}
 

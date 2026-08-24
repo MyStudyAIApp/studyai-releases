@@ -99,7 +99,7 @@ export default function Home() {
   }
   // ── Suscripción Pro / bonos (web, vía Stripe) ───────────────────────────
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | null
-  const { canarias, setCanarias } = useBillingRegion()
+  const { region: billingRegion, setRegion: setBillingRegion } = useBillingRegion()
   const [pendingCheckoutKind, setPendingCheckoutKind] = useState(null)
   const STRIPE_PRICES = {
     pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
@@ -107,7 +107,7 @@ export default function Home() {
     podcast:       'price_1U6EFHBUwE5wbpTt0fQuBaqD',
   }
   async function handleStripeCheckout(kind) {
-    if (canarias === null) { setPendingCheckoutKind(kind); return }
+    if (billingRegion === null) { setPendingCheckoutKind(kind); return }
     setBillingBusy(kind)
     try {
       const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
@@ -118,7 +118,7 @@ export default function Home() {
     }
   }
   async function handleCanariasAnswered(value) {
-    await setCanarias(value)
+    await setBillingRegion(value)
     const kind = pendingCheckoutKind
     setPendingCheckoutKind(null)
     if (kind) handleStripeCheckout(kind)

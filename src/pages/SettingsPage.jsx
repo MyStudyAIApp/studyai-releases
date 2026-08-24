@@ -559,7 +559,7 @@ export default function SettingsPage() {
   // ── Plan y facturación (Stripe, solo web) ──────────────────────────────
   const planTier = useAppStore(s => s.planTier)
   const [billingBusy, setBillingBusy] = useState(null) // 'pro' | 'transcription' | 'podcast' | 'portal' | null
-  const { canarias, setCanarias } = useBillingRegion()
+  const { region: billingRegion, setRegion: setBillingRegion } = useBillingRegion()
   const [pendingCheckoutKind, setPendingCheckoutKind] = useState(null)
 
   const STRIPE_PRICES = {
@@ -584,7 +584,7 @@ export default function SettingsPage() {
   }, [])
 
   async function handleCheckout(kind) {
-    if (canarias === null) { setPendingCheckoutKind(kind); return }
+    if (billingRegion === null) { setPendingCheckoutKind(kind); return }
     setBillingBusy(kind)
     try {
       const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
@@ -595,7 +595,7 @@ export default function SettingsPage() {
     }
   }
   async function handleCanariasAnswered(value) {
-    await setCanarias(value)
+    await setBillingRegion(value)
     const kind = pendingCheckoutKind
     setPendingCheckoutKind(null)
     if (kind) handleCheckout(kind)
@@ -920,7 +920,12 @@ export default function SettingsPage() {
       {IS_WEB && (
         <CollapsibleCard icon="💳" title="Plan y facturación" subtitle={planTier === 'pro' ? 'Pro' : planTier === 'trial' ? 'Prueba gratis' : 'Free'} defaultOpen={false}>
           <p className="text-xs text-slate-500 pb-3 border-b border-slate-800 mb-3">
-            Región fiscal: {canarias === null ? 'sin definir (se preguntará al comprar)' : canarias ? 'Canarias (IGIC)' : 'Resto (IVA)'}
+            Región fiscal: {
+              billingRegion === null ? 'sin definir (se preguntará al comprar)'
+              : billingRegion === 'canarias' ? 'Canarias (IGIC)'
+              : billingRegion === 'ceuta_melilla' ? 'Ceuta/Melilla (IPSI)'
+              : 'Resto (IVA)'
+            }
           </p>
           {planTier !== 'pro' && (
             <div className="pb-3 border-b border-slate-800">
