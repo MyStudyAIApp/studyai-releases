@@ -1,6 +1,6 @@
 ## Privacy Policy of mystudyai.eu
 Welcome to the privacy policy of mystudyai.eu. This policy will help you understand what data we collect, why we collect it, and what your rights are in relation to it.
-Latest update: August 05, 2026
+Latest update: August 25, 2026
 
 ## Table of contents
 - Summary
@@ -34,7 +34,12 @@ We automatically collect data from you for example when you visit  mystudyai.eu.
 - Advertising
 
 ## Owner and Data Controller
+Data Controller: Sergio Gómez Negrín
+Spanish tax ID (NIF): 78696662T
+Address: Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spain)
 Owner contact email: support@mystudyai.eu
+
+No Data Protection Officer has been appointed, as none of the cases set out in Article 37 GDPR apply.
 
 ## Type of Data we collect
 Among the types of Personal Data that this Application collects, by itself or through third parties, there are:
@@ -115,8 +120,8 @@ Hosting service for the application's backend server, Frankfurt region (EU).
 This type of service allows this Application to monitor the use and behavior of its components, enabling the improvement of its performance, operation, and maintenance, and helping to troubleshoot bugs. The Personal Data processed depend on the characteristics and mode of implementation of these services, whose function is to filter this Application's activity.
 
 ### Sentry
-Company: Functional Software, Inc.
-Place of processing: USA
+Company: Functional Software, Inc. (USA)
+Place of processing: European Union — Frankfurt (Germany) data region. As the provider is a US entity, occasional access from the USA for support purposes may occur, covered by the Standard Contractual Clauses.
 Sentry is an application-monitoring service provided by Functional Software, Inc.
 
 ### Personal Data processed:
@@ -144,7 +149,7 @@ Cloudflare Turnstile is also used on the registration form to distinguish human 
 ### Provision of the Service
 
 ### Mistral AI
-Artificial intelligence service (Mistral AI, France) used to generate summaries, exams, study cards, and other content from the text of the User's documents. Documents and text provided by the User are not used to train Mistral AI's or any other provider's public Artificial Intelligence models.
+Artificial intelligence service (Mistral AI, France) used to generate summaries, exams, study cards, and other content from the content of the User's documents. Where the document is a scanned PDF or a photo and the text cannot be read otherwise (for example, handwritten formulas), the page image is also sent to the service. Documents and text provided by the User are not used to train Mistral AI's or any other provider's public Artificial Intelligence models.
 
 ### Payments and subscriptions
 
@@ -242,6 +247,21 @@ In the "Solve exercise" feature, the statement and solution of each solved exerc
 
 ### International data transfers
 Some of the providers listed in this document (including Groq, Sentry, Cloudflare, Microsoft Azure and RevenueCat) process data in the United States. Depending on the provider, these transfers rely on the EU-U.S. Data Privacy Framework or on the Standard Contractual Clauses approved by the European Commission, ensuring a level of protection equivalent to that required by the GDPR. Users may request further information on the safeguards applicable to each provider using the contact details provided in this document.
+
+### Minors
+The Service is not aimed at children under 16, and the Terms of Use require that minimum age to create an account. No data is knowingly collected from anyone below that age. Should the Owner become aware that an account was created in breach of this requirement, it will be deleted along with its data. Parents or guardians who identify such a situation may report it to support@mystudyai.eu and it will be handled without delay.
+
+### Downloading a copy of your data
+From Settings, within the Application itself, Users can download at any time and free of charge a ZIP file containing all their content (one JSON file per data category, in a structured and commonly used format) along with the files they have uploaded. This feature covers the right to data portability under Article 20 GDPR without the need to submit any request.
+
+### What happens when an account is deleted
+Deleting the account from the Application permanently and irreversibly removes the profile, documents, generated material, annotations, study sessions, usage logs and uploaded files, with no recovery period. The only data that survives is:
+- Invoices and payment receipts, kept directly by Stripe, Google Play or the invoicing provider, for the periods required by Spanish tax and commercial law (up to 6 years). The Owner cannot delete them earlier even at the User's request, as this is a legal obligation (Article 17(3)(b) GDPR).
+- Technical database backups, which are overwritten in their normal rotation within a maximum of 30 days and from which no data is extracted during that time.
+Users are advised to download their copy of the data BEFORE deleting the account: afterwards it can no longer be recovered.
+
+### Supervisory authority
+Users may lodge a complaint with the Spanish Data Protection Agency (AEPD), C/ Jorge Juan 6, 28001 Madrid, www.aepd.es, or with the supervisory authority of their country of residence if different from Spain. Beforehand, they may contact the Owner at support@mystudyai.eu, who will handle the request within one month.
 
 ## Cookie Policy
 This Application uses Trackers. To learn more, Users may consult the Cookie Policy .

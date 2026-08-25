@@ -1,6 +1,6 @@
 ## Conditions générales de mystudyai.eu
 Bienvenue sur la page des Conditions Générales de mystudyai.eu. Ce document vous aidera à comprendre comment vous pouvez utiliser nos services et ce que vous pouvez attendre de nous.
-Dernière mise à jour :  4 août 2026
+Dernière mise à jour :  25 août 2026
 
 ## Table des matières
 - Introduction
@@ -22,7 +22,7 @@ de façon juridiquement contraignante. Les mots commençant par une majuscule so
 L’Utilisateur doit lire ce document attentivement.
 Bien que l’intégralité de la relation contractuelle relative à ces Produits soit conclue uniquement par le Propriétaire et l’Utilisateur, l’Utilisateur reconnaît et accepte que, lorsqu’il accède à cette Application par l’intermédiaire de l’App Store d’Apple, Apple peut faire appliquer les présentes Conditions en tant que tiers bénéficiaire.
 L'entité suivante fournit cette Application :
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España)
+Sergio Gómez Negrín (numéro d'identification fiscale espagnol / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Espagne)
 Courriel de contact du Propriétaire : support@mystudyai.eu
 
 ## L’essentiel de ce que les Utilisateurs doivent savoir en un coup d’œil
@@ -50,7 +50,10 @@ Il est requis des Utilisateurs d’informer le Propriétaire immédiatement et s
 
 ### Fermeture du compte
 Les Utilisateurs peuvent fermer leur compte et arrêter d’utiliser le Service à tout moment en :
+- Depuis l'Application elle-même, dans Réglages > Suppression du compte. La suppression est immédiate, définitive et irréversible.
 - En contactant directement le Propriétaire avec les coordonnées fournies dans ce document.
+
+Avant de supprimer le compte, il est recommandé de télécharger une copie de ses données depuis Réglages > Télécharger mes données, car elles ne pourront plus être récupérées ensuite. Supprimer le compte ne résilie pas à lui seul un abonnement souscrit via Google Play : celui-ci doit également être résilié depuis la boutique.
 
 ### Suspension et suppression de compte
 Le Propriétaire se réserve le droit, à sa seule discrétion, de suspendre ou de supprimer à tout moment et sans avis, les comptes d’Utilisateurs considérés inappropriés, en infraction ou en violation de ces Conditions générales.
@@ -182,11 +185,11 @@ Afin de conserver leurs abonnements, les Utilisateurs doivent payer les frais p�
 
 ### Résiliation par l’Utilisateur d’abonnements illimités
 Les abonnements illimités peuvent être résiliés à tout moment par l’envoi d’un avis clair et univoque au Propriétaire, aux coordonnées indiquées dans ce document, ou – si applicable – en utilisant les commandes correspondantes dans cette Application.
-La résiliation prendra effet 0 jours après réception de l’avis de résiliation par le Propriétaire.
+La résiliation prendra effet à la fin de la période de facturation en cours : l'Utilisateur conserve l'accès à la formule souscrite jusqu'à cette date et n'est plus prélevé. Aucun remboursement n'est dû pour la partie déjà consommée de la période en cours.
 
 ### Résiliation par le Propriétaire d’abonnements illimités
 Le Propriétaire se réserve le droit de résilier l’abonnement pour convenance à tout moment en envoyant un avis de résiliation à l’Utilisateur. La résiliation prendra effet à la fin du délai de préavis.
-Le délai de préavis est de 0 jours.
+Le délai de préavis est de 30 jours calendaires, le même que celui applicable à la fermeture du Service. Si une résiliation pour convenance par le Propriétaire laisse inutilisée une période déjà payée, la part proportionnelle correspondante sera remboursée. Ce qui précède ne s'applique pas à la résiliation pour motif légitime, régie par la clause suivante.
 
 ### Résiliation pour motif légitime et/ou impossibilité d’exécution
 Le Propriétaire se réserve expressément le droit de résilier le contrat avec effet immédiat pour motif légitime et/ou impossibilité d’exécution — par exemple, sur ordre d’autorités publiques, violation de la loi, atteinte aux droits de tiers, insolvabilité réelle ou imminente, usage inapproprié de cette Application.
@@ -335,7 +338,14 @@ Le fait que le Propriétaire ne fasse pas valoir un droit ou une disposition dan
 
 ### Interruption de service
 Afin d’assurer le meilleur niveau de service possible, le Propriétaire se réserve le droit d’interrompre le Service pour procéder à une maintenance, à des mises à jour du système ou à tout autre changement, en informant les Utilisateurs correctement.
-Dans les limites du droit, le Propriétaire peut aussi décider de suspendre ou de mettre fin au Service tout entier. S’il est mis fin au Service, le Propriétaire coopérera avec les Utilisateurs pour leur permettre de retirer des données personnelles ou des informations et respectera les droits des Utilisateurs en matière de poursuite de l’utilisation du produit et/ou de dédommagement, ainsi que le prévoit la loi applicable.
+Dans les limites du droit, le Propriétaire peut aussi décider de suspendre ou de mettre fin au Service tout entier. Afin qu'une telle situation ne laisse pas l'Utilisateur dans l'incertitude, le Propriétaire s'engage expressément à ce qui suit :
+- **Préavis.** La fermeture définitive du Service sera annoncée au moins **30 jours calendaires à l'avance**, par courriel à l'adresse associée au compte et par un avis visible dans l'Application.
+- **Fenêtre de téléchargement.** Pendant ces 30 jours, et au moins jusqu'à la date effective de fermeture, la fonction Réglages > Télécharger mes données restera opérationnelle afin que l'Utilisateur puisse obtenir son contenu et ses fichiers. Si cette fonction était indisponible pour des raisons techniques, le Propriétaire fournira la copie par un autre moyen à la demande de l'Utilisateur.
+- **Abonnements en cours.** Le renouvellement automatique sera annulé et la part proportionnelle de la période déjà payée et non consommée sera remboursée, à compter de la date effective de fermeture.
+- **Crédits non consommés.** Le montant correspondant aux crédits achetés et non consommés au moment de la fermeture sera remboursé.
+- **Achats effectués via Google Play.** Les remboursements de ces achats sont nécessairement traités par Google selon ses propres conditions ; le Propriétaire apportera à l'Utilisateur toute l'assistance en son pouvoir pour les gérer.
+- **Suppression ultérieure.** 30 jours calendaires après la date effective de fermeture, toutes les données des Utilisateurs seront définitivement supprimées, à l'exception des documents de facturation devant être conservés au titre d'obligations fiscales ou commerciales.
+Ces engagements s'entendent sans préjudice de tout droit plus favorable reconnu à l'Utilisateur par la loi applicable.
 De plus, le Service peut ne pas être accessible à cause de raisons échappant au contrôle raisonnable du Propriétaire, telles que des cas de « force majeure » (défaillances des infrastructures ou pannes de courant etc.).
 
 ### Revente de Service
@@ -424,7 +434,7 @@ S’applique lorsqu’un Utilisateur, indépendamment de sa nationalité, est si
 
 ### Exemple de formulaire de rétractation
 Adressé à :
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España) support@mystudyai.eu
+Sergio Gómez Negrín (numéro d'identification fiscale espagnol / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Espagne) support@mystudyai.eu
 Je/Nous vous notifie/notifions par la présente ma/notre rétractation du contrat portant sur la vente du bien/pour la prestation de service ci-dessous :
 _____________________________________________ (insérer une description des biens/services qui sont sujets à la rétractation en question)
 - Commandé le: _____________________________________________ (insérez la date)

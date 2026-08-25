@@ -1,6 +1,6 @@
 ## Política de privacidad de mystudyai.eu
 Bienvenido a la política de privacidad de mystudyai.eu. Esta política le ayudará a entender qué datos recogemos, por qué los recogemos y qué derechos tiene usted al respecto
-Última revisión:  5 agosto 2026
+Última revisión:  25 agosto 2026
 
 ## Índice
 - Resumen
@@ -34,7 +34,12 @@ Recogemos datos sobre usted automáticamente, por ejemplo, cuando visita  mystud
 - Publicidad
 
 ## Titular y Responsable del tratamiento de los Datos
+Responsable del tratamiento: Sergio Gómez Negrín
+NIF: 78696662T
+Domicilio: Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (España)
 Correo electrónico de contacto del Titular: support@mystudyai.eu
+
+No se ha designado Delegado de Protección de Datos por no concurrir ninguno de los supuestos del artículo 37 del RGPD.
 
 ## Tipos de Datos que recogemos
 Entre las clases de Datos Personales que recoge esta Aplicación, ya sea directamente o a través de terceros, se encuentran:
@@ -138,8 +143,8 @@ Este tipo de servicios permiten a esta Aplicación monitorizar el uso y el compo
 Este tipo de servicios permiten a esta Aplicación monitorizar el uso y el comportamiento de los componentes de ésta, para permitir la mejora de su rendimiento y funcionalidad, su mantenimiento o la resolución de problemas. Los Datos Personales tratados dependerán de las características y las modalidades de implementación de estos servicios, que por su propia naturaleza filtran la actividad de esta Aplicación.
 
 ### Sentry
-Empresa: Functional Software, Inc.
-Lugar de tratamiento: EE.UU.
+Empresa: Functional Software, Inc. (EE.UU.)
+Lugar de tratamiento: Unión Europea — región de datos de Fráncfort (Alemania). Al ser el proveedor una entidad estadounidense, puede producirse acceso puntual desde EE.UU. para soporte, amparado en las Cláusulas Contractuales Tipo.
 Datos Personales tratados: distintas clases de Datos, según se especifica en la Política de Privacidad del servicio
 Sentry es un servicio de monitorización de aplicaciones prestado por Functional Software, Inc. .
 
@@ -175,7 +180,7 @@ Cloudflare Turnstile se utiliza además en el formulario de registro para distin
 ### Prestación del Servicio
 
 ### Mistral AI
-Servicio de inteligencia artificial (Mistral AI, Francia) usado para generar resumenes, examenes, fichas de estudio y otros contenidos a partir del texto de los documentos del usuario. Los documentos y textos facilitados por el usuario no se utilizan para entrenar modelos públicos de Inteligencia Artificial de Mistral AI ni de ningún otro proveedor.
+Servicio de inteligencia artificial (Mistral AI, Francia) usado para generar resumenes, examenes, fichas de estudio y otros contenidos a partir del contenido de los documentos del usuario. Cuando el documento es un PDF escaneado o una foto y el texto no se puede leer de otro modo (por ejemplo, fórmulas manuscritas), también se envía la imagen de la página al servicio. Los documentos y textos facilitados por el usuario no se utilizan para entrenar modelos públicos de Inteligencia Artificial de Mistral AI ni de ningún otro proveedor.
 
 ### Pagos y suscripciones
 
@@ -249,6 +254,21 @@ En la función "Resolver ejercicio", el enunciado y la solución de cada ejercic
 
 ### Transferencias internacionales de datos
 Algunos de los proveedores enumerados en este documento (entre otros, Groq, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.
+
+### Menores de edad
+El Servicio no está dirigido a menores de 16 años y las Condiciones de Uso exigen esa edad mínima para crear una cuenta. No se recaba de forma consciente ningún dato de menores de esa edad. Si el Titular tiene conocimiento de que se ha creado una cuenta incumpliendo este requisito, la eliminará junto con sus datos. Los padres o tutores que detecten una situación así pueden comunicarlo a support@mystudyai.eu y se atenderá sin demora.
+
+### Descargar una copia de tus datos
+Desde Ajustes, en la propia Aplicación, el Usuario puede descargar en cualquier momento y sin coste un archivo ZIP con todo su contenido (un fichero JSON por cada categoría de datos, en formato estructurado y de uso común) y con los archivos que haya subido. Esta función cubre el derecho de portabilidad del artículo 20 del RGPD sin necesidad de presentar ninguna solicitud.
+
+### Qué ocurre cuando se borra la cuenta
+Al borrar la cuenta desde la Aplicación se eliminan de forma permanente e irreversible el perfil, los documentos, el material generado, las anotaciones, las sesiones de estudio, los registros de uso y los archivos subidos, sin periodo de recuperación. Sobreviven únicamente:
+- Las facturas y los justificantes de pago, que conservan directamente Stripe, Google Play o el emisor de facturación, durante los plazos que impone la normativa fiscal y mercantil española (hasta 6 años). El Titular no puede borrarlas antes de ese plazo aunque el Usuario lo solicite, por tratarse de una obligación legal (artículo 17.3.b del RGPD).
+- Las copias de seguridad técnicas de la base de datos, que se sobrescriben en su rotación normal en un plazo máximo de 30 días y de las que no se extrae ningún dato durante ese tiempo.
+Se recomienda descargar la copia de los datos ANTES de borrar la cuenta: después ya no es posible recuperarlos.
+
+### Autoridad de control
+El Usuario puede presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD), C/ Jorge Juan 6, 28001 Madrid, www.aepd.es, o ante la autoridad de control de su país de residencia si es distinto de España. Antes de ello, puede dirigirse al Titular en support@mystudyai.eu, que atenderá la solicitud en el plazo de un mes.
 
 ## Política de Cookies
 Esta Aplicación utiliza Rastreadores. Para obtener más información, los Usuarios pueden consultar la Política de Cookies .

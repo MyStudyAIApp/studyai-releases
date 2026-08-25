@@ -424,7 +424,13 @@
     "delete": "Löschen",
     "more": "mehr",
     "loading": "Kalender wird geladen...",
-    "mon": "Mo", "tue": "Di", "wed": "Mi", "thu": "Do", "fri": "Fr", "sat": "Sa", "sun": "So"
+    "mon": "Mo",
+    "tue": "Di",
+    "wed": "Mi",
+    "thu": "Do",
+    "fri": "Fr",
+    "sat": "Sa",
+    "sun": "So"
   },
   "compare": {
     "title": "Dokumente vergleichen",
@@ -679,18 +685,54 @@
       "cardTitle": "📖 Detaillierte Tutorials",
       "cardSubtitle": "Eine geführte Tour durch jeden Bereich, für den Fall, dass du eine bestimmte Frage hast",
       "sections": {
-        "home":      { "icon": "🏠", "label": "Start" },
-        "library":   { "icon": "📚", "label": "Bibliothek" },
-        "study":     { "icon": "🧠", "label": "Ausstehend" },
-        "exam":      { "icon": "📝", "label": "Prüfung" },
-        "tutor":     { "icon": "🦉", "label": "Tutor" },
-        "languages": { "icon": "🌍", "label": "Sprachen" },
-        "lecture":   { "icon": "🎙️", "label": "Sprachnotizen" },
-        "solve":     { "icon": "🧮", "label": "Aufgabe lösen" },
-        "compare":   { "icon": "⚖️", "label": "Vergleichen" },
-        "stats":     { "icon": "📊", "label": "Fortschritt" },
-        "calendar":  { "icon": "📅", "label": "Kalender" },
-        "settings":  { "icon": "⚙️", "label": "Einstellungen" }
+        "home": {
+          "icon": "🏠",
+          "label": "Start"
+        },
+        "library": {
+          "icon": "📚",
+          "label": "Bibliothek"
+        },
+        "study": {
+          "icon": "🧠",
+          "label": "Ausstehend"
+        },
+        "exam": {
+          "icon": "📝",
+          "label": "Prüfung"
+        },
+        "tutor": {
+          "icon": "🦉",
+          "label": "Tutor"
+        },
+        "languages": {
+          "icon": "🌍",
+          "label": "Sprachen"
+        },
+        "lecture": {
+          "icon": "🎙️",
+          "label": "Sprachnotizen"
+        },
+        "solve": {
+          "icon": "🧮",
+          "label": "Aufgabe lösen"
+        },
+        "compare": {
+          "icon": "⚖️",
+          "label": "Vergleichen"
+        },
+        "stats": {
+          "icon": "📊",
+          "label": "Fortschritt"
+        },
+        "calendar": {
+          "icon": "📅",
+          "label": "Kalender"
+        },
+        "settings": {
+          "icon": "⚙️",
+          "label": "Einstellungen"
+        }
       }
     },
     "modelLabels": {
@@ -702,6 +744,13 @@
       "free": "KOSTENLOS",
       "freeLimited": "KOSTENLOS*",
       "paid": "BEZAHLT"
+    },
+    "exportData": {
+      "title": "Meine Daten herunterladen",
+      "subtitle": "Eine ZIP-Datei mit all deinen Inhalten und hochgeladenen Dateien.",
+      "button": "ZIP herunterladen",
+      "preparing": "Wird vorbereitet…",
+      "error": "Der Download konnte nicht erstellt werden."
     }
   },
   "languages": {
@@ -925,14 +974,38 @@
     },
     "features": {
       "title": "Alles, was du zum Lernen brauchst",
-      "summary":    { "title": "Zusammenfassungen", "desc": "Strukturiert mit den wichtigsten Punkten jedes Themas" },
-      "flashcards": { "title": "Karteikarten",       "desc": "Wiederholungskarten mit Spaced Repetition" },
-      "exam":       { "title": "Prüfungen",          "desc": "Tests und offene Fragen aus deinen Notizen erstellt" },
-      "tutor":      { "title": "Tutor",              "desc": "Löse deine Fragen per Chat oder Stimme" },
-      "languages":  { "title": "Sprachen",           "desc": "Übe Grammatik, Konversation und Hörverständnis" },
-      "lecture":    { "title": "Sprachnotizen",      "desc": "Diktiere deine Notizen laut und wir verwandeln sie in sauberen Text" },
-      "calendar":   { "title": "Kalender",           "desc": "Prüfungserinnerungen und Planung nach Fach" },
-      "solve":      { "title": "Aufgabenlöser",      "desc": "Schritt-für-Schritt-Lösungen für die Aufgaben in deinen Notizen" }
+      "summary": {
+        "title": "Zusammenfassungen",
+        "desc": "Strukturiert mit den wichtigsten Punkten jedes Themas"
+      },
+      "flashcards": {
+        "title": "Karteikarten",
+        "desc": "Wiederholungskarten mit Spaced Repetition"
+      },
+      "exam": {
+        "title": "Prüfungen",
+        "desc": "Tests und offene Fragen aus deinen Notizen erstellt"
+      },
+      "tutor": {
+        "title": "Tutor",
+        "desc": "Löse deine Fragen per Chat oder Stimme"
+      },
+      "languages": {
+        "title": "Sprachen",
+        "desc": "Übe Grammatik, Konversation und Hörverständnis"
+      },
+      "lecture": {
+        "title": "Sprachnotizen",
+        "desc": "Diktiere deine Notizen laut und wir verwandeln sie in sauberen Text"
+      },
+      "calendar": {
+        "title": "Kalender",
+        "desc": "Prüfungserinnerungen und Planung nach Fach"
+      },
+      "solve": {
+        "title": "Aufgabenlöser",
+        "desc": "Schritt-für-Schritt-Lösungen für die Aufgaben in deinen Notizen"
+      }
     },
     "how": {
       "title": "So funktioniert es",

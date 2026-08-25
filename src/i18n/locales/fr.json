@@ -424,7 +424,13 @@
     "delete": "Supprimer",
     "more": "de plus",
     "loading": "Chargement du calendrier...",
-    "mon": "Lun", "tue": "Mar", "wed": "Mer", "thu": "Jeu", "fri": "Ven", "sat": "Sam", "sun": "Dim"
+    "mon": "Lun",
+    "tue": "Mar",
+    "wed": "Mer",
+    "thu": "Jeu",
+    "fri": "Ven",
+    "sat": "Sam",
+    "sun": "Dim"
   },
   "compare": {
     "title": "Comparer des documents",
@@ -679,18 +685,54 @@
       "cardTitle": "📖 Tutoriels détaillés",
       "cardSubtitle": "Une visite guidée de chaque section, pour quand tu as une question précise",
       "sections": {
-        "home":      { "icon": "🏠", "label": "Accueil" },
-        "library":   { "icon": "📚", "label": "Bibliothèque" },
-        "study":     { "icon": "🧠", "label": "En attente" },
-        "exam":      { "icon": "📝", "label": "Examen" },
-        "tutor":     { "icon": "🦉", "label": "Tuteur" },
-        "languages": { "icon": "🌍", "label": "Langues" },
-        "lecture":   { "icon": "🎙️", "label": "Notes vocales" },
-        "solve":     { "icon": "🧮", "label": "Résoudre un exercice" },
-        "compare":   { "icon": "⚖️", "label": "Comparer" },
-        "stats":     { "icon": "📊", "label": "Progrès" },
-        "calendar":  { "icon": "📅", "label": "Calendrier" },
-        "settings":  { "icon": "⚙️", "label": "Paramètres" }
+        "home": {
+          "icon": "🏠",
+          "label": "Accueil"
+        },
+        "library": {
+          "icon": "📚",
+          "label": "Bibliothèque"
+        },
+        "study": {
+          "icon": "🧠",
+          "label": "En attente"
+        },
+        "exam": {
+          "icon": "📝",
+          "label": "Examen"
+        },
+        "tutor": {
+          "icon": "🦉",
+          "label": "Tuteur"
+        },
+        "languages": {
+          "icon": "🌍",
+          "label": "Langues"
+        },
+        "lecture": {
+          "icon": "🎙️",
+          "label": "Notes vocales"
+        },
+        "solve": {
+          "icon": "🧮",
+          "label": "Résoudre un exercice"
+        },
+        "compare": {
+          "icon": "⚖️",
+          "label": "Comparer"
+        },
+        "stats": {
+          "icon": "📊",
+          "label": "Progrès"
+        },
+        "calendar": {
+          "icon": "📅",
+          "label": "Calendrier"
+        },
+        "settings": {
+          "icon": "⚙️",
+          "label": "Paramètres"
+        }
       }
     },
     "modelLabels": {
@@ -702,6 +744,13 @@
       "free": "GRATUIT",
       "freeLimited": "GRATUIT*",
       "paid": "PAYANT"
+    },
+    "exportData": {
+      "title": "Télécharger mes données",
+      "subtitle": "Une archive ZIP avec tout votre contenu et les fichiers que vous avez importés.",
+      "button": "Télécharger le ZIP",
+      "preparing": "Préparation…",
+      "error": "Le téléchargement n'a pas pu être généré."
     }
   },
   "languages": {
@@ -925,14 +974,38 @@
     },
     "features": {
       "title": "Tout ce dont tu as besoin pour étudier",
-      "summary":    { "title": "Résumés",       "desc": "Structurés avec les points clés de chaque sujet" },
-      "flashcards": { "title": "Fiches",        "desc": "Cartes de révision avec répétition espacée" },
-      "exam":       { "title": "Examens",       "desc": "Tests et questions ouvertes générés à partir de tes notes" },
-      "tutor":      { "title": "Tuteur",        "desc": "Fais résoudre tes doutes par chat ou par la voix" },
-      "languages":  { "title": "Langues",       "desc": "Pratique la grammaire, la conversation et la compréhension orale" },
-      "lecture":    { "title": "Notes vocales", "desc": "Dicte tes notes à voix haute et nous les transformons en texte propre" },
-      "calendar":   { "title": "Calendrier",    "desc": "Rappels d'examens et planification par matière" },
-      "solve":      { "title": "Résolveur d'exercices", "desc": "Solutions étape par étape des exercices de tes notes" }
+      "summary": {
+        "title": "Résumés",
+        "desc": "Structurés avec les points clés de chaque sujet"
+      },
+      "flashcards": {
+        "title": "Fiches",
+        "desc": "Cartes de révision avec répétition espacée"
+      },
+      "exam": {
+        "title": "Examens",
+        "desc": "Tests et questions ouvertes générés à partir de tes notes"
+      },
+      "tutor": {
+        "title": "Tuteur",
+        "desc": "Fais résoudre tes doutes par chat ou par la voix"
+      },
+      "languages": {
+        "title": "Langues",
+        "desc": "Pratique la grammaire, la conversation et la compréhension orale"
+      },
+      "lecture": {
+        "title": "Notes vocales",
+        "desc": "Dicte tes notes à voix haute et nous les transformons en texte propre"
+      },
+      "calendar": {
+        "title": "Calendrier",
+        "desc": "Rappels d'examens et planification par matière"
+      },
+      "solve": {
+        "title": "Résolveur d'exercices",
+        "desc": "Solutions étape par étape des exercices de tes notes"
+      }
     },
     "how": {
       "title": "Comment ça marche",

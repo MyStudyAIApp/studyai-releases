@@ -424,7 +424,13 @@
     "delete": "Delete",
     "more": "more",
     "loading": "Loading calendar...",
-    "mon": "Mon", "tue": "Tue", "wed": "Wed", "thu": "Thu", "fri": "Fri", "sat": "Sat", "sun": "Sun"
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun"
   },
   "compare": {
     "title": "Compare documents",
@@ -679,18 +685,54 @@
       "cardTitle": "📖 Detailed tutorials",
       "cardSubtitle": "A guided walkthrough of each section, for whenever you have a specific question",
       "sections": {
-        "home":      { "icon": "🏠", "label": "Home" },
-        "library":   { "icon": "📚", "label": "Library" },
-        "study":     { "icon": "🧠", "label": "Pending" },
-        "exam":      { "icon": "📝", "label": "Exam" },
-        "tutor":     { "icon": "🦉", "label": "Tutor" },
-        "languages": { "icon": "🌍", "label": "Languages" },
-        "lecture":   { "icon": "🎙️", "label": "Voice notes" },
-        "solve":     { "icon": "🧮", "label": "Solve exercise" },
-        "compare":   { "icon": "⚖️", "label": "Compare" },
-        "stats":     { "icon": "📊", "label": "Progress" },
-        "calendar":  { "icon": "📅", "label": "Calendar" },
-        "settings":  { "icon": "⚙️", "label": "Settings" }
+        "home": {
+          "icon": "🏠",
+          "label": "Home"
+        },
+        "library": {
+          "icon": "📚",
+          "label": "Library"
+        },
+        "study": {
+          "icon": "🧠",
+          "label": "Pending"
+        },
+        "exam": {
+          "icon": "📝",
+          "label": "Exam"
+        },
+        "tutor": {
+          "icon": "🦉",
+          "label": "Tutor"
+        },
+        "languages": {
+          "icon": "🌍",
+          "label": "Languages"
+        },
+        "lecture": {
+          "icon": "🎙️",
+          "label": "Voice notes"
+        },
+        "solve": {
+          "icon": "🧮",
+          "label": "Solve exercise"
+        },
+        "compare": {
+          "icon": "⚖️",
+          "label": "Compare"
+        },
+        "stats": {
+          "icon": "📊",
+          "label": "Progress"
+        },
+        "calendar": {
+          "icon": "📅",
+          "label": "Calendar"
+        },
+        "settings": {
+          "icon": "⚙️",
+          "label": "Settings"
+        }
       }
     },
     "modelLabels": {
@@ -702,6 +744,13 @@
       "free": "FREE",
       "freeLimited": "FREE*",
       "paid": "PAID"
+    },
+    "exportData": {
+      "title": "Download my data",
+      "subtitle": "A ZIP with all your content and the files you uploaded.",
+      "button": "Download ZIP",
+      "preparing": "Preparing…",
+      "error": "The download could not be generated."
     }
   },
   "languages": {
@@ -925,14 +974,38 @@
     },
     "features": {
       "title": "Everything you need to study",
-      "summary":    { "title": "Summaries",   "desc": "Structured with the key points of each topic" },
-      "flashcards": { "title": "Flashcards",   "desc": "Review cards with spaced repetition" },
-      "exam":       { "title": "Exams",        "desc": "Tests and open questions generated from your notes" },
-      "tutor":      { "title": "Tutor",        "desc": "Get your doubts solved by chat or voice" },
-      "languages":  { "title": "Languages",    "desc": "Practise grammar, conversation and listening" },
-      "lecture":    { "title": "Voice notes",  "desc": "Dictate your notes out loud and we turn them into clean text" },
-      "calendar":   { "title": "Calendar",     "desc": "Exam reminders and planning by subject" },
-      "solve":      { "title": "Exercise solver", "desc": "Step-by-step solutions to the problems in your notes" }
+      "summary": {
+        "title": "Summaries",
+        "desc": "Structured with the key points of each topic"
+      },
+      "flashcards": {
+        "title": "Flashcards",
+        "desc": "Review cards with spaced repetition"
+      },
+      "exam": {
+        "title": "Exams",
+        "desc": "Tests and open questions generated from your notes"
+      },
+      "tutor": {
+        "title": "Tutor",
+        "desc": "Get your doubts solved by chat or voice"
+      },
+      "languages": {
+        "title": "Languages",
+        "desc": "Practise grammar, conversation and listening"
+      },
+      "lecture": {
+        "title": "Voice notes",
+        "desc": "Dictate your notes out loud and we turn them into clean text"
+      },
+      "calendar": {
+        "title": "Calendar",
+        "desc": "Exam reminders and planning by subject"
+      },
+      "solve": {
+        "title": "Exercise solver",
+        "desc": "Step-by-step solutions to the problems in your notes"
+      }
     },
     "how": {
       "title": "How it works",

@@ -1,6 +1,6 @@
 ## Datenschutzerklärung von mystudyai.eu
 Willkommen bei der Datenschutzrichtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Daten wir erheben, warum wir sie erheben und welche Rechte Sie diesbezüglich haben.
-Letzte Aktualisierung:  5. August 2026
+Letzte Aktualisierung:  25. August 2026
 
 ## Inhaltsverzeichnis
 - Zusammenfassung
@@ -34,7 +34,12 @@ Wir erheben automatisch Daten von Ihnen, wenn Sie z. B. mystudyai.eu besuchen.
 - Werbung
 
 ## Anbieter und Verantwortlicher
+Verantwortlicher: Sergio Gómez Negrín
+Spanische Steuernummer (NIF): 78696662T
+Anschrift: Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spanien)
 E-Mail-Adresse des Anbieters: support@mystudyai.eu
+
+Es wurde kein Datenschutzbeauftragter benannt, da keiner der in Art. 37 DSGVO genannten Fälle vorliegt.
 
 ## Art der von uns erhobenen Daten
 Zu den personenbezogenen Daten, die diese Anwendung selbstständig oder durch Dritte verarbeitet, gehören:
@@ -126,8 +131,8 @@ Hosting-Dienst für den Backend-Server der Anwendung, Region Frankfurt (EU).
 Diese Art von Diensten ermöglicht dieser Anwendung, die Nutzung und das Verhalten ihrer Komponenten zu überwachen, um deren Leistung und Funktionalität zu verbessern, sie zu warten oder Fehler zu beheben. Die verarbeiteten personenbezogenen Daten hängen von den Merkmalen und der Art der Implementierung dieser Dienste ab, die naturgemäß die Aktivität dieser Anwendung filtern.
 
 ### Sentry
-Unternehmen: Functional Software, Inc.
-Ort der Verarbeitung: USA
+Unternehmen: Functional Software, Inc. (USA)
+Ort der Verarbeitung: Europäische Union — Datenregion Frankfurt (Deutschland). Da der Anbieter ein US-Unternehmen ist, kann es zu punktuellen Zugriffen aus den USA zu Supportzwecken kommen, abgesichert durch die Standardvertragsklauseln.
 Sentry ist ein Anwendungsüberwachungsdienst von Functional Software, Inc.
 
 ### Verarbeitete personenbezogene Daten:
@@ -155,7 +160,7 @@ Cloudflare Turnstile wird zusätzlich im Registrierungsformular eingesetzt, um m
 ### Erbringung des Dienstes
 
 ### Mistral AI
-KI-Dienst (Mistral AI, Frankreich), der zur Erstellung von Zusammenfassungen, Prüfungen, Lernkarten und anderen Inhalten aus den vom Nutzer hochgeladenen Dokumenten verwendet wird. Die vom Nutzer bereitgestellten Dokumente und Texte werden nicht zum Training öffentlicher KI-Modelle von Mistral AI oder anderen Anbietern verwendet.
+KI-Dienst (Mistral AI, Frankreich), der zur Erstellung von Zusammenfassungen, Prüfungen, Lernkarten und anderen Inhalten aus den Inhalten der vom Nutzer hochgeladenen Dokumente verwendet wird. Handelt es sich um ein gescanntes PDF oder ein Foto und ist der Text nicht anders lesbar (z. B. handschriftliche Formeln), wird auch das Seitenbild an den Dienst übermittelt. Die vom Nutzer bereitgestellten Dokumente und Texte werden nicht zum Training öffentlicher KI-Modelle von Mistral AI oder anderen Anbietern verwendet.
 
 ### Zahlungen und Abonnements
 
@@ -223,6 +228,21 @@ Die vom Nutzer hochgeladene Originaldatei (PDF oder Foto) wird 10 Tage nach dem 
 
 ### Datenspeicherung – gelöste Übungen
 Bei der Funktion „Übung lösen" werden die Aufgabenstellung und die Lösung jeder gelösten Übung automatisch 10 Tage lang gespeichert, damit der Nutzer sie einsehen kann. Nach Ablauf dieser Frist werden sie automatisch gelöscht, wobei der Nutzer 3 Tage zuvor per E-Mail benachrichtigt wird. Der Nutzer kann die Übung vor Ablauf auf sein Gerät herunterladen und die E-Mail-Benachrichtigung in der Anwendung deaktivieren.
+
+### Minderjährige
+Der Dienst richtet sich nicht an Kinder unter 16 Jahren; die Nutzungsbedingungen setzen dieses Mindestalter für die Erstellung eines Kontos voraus. Von Personen unterhalb dieses Alters werden wissentlich keine Daten erhoben. Erlangt der Anbieter Kenntnis davon, dass ein Konto unter Verstoß gegen diese Anforderung angelegt wurde, wird es samt Daten gelöscht. Eltern oder Erziehungsberechtigte, die einen solchen Fall bemerken, können dies an support@mystudyai.eu melden; die Bearbeitung erfolgt unverzüglich.
+
+### Kopie der eigenen Daten herunterladen
+Über die Einstellungen in der Anwendung können Nutzer jederzeit und kostenlos eine ZIP-Datei mit allen ihren Inhalten (eine JSON-Datei je Datenkategorie, in einem strukturierten und gängigen Format) sowie mit den von ihnen hochgeladenen Dateien herunterladen. Diese Funktion erfüllt das Recht auf Datenübertragbarkeit nach Art. 20 DSGVO, ohne dass ein Antrag gestellt werden muss.
+
+### Was bei der Löschung des Kontos geschieht
+Beim Löschen des Kontos in der Anwendung werden Profil, Dokumente, erzeugtes Material, Anmerkungen, Lernsitzungen, Nutzungsprotokolle und hochgeladene Dateien dauerhaft und unwiderruflich entfernt, ohne Wiederherstellungsfrist. Erhalten bleiben ausschließlich:
+- Rechnungen und Zahlungsbelege, die unmittelbar von Stripe, Google Play oder dem Rechnungsdienstleister aufbewahrt werden, für die nach spanischem Steuer- und Handelsrecht vorgeschriebenen Fristen (bis zu 6 Jahre). Der Anbieter kann sie auch auf Wunsch des Nutzers nicht früher löschen, da es sich um eine rechtliche Verpflichtung handelt (Art. 17 Abs. 3 lit. b DSGVO).
+- Technische Datenbank-Backups, die im Rahmen der normalen Rotation innerhalb von höchstens 30 Tagen überschrieben werden und aus denen in dieser Zeit keine Daten entnommen werden.
+Es wird empfohlen, die Datenkopie VOR dem Löschen des Kontos herunterzuladen: danach ist eine Wiederherstellung nicht mehr möglich.
+
+### Aufsichtsbehörde
+Nutzer können Beschwerde bei der spanischen Datenschutzbehörde (AEPD), C/ Jorge Juan 6, 28001 Madrid, www.aepd.es, oder bei der Aufsichtsbehörde ihres Wohnsitzlandes einlegen, sofern dieses nicht Spanien ist. Zuvor können sie sich unter support@mystudyai.eu an den Anbieter wenden, der die Anfrage innerhalb eines Monats bearbeitet.
 
 ## Cookie-Richtlinie
 Diese Anwendung verwendet Tracker. Weitere Informationen ergeben sich aus der Cookie-Richtlinie .

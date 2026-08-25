@@ -1,0 +1,12 @@
+# Cabeceras de seguridad para Cloudflare Pages.
+# Ojo: NO hay una CSP completa aqui a proposito. Una CSP restrictiva rompe
+# Supabase, Sentry, Turnstile y Stripe si no se prueba una por una; se deja
+# para una pasada aparte. Lo que hay debajo es lo que se puede activar sin
+# riesgo de romper nada.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'
+  Permissions-Policy: geolocation=(), payment=(), usb=(), interest-cohort=()

@@ -472,6 +472,32 @@ export default function SettingsPage() {
   const [deleting, setDeleting]                 = useState(false)
   const [deleteError, setDeleteError]           = useState('')
 
+  // ── Descargar mis datos (portabilidad, art. 20 RGPD) ───────────────────
+  const [exportingData, setExportingData] = useState(false)
+  const [exportError, setExportError]   = useState('')
+  async function handleExportMyData() {
+    setExportingData(true)
+    setExportError('')
+    try {
+      const authHeader = await getAuthHeader()
+      const res = await fetch(`${WEB_API}/account/export`, { headers: { ...authHeader } })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const blob = await res.blob()
+      const url  = URL.createObjectURL(blob)
+      const a    = document.createElement('a')
+      a.href = url
+      a.download = `mystudyai-datos-${new Date().toISOString().slice(0, 10)}.zip`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      setExportError(e.message || t('settings.exportData.error'))
+    } finally {
+      setExportingData(false)
+    }
+  }
+
   async function handleDeleteAccount() {
     if (!deletePassword) return
     setDeleting(true)
@@ -1500,6 +1526,22 @@ export default function SettingsPage() {
           </div>
         )}
       </CollapsibleCard>
+
+      {/* ── Descargar mis datos ──────────────────────────────────────── */}
+      <div className="card p-4 flex items-center justify-between gap-4">
+        <div>
+          <p className="font-medium text-slate-200">{t('settings.exportData.title')}</p>
+          <p className="text-xs text-slate-500 mt-0.5">{t('settings.exportData.subtitle')}</p>
+          {exportError && <p className="text-xs text-red-400 mt-1">{exportError}</p>}
+        </div>
+        <button
+          onClick={handleExportMyData}
+          disabled={exportingData}
+          className="btn-secondary btn-sm shrink-0"
+        >
+          {exportingData ? t('settings.exportData.preparing') : t('settings.exportData.button')}
+        </button>
+      </div>
 
       {/* ── Zona de peligro ──────────────────────────────────────────── */}
       <div className="card border-red-900/50 p-4 flex items-center justify-between gap-4">

@@ -1,6 +1,6 @@
 ## Política de Cookies de mystudyai.eu
 Bienvenido a la política de cookies de mystudyai.eu. Esta política le ayudará a entender qué cookies y tecnologías de seguimiento utilizamos, cómo las utilizamos y qué derechos tiene usted al respecto.
-Última revisión:  5 agosto 2026
+Última revisión:  25 agosto 2026
 
 ## Índice
 - Introducción
@@ -16,9 +16,18 @@ Es posible que algunas de las finalidades para las que se utilizan Rastreadores 
 Esta Aplicación utiliza Rastreadores gestionados directamente por el Titular (denominados Rastreadores “de origen") y Rastreadores que hacen posibles servicios prestados por un tercero (denominados Rastreadores “de terceros”). Salvo que se indique lo contrario en el presente documento, los terceros proveedores podrán acceder a los Rastreadores que gestionen. Los plazos de validez y expiración de las Cookies y otros Rastreadores similares pueden variar dependiendo de la duración establecida por el Titular o el proveedor correspondiente. Algunas de ellas expiran a la finalización de la sesión de navegación del Usuario. Además de lo especificado en las descripciones que aparecen en cada una de las categorías indicadas más adelante, los Usuarios podrán encontrar información más precisa y actualizada acerca de las especificaciones de duración, así como cualquier otra información relevante – como la presencia de otros Rastreadores - en las políticas de privacidad de los terceros proveedores correspondientes para las que se proporcionan enlaces o contactando con el Titular.
 
 ## Titular y Responsable del tratamiento de los Datos
+Responsable del tratamiento: Sergio Gómez Negrín
+NIF: 78696662T
+Domicilio: Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (España)
 Correo electrónico de contacto del Titular: support@mystudyai.eu
 
+No se ha designado Delegado de Protección de Datos por no concurrir ninguno de los supuestos del artículo 37 del RGPD.
+
 ## Cómo esta Aplicación utiliza Rastreadores
+
+### Estado actual (importante)
+A día de hoy esta Aplicación **solo utiliza Rastreadores estrictamente necesarios**: los que mantienen la sesión iniciada, los de seguridad de la red y los que guardan preferencias que el propio Usuario ha elegido (idioma, tema visual). Ninguno sirve para analítica, perfilado ni publicidad.
+Por ese motivo **no se muestra un banner de consentimiento de cookies**: la normativa no lo exige para esta clase de Rastreadores. Si algún día se activara un Rastreador que sí requiera consentimiento, se habilitará un banner previo y se actualizará este documento antes de hacerlo.
 
 ### Necesarios
 Esta Aplicación utiliza Cookies denominadas “técnicas” y otros Rastreadores similares para llevar a cabo actividades que son estrictamente necesarias para el funcionamiento o la prestación del Servicio.
@@ -70,7 +79,7 @@ Esta Aplicación utiliza Rastreadores para ofrecer anuncios personalizados o con
 
 ### Rastreadores gestionados por terceros
 
-Meta Pixel y TikTok Pixel no están activos actualmente en esta Aplicación. Si en el futuro se activan, su ejecución quedará condicionada al consentimiento explícito y previo del Usuario a través del banner de gestión de cookies.
+Meta Pixel y TikTok Pixel no están activos actualmente en esta Aplicación. Si en el futuro se activan, su ejecución quedará condicionada al consentimiento explícito y previo del Usuario a través de un banner de gestión de cookies que se habilitará a tal efecto.
 
 ### Meta Pixel (Facebook Ads)
 Datos Personales tratados: Rastreadores
@@ -87,7 +96,7 @@ Píxel de seguimiento de conversiones de TikTok Ads, usado para medir la eficaci
 - Rastreadores
 
 ## Cómo gestionar preferencias y otorgar o revocar el consentimiento en esta Aplicación
-Siempre que el uso de Rastreadores esté basado en el consentimiento, los Usuarios podrán otorgar o revocar dicho consentimiento estableciendo o actualizando sus preferencias a través del panel de opciones de privacidad relevante que está disponible en esta Aplicación.
+Esta Aplicación no utiliza hoy ningún Rastreador basado en el consentimiento, por lo que no existe —ni hace falta— un panel de preferencias de cookies. Los Rastreadores necesarios pueden bloquearse o borrarse desde la configuración del propio navegador, tal y como se explica más abajo, teniendo en cuenta que hacerlo impedirá mantener la sesión iniciada. Si en el futuro se incorporase algún Rastreador sujeto a consentimiento, se habilitarán el banner y el panel correspondientes.
 En cuanto a los Rastreadores de terceros, los Usuarios podrán gestionar sus preferencias a través del enlace de inhabilitación relacionado (cuando exista), utilizando los medios indicados en la política de privacidad del tercero o contactando con dicho tercero.
 
 ### Cómo controlar o borrar Cookies y tecnologías similares mediante las opciones de configuración de tu dispositivo

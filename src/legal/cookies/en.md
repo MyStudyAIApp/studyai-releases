@@ -1,6 +1,6 @@
 ## Cookie Policy of mystudyai.eu
 Welcome to the cookie policy of mystudyai.eu. This policy will help you understand what cookies and tracking technologies we use, how we use them and what your rights are in relation to it.
-Latest update: August 05, 2026
+Latest update: August 25, 2026
 
 ## Table of contents
 - Introduction
@@ -16,9 +16,18 @@ Some of the purposes for which Trackers are used may also require the User's con
 This Application uses Trackers managed directly by the Owner (so-called “first-party” Trackers) and Trackers that enable services provided by a third-party (so-called “third-party” Trackers). Unless otherwise specified within this document, third-party providers may access the Trackers managed by them. The validity and expiration periods of Cookies and other similar Trackers may vary depending on the lifetime set by the Owner or the relevant provider. Some of them expire upon termination of the User’s browsing session. In addition to what’s specified in the descriptions within each of the categories below, Users may find more precise and updated information regarding lifetime specification as well as any other relevant information — such as the presence of other Trackers — in the linked privacy policies of the respective third-party providers or by contacting the Owner.
 
 ## Owner and Data Controller
+Data Controller: Sergio Gómez Negrín
+Spanish tax ID (NIF): 78696662T
+Address: Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spain)
 Owner contact email: support@mystudyai.eu
 
+No Data Protection Officer has been appointed, as none of the cases set out in Article 37 GDPR apply.
+
 ## How this Application uses Trackers
+
+### Current status (important)
+As of today this Application **only uses strictly necessary Trackers**: those that keep the User signed in, network security ones, and those storing preferences the User has chosen themselves (language, visual theme). None of them serve analytics, profiling or advertising purposes.
+For that reason **no cookie consent banner is displayed**: the law does not require one for this class of Trackers. Should a Tracker requiring consent ever be activated, a prior banner will be enabled and this document updated beforehand.
 
 ### Necessary
 This Application uses so-called “technical” Cookies and other similar Trackers to carry out activities that are strictly necessary for the operation or delivery of the Service.
@@ -70,7 +79,7 @@ This Application uses Trackers to deliver personalized ads or marketing content,
 
 ### Trackers managed by third parties
 
-Meta Pixel and TikTok Pixel are not currently active on this Application. If activated in the future, they will only run after the User’s prior, explicit consent given through the cookie management banner.
+Meta Pixel and TikTok Pixel are not currently active on this Application. If activated in the future, they will only run after the User’s prior, explicit consent given through a cookie management banner that will be enabled for that purpose.
 
 ### Meta Pixel (Facebook Ads)
 Personal Data processed: Trackers
@@ -89,7 +98,7 @@ Conversion tracking pixel from TikTok Ads, used to measure the effectiveness of 
 
 
 ## How to manage preferences and provide or withdraw consent on this Application
-Whenever the use of Trackers is based on consent, users can provide or withdraw such consent by setting or updating their preferences via the relevant privacy choices panel available on this Application.
+This Application currently uses no consent-based Trackers, so no cookie preferences panel exists — nor is one needed. Necessary Trackers can be blocked or deleted from the browser's own settings, as explained below, bearing in mind that doing so will prevent staying signed in. Should any consent-based Tracker be added in the future, the corresponding banner and panel will be enabled.
 With regard to any third-party Trackers, Users can manage their preferences via the related opt-out link (where provided), by using the means indicated in the third party's privacy policy, or by contacting the third party.
 
 ### How to control or delete Cookies and similar technologies via your device settings

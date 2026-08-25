@@ -1,6 +1,6 @@
 ## Cookie-Richtlinie von mystudyai.eu
 Willkommen bei der Cookie-Richtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Cookies und Tracking-Technologien wir verwenden, wie wir sie verwenden und welche Rechte Sie diesbezüglich haben.
-Letzte Aktualisierung:  5. August 2026
+Letzte Aktualisierung:  25. August 2026
 
 ## Inhaltsverzeichnis
 - Einführung
@@ -16,9 +16,18 @@ Einige der Verarbeitungszwecke, zu denen Tracker eingesetzt werden, erfordern di
 Diese Anwendung setzt anbietereigene Tracker (sogenannte „first-party Tracker“) und fremde Tracker im Zusammenhang mit Diensten von Drittanbietern ein (sogenannte „third-party Tracker“). Sofern innerhalb dieses Dokuments nicht anders angegeben, haben solche Dritte auch Zugriff auf die von ihnen verwalteten Tracker. Die Geltungsdauer und der Verfall von Cookies und anderen vergleichbaren Trackern hängen von der vom Anbieter oder vom jeweiligen Drittanbieter festgelegten Lebensdauer ab. Einige davon verfallen, sobald der Nutzer die Browsersitzung beendet. Um genauere und aktuellere Angaben zu der Lebensdauer sowie andere Informationen – wie z. B. bezüglich des Einsatzes weiterer Tracker – zu erhalten, werden Nutzer auf die Beschreibungen der unten aufgeführten Kategorien sowie, darüber hinaus, auf die verlinkten Datenschutzerklärungen entsprechender Drittanbieter oder auf Kontaktaufnahme zum Anbieter verwiesen.
 
 ## Anbieter und Verantwortlicher
+Verantwortlicher: Sergio Gómez Negrín
+Spanische Steuernummer (NIF): 78696662T
+Anschrift: Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spanien)
 E-Mail-Adresse des Anbieters: support@mystudyai.eu
 
+Es wurde kein Datenschutzbeauftragter benannt, da keiner der in Art. 37 DSGVO genannten Fälle vorliegt.
+
 ## Wie diese Anwendung Tracker verwendet.
+
+### Aktueller Stand (wichtig)
+Derzeit verwendet diese Anwendung **ausschließlich unbedingt erforderliche Tracker**: solche, die die Anmeldung aufrechterhalten, solche zur Netzwerksicherheit sowie solche, die vom Nutzer selbst gewählte Einstellungen speichern (Sprache, Design). Keiner dient der Analyse, der Profilbildung oder der Werbung.
+Aus diesem Grund **wird kein Cookie-Einwilligungsbanner angezeigt**: Für diese Art von Trackern ist es rechtlich nicht erforderlich. Sollte künftig ein einwilligungspflichtiger Tracker aktiviert werden, wird zuvor ein Banner eingerichtet und dieses Dokument aktualisiert.
 
 ### Funktionalität
 Diese Anwendung nutzt sogenannte „technische“ Cookies und ähnliche Tracker, um Vorgänge zu ermöglichen, die für die Durchführung und Erbringung des Dienstes unbedingt erforderlich sind.
@@ -70,7 +79,7 @@ Diese Anwendung verwendet Tracker, um personalisierte Werbung oder Marketinginha
 
 ### Von Dritten verwaltete Tracker
 
-Meta Pixel und TikTok Pixel sind derzeit in dieser Anwendung nicht aktiv. Sollten sie künftig aktiviert werden, laufen sie ausschließlich nach vorheriger, ausdrücklicher Einwilligung des Nutzers über das Cookie-Verwaltungsbanner.
+Meta Pixel und TikTok Pixel sind derzeit in dieser Anwendung nicht aktiv. Sollten sie künftig aktiviert werden, laufen sie ausschließlich nach vorheriger, ausdrücklicher Einwilligung des Nutzers über ein zu diesem Zweck einzurichtendes Cookie-Verwaltungsbanner.
 
 ### Meta Pixel (Facebook Ads)
 Verarbeitete personenbezogene Daten: Tracker
@@ -89,7 +98,7 @@ Conversion-Tracking-Pixel von TikTok Ads, verwendet zur Messung der Wirksamkeit 
 
 
 ## Einstellungen verwalten und Einwilligungen erteilen oder widerrufen
-Wenn die Verwendung von Trackern auf einer Einwilligung beruht, können die Nutzer diese Einwilligung erteilen oder widerrufen, indem sie ihre Einstellungen über die entsprechende Datenschutzauswahltafel auf diese Anwendung festelegen oder aktualisieren.
+Diese Anwendung setzt derzeit keine einwilligungsbasierten Tracker ein; eine Auswahltafel für Cookie-Einstellungen besteht daher nicht und ist auch nicht erforderlich. Erforderliche Tracker lassen sich über die Einstellungen des Browsers blockieren oder löschen, wie unten beschrieben — dabei ist zu beachten, dass dann keine Anmeldung aufrechterhalten werden kann. Sollte künftig ein einwilligungspflichtiger Tracker hinzukommen, werden das entsprechende Banner und die Auswahltafel aktiviert.
 In Bezug auf alle von Dritten eingesetzten Tracker können Nutzer ihre Einstellungen verwalten, indem sie den entsprechenden Opt-out-Link nutzen (sofern vorhanden), die in der Datenschutzerklärung des Dritten angegebenen Mittel verwenden oder sich mit dem Dritten in Verbindung setzen.
 
 ### Wie Sie Cookies und ähnliche Technologien über Ihre Geräteeinstellungen kontrollieren oder löschen können.

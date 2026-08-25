@@ -1,6 +1,6 @@
 ## Politique relative aux cookies de mystudyai.eu
 Bienvenue sur la politique de cookies de mystudyai.eu. La présente politique vous aidera à comprendre quels cookies et technologies de traçage nous utilisons, la façon dont nous les utilisons et quels sont vos droits à cet égard.
-Dernière mise à jour :  5 août 2026
+Dernière mise à jour :  25 août 2026
 
 ## Table des matières
 - Introduction
@@ -16,9 +16,18 @@ Certaines des finalités pour lesquelles les Traqueurs sont utilisés peuvent n�
 Cette Application utilise des Traqueurs gérés directement par le Propriétaire (les Traqueurs dits « de première partie ») et les Traqueurs qui activent les services fournis par un tiers (les Traqueurs dits « tiers »). Sauf indication contraire dans le présent document, les fournisseurs tiers peuvent accéder aux Traqueurs gérés par eux-mêmes. Les périodes de validité et d’expiration des Cookies et d’autres Traqueurs similaires peuvent varier en fonction de la durée de vie définie par le Propriétaire ou le fournisseur concerné. Certains expirent à la fin de la session de navigation de l’Utilisateur. Outre ce qui est précisé dans les descriptions de chacune des catégories ci-dessous, les Utilisateurs peuvent trouver des informations plus précises et actualisées concernant la description sur la durée de vie ainsi que toute autre information utile – comme la présence d’autres Traqueurs – dans les politiques de confidentialité des fournisseurs tiers respectifs, mises en lien, ou en contactant le Propriétaire.
 
 ## Propriétaire et Responsable du traitement
+Responsable du traitement : Sergio Gómez Negrín
+Numéro d'identification fiscale espagnol (NIF) : 78696662T
+Adresse : Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Espagne)
 Courriel de contact du Propriétaire : support@mystudyai.eu
 
+Aucun Délégué à la protection des données n'a été désigné, aucun des cas prévus à l'article 37 du RGPD ne s'appliquant.
+
 ## Utilisation des Traqueurs par cette Application
+
+### État actuel (important)
+À ce jour, cette Application **n'utilise que des Traqueurs strictement nécessaires** : ceux qui maintiennent la session ouverte, ceux liés à la sécurité du réseau et ceux qui conservent les préférences choisies par l'Utilisateur lui-même (langue, thème visuel). Aucun ne sert à l'analyse, au profilage ou à la publicité.
+Pour cette raison, **aucune bannière de consentement aux cookies n'est affichée** : la réglementation ne l'exige pas pour ce type de Traqueurs. Si un Traqueur soumis à consentement venait à être activé, une bannière préalable serait mise en place et le présent document mis à jour au préalable.
 
 ### Nécessaires
 Cette Application utilise des Cookies dits « techniques » et d’autres Traqueurs similaires pour mener des activités strictement nécessaires au fonctionnement ou à la fourniture du Service.
@@ -70,7 +79,7 @@ Cette Application utilise des Traqueurs pour fournir des publicités personnalis
 
 ### Traqueurs gérés par des tiers
 
-Meta Pixel et TikTok Pixel ne sont pas actuellement actifs sur cette Application. S’ils sont activés à l’avenir, ils ne fonctionneront qu’après le consentement explicite et préalable de l’Utilisateur via la bannière de gestion des cookies.
+Meta Pixel et TikTok Pixel ne sont pas actuellement actifs sur cette Application. S’ils sont activés à l’avenir, ils ne fonctionneront qu’après le consentement explicite et préalable de l’Utilisateur via une bannière de gestion des cookies qui sera mise en place à cet effet.
 
 ### Meta Pixel (Facebook Ads)
 Données personnelles traitées : Traqueurs
@@ -89,7 +98,7 @@ Pixel de suivi des conversions de TikTok Ads, utilisé pour mesurer l’efficaci
 
 
 ## Comment gérer les préférences et donner ou retirer son consentement sur cette Application
-Lorsque l’utilisation des Traqueurs repose sur le consentement de l’utilisateur, celui-ci peut donner ou retirer son consentement en définissant ou en mettant à jour ses préférences dans le panneau des choix en matière de confidentialité correspondant, disponible sur cette Application.
+Cette Application n'utilise aujourd'hui aucun Traqueur soumis au consentement ; il n'existe donc pas de panneau de préférences relatives aux cookies, et il n'est pas nécessaire. Les Traqueurs nécessaires peuvent être bloqués ou supprimés depuis les réglages du navigateur, comme expliqué ci-dessous, étant entendu que cela empêchera de rester connecté. Si un Traqueur soumis au consentement était ajouté à l'avenir, la bannière et le panneau correspondants seraient activés.
 S’agissant des Traqueurs tiers, les Utilisateurs peuvent gérer leurs préférences par le lien de retrait associé (le cas échéant), à l’aide du moyen indiqué dans la politique de confidentialité de ce tiers ou en contactant celui-ci.
 
 ### Comment contrôler ou supprimer les Cookies et technologies similaires en passant par les paramètres de votre appareil

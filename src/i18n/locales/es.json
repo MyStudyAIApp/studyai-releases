@@ -424,7 +424,13 @@
     "delete": "Borrar",
     "more": "más",
     "loading": "Cargando calendario...",
-    "mon": "Lun", "tue": "Mar", "wed": "Mié", "thu": "Jue", "fri": "Vie", "sat": "Sáb", "sun": "Dom"
+    "mon": "Lun",
+    "tue": "Mar",
+    "wed": "Mié",
+    "thu": "Jue",
+    "fri": "Vie",
+    "sat": "Sáb",
+    "sun": "Dom"
   },
   "compare": {
     "title": "Comparar documentos",
@@ -679,18 +685,54 @@
       "cardTitle": "📖 Tutoriales detallados",
       "cardSubtitle": "Un recorrido guiado por cada sección, para cuando tengas una duda concreta",
       "sections": {
-        "home":      { "icon": "🏠", "label": "Inicio" },
-        "library":   { "icon": "📚", "label": "Biblioteca" },
-        "study":     { "icon": "🧠", "label": "Pendiente" },
-        "exam":      { "icon": "📝", "label": "Examen" },
-        "tutor":     { "icon": "🦉", "label": "Tutor" },
-        "languages": { "icon": "🌍", "label": "Idiomas" },
-        "lecture":   { "icon": "🎙️", "label": "Apuntes por voz" },
-        "solve":     { "icon": "🧮", "label": "Resolver ejercicio" },
-        "compare":   { "icon": "⚖️", "label": "Comparar" },
-        "stats":     { "icon": "📊", "label": "Progreso" },
-        "calendar":  { "icon": "📅", "label": "Calendario" },
-        "settings":  { "icon": "⚙️", "label": "Ajustes" }
+        "home": {
+          "icon": "🏠",
+          "label": "Inicio"
+        },
+        "library": {
+          "icon": "📚",
+          "label": "Biblioteca"
+        },
+        "study": {
+          "icon": "🧠",
+          "label": "Pendiente"
+        },
+        "exam": {
+          "icon": "📝",
+          "label": "Examen"
+        },
+        "tutor": {
+          "icon": "🦉",
+          "label": "Tutor"
+        },
+        "languages": {
+          "icon": "🌍",
+          "label": "Idiomas"
+        },
+        "lecture": {
+          "icon": "🎙️",
+          "label": "Apuntes por voz"
+        },
+        "solve": {
+          "icon": "🧮",
+          "label": "Resolver ejercicio"
+        },
+        "compare": {
+          "icon": "⚖️",
+          "label": "Comparar"
+        },
+        "stats": {
+          "icon": "📊",
+          "label": "Progreso"
+        },
+        "calendar": {
+          "icon": "📅",
+          "label": "Calendario"
+        },
+        "settings": {
+          "icon": "⚙️",
+          "label": "Ajustes"
+        }
       }
     },
     "modelLabels": {
@@ -702,6 +744,13 @@
       "free": "GRATIS",
       "freeLimited": "GRATIS*",
       "paid": "PAGO"
+    },
+    "exportData": {
+      "title": "Descargar mis datos",
+      "subtitle": "Un ZIP con todo tu contenido y los archivos que subiste.",
+      "button": "Descargar ZIP",
+      "preparing": "Preparando…",
+      "error": "No se pudo generar la descarga."
     }
   },
   "languages": {
@@ -925,14 +974,38 @@
     },
     "features": {
       "title": "Todo lo que necesitas para estudiar",
-      "summary":    { "title": "Resúmenes",    "desc": "Estructurados con los puntos clave de cada tema" },
-      "flashcards": { "title": "Fichas",        "desc": "Tarjetas de repaso con repetición espaciada" },
-      "exam":       { "title": "Exámenes",      "desc": "Tests y preguntas de desarrollo generados de tus apuntes" },
-      "tutor":      { "title": "Tutor",         "desc": "Resuelve tus dudas por chat o por voz" },
-      "languages":  { "title": "Idiomas",       "desc": "Practica gramática, conversación y comprensión oral" },
-      "lecture":    { "title": "Apuntes por voz", "desc": "Dicta tus apuntes en voz y los convertimos en texto limpio" },
-      "calendar":   { "title": "Calendario",    "desc": "Avisos de examen y planificación por asignatura" },
-      "solve":      { "title": "Resolver ejercicios", "desc": "Soluciones paso a paso de los problemas de tus apuntes" }
+      "summary": {
+        "title": "Resúmenes",
+        "desc": "Estructurados con los puntos clave de cada tema"
+      },
+      "flashcards": {
+        "title": "Fichas",
+        "desc": "Tarjetas de repaso con repetición espaciada"
+      },
+      "exam": {
+        "title": "Exámenes",
+        "desc": "Tests y preguntas de desarrollo generados de tus apuntes"
+      },
+      "tutor": {
+        "title": "Tutor",
+        "desc": "Resuelve tus dudas por chat o por voz"
+      },
+      "languages": {
+        "title": "Idiomas",
+        "desc": "Practica gramática, conversación y comprensión oral"
+      },
+      "lecture": {
+        "title": "Apuntes por voz",
+        "desc": "Dicta tus apuntes en voz y los convertimos en texto limpio"
+      },
+      "calendar": {
+        "title": "Calendario",
+        "desc": "Avisos de examen y planificación por asignatura"
+      },
+      "solve": {
+        "title": "Resolver ejercicios",
+        "desc": "Soluciones paso a paso de los problemas de tus apuntes"
+      }
     },
     "how": {
       "title": "Cómo funciona",

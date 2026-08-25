@@ -118,6 +118,13 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     setError(null)
+    // El alta con Google crea la cuenta igual que el formulario de email, asi
+    // que tiene que pasar por la misma aceptacion de Condiciones y Privacidad.
+    // Sin esto se podian crear cuentas sin contrato aceptado (art. 13 RGPD).
+    if (mode === 'register' && !acceptedTerms) {
+      setError('Debes aceptar los Términos y la Política de Privacidad para crear una cuenta.')
+      return
+    }
     if (IS_WEB) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -551,7 +558,7 @@ export default function LoginPage() {
         <button
           type="button"
           onClick={handleGoogleLogin}
-          disabled={loading}
+          disabled={loading || (mode === 'register' && !acceptedTerms)}
           className="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 font-semibold py-3 rounded-xl transition-all shadow-lg"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -562,6 +569,18 @@ export default function LoginPage() {
           </svg>
           Continuar con Google
         </button>
+
+        {/* En modo login, Google tambien puede dar de alta a alguien que no
+            tenia cuenta -- ahi el checkbox no se muestra, asi que la aceptacion
+            se informa aqui de forma expresa antes de pulsar. */}
+        {mode === 'login' && (
+          <p className="text-[11px] text-slate-500 text-center mt-2">
+            Si continúas con Google y aún no tienes cuenta, aceptas los{' '}
+            <Link to="/terminos" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
+            {' '}y la{' '}
+            <Link to="/privacidad" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
+          </p>
+        )}
 
         <button
           type="button"

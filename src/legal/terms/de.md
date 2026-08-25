@@ -1,6 +1,6 @@
 ## Allgemeine Nutzungsbedingungen von mystudyai.eu
 Willkommen bei der Seite der AGBs von mystudyai.eu. Dieses Dokument hilft Ihnen zu verstehen, wie Sie unsere Dienste nutzen können und was Sie von uns erwarten können.
-Letzte Aktualisierung:  4. August 2026
+Letzte Aktualisierung:  25. August 2026
 
 ## Inhaltsverzeichnis
 - Einleitung
@@ -22,7 +22,7 @@ auf rechtsverbindliche Weise. Definierte Begriffe sind im entsprechenden Abschni
 Nutzer werden aufgefordert, dieses Dokument sorgfältig zur Kenntnis zu nehmen.
 Obwohl das mit den Produkten verbundene Vertragsverhältnis ausschließlich zwischen Nutzer und Anbieter zustande kommt, erkennt und akzeptiert der Nutzer, in Fällen in welchen diese Anwendung über den Apple App Store bezogen wurde, dass Apple diese AGB als Drittbegünstigter durchsetzen kann.
 Diese Anwendung wird angeboten von:
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España)
+Sergio Gómez Negrín (spanische Steuernummer / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spanien)
 E-Mail-Adresse des Anbieters: support@mystudyai.eu
 
 ## Das Wichtigste auf einen Blick
@@ -48,7 +48,10 @@ Bei der Anmeldung erklären sich Nutzer damit einverstanden, für alle Handlunge
 
 ### Beendigung des Nutzerkontos
 Nutzerkonten können jederzeit folgendermaßen gelöscht werden:
+- Direkt in der Anwendung unter Einstellungen > Kontolöschung. Die Löschung erfolgt sofort, dauerhaft und unwiderruflich.
 - Durch direkte Kontaktaufnahme zum Anbieter über die in diesem Dokument angegebenen Kontaktdaten.
+
+Vor dem Löschen des Kontos wird empfohlen, unter Einstellungen > Meine Daten herunterladen eine Kopie der Daten zu sichern, da diese danach nicht wiederhergestellt werden können. Das Löschen des Kontos kündigt ein über Google Play abgeschlossenes Abonnement nicht automatisch: dieses muss zusätzlich im Store selbst gekündigt werden.
 
 ### Sperrung und Löschung des Nutzerkontos
 Der Anbieter behält sich das Recht vor, Nutzerkonten, die er für unangemessen oder beleidigend hält oder die nach seinem Dafürhalten gegen diese AGB verstoßen, nach eigenem Ermessen jederzeit und ohne Vorankündigung zu sperren oder zu löschen.
@@ -178,11 +181,11 @@ Um Abonnements aufrechtzuerhalten, müssen die Nutzer die erforderliche wiederke
 
 ### Kündigung durch den Nutzer bei unbefristeten Abonnements
 Unbefristete Abonnements können jederzeit durch eine klare und unmissverständliche Kündigungsmitteilung gegenüber dem Anbieter gekündigt werden. Hierzu haben die Nutzer die in diesem Dokument angegebenen Kontaktdaten, oder – falls möglich – die entsprechenden Bedienelemente, welche über diese Anwendung zur Verfügung gestellt werden, zu verwenden.
-Kündigungen werden 0 Tage nach Zugang des Kündigungsschreibens beim Anbieter wirksam.
+Die Kündigung wird zum Ende des laufenden Abrechnungszeitraums wirksam: Der Nutzer behält bis zu diesem Zeitpunkt den Zugang zum gebuchten Tarif und wird nicht erneut belastet. Für den bereits genutzten Teil des laufenden Zeitraums besteht kein Erstattungsanspruch.
 
 ### Kündigung durch den Anbieter bei unbefristeten Abonnements
 Der Anbieter behält sich das Recht vor, das Abonnement jederzeit ohne Angabe von Gründen durch Übersendung einer Kündigungsmitteilung an den Nutzer zu kündigen. Die Kündigung wird mit Ablauf der Kündigungsfrist wirksam.
-Die Kündigungsfrist beträgt 0 Tage.
+Die Kündigungsfrist beträgt 30 Kalendertage — dieselbe, die für die Einstellung des Dienstes gilt. Bleibt durch eine Kündigung des Anbieters ohne Angabe von Gründen ein bereits bezahlter Zeitraum ungenutzt, wird der entsprechende anteilige Betrag erstattet. Dies gilt nicht für die Kündigung aus wichtigem Grund, die sich nach der folgenden Klausel richtet.
 
 ### Kündigung aus wichtigem Grund und/oder aufgrund von Undurchführbarkeit
 Der Anbieter behält sich ausdrücklich das Recht vor, den Vertrag aus wichtigem Grund und/oder aufgrund einer Undurchführbarkeit mit sofortiger Wirkung zu kündigen — beispielsweise aufgrund behördlicher Anordnungen, Gesetzesverstößen oder Verletzungen von Rechten Dritter, tatsächlicher oder drohender Insolvenz oder unangemessener Nutzung von diese Anwendung.
@@ -333,7 +336,14 @@ Unterlässt es der Anbieter, ein Recht aus diesen AGB geltend zu machen oder ein
 
 ### Serviceunterbrechung
 Um einen bestmöglichen Service zu gewährleisten, behält sich der Anbieter das Recht vor, den Dienst für Wartungen, Systemaktualisierungen oder andere Änderungen zu unterbrechen. Er wird die Nutzer angemessen informieren.
-Im Rahmen der gesetzlichen Bestimmungen kann der Anbieter den Dienst auch ganz aussetzen oder beenden. Im Fall der Einstellung des Dienstes wird der Anbieter Nutzern die Möglichkeit geben, personenbezogene Daten oder Informationen gemäß jeweils geltendem Recht zu sichern und wird etwaig nach dem jeweils anwendbarem Recht bestehtende Ansprüche der Nutzer auf Weiternutzung und/oder Schadensersatz berücksichtigen.
+Im Rahmen der gesetzlichen Bestimmungen kann der Anbieter den Dienst auch ganz aussetzen oder beenden. Damit ein solcher Fall die Nutzer nicht im Ungewissen lässt, verpflichtet sich der Anbieter ausdrücklich zu Folgendem:
+- **Vorankündigung.** Die endgültige Einstellung des Dienstes wird mindestens **30 Kalendertage im Voraus** angekündigt, per E-Mail an die mit dem Konto verknüpfte Adresse sowie durch einen sichtbaren Hinweis in der Anwendung.
+- **Download-Zeitfenster.** Während dieser 30 Tage und mindestens bis zum wirksamen Einstellungsdatum bleibt die Funktion Einstellungen > Meine Daten herunterladen verfügbar, damit Nutzer ihre Inhalte und Dateien erhalten. Sollte diese Funktion aus technischen Gründen nicht verfügbar sein, stellt der Anbieter die Kopie auf Anfrage des Nutzers auf anderem Wege bereit.
+- **Laufende Abonnements.** Die automatische Verlängerung wird beendet und der anteilige Betrag des bereits bezahlten und nicht genutzten Zeitraums wird ab dem wirksamen Einstellungsdatum erstattet.
+- **Nicht verbrauchte Pakete.** Der Betrag für erworbene und zum Zeitpunkt der Einstellung nicht verbrauchte Pakete wird erstattet.
+- **Über Google Play getätigte Käufe.** Erstattungen solcher Käufe werden zwingend über Google nach dessen Bedingungen abgewickelt; der Anbieter unterstützt die Nutzer dabei im Rahmen seiner Möglichkeiten.
+- **Anschließende Löschung.** 30 Kalendertage nach dem wirksamen Einstellungsdatum werden alle Nutzerdaten dauerhaft gelöscht, mit Ausnahme von Rechnungsunterlagen, die aufgrund steuer- oder handelsrechtlicher Pflichten aufzubewahren sind.
+Diese Zusagen gelten unbeschadet weiter gehender Rechte, die dem Nutzer nach anwendbarem Recht zustehen.
 Darüber hinaus kann Dienst aus Gründen, die außerhalb der Kontrolle des Anbieters liegen (sog. Gründe „höherer Gewalt“), nicht verfügbar sein (z. B. Infrastrukturausfälle oder Stromausfälle usw.).
 
 ### Weiterverkauf
@@ -424,7 +434,7 @@ Gilt für Nutzer, die sich, unabhängig von ihrer Staatsangehörigkeit, in der E
 
 ### Beispiel Widerrufsformular
 An:
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España) support@mystudyai.eu
+Sergio Gómez Negrín (spanische Steuernummer / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spanien) support@mystudyai.eu
 Ich/Wir teilen hiermit mit, dass ich/wir von meinem/unserem Kaufvertrag über die folgenden Waren / zur Erbringung der folgenden Dienstleistung zurücktreten:
 _____________________________________________ (Beschreibung der Waren/Dienstleistungen, die Gegenstand des Widerrufs sind)
 - Bestellt am: _____________________________________________ (Datum einfügen)

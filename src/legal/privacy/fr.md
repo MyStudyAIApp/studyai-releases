@@ -1,6 +1,6 @@
 ## Politique de confidentialité de mystudyai.eu
 Bienvenue sur la politique de confidentialité de mystudyai.eu. La présente politique vous aidera à comprendre quelles données nous recueillons, pourquoi nous les recueillons et quels sont vos droits à cet égard.
-Dernière mise à jour :  5 août 2026
+Dernière mise à jour :  25 août 2026
 
 ## Table des matières
 - Résumé
@@ -34,7 +34,12 @@ Nous recueillons automatiquement des données auprès de vous, par exemple lorsq
 - Publicité
 
 ## Propriétaire et Responsable du traitement
+Responsable du traitement : Sergio Gómez Negrín
+Numéro d'identification fiscale espagnol (NIF) : 78696662T
+Adresse : Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Espagne)
 Courriel de contact du Propriétaire : support@mystudyai.eu
+
+Aucun Délégué à la protection des données n'a été désigné, aucun des cas prévus à l'article 37 du RGPD ne s'appliquant.
 
 ## Type de Données que nous recueillons
 Figurent parmi les types de Données personnelles que cette Application collecte directement ou en recourant à des tiers :
@@ -126,8 +131,8 @@ Service d'hébergement du serveur backend de l'application, région Francfort (U
 Ce type de services permet à cette Application de surveiller l'utilisation et le comportement de ses composants, afin d'en améliorer les performances, la fonctionnalité, la maintenance, et de résoudre les problèmes. Les Données personnelles traitées dépendent des caractéristiques et des modalités de mise en œuvre de ces services, qui par nature filtrent l'activité de cette Application.
 
 ### Sentry
-Société : Functional Software, Inc.
-Lieu de traitement : États-Unis
+Société : Functional Software, Inc. (États-Unis)
+Lieu de traitement : Union européenne — région de données de Francfort (Allemagne). Le prestataire étant une entité américaine, des accès ponctuels depuis les États-Unis à des fins de support peuvent avoir lieu, encadrés par les Clauses Contractuelles Types.
 Sentry est un service de surveillance d'applications fourni par Functional Software, Inc.
 
 ### Données personnelles traitées :
@@ -155,7 +160,7 @@ Cloudflare Turnstile est également utilisé sur le formulaire d'inscription pou
 ### Fourniture du Service
 
 ### Mistral AI
-Service d'intelligence artificielle (Mistral AI, France) utilisé pour générer des résumés, examens, fiches de révision et autres contenus à partir du texte des documents de l'Utilisateur. Les documents et textes fournis par l'Utilisateur ne sont pas utilisés pour entraîner des modèles publics d'Intelligence Artificielle de Mistral AI ni d'aucun autre fournisseur.
+Service d'intelligence artificielle (Mistral AI, France) utilisé pour générer des résumés, examens, fiches de révision et autres contenus à partir du contenu des documents de l'Utilisateur. Lorsque le document est un PDF numérisé ou une photo et que le texte ne peut pas être lu autrement (par exemple des formules manuscrites), l'image de la page est également envoyée au service. Les documents et textes fournis par l'Utilisateur ne sont pas utilisés pour entraîner des modèles publics d'Intelligence Artificielle de Mistral AI ni d'aucun autre fournisseur.
 
 ### Paiements et abonnements
 
@@ -224,6 +229,21 @@ Le fichier original (PDF ou photo) que l'utilisateur télécharge est conservé 
 
 ### Conservation des données – exercices résolus
 Dans la fonction « Résoudre un exercice », l'énoncé et la solution de chaque exercice résolu sont automatiquement enregistrés pendant 10 jours afin que l'utilisateur puisse les consulter. Passé ce délai, ils sont automatiquement supprimés, avec un avis par e-mail envoyé à l'utilisateur 3 jours auparavant. L'utilisateur peut télécharger l'exercice sur son appareil avant son expiration et peut désactiver l'avis par e-mail depuis l'application.
+
+### Mineurs
+Le Service ne s'adresse pas aux enfants de moins de 16 ans et les Conditions d'utilisation exigent cet âge minimum pour créer un compte. Aucune donnée n'est sciemment collectée auprès de personnes en dessous de cet âge. Si le Propriétaire apprend qu'un compte a été créé en violation de cette exigence, il sera supprimé avec ses données. Les parents ou tuteurs qui constatent une telle situation peuvent la signaler à support@mystudyai.eu ; elle sera traitée sans délai.
+
+### Télécharger une copie de vos données
+Depuis les Réglages, dans l'Application elle-même, l'Utilisateur peut télécharger à tout moment et gratuitement une archive ZIP contenant l'ensemble de son contenu (un fichier JSON par catégorie de données, dans un format structuré et couramment utilisé) ainsi que les fichiers qu'il a importés. Cette fonction couvre le droit à la portabilité prévu à l'article 20 du RGPD sans qu'aucune demande ne soit nécessaire.
+
+### Ce qui se passe lors de la suppression du compte
+La suppression du compte depuis l'Application efface définitivement et irréversiblement le profil, les documents, le matériel généré, les annotations, les sessions d'étude, les journaux d'utilisation et les fichiers importés, sans période de récupération. Seules subsistent :
+- Les factures et justificatifs de paiement, conservés directement par Stripe, Google Play ou le prestataire de facturation, pendant les durées imposées par la législation fiscale et commerciale espagnole (jusqu'à 6 ans). Le Propriétaire ne peut pas les supprimer avant ce délai, même à la demande de l'Utilisateur, s'agissant d'une obligation légale (article 17.3.b du RGPD).
+- Les sauvegardes techniques de la base de données, écrasées lors de leur rotation normale dans un délai maximal de 30 jours et dont aucune donnée n'est extraite pendant ce temps.
+Il est recommandé de télécharger la copie de ses données AVANT de supprimer le compte : ensuite, elles ne peuvent plus être récupérées.
+
+### Autorité de contrôle
+L'Utilisateur peut introduire une réclamation auprès de l'Agence espagnole de protection des données (AEPD), C/ Jorge Juan 6, 28001 Madrid, www.aepd.es, ou auprès de l'autorité de contrôle de son pays de résidence s'il diffère de l'Espagne. Au préalable, il peut s'adresser au Propriétaire à support@mystudyai.eu, qui traitera la demande dans un délai d'un mois.
 
 ## Politique relative aux Cookies
 Cette Application utilise des Traqueurs. Pour en savoir plus, les Utilisateur peuvent consulter la Politique relative aux Cookies .

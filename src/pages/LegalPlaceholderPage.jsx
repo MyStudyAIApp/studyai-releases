@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
@@ -26,6 +27,19 @@ const DOCS = {
 export default function LegalPlaceholderPage({ docKey }) {
   const { t, i18n } = useTranslation()
   const doc = DOCS[docKey]
+
+  // Estas paginas llevan los datos identificativos del Titular (nombre,
+  // domicilio y NIF) porque los exige el art. 10 LSSI. Que sean publicas es
+  // obligatorio; que ademas queden indexadas en buscadores, no. Se marca
+  // noindex mientras la pagina esta a la vista y se quita al salir, para no
+  // afectar al posicionamiento del resto del sitio.
+  useEffect(() => {
+    const meta = document.createElement('meta')
+    meta.name = 'robots'
+    meta.content = 'noindex, nofollow, noarchive'
+    document.head.appendChild(meta)
+    return () => meta.remove()
+  }, [])
 
   const lang = i18n.language?.split('-')[0] || 'es'
   const path = Object.keys(doc.files).find((p) => p.endsWith(`/${lang}.md`))

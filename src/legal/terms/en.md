@@ -1,6 +1,6 @@
 ## Terms and Conditions of mystudyai.eu
 Welcome to the Terms & Conditions page of mystudyai.eu. This document will help you understand how you can use our services and what you can expect from us.
-Latest update: August 04, 2026
+Latest update: August 25, 2026
 
 ## Table of contents
 - Introduction
@@ -22,7 +22,7 @@ in a legally binding way. Capitalized words are defined in the relevant dedicate
 The User must read this document carefully.
 Although the entire contractual relationship relating to these Products is entered into solely by the Owner and Users, Users acknowledge and agree that, where this Application has been provided to them via the Apple App Store, Apple may enforce these Terms as a third-party beneficiary.
 This Application is provided by:
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España)
+Sergio Gómez Negrín (Spanish tax ID / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spain)
 Owner contact email: support@mystudyai.eu
 
 ## What the User should know at a glance
@@ -48,7 +48,10 @@ By registering, Users agree to be fully responsible for all activities that occu
 
 ### Account termination
 Users can terminate their account and stop using the Service at any time by doing the following:
+- From within the Application itself, under Settings > Account deletion. Deletion is immediate, permanent and irreversible.
 - By directly contacting the Owner at the contact details provided in this document.
+
+Before deleting the account, Users are advised to download a copy of their data from Settings > Download my data, as it cannot be recovered afterwards. Deleting the account does not by itself cancel a subscription purchased through Google Play: that must also be cancelled from the store itself.
 
 ### Account suspension and deletion
 The Owner reserves the right, at its sole discretion, to suspend or delete at any time and without notice, User accounts that it deems inappropriate, offensive or in violation of these Terms.
@@ -180,11 +183,11 @@ In order to maintain subscriptions, Users must pay the required recurring fee in
 
 ### Termination by the User of open-ended subscriptions
 Open-ended subscriptions may be terminated at any time by sending a clear and unambiguous termination notice to the Owner using the contact details provided in this document, or — if applicable — by using the corresponding controls inside this Application.
-Terminations shall take effect 0 days after the notice of termination has been received by the Owner.
+Termination shall take effect at the end of the current billing period: the User keeps access to the plan purchased until that date and is not charged again. No refund is due for the part of the current period already enjoyed.
 
 ### Termination by the Owner of open-ended subscriptions
 The Owner reserves the right to terminate the subscription for convenience at any time by sending a termination notice to the User. The termination shall take effect at the end of the notice period.
-The notice period is 0 days.
+The notice period is 30 calendar days, the same one that applies to discontinuation of the Service. Where termination for convenience by the Owner leaves a period already paid for unused, the corresponding proportional part will be refunded. The foregoing does not apply to termination for cause, which is governed by the following clause.
 
 ### Termination for cause and/or impossibility of performance
 The Owner expressly reserves the right to terminate the contract effective immediately for cause and/or impossibility of performance — such as, for instance, orders from public authorities, breach against statutory law or infringement of third-party rights, actual or impending insolvency, inappropriate use of this Application.
@@ -334,7 +337,14 @@ The Owner’s failure to assert any right or provision under these Terms shall n
 
 ### Service interruption
 To ensure the best possible service level, the Owner reserves the right to interrupt the Service for maintenance, system updates or any other changes, informing the Users appropriately.
-Within the limits of law, the Owner may also decide to suspend or discontinue the Service altogether. If the Service is discontinued, the Owner will cooperate with Users to enable them to withdraw personal data or information and will respect Users' rights relating to continued product use and/or compensation, as provided for by applicable law.
+Within the limits of law, the Owner may also decide to suspend or discontinue the Service altogether. So that such a scenario does not leave Users in a position of uncertainty, the Owner expressly undertakes the following:
+- **Notice period.** Permanent discontinuation of the Service will be announced at least **30 calendar days in advance**, by email to the address associated with the account and through a visible notice inside the Application.
+- **Download window.** During those 30 days, and at least until the effective closure date, the Settings > Download my data feature will remain operational so Users can obtain their content and files. Should that feature be unavailable for technical reasons, the Owner will provide the copy by other means upon the User's request.
+- **Ongoing subscriptions.** Automatic renewal will be cancelled and the proportional part of the period already paid for and not enjoyed will be refunded, counted from the effective closure date.
+- **Unused bundles.** The amount corresponding to bundles purchased and not consumed at the time of closure will be refunded.
+- **Purchases made through Google Play.** Refunds for those purchases are necessarily processed through Google under its own terms; the Owner will give Users whatever assistance is within its power to handle them.
+- **Subsequent deletion.** 30 calendar days after the effective closure date, all User data will be permanently deleted, except invoicing documents that must be retained under tax or commercial obligations.
+These undertakings are without prejudice to any more favourable rights granted to the User by applicable law.
 Additionally, the Service might not be available due to reasons outside the Owner’s reasonable control, such as “force majeure” events (infrastructural breakdowns or blackouts etc.).
 
 ### Service reselling
@@ -427,7 +437,7 @@ Applies where a User, regardless of nationality, is in the EU.
 
 ### Example withdrawal form
 Addressed to:
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España) support@mystudyai.eu
+Sergio Gómez Negrín (Spanish tax ID / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spain) support@mystudyai.eu
 I/We hereby give notice that I/we withdraw from my/our contract of sale of the following goods/for the provision of the following service:
 _____________________________________________ (insert a description of the goods/services that are subject to the respective withdrawal)
 - Ordered on: _____________________________________________ (insert the date)

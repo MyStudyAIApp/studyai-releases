@@ -1,6 +1,6 @@
 ## Condiciones de Uso de mystudyai.eu
 Bienvenido a la página de Términos y Condiciones de mystudyai.eu. Este documento le ayudará a entender cómo puede utilizar nuestros servicios y qué puede esperar de nosotros.
-Última revisión:  4 agosto 2026
+Última revisión:  25 agosto 2026
 
 ## Índice
 - Introducción
@@ -22,7 +22,7 @@ de forma jurídicamente vinculante. Las palabras en mayúsculas se definen en la
 Los Usuarios deben leer atentamente el presente documento.
 Aunque la relación contractual relativa a estos Productos en su totalidad se establece únicamente entre el Titular y los Usuarios, los Usuarios reconocen y aceptan que, cuando esta Aplicación se les haya facilitado a través de la Apple App Store, Apple podrá exigir el cumplimiento de las presentes Condiciones como tercero beneficiario.
 Esta Aplicación es ofrecida por:
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España)
+Sergio Gómez Negrín (NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (España)
 Correo electrónico de contacto del Titular: support@mystudyai.eu
 
 ## Lo que el Usuario debería saber de un vistazo
@@ -48,7 +48,10 @@ Al registrarse, los Usuarios acuerdan asumir plena responsabilidad por todas las
 
 ### Cancelación de la cuenta
 Los Usuarios podrán cancelar sus cuentas y dejar de utilizar el Servicio en cualquier momento de la siguiente forma:
+- Desde la propia Aplicación, en Ajustes > Borrado de cuenta. El borrado es inmediato, permanente e irreversible.
 - Contactando directamente con el Titular a través de los datos de contacto facilitados en el presente documento.
+
+Antes de borrar la cuenta se recomienda descargar una copia de los datos desde Ajustes > Descargar mis datos, ya que después no será posible recuperarlos. Cancelar la cuenta no cancela por sí solo una suscripción contratada a través de Google Play: esa debe cancelarse además desde la propia tienda.
 
 ### Suspensión y eliminación de la cuenta
 El Titular se reserva el derecho, a su entera discreción, de suspender o eliminar las cuentas de Usuarios en cualquier momento y sin preaviso, si las considera inapropiadas, ofensivas o entiende que incumplen las presentes Condiciones.
@@ -181,11 +184,11 @@ Para mantener las suscripciones, los Usuarios deberán pagar la tarifa periódic
 
 ### Cancelación por parte del Usuario de suscripciones de duración indefinida
 Las suscripciones indefinidas podrán cancelarse en cualquier momento mediante el envío al Titular de una notificación de cancelación clara e inequívoca utilizando los datos de contacto indicados en el presente documento, o — en su caso — utilizando las opciones correspondientes dentro de esta Aplicación.
-Las cancelaciones se harán efectivas 0 días después de que el Titular reciba la notificación de cancelación.
+La cancelación surtirá efecto al finalizar el periodo de facturación en curso: el Usuario conserva el acceso al plan contratado hasta esa fecha y no se le vuelve a cobrar. No procede reembolso de la parte ya disfrutada del periodo en curso.
 
 ### Cancelación por parte del Titular de suscripciones de duración indefinida
 El Titular se reserva el derecho a cancelar la suscripción por conveniencia en cualquier momento mediante el envío de una notificación de cancelación al Usuario. La cancelación surtirá efecto al finalizar el periodo de preaviso.
-El periodo de preaviso es de 0 días.
+El periodo de preaviso es de 30 días naturales, el mismo que se aplica al cierre del Servicio. Si la cancelación por conveniencia del Titular deja sin disfrutar un periodo ya abonado, se reembolsará la parte proporcional correspondiente. Lo anterior no se aplica a la resolución por causa justificada, que se rige por la cláusula siguiente.
 
 ### Cancelación por causa justificada y/o imposibilidad de ejecución
 El Titular se reserva expresamente el derecho a resolver el contrato con efecto inmediato por causa justificada y/o por imposibilidad de ejecución —como, por ejemplo, órdenes de autoridades públicas, infracción de la ley, vulneración de derechos de terceros, insolvencia real o inminente, uso inapropiado de esta Aplicación.
@@ -334,7 +337,14 @@ La falta de ejercicio de cualquier derecho o el hecho de no invocar una disposic
 
 ### Interrupción del servicio
 Para garantizar el mejor nivel de servicio posible, el Titular se reserva el derecho a interrumpir el Servicio para labores de mantenimiento, actualizaciones del sistema o cualesquiera otros cambios, informando adecuadamente a los Usuarios.
-Dentro de los límites de la ley, el Titular también podrá decidir suspender o dejar de prestar por completo el Servicio. Si el servicio deja de prestarse, el Titular cooperará con los Usuarios para permitirles retirar datos personales o información y respetará los derechos de los Usuarios relativos al uso continuado/la continuación en el uso del producto y/o la compensación, según establezca la ley aplicable.
+Dentro de los límites de la ley, el Titular también podrá decidir suspender o dejar de prestar por completo el Servicio. Para que ese supuesto no deje al Usuario en una situación de incertidumbre, el Titular se compromete expresamente a lo siguiente:
+- **Preaviso.** El cierre definitivo del Servicio se comunicará con al menos **30 días naturales de antelación**, por correo electrónico a la dirección asociada a la cuenta y mediante un aviso visible dentro de la Aplicación.
+- **Ventana de descarga.** Durante esos 30 días, y como mínimo hasta la fecha efectiva de cierre, la función Ajustes > Descargar mis datos seguirá operativa para que el Usuario obtenga su contenido y sus archivos. Si por causas técnicas esa función no estuviera disponible, el Titular facilitará la copia por otro medio a solicitud del Usuario.
+- **Suscripciones en curso.** Se cancelará la renovación automática y se reembolsará la parte proporcional del periodo ya abonado y no disfrutado, contada desde la fecha efectiva de cierre.
+- **Bonos no consumidos.** Se reembolsará el importe correspondiente a los bonos adquiridos y no consumidos en el momento del cierre.
+- **Compras realizadas a través de Google Play.** Los reembolsos de estas compras se tramitan necesariamente a través de Google, conforme a sus condiciones; el Titular prestará al Usuario la asistencia que esté en su mano para gestionarlos.
+- **Borrado posterior.** Transcurridos 30 días naturales desde la fecha efectiva de cierre, todos los datos de los Usuarios se eliminarán de forma permanente, salvo los documentos de facturación que deban conservarse por obligación fiscal o mercantil.
+Estos compromisos se entienden sin perjuicio de cualesquiera derechos más favorables que la ley aplicable reconozca al Usuario.
 Asimismo, el Servicio podrá no estar disponible debido a motivos fuera del control razonable del Titular, como la «fuerza mayor» (p.ej. averías en las infraestructuras o apagones, etc.).
 
 ### Reventa del Servicio
@@ -424,7 +434,7 @@ Es aplicable cuando un Usuario, con independencia de su nacionalidad, está situ
 
 ### Formulario modelo de desistimiento
 *A la atención de:
-Sergio Gomez Negrin - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Guimar, Santa Cruz de Tenerife (España) support@mystudyai.eu
+Sergio Gómez Negrín (NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (España) support@mystudyai.eu
 Yo/Nosotros comunico/comunicamos mi/nuestra intención de desistir de mi/nuestro contrato de compraventa de los siguientes bienes/para la prestación del siguiente servicio: .
 _____________________________________________ (insertar una descripción de los bienes/servicios a los que se refiere el desistimiento correspondiente)
 - Pedido el: _____________________________________________ (inserte la fecha)
