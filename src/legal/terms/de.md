@@ -20,7 +20,6 @@ Diese AGB sind anwendbar auf
 - jede andere damit zusammenhängende Vereinbarung oder Rechtsbeziehung mit dem Anbieter
 auf rechtsverbindliche Weise. Definierte Begriffe sind im entsprechenden Abschnitt dieses Dokumentes aufgeführt.
 Nutzer werden aufgefordert, dieses Dokument sorgfältig zur Kenntnis zu nehmen.
-Obwohl das mit den Produkten verbundene Vertragsverhältnis ausschließlich zwischen Nutzer und Anbieter zustande kommt, erkennt und akzeptiert der Nutzer, in Fällen in welchen diese Anwendung über den Apple App Store bezogen wurde, dass Apple diese AGB als Drittbegünstigter durchsetzen kann.
 Diese Anwendung wird angeboten von:
 Sergio Gómez Negrín (spanische Steuernummer / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Spanien)
 E-Mail-Adresse des Anbieters: support@mystudyai.eu

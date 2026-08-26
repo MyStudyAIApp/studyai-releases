@@ -480,17 +480,13 @@ export default function SettingsPage() {
     setExportError('')
     try {
       const authHeader = await getAuthHeader()
-      const res = await fetch(`${WEB_API}/account/export`, { headers: { ...authHeader } })
+      // El backend genera el ZIP en segundo plano y avisa por email con un
+      // enlace de descarga: con bibliotecas grandes puede tardar varios
+      // minutos, así que no tiene sentido que el usuario se quede esperando
+      // en esta pantalla ni arriesgarse al límite de 100s de Cloudflare.
+      const res = await fetch(`${WEB_API}/account/export`, { method: 'POST', headers: { ...authHeader } })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
-      const blob = await res.blob()
-      const url  = URL.createObjectURL(blob)
-      const a    = document.createElement('a')
-      a.href = url
-      a.download = `mystudyai-datos-${new Date().toISOString().slice(0, 10)}.zip`
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-      URL.revokeObjectURL(url)
+      addToast(t('settings.exportData.requested'), 'success')
     } catch (e) {
       setExportError(e.message || t('settings.exportData.error'))
     } finally {

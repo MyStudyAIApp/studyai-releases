@@ -20,7 +20,6 @@ Les Conditions générales gouvernent :
 - tout autre Accord connexe ou relation juridique avec le Propriétaire
 de façon juridiquement contraignante. Les mots commençant par une majuscule sont définis dans les sections correspondantes de ce document.
 L’Utilisateur doit lire ce document attentivement.
-Bien que l’intégralité de la relation contractuelle relative à ces Produits soit conclue uniquement par le Propriétaire et l’Utilisateur, l’Utilisateur reconnaît et accepte que, lorsqu’il accède à cette Application par l’intermédiaire de l’App Store d’Apple, Apple peut faire appliquer les présentes Conditions en tant que tiers bénéficiaire.
 L'entité suivante fournit cette Application :
 Sergio Gómez Negrín (numéro d'identification fiscale espagnol / NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (Espagne)
 Courriel de contact du Propriétaire : support@mystudyai.eu

@@ -20,7 +20,6 @@ Las presentes Condiciones regulan
 - cualquier otro Contrato o relación jurídica conexos celebrados con el Titular
 de forma jurídicamente vinculante. Las palabras en mayúsculas se definen en la sección correspondiente específica del presente documento.
 Los Usuarios deben leer atentamente el presente documento.
-Aunque la relación contractual relativa a estos Productos en su totalidad se establece únicamente entre el Titular y los Usuarios, los Usuarios reconocen y aceptan que, cuando esta Aplicación se les haya facilitado a través de la Apple App Store, Apple podrá exigir el cumplimiento de las presentes Condiciones como tercero beneficiario.
 Esta Aplicación es ofrecida por:
 Sergio Gómez Negrín (NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (Local), 38500 Güímar, Santa Cruz de Tenerife (España)
 Correo electrónico de contacto del Titular: support@mystudyai.eu

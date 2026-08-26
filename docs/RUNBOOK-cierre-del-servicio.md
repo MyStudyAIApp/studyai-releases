@@ -78,13 +78,16 @@ cobros, y que los bonos sin consumir se devuelven.
 
 ## Días 1–30 — Ventana de descarga
 
-`GET /account/export` tiene que seguir vivo hasta la fecha efectiva de cierre.
-Esto significa **no apagar Render ni Supabase antes de tiempo**, por muy
-tentador que sea dejar de pagarlos.
+`POST /account/export` tiene que seguir vivo hasta la fecha efectiva de
+cierre. Esto significa **no apagar Render ni Supabase antes de tiempo**, por
+muy tentador que sea dejar de pagarlos.
 
-Si el endpoint falla con bibliotecas muy grandes (tope de 100 s de Cloudflare),
-las Condiciones obligan a facilitar la copia por otro medio a quien lo pida:
-generar el ZIP a mano con el mismo código y enviarlo por enlace temporal.
+Genera el ZIP en segundo plano y envía por email un enlace de descarga que
+caduca a los 7 días (`_generate_and_email_export` en `web_main.py`) — el usuario
+no espera en la app ni hay riesgo de chocar con el límite de 100s de
+Cloudflare, incluso con bibliotecas grandes. El cron
+`/admin/cleanup-old-exports` borra esos ZIPs pasados 7 días; durante el cierre,
+comprobar que sigue corriendo o desactivarlo temporalmente si genera ruido.
 
 ## Días 1–30 — Reembolsar los bonos no consumidos
 

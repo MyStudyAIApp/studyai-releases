@@ -252,7 +252,7 @@ Some of the providers listed in this document (including Groq, Sentry, Cloudflar
 The Service is not aimed at children under 16, and the Terms of Use require that minimum age to create an account. No data is knowingly collected from anyone below that age. Should the Owner become aware that an account was created in breach of this requirement, it will be deleted along with its data. Parents or guardians who identify such a situation may report it to support@mystudyai.eu and it will be handled without delay.
 
 ### Downloading a copy of your data
-From Settings, within the Application itself, Users can download at any time and free of charge a ZIP file containing all their content (one JSON file per data category, in a structured and commonly used format) along with the files they have uploaded. This feature covers the right to data portability under Article 20 GDPR without the need to submit any request.
+From Settings, within the Application itself, Users can obtain at any time and free of charge a copy of all their content (one JSON file per data category, in a structured and commonly used format) and of the files they have uploaded. One click starts the process automatically: if the library is large, generating the file may take a few minutes, and once ready a download link valid for 7 days is sent by email, with no team member involved and no need to contact support. This feature covers the right to data portability under Article 20 GDPR.
 
 ### What happens when an account is deleted
 Deleting the account from the Application permanently and irreversibly removes the profile, documents, generated material, annotations, study sessions, usage logs and uploaded files, with no recovery period. The only data that survives is:

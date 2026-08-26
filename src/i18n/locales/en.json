@@ -747,9 +747,10 @@
     },
     "exportData": {
       "title": "Download my data",
-      "subtitle": "A ZIP with all your content and the files you uploaded.",
-      "button": "Download ZIP",
+      "subtitle": "Generates a ZIP with all your content and files. If you have a lot saved it may take a few minutes, so we'll email you the link as soon as it's ready.",
+      "button": "Download my data",
       "preparing": "Preparing…",
+      "requested": "Done. We'll email you the download link as soon as it's ready.",
       "error": "The download could not be generated."
     }
   },

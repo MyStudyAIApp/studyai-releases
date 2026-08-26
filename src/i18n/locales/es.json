@@ -747,9 +747,10 @@
     },
     "exportData": {
       "title": "Descargar mis datos",
-      "subtitle": "Un ZIP con todo tu contenido y los archivos que subiste.",
-      "button": "Descargar ZIP",
+      "subtitle": "Genera un ZIP con todo tu contenido y archivos. Si tienes mucho guardado puede tardar unos minutos, así que te avisaremos por email con el enlace en cuanto esté listo.",
+      "button": "Descargar mis datos",
       "preparing": "Preparando…",
+      "requested": "Hecho. Te avisaremos por email con el enlace de descarga en cuanto esté listo.",
       "error": "No se pudo generar la descarga."
     }
   },

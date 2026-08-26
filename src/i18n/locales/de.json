@@ -747,9 +747,10 @@
     },
     "exportData": {
       "title": "Meine Daten herunterladen",
-      "subtitle": "Eine ZIP-Datei mit all deinen Inhalten und hochgeladenen Dateien.",
-      "button": "ZIP herunterladen",
+      "subtitle": "Erstellt eine ZIP-Datei mit all deinen Inhalten und Dateien. Bei viel gespeichertem Material kann es ein paar Minuten dauern, daher senden wir dir den Link per E-Mail, sobald er bereit ist.",
+      "button": "Meine Daten herunterladen",
       "preparing": "Wird vorbereitet…",
+      "requested": "Erledigt. Wir senden dir den Download-Link per E-Mail, sobald er bereit ist.",
       "error": "Der Download konnte nicht erstellt werden."
     }
   },
