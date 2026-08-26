@@ -102,9 +102,9 @@ export default function Home() {
   const { region: billingRegion, setRegion: setBillingRegion } = useBillingRegion()
   const [pendingCheckoutKind, setPendingCheckoutKind] = useState(null)
   const STRIPE_PRICES = {
-    pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
-    transcription: 'price_1U6EFGBUwE5wbpTtPo2IKUr0',
-    podcast:       'price_1U6EFHBUwE5wbpTt0fQuBaqD',
+    pro:           'price_1U8mxABQGm9sAUG4YBhqRMow',
+    transcription: 'price_1U8mxABQGm9sAUG4spSQrqGl',
+    podcast:       'price_1U8mxABQGm9sAUG4AuHw8PSe',
   }
   async function handleStripeCheckout(kind) {
     if (billingRegion === null) { setPendingCheckoutKind(kind); return }

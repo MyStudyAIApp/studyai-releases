@@ -585,9 +585,9 @@ export default function SettingsPage() {
   const [pendingCheckoutKind, setPendingCheckoutKind] = useState(null)
 
   const STRIPE_PRICES = {
-    pro:           'price_1U6EFGBUwE5wbpTtmWFqx4Jk',
-    transcription: 'price_1U6EFGBUwE5wbpTtPo2IKUr0',
-    podcast:       'price_1U6EFHBUwE5wbpTt0fQuBaqD',
+    pro:           'price_1U8mxABQGm9sAUG4YBhqRMow',
+    transcription: 'price_1U8mxABQGm9sAUG4spSQrqGl',
+    podcast:       'price_1U8mxABQGm9sAUG4AuHw8PSe',
   }
 
   // Saldo de bonos y ciclo vigente -- se enseña aquí porque es la pantalla
