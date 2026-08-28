@@ -158,6 +158,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true)
   const [trendRange, setTrendRange] = useState(30)
   const [renderDeploys, setRenderDeploys] = useState([])
+  const [renderCpu, setRenderCpu] = useState(null)
   const [featureUsage, setFeatureUsage] = useState([])
   const [announcements, setAnnouncements] = useState([])
   const [annTitle, setAnnTitle] = useState('')
@@ -318,6 +319,10 @@ export default function AdminPage() {
       try {
         const rDeploys = await fetch(`${WEB_API}/admin/render/deploys`, { headers: { ...authHeader, ...twoFAHeader() } })
         if (rDeploys.ok) setRenderDeploys((await rDeploys.json()).deploys || [])
+      } catch { /* opcional, no bloquea el resto del panel */ }
+      try {
+        const rCpu = await fetch(`${WEB_API}/admin/render/cpu`, { headers: { ...authHeader, ...twoFAHeader() } })
+        if (rCpu.ok) setRenderCpu(await rCpu.json())
       } catch { /* opcional, no bloquea el resto del panel */ }
       try {
         const rUsage = await fetch(`${WEB_API}/admin/feature-usage`, { headers: { ...authHeader, ...twoFAHeader() } })
@@ -616,6 +621,14 @@ export default function AdminPage() {
             top="usado (estimado)"
             bottom={`${render_hours_used.toFixed(0)} / ${limits.render_hours} h`}
           />
+          {renderCpu?.cpu_pct != null && (
+            <RingGauge
+              pct={renderCpu.cpu_pct}
+              title="CPU Render (pico 24h)"
+              top={renderCpu.status === 'subir_ya' ? 'subir a Starter' : renderCpu.status === 'vigilar' ? 'vigilar' : 'holgado'}
+              bottom={`${renderCpu.cpu_peak} / ${renderCpu.cpu_cap} CPU`}
+            />
+          )}
         </div>
       </div>
 
