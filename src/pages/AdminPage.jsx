@@ -464,7 +464,7 @@ export default function AdminPage() {
     )
   }
 
-  const { db, limits, ai_usage, top_ai_users, ai_daily_trend, render_hours_used, sentry_summary, orphaned_storage_objects, recent_feedback } = stats
+  const { db, limits, ai_usage, top_ai_users, ai_daily_trend, render_hours_used, sentry_summary, orphaned_storage_objects, recent_feedback, provider_quotas } = stats
   const trendData = (ai_daily_trend || []).filter(d => {
     const days = (Date.now() - new Date(d.day).getTime()) / 86400000
     return days <= trendRange
@@ -479,6 +479,9 @@ export default function AdminPage() {
   if (storagePct >= 80) alerts.push(`Storage al ${Math.round(storagePct)}% del límite gratuito`)
   if (aiPct >= 80) alerts.push(`Presupuesto de IA al ${Math.round(aiPct)}% del mes`)
   if (renderPct >= 80) alerts.push(`Horas de Render al ${Math.round(renderPct)}% del límite gratuito`)
+  ;(provider_quotas || []).forEach(q => {
+    if (q.pct >= 80) alerts.push(`${q.etiqueta} al ${Math.round(q.pct)}% de su cuota (${q.periodo === 'dia' ? 'hoy' : 'este mes'})`)
+  })
   if (db.documents_suspicious > 0) alerts.push(`${db.documents_suspicious} documento(s) sospechoso(s) detectado(s)`)
   if (db.storage_orphaned_objects > 0) alerts.push(`${db.storage_orphaned_objects} archivo(s) huérfano(s) en Storage (de cuentas ya borradas)`)
 
@@ -631,6 +634,45 @@ export default function AdminPage() {
           )}
         </div>
       </div>
+
+      {/* Cuotas de los proveedores externos, cada una en SU unidad y SU periodo */}
+      {provider_quotas?.length > 0 && (
+        <div className="card space-y-3">
+          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Cuotas de los proveedores</h2>
+          <p className="text-[11px] text-slate-600 -mt-1">
+            Lo que hemos consumido de cada servicio externo. Ojo: Groq se mide por DÍA, los demás por mes.
+          </p>
+          <div className="space-y-3">
+            {provider_quotas.map(q => {
+              const pct = Math.min(100, q.pct)
+              const barra = q.pct >= 85 ? 'bg-red-500' : q.pct >= 60 ? 'bg-amber-400' : 'bg-emerald-500'
+              const usado = q.unidad === '€' ? `${q.usado.toFixed(2)} €` : `${Math.round(q.usado).toLocaleString('es-ES')} ${q.unidad}`
+              const tope  = q.unidad === '€' ? `${q.tope.toFixed(0)} €` : `${q.tope.toLocaleString('es-ES')} ${q.unidad}`
+              return (
+                <div key={q.proveedor} className="bg-slate-800/50 rounded-xl p-3">
+                  <div className="flex justify-between items-baseline gap-2">
+                    <span className="text-sm text-slate-200">{q.etiqueta}</span>
+                    <span className={`text-sm font-bold ${q.pct >= 85 ? 'text-red-400' : q.pct >= 60 ? 'text-amber-300' : 'text-slate-300'}`}>
+                      {q.pct.toFixed(0)}%
+                    </span>
+                  </div>
+                  <div className="h-2 bg-slate-900 rounded-full mt-2 overflow-hidden">
+                    <div className={`h-full ${barra} rounded-full transition-all`} style={{ width: `${Math.max(1, pct)}%` }} />
+                  </div>
+                  <div className="text-[11px] text-slate-500 mt-1.5">
+                    {usado} de {tope} · {q.periodo === 'dia' ? 'hoy' : 'este mes'}
+                  </div>
+                  {q.pct >= 60 && (
+                    <div className="text-[11px] text-amber-300/80 mt-1.5 border-t border-slate-700/60 pt-1.5">
+                      Al llegar: {q.al_llegar}.<br />Para ampliar: {q.como_ampliar}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Supabase: detalle numérico */}
       <div className="card space-y-3">
