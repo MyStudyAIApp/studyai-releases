@@ -1,6 +1,6 @@
 ## Privacy Policy of mystudyai.eu
 Welcome to the privacy policy of mystudyai.eu. This policy will help you understand what data we collect, why we collect it, and what your rights are in relation to it.
-Latest update: August 25, 2026
+Latest update: September 3, 2026
 
 ## Table of contents
 - Summary
@@ -31,7 +31,7 @@ We automatically collect data from you for example when you visit  mystudyai.eu.
 - Hosting and backend infrastructure
 - Traffic optimization and distribution
 - Payments and subscriptions
-- Advertising
+- Advertising (not currently active — see the "Advertising" section)
 
 ## Owner and Data Controller
 Data Controller: Sergio Gómez Negrín
@@ -68,7 +68,7 @@ The Data concerning the User is collected to allow the Owner to provide its Serv
 - Traffic optimization and distribution
 - Infrastructure monitoring
 - Payments and subscriptions
-- Advertising
+- Advertising (not currently active — see the "Advertising" section)
 
 ## Detailed information on the processing of Personal Data
 

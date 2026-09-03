@@ -1,6 +1,6 @@
 ## Politique de confidentialité de mystudyai.eu
 Bienvenue sur la politique de confidentialité de mystudyai.eu. La présente politique vous aidera à comprendre quelles données nous recueillons, pourquoi nous les recueillons et quels sont vos droits à cet égard.
-Dernière mise à jour :  25 août 2026
+Dernière mise à jour :  3 septembre 2026
 
 ## Table des matières
 - Résumé
@@ -31,7 +31,7 @@ Nous recueillons automatiquement des données auprès de vous, par exemple lorsq
 - Hébergement web et infrastructure de backend
 - Optimisation et répartition du trafic
 - Paiements et abonnements
-- Publicité
+- Publicité (non active actuellement — voir la section « Publicité »)
 
 ## Propriétaire et Responsable du traitement
 Responsable du traitement : Sergio Gómez Negrín
@@ -68,7 +68,7 @@ Les Données relatives à l’Utilisateur sont collectées afin de permettre au 
 - Optimisation et répartition du trafic
 - Surveillance de l’infrastructure
 - Paiements et abonnements
-- Publicité
+- Publicité (non active actuellement — voir la section « Publicité »)
 
 ## Informations détaillées sur le traitement des Données personnelles
 

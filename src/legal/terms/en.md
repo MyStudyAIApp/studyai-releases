@@ -1,6 +1,6 @@
 ## Terms and Conditions of mystudyai.eu
 Welcome to the Terms & Conditions page of mystudyai.eu. This document will help you understand how you can use our services and what you can expect from us.
-Latest update: August 25, 2026
+Latest update: September 3, 2026
 
 ## Table of contents
 - Introduction
@@ -121,7 +121,7 @@ The characteristics of the chosen Product will be outlined during the purchasing
 
 ### Plans, usage quotas and top-ups
 - **Free plan**: free access with a quota of 10 content generations per month (summaries, exams, flashcards, etc.), 1 podcast per month and 10 minutes/month of transcription and image analysis.
-- **Free trial**: the first 7 days after registration, the account has Pro-equivalent access at no cost.
+- **Free trial**: the first 7 days after registration, the account has Pro-equivalent access at no cost, with one exception: during the trial **3 podcasts** can be generated, not the 20 per month of the Pro plan. The remaining features (content generation and transcription) have no quota limit during those 7 days.
 - **Pro plan (€15/month, recurring subscription)**: unlimited content generations; **20 podcasts per month** and **20 hours/month of transcription** (turning recorded audio into text).
 - **What a “podcast” means in this Application.** It is an automatically generated **narrated summary** of the document, between 3 and 5 minutes long, read by **a single synthetic voice**, which the User can download and listen to offline. It is not a reading of the full document, nor a conversation between several speakers. For long documents the summary is produced from the first 12,000 characters of the text, so it may not cover the whole content. Users who want to hear the full text should use the read-aloud feature, which is free and unlimited.
 - **Read-aloud: unlimited and free on every plan.** It is performed by the speech engine of the User's own device, so it uses no quota and the text is not sent to any third party. The available voices depend on the device: this Application does not guarantee that voices exist for every language on every device.

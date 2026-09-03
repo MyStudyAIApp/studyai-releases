@@ -1,6 +1,6 @@
 ## Condiciones de Uso de mystudyai.eu
 Bienvenido a la página de Términos y Condiciones de mystudyai.eu. Este documento le ayudará a entender cómo puede utilizar nuestros servicios y qué puede esperar de nosotros.
-Última revisión:  25 agosto 2026
+Última revisión:  3 septiembre 2026
 
 ## Índice
 - Introducción
@@ -121,7 +121,7 @@ Las características del Producto escogido se describirán durante el proceso de
 
 ### Planes, cuotas de uso y bonos
 - **Plan Free**: acceso gratuito con un cupo de 10 generaciones de contenido al mes (resúmenes, exámenes, fichas, etc.), 1 podcast al mes y 10 minutos/mes de transcripción y análisis de imágenes.
-- **Prueba gratis**: los 7 primeros días desde el registro, la cuenta tiene acceso equivalente al plan Pro sin coste.
+- **Prueba gratis**: los 7 primeros días desde el registro, la cuenta tiene acceso equivalente al plan Pro sin coste, con una única salvedad: durante la prueba se pueden generar **3 podcasts**, no los 20 mensuales del plan Pro. El resto de funciones (generaciones de contenido y transcripción) no tienen límite de cupo durante esos 7 días.
 - **Plan Pro (15€/mes, suscripción recurrente)**: sin límite de generaciones de contenido; **20 podcasts al mes** y **20 horas/mes de transcripción** (pasar audio grabado a texto).
 - **Qué es un “podcast” en esta Aplicación.** Es un **resumen narrado** del documento, de entre 3 y 5 minutos, generado automáticamente y leído por **una sola voz sintética**, que el Usuario puede descargar y escuchar sin conexión. No es una lectura del documento completo ni una conversación entre varios interlocutores. Para documentos extensos, el resumen se elabora a partir de las primeras 12.000 letras del texto, por lo que puede no cubrir todo el contenido. Si el Usuario desea escuchar el texto íntegro, debe usar la función de lectura en voz alta, que es gratuita e ilimitada.
 - **Lectura en voz alta: ilimitada y sin coste en todos los planes.** La realiza el motor de voz del propio dispositivo del Usuario, por lo que no consume cupo alguno y el texto no se envía a ningún tercero. Las voces disponibles dependen del dispositivo: esta Aplicación no garantiza que existan voces para todos los idiomas en todos los aparatos.

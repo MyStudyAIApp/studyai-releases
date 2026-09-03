@@ -1,6 +1,6 @@
 ## Cookie Policy of mystudyai.eu
 Welcome to the cookie policy of mystudyai.eu. This policy will help you understand what cookies and tracking technologies we use, how we use them and what your rights are in relation to it.
-Latest update: August 25, 2026
+Latest update: September 3, 2026
 
 ## Table of contents
 - Introduction
@@ -75,7 +75,7 @@ The way Cloudflare is integrated means that it filters all the traffic through t
 - cf_clearance: 30 minutes
 
 ### Marketing
-This Application uses Trackers to deliver personalized ads or marketing content, and to measure their performance.
+This Application **does not currently use any marketing or advertising Trackers**. The Trackers described below are listed in case they are activated in the future, in which case they would serve to deliver personalized ads or marketing content and measure their performance, and would only run with the User's prior consent.
 
 ### Trackers managed by third parties
 

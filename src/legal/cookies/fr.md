@@ -1,6 +1,6 @@
 ## Politique relative aux cookies de mystudyai.eu
 Bienvenue sur la politique de cookies de mystudyai.eu. La présente politique vous aidera à comprendre quels cookies et technologies de traçage nous utilisons, la façon dont nous les utilisons et quels sont vos droits à cet égard.
-Dernière mise à jour :  25 août 2026
+Dernière mise à jour :  3 septembre 2026
 
 ## Table des matières
 - Introduction
@@ -75,7 +75,7 @@ La façon dont Cloudflare est intégré signifie qu'il filtre l'ensemble du traf
 - cf_clearance: 30 minutes
 
 ### Marketing
-Cette Application utilise des Traqueurs pour fournir des publicités personnalisées ou un contenu de marketing personnalisé, et mesurer leur performance.
+Cette Application **n'utilise actuellement aucun Traqueur de marketing ou de publicité**. Les Traqueurs décrits ci-dessous sont mentionnés au cas où ils seraient activés à l'avenir ; ils serviraient alors à fournir des publicités personnalisées ou du contenu marketing et à mesurer leur performance, et ne fonctionneraient qu'avec le consentement préalable de l'Utilisateur.
 
 ### Traqueurs gérés par des tiers
 

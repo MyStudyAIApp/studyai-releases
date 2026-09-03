@@ -1,6 +1,6 @@
 ## Datenschutzerklärung von mystudyai.eu
 Willkommen bei der Datenschutzrichtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Daten wir erheben, warum wir sie erheben und welche Rechte Sie diesbezüglich haben.
-Letzte Aktualisierung:  25. August 2026
+Letzte Aktualisierung:  3. September 2026
 
 ## Inhaltsverzeichnis
 - Zusammenfassung
@@ -31,7 +31,7 @@ Wir erheben automatisch Daten von Ihnen, wenn Sie z. B. mystudyai.eu besuchen.
 - Hosting und Backend-Infrastruktur
 - Optimierung und Verbreitung des Datenverkehrs
 - Zahlungen und Abonnements
-- Werbung
+- Werbung (derzeit nicht aktiv — siehe Abschnitt „Werbung“)
 
 ## Anbieter und Verantwortlicher
 Verantwortlicher: Sergio Gómez Negrín
@@ -68,7 +68,7 @@ Personenbezogene Daten über den Nutzer werden erhoben, damit der Anbieter den D
 - Optimierung und Verbreitung des Datenverkehrs
 - Überwachung der Infrastruktur
 - Zahlungen und Abonnements
-- Werbung
+- Werbung (derzeit nicht aktiv — siehe Abschnitt „Werbung“)
 
 ## Ausführliche Angaben über die Verarbeitung personenbezogener Daten
 

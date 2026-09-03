@@ -480,7 +480,7 @@ export default function AdminPage() {
   if (aiPct >= 80) alerts.push(`Presupuesto de IA al ${Math.round(aiPct)}% del mes`)
   if (renderPct >= 80) alerts.push(`Horas de Render al ${Math.round(renderPct)}% del límite gratuito`)
   ;(provider_quotas || []).forEach(q => {
-    if (q.pct >= 80) alerts.push(`${q.etiqueta} al ${Math.round(q.pct)}% de su cuota (${q.periodo === 'dia' ? 'hoy' : 'este mes'})`)
+    if (q.pct >= 60) alerts.push(`${q.etiqueta} al ${Math.round(q.pct)}% de su cuota (${q.periodo === 'dia' ? 'hoy' : 'este mes'})`)
   })
   if (db.documents_suspicious > 0) alerts.push(`${db.documents_suspicious} documento(s) sospechoso(s) detectado(s)`)
   if (db.storage_orphaned_objects > 0) alerts.push(`${db.storage_orphaned_objects} archivo(s) huérfano(s) en Storage (de cuentas ya borradas)`)

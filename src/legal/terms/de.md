@@ -1,6 +1,6 @@
 ## Allgemeine Nutzungsbedingungen von mystudyai.eu
 Willkommen bei der Seite der AGBs von mystudyai.eu. Dieses Dokument hilft Ihnen zu verstehen, wie Sie unsere Dienste nutzen können und was Sie von uns erwarten können.
-Letzte Aktualisierung:  25. August 2026
+Letzte Aktualisierung:  3. September 2026
 
 ## Inhaltsverzeichnis
 - Einleitung
@@ -120,7 +120,7 @@ Die Merkmale des ausgewählten Produkts werden im Laufe des Kaufvorgangs erläut
 
 ### Pläne, Nutzungskontingente und Zusatzpakete
 - **Free-Plan**: kostenloser Zugang mit einem Kontingent von 10 Inhaltsgenerierungen pro Monat (Zusammenfassungen, Prüfungen, Karteikarten usw.), 1 Podcast pro Monat und 10 Minuten/Monat Transkription und Bildanalyse.
-- **Kostenlose Testphase**: die ersten 7 Tage nach der Registrierung hat das Konto Pro-Zugang ohne Kosten.
+- **Kostenlose Testphase**: die ersten 7 Tage nach der Registrierung hat das Konto Pro-Zugang ohne Kosten, mit einer Ausnahme: während der Testphase können **3 Podcasts** erzeugt werden, nicht die 20 pro Monat des Pro-Tarifs. Die übrigen Funktionen (Inhaltserstellung und Transkription) unterliegen in diesen 7 Tagen keinem Kontingent.
 - **Pro-Plan (15 €/Monat, wiederkehrendes Abonnement)**: unbegrenzte Inhaltsgenerierungen; **20 Podcasts pro Monat** und **20 Stunden/Monat Transkription** (Umwandlung von Audioaufnahmen in Text).
 - **Was in dieser Anwendung ein „Podcast“ ist.** Es handelt sich um eine automatisch erzeugte **erzählte Zusammenfassung** des Dokuments von drei bis fünf Minuten, gelesen von **einer einzigen synthetischen Stimme**, die der Nutzer herunterladen und offline anhören kann. Es ist weder eine Vorlesung des vollständigen Dokuments noch ein Gespräch zwischen mehreren Sprechern. Bei langen Dokumenten wird die Zusammenfassung aus den ersten 12.000 Zeichen des Textes erstellt und deckt daher möglicherweise nicht den gesamten Inhalt ab. Wer den vollständigen Text hören möchte, nutzt die Vorlesefunktion, die kostenlos und unbegrenzt ist.
 - **Vorlesefunktion: unbegrenzt und kostenlos in allen Plänen.** Sie wird von der Sprachausgabe des Geräts des Nutzers ausgeführt, verbraucht daher kein Kontingent, und der Text wird an keinen Dritten übermittelt. Die verfügbaren Stimmen hängen vom Gerät ab: diese Anwendung garantiert nicht, dass auf jedem Gerät Stimmen für alle Sprachen vorhanden sind.

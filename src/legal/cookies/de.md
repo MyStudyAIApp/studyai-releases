@@ -1,6 +1,6 @@
 ## Cookie-Richtlinie von mystudyai.eu
 Willkommen bei der Cookie-Richtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Cookies und Tracking-Technologien wir verwenden, wie wir sie verwenden und welche Rechte Sie diesbezüglich haben.
-Letzte Aktualisierung:  25. August 2026
+Letzte Aktualisierung:  3. September 2026
 
 ## Inhaltsverzeichnis
 - Einführung
@@ -75,7 +75,7 @@ Durch die Art und Weise, wie die Funktionen von Cloudflare integriert sind, filt
 - cf_clearance: 30 Minuten
 
 ### Marketing
-Diese Anwendung verwendet Tracker, um personalisierte Werbung oder Marketinginhalte auszuliefern und deren Leistung zu messen.
+Diese Anwendung **verwendet derzeit keine Marketing- oder Werbe-Tracker**. Die nachstehend beschriebenen Tracker sind für den Fall aufgeführt, dass sie künftig aktiviert werden; sie würden dann dazu dienen, personalisierte Werbung oder Marketinginhalte auszuliefern und deren Leistung zu messen, und liefen ausschließlich mit vorheriger Einwilligung des Nutzers.
 
 ### Von Dritten verwaltete Tracker
 

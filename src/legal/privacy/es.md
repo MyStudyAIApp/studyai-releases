@@ -1,6 +1,6 @@
 ## Política de privacidad de mystudyai.eu
 Bienvenido a la política de privacidad de mystudyai.eu. Esta política le ayudará a entender qué datos recogemos, por qué los recogemos y qué derechos tiene usted al respecto
-Última revisión:  25 agosto 2026
+Última revisión:  3 septiembre 2026
 
 ## Índice
 - Resumen
@@ -31,7 +31,7 @@ Recogemos datos sobre usted automáticamente, por ejemplo, cuando visita  mystud
 - Hosting e infrastructura de backend
 - Optimización y distribución del tráfico
 - Pagos y suscripciones
-- Publicidad
+- Publicidad (no activa actualmente — ver la sección "Publicidad")
 
 ## Titular y Responsable del tratamiento de los Datos
 Responsable del tratamiento: Sergio Gómez Negrín
@@ -68,7 +68,7 @@ Los Datos relativos al Usuario son recogidos para permitir al Titular prestar su
 - Optimización y distribución del tráfico
 - Monitorización de la infrastructura
 - Pagos y suscripciones
-- Publicidad
+- Publicidad (no activa actualmente — ver la sección "Publicidad")
 
 ## Información detallada del Tratamiento de los Datos Personales
 

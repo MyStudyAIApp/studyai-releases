@@ -1,6 +1,6 @@
 ## Conditions générales de mystudyai.eu
 Bienvenue sur la page des Conditions Générales de mystudyai.eu. Ce document vous aidera à comprendre comment vous pouvez utiliser nos services et ce que vous pouvez attendre de nous.
-Dernière mise à jour :  25 août 2026
+Dernière mise à jour :  3 septembre 2026
 
 ## Table des matières
 - Introduction
@@ -123,7 +123,7 @@ Les caractéristiques du Produit choisi seront décrites lors du processus d’a
 
 ### Formules, quotas d'utilisation et bonus
 - **Formule Free** : accès gratuit avec un quota de 10 générations de contenu par mois (résumés, examens, fiches, etc.), 1 podcast par mois et 10 minutes/mois de transcription et d'analyse d'images.
-- **Essai gratuit** : les 7 premiers jours après l'inscription, le compte a un accès équivalent à Pro sans frais.
+- **Essai gratuit** : les 7 premiers jours après l'inscription, le compte a un accès équivalent à Pro sans frais, à une exception près : pendant l'essai, **3 podcasts** peuvent être générés, et non les 20 par mois du plan Pro. Les autres fonctions (génération de contenu et transcription) ne sont soumises à aucun quota pendant ces 7 jours.
 - **Formule Pro (15€/mois, abonnement récurrent)** : générations de contenu illimitées ; **20 podcasts par mois** et **20 heures/mois de transcription** (conversion des enregistrements audio en texte).
 - **Ce qu’est un « podcast » dans cette Application.** Il s’agit d’un **résumé narré** du document, de trois à cinq minutes, généré automatiquement et lu par **une seule voix de synthèse**, que l’Utilisateur peut télécharger et écouter hors connexion. Ce n’est ni une lecture du document intégral, ni une conversation entre plusieurs intervenants. Pour les documents longs, le résumé est élaboré à partir des 12 000 premiers caractères du texte et peut donc ne pas couvrir l’ensemble du contenu. L’Utilisateur qui souhaite écouter le texte intégral doit utiliser la lecture à voix haute, gratuite et illimitée.
 - **Lecture à voix haute : illimitée et gratuite dans toutes les formules.** Elle est assurée par le moteur vocal de l'appareil de l'Utilisateur : elle ne consomme aucun quota et le texte n'est transmis à aucun tiers. Les voix disponibles dépendent de l'appareil : cette Application ne garantit pas l'existence de voix pour toutes les langues sur tous les appareils.
