@@ -88,10 +88,10 @@ Supabase is a hosting and backend service provided by Supabase, Inc.
 ### Service provided by:
 - Supabase, Inc. (Europe) – Privacy Policy
 
-### GroqCloud
-Company: Groq UK Limited (United Kingdom)
+### DeepInfra
+Company: Deep Infra, Inc. (United States)
 Place of processing: USA and other countries
-GroqCloud is an AI inference service used solely to transcribe into text the audio recordings made by the User within this Application (Whisper model). The audio is sent to the service, which returns the transcription; neither the audio nor the transcription is used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes on the device itself, without sending anything.
+DeepInfra is an AI inference service used solely to transcribe into text the audio recordings made by the User within this Application (Whisper model). The audio is sent to the service, which returns the transcription; neither the audio nor the transcription is used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes on the device itself, without sending anything.
 
 ### Personal Data processed:
 - Audio recordings submitted by the User for transcription
@@ -100,7 +100,7 @@ GroqCloud is an AI inference service used solely to transcribe into text the aud
 - IP address
 
 ### Service provided by:
-- Groq UK Limited (United Kingdom), the contracting entity for customers in the European Economic Area. Processing takes place in the USA and other countries, covered by the EU Standard Contractual Clauses and the UK International Data Transfer Addendum, automatically incorporated into Groq’s data processing addendum. – Privacy Policy
+- Deep Infra, Inc. (Palo Alto, California, United States), the contracting entity. Processing takes place in the USA, covered by the Standard Contractual Clauses approved by the European Commission (Decision 2021/914), incorporated into the data processing agreement signed with the provider. That agreement expressly prohibits using the data to train or improve artificial intelligence models and provides that the provider does not retain the audio or the transcription beyond the time needed to return the result. – Privacy Policy
 
 ### Microsoft Azure
 Company: Microsoft Corporation
@@ -246,7 +246,7 @@ The original file (PDF or photo) that the user uploads is retained for 10 days f
 In the "Solve exercise" feature, the statement and solution of each solved exercise are automatically saved for 10 days so the user can review them. After that period they are automatically deleted, with an email notice sent to the user 3 days beforehand. The user can download the exercise to their device before it expires, and can disable the email notice from within the application.
 
 ### International data transfers
-Some of the providers listed in this document (including Groq, Sentry, Cloudflare, Microsoft Azure and RevenueCat) process data in the United States. Depending on the provider, these transfers rely on the EU-U.S. Data Privacy Framework or on the Standard Contractual Clauses approved by the European Commission, ensuring a level of protection equivalent to that required by the GDPR. Users may request further information on the safeguards applicable to each provider using the contact details provided in this document.
+Some of the providers listed in this document (including DeepInfra, Sentry, Cloudflare, Microsoft Azure and RevenueCat) process data in the United States. Depending on the provider, these transfers rely on the EU-U.S. Data Privacy Framework or on the Standard Contractual Clauses approved by the European Commission, ensuring a level of protection equivalent to that required by the GDPR. Users may request further information on the safeguards applicable to each provider using the contact details provided in this document.
 
 ### Minors
 The Service is not aimed at children under 16, and the Terms of Use require that minimum age to create an account. No data is knowingly collected from anyone below that age. Should the Owner become aware that an account was created in breach of this requirement, it will be deleted along with its data. Parents or guardians who identify such a situation may report it to support@mystudyai.eu and it will be handled without delay.

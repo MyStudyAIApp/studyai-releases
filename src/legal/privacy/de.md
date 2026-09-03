@@ -99,10 +99,10 @@ Supabase ist ein Hosting- und Backend-Dienst von Supabase, Inc.
 ### Dienst bereitgestellt von:
 - Supabase, Inc. (Europa) – Datenschutzerklärung
 
-### GroqCloud
-Unternehmen: Groq UK Limited (Vereinigtes Königreich)
+### DeepInfra
+Unternehmen: Deep Infra, Inc. (Vereinigte Staaten)
 Ort der Verarbeitung: USA und weitere Länder
-GroqCloud ist ein KI-Inferenzdienst, der ausschließlich dazu dient, die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell). Die Audiodaten werden an den Dienst übermittelt, der die Transkription zurückgibt; weder die Audiodaten noch die Transkription werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert lokal auf dem Gerät, ohne Daten zu übermitteln.
+DeepInfra ist ein KI-Inferenzdienst, der ausschließlich dazu dient, die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell). Die Audiodaten werden an den Dienst übermittelt, der die Transkription zurückgibt; weder die Audiodaten noch die Transkription werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert lokal auf dem Gerät, ohne Daten zu übermitteln.
 
 ### Verarbeitete personenbezogene Daten:
 - Vom Nutzer zur Transkription übermittelte Audioaufnahmen
@@ -111,7 +111,7 @@ GroqCloud ist ein KI-Inferenzdienst, der ausschließlich dazu dient, die vom Nut
 - IP-Adresse
 
 ### Dienst bereitgestellt von:
-- Groq UK Limited (Vereinigtes Königreich), Vertragspartner für Kunden im Europäischen Wirtschaftsraum. Die Verarbeitung erfolgt in den USA und weiteren Ländern, abgesichert durch die EU-Standardvertragsklauseln und das britische International Data Transfer Addendum, die automatisch Bestandteil des Auftragsverarbeitungsvertrags von Groq sind. – Datenschutzerklärung
+- Deep Infra, Inc. (Palo Alto, Kalifornien, Vereinigte Staaten), Vertragspartner. Die Verarbeitung erfolgt in den USA, abgesichert durch die von der Europäischen Kommission genehmigten Standardvertragsklauseln (Beschluss 2021/914), die Bestandteil des mit dem Anbieter geschlossenen Auftragsverarbeitungsvertrags sind. Dieser Vertrag untersagt ausdrücklich die Nutzung der Daten zum Trainieren oder Verbessern von Modellen künstlicher Intelligenz und sieht vor, dass der Anbieter weder die Audiodaten noch die Transkription über die zur Rückgabe des Ergebnisses erforderliche Zeit hinaus speichert. – Datenschutzerklärung
 
 ### Microsoft Azure
 Unternehmen: Microsoft Corporation
@@ -211,7 +211,7 @@ Verarbeitete personenbezogene Daten: Tracker
 Conversion-Tracking-Pixel von TikTok Ads, verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
 
 ### Internationale Datenübermittlungen
-Einige der in diesem Dokument genannten Anbieter (u. a. Groq, Sentry, Cloudflare, Microsoft Azure und RevenueCat) verarbeiten Daten in den USA. Je nach Anbieter stützen sich diese Übermittlungen auf das EU-U.S. Data Privacy Framework oder auf die von der Europäischen Kommission genehmigten Standardvertragsklauseln, die ein der DSGVO gleichwertiges Schutzniveau gewährleisten. Nutzer können über die in diesem Dokument angegebenen Kontaktdaten weitere Informationen zu den für den jeweiligen Anbieter geltenden Garantien anfordern.
+Einige der in diesem Dokument genannten Anbieter (u. a. DeepInfra, Sentry, Cloudflare, Microsoft Azure und RevenueCat) verarbeiten Daten in den USA. Je nach Anbieter stützen sich diese Übermittlungen auf das EU-U.S. Data Privacy Framework oder auf die von der Europäischen Kommission genehmigten Standardvertragsklauseln, die ein der DSGVO gleichwertiges Schutzniveau gewährleisten. Nutzer können über die in diesem Dokument angegebenen Kontaktdaten weitere Informationen zu den für den jeweiligen Anbieter geltenden Garantien anfordern.
 
 ## Informationen zur Ablehnung von interessenbasierter Werbung
 Zusätzlich zu jeder Opt-Out-Funktion, die von den in diesem Dokument aufgelisteten Diensten zur Verfügung gestellt

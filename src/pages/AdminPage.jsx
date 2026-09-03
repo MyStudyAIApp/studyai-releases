@@ -640,7 +640,7 @@ export default function AdminPage() {
         <div className="card space-y-3">
           <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Cuotas de los proveedores</h2>
           <p className="text-[11px] text-slate-600 -mt-1">
-            Lo que hemos consumido de cada servicio externo. Ojo: Groq se mide por DÍA, los demás por mes.
+            Lo que hemos consumido de cada servicio externo este mes.
           </p>
           <div className="space-y-3">
             {provider_quotas.map(q => {

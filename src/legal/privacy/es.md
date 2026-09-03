@@ -104,11 +104,11 @@ Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
 
                               – Política de privacidad
 
-### GroqCloud
-Empresa: Groq UK Limited (Reino Unido)
+### DeepInfra
+Empresa: Deep Infra, Inc. (Estados Unidos)
 Lugar de tratamiento: EE.UU. y otros países
 Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
-GroqCloud es un servicio de inferencia de IA utilizado únicamente para transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper). El audio se envía al servicio, que devuelve la transcripción; ni el audio ni la transcripción se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe en el propio dispositivo, sin enviar nada.
+DeepInfra es un servicio de inferencia de IA utilizado únicamente para transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper). El audio se envía al servicio, que devuelve la transcripción; ni el audio ni la transcripción se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe en el propio dispositivo, sin enviar nada.
 
 ### Datos Personales tratados:
 - Grabaciones de audio enviadas por el Usuario para su transcripción
@@ -117,7 +117,7 @@ GroqCloud es un servicio de inferencia de IA utilizado únicamente para transcri
 - Dirección IP
 
 ### Servicio prestado por:
-- Groq UK Limited (Reino Unido), entidad contratante para clientes del Espacio Económico Europeo. El tratamiento se realiza en EE.UU. y otros países, amparado por las cláusulas contractuales tipo de la UE y el Anexo de Transferencia Internacional de Datos del Reino Unido, incorporados automáticamente en el acuerdo de tratamiento de datos de Groq.
+- Deep Infra, Inc. (Palo Alto, California, Estados Unidos), entidad contratante. El tratamiento se realiza en EE.UU., amparado por las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea (Decisión 2021/914), incorporadas al acuerdo de tratamiento de datos suscrito con el proveedor. Dicho acuerdo prohíbe expresamente el uso de los datos para entrenar o mejorar modelos de inteligencia artificial y establece que el proveedor no conserva el audio ni la transcripción más allá del tiempo necesario para devolver el resultado.
 
                               – Política de privacidad
 
@@ -253,7 +253,7 @@ El archivo original (PDF o foto) que el usuario sube se conserva durante 10 día
 En la función "Resolver ejercicio", el enunciado y la solución de cada ejercicio resuelto se guardan automáticamente durante 10 días para que el usuario pueda consultarlo. Pasado ese plazo se borra automáticamente, avisando por email al usuario 3 días antes. El usuario puede descargar el ejercicio a su dispositivo antes de que caduque, y puede desactivar el aviso por email desde la propia aplicación.
 
 ### Transferencias internacionales de datos
-Algunos de los proveedores enumerados en este documento (entre otros, Groq, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.
+Algunos de los proveedores enumerados en este documento (entre otros, DeepInfra, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.
 
 ### Menores de edad
 El Servicio no está dirigido a menores de 16 años y las Condiciones de Uso exigen esa edad mínima para crear una cuenta. No se recaba de forma consciente ningún dato de menores de esa edad. Si el Titular tiene conocimiento de que se ha creado una cuenta incumpliendo este requisito, la eliminará junto con sus datos. Los padres o tutores que detecten una situación así pueden comunicarlo a support@mystudyai.eu y se atenderá sin demora.

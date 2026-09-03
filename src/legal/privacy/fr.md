@@ -99,10 +99,10 @@ Supabase est un service d'hébergement et de backend fourni par Supabase, Inc.
 ### Service fourni par :
 - Supabase, Inc. (Europe) – Politique de confidentialité
 
-### GroqCloud
-Société : Groq UK Limited (Royaume-Uni)
+### DeepInfra
+Société : Deep Infra, Inc. (États-Unis)
 Lieu de traitement : États-Unis et autres pays
-GroqCloud est un service d’inférence IA utilisé uniquement pour transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper). L’audio est transmis au service, qui renvoie la transcription ; ni l’audio ni la transcription ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription sur l’appareil lui-même, sans rien transmettre.
+DeepInfra est un service d’inférence IA utilisé uniquement pour transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper). L’audio est transmis au service, qui renvoie la transcription ; ni l’audio ni la transcription ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription sur l’appareil lui-même, sans rien transmettre.
 
 ### Données personnelles traitées :
 - Enregistrements audio transmis par l’Utilisateur pour transcription
@@ -111,7 +111,7 @@ GroqCloud est un service d’inférence IA utilisé uniquement pour transcrire e
 - Adresse IP
 
 ### Service fourni par :
-- Groq UK Limited (Royaume-Uni), entité contractante pour les clients de l’Espace économique européen. Le traitement a lieu aux États-Unis et dans d’autres pays, encadré par les clauses contractuelles types de l’UE et l’Addendum britannique de transfert international de données, automatiquement intégrés à l’accord de traitement des données de Groq. – Politique de confidentialité
+- Deep Infra, Inc. (Palo Alto, Californie, États-Unis), entité contractante. Le traitement a lieu aux États-Unis, encadré par les Clauses Contractuelles Types approuvées par la Commission européenne (décision 2021/914), intégrées à l’accord de traitement des données conclu avec le prestataire. Cet accord interdit expressément l’utilisation des données pour entraîner ou améliorer des modèles d’intelligence artificielle et prévoit que le prestataire ne conserve ni l’audio ni la transcription au-delà du temps nécessaire pour renvoyer le résultat. – Politique de confidentialité
 
 ### Microsoft Azure
 Société : Microsoft Corporation
@@ -211,7 +211,7 @@ Données personnelles traitées : Traceurs
 Pixel de suivi des conversions de TikTok Ads, utilisé pour mesurer l'efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
 
 ### Transferts internationaux de données
-Certains prestataires mentionnés dans ce document (notamment Groq, Sentry, Cloudflare, Microsoft Azure et RevenueCat) traitent des données aux États-Unis. Selon le prestataire, ces transferts s'appuient sur le Data Privacy Framework UE-États-Unis ou sur les Clauses Contractuelles Types approuvées par la Commission européenne, garantissant un niveau de protection équivalent à celui exigé par le RGPD. Les Utilisateurs peuvent demander davantage d'informations sur les garanties applicables à chaque prestataire via les coordonnées indiquées dans ce document.
+Certains prestataires mentionnés dans ce document (notamment DeepInfra, Sentry, Cloudflare, Microsoft Azure et RevenueCat) traitent des données aux États-Unis. Selon le prestataire, ces transferts s'appuient sur le Data Privacy Framework UE-États-Unis ou sur les Clauses Contractuelles Types approuvées par la Commission européenne, garantissant un niveau de protection équivalent à celui exigé par le RGPD. Les Utilisateurs peuvent demander davantage d'informations sur les garanties applicables à chaque prestataire via les coordonnées indiquées dans ce document.
 
 ## Information sur le refus de publicité ciblée par centres d’intérêt
 En complément de toute fonctionnalité de désinscription fournie par l’un quelconque des services listés dans le
