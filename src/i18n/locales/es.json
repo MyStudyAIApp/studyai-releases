@@ -58,7 +58,7 @@
     "statSubjects": "Asignaturas",
     "statCards": "Tarjetas hoy",
     "statStreak": "Racha",
-    "masteryTitle": "Dominio por asignatura",
+    "masteryTitle": "Dominio por asignatura y tema",
     "masteryNoData": "Sin repasar aún",
     "recent": "Recientes",
     "quickActions": "Acciones rápidas",
@@ -108,7 +108,8 @@
       "upload": "Subir",
       "uploading": "⏳ Subiendo...",
       "imported": "importado"
-    }
+    },
+    "masteryNoTopic": "Sin tema"
   },
   "library": {
     "title": "Biblioteca",

@@ -495,6 +495,32 @@ export default function Home() {
                     style={{ width: `${m.mastery_pct ?? 0}%`, backgroundColor: m.color }}
                   />
                 </div>
+
+                {/* Desglose por tema. Solo lo tienen los alumnos que organizan
+                    en temas; quien lo deja todo suelto en la asignatura ve la
+                    barra de arriba y nada mas. */}
+                {m.topics?.length > 0 && (
+                  <div className="mt-2 ml-4 pl-3 border-l border-slate-700/60 space-y-1.5">
+                    {m.topics.map(tp => (
+                      <div key={tp.id ?? '__sin_tema__'}>
+                        <div className="flex items-center justify-between text-[11px] mb-0.5">
+                          <span className={tp.id ? 'text-slate-400' : 'text-slate-500 italic'}>
+                            {tp.name ?? t('home.masteryNoTopic')}
+                          </span>
+                          <span className="text-slate-500">
+                            {tp.mastery_pct === null ? t('home.masteryNoData') : `${tp.mastery_pct}%`}
+                          </span>
+                        </div>
+                        <div className="h-1 rounded-full bg-slate-700/40 overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all duration-500 opacity-70"
+                            style={{ width: `${tp.mastery_pct ?? 0}%`, backgroundColor: m.color }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

@@ -58,7 +58,7 @@
     "statSubjects": "Fächer",
     "statCards": "Karten heute",
     "statStreak": "Serie",
-    "masteryTitle": "Beherrschung nach Fach",
+    "masteryTitle": "Beherrschung nach Fach und Thema",
     "masteryNoData": "Noch keine Wiederholungen",
     "recent": "Zuletzt",
     "quickActions": "Schnellaktionen",
@@ -108,7 +108,8 @@
       "upload": "Hochladen",
       "uploading": "⏳ Wird hochgeladen...",
       "imported": "importiert"
-    }
+    },
+    "masteryNoTopic": "Ohne Thema"
   },
   "library": {
     "title": "Bibliothek",

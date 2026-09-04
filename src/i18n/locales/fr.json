@@ -58,7 +58,7 @@
     "statSubjects": "Matières",
     "statCards": "Cartes aujourd'hui",
     "statStreak": "Série",
-    "masteryTitle": "Maîtrise par matière",
+    "masteryTitle": "Maîtrise par matière et thème",
     "masteryNoData": "Pas encore de révisions",
     "recent": "Récents",
     "quickActions": "Actions rapides",
@@ -108,7 +108,8 @@
       "upload": "Importer",
       "uploading": "⏳ Importation...",
       "imported": "importé"
-    }
+    },
+    "masteryNoTopic": "Sans thème"
   },
   "library": {
     "title": "Bibliothèque",

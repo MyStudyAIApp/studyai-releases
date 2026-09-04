@@ -58,7 +58,7 @@
     "statSubjects": "Subjects",
     "statCards": "Cards today",
     "statStreak": "Streak",
-    "masteryTitle": "Mastery by subject",
+    "masteryTitle": "Mastery by subject and topic",
     "masteryNoData": "No reviews yet",
     "recent": "Recent",
     "quickActions": "Quick actions",
@@ -108,7 +108,8 @@
       "upload": "Upload",
       "uploading": "⏳ Uploading...",
       "imported": "imported"
-    }
+    },
+    "masteryNoTopic": "No topic"
   },
   "library": {
     "title": "Library",
