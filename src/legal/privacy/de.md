@@ -1,6 +1,6 @@
 ## Datenschutzerklärung von mystudyai.eu
 Willkommen bei der Datenschutzrichtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Daten wir erheben, warum wir sie erheben und welche Rechte Sie diesbezüglich haben.
-Letzte Aktualisierung:  3. September 2026
+Letzte Aktualisierung:  4. September 2026
 
 ## Inhaltsverzeichnis
 - Zusammenfassung
@@ -230,7 +230,7 @@ Die vom Nutzer hochgeladene Originaldatei (PDF oder Foto) wird 10 Tage nach dem 
 Bei der Funktion „Übung lösen" werden die Aufgabenstellung und die Lösung jeder gelösten Übung automatisch 10 Tage lang gespeichert, damit der Nutzer sie einsehen kann. Nach Ablauf dieser Frist werden sie automatisch gelöscht, wobei der Nutzer 3 Tage zuvor per E-Mail benachrichtigt wird. Der Nutzer kann die Übung vor Ablauf auf sein Gerät herunterladen und die E-Mail-Benachrichtigung in der Anwendung deaktivieren.
 
 ### Minderjährige
-Der Dienst richtet sich nicht an Kinder unter 16 Jahren; die Nutzungsbedingungen setzen dieses Mindestalter für die Erstellung eines Kontos voraus. Von Personen unterhalb dieses Alters werden wissentlich keine Daten erhoben. Erlangt der Anbieter Kenntnis davon, dass ein Konto unter Verstoß gegen diese Anforderung angelegt wurde, wird es samt Daten gelöscht. Eltern oder Erziehungsberechtigte, die einen solchen Fall bemerken, können dies an support@mystudyai.eu melden; die Bearbeitung erfolgt unverzüglich.
+Der Dienst richtet sich nicht an Kinder unter 16 Jahren. Die Nutzungsbedingungen setzen dieses Mindestalter für die Erstellung eines Kontos voraus oder, wenn der Nutzer es nicht erreicht, die ausdrückliche Zustimmung seiner Eltern oder gesetzlichen Vertreter, über die der Nutzer bei der Registrierung zu verfügen erklärt. Von Personen unterhalb dieses Alters werden wissentlich keine Daten erhoben. Erlangt der Anbieter Kenntnis davon, dass ein Konto unter Verstoß gegen diese Anforderung angelegt wurde, wird es samt Daten gelöscht. Eltern oder Erziehungsberechtigte, die einen solchen Fall bemerken, können dies an support@mystudyai.eu melden; die Bearbeitung erfolgt unverzüglich.
 
 ### Kopie der eigenen Daten herunterladen
 Über die Einstellungen in der Anwendung können Nutzer jederzeit und kostenlos eine Kopie all ihrer Inhalte (eine JSON-Datei je Datenkategorie, in einem strukturierten und gängigen Format) sowie der von ihnen hochgeladenen Dateien erhalten. Ein Klick startet den Vorgang automatisch: Bei einer großen Bibliothek kann die Erstellung der Datei einige Minuten dauern; sobald sie fertig ist, wird per E-Mail ein 7 Tage gültiger Download-Link gesendet, ohne dass ein Teammitglied beteiligt ist oder der Support kontaktiert werden muss. Diese Funktion erfüllt das Recht auf Datenübertragbarkeit nach Art. 20 DSGVO.

@@ -1,6 +1,6 @@
 ## Política de Cookies de mystudyai.eu
 Bienvenido a la política de cookies de mystudyai.eu. Esta política le ayudará a entender qué cookies y tecnologías de seguimiento utilizamos, cómo las utilizamos y qué derechos tiene usted al respecto.
-Última revisión:  3 septiembre 2026
+Última revisión:  4 septiembre 2026
 
 ## Índice
 - Introducción

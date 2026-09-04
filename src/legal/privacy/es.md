@@ -1,6 +1,6 @@
 ## Política de privacidad de mystudyai.eu
 Bienvenido a la política de privacidad de mystudyai.eu. Esta política le ayudará a entender qué datos recogemos, por qué los recogemos y qué derechos tiene usted al respecto
-Última revisión:  3 septiembre 2026
+Última revisión:  4 septiembre 2026
 
 ## Índice
 - Resumen
@@ -256,7 +256,7 @@ En la función "Resolver ejercicio", el enunciado y la solución de cada ejercic
 Algunos de los proveedores enumerados en este documento (entre otros, DeepInfra, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.
 
 ### Menores de edad
-El Servicio no está dirigido a menores de 16 años y las Condiciones de Uso exigen esa edad mínima para crear una cuenta. No se recaba de forma consciente ningún dato de menores de esa edad. Si el Titular tiene conocimiento de que se ha creado una cuenta incumpliendo este requisito, la eliminará junto con sus datos. Los padres o tutores que detecten una situación así pueden comunicarlo a support@mystudyai.eu y se atenderá sin demora.
+El Servicio no está dirigido a menores de 16 años. Las Condiciones de Uso exigen esa edad mínima para crear una cuenta o, si el Usuario no la alcanza, la autorización expresa de sus padres o tutores legales, que el Usuario declara tener al registrarse. No se recaba de forma consciente ningún dato de menores de esa edad. Si el Titular tiene conocimiento de que se ha creado una cuenta incumpliendo este requisito, la eliminará junto con sus datos. Los padres o tutores que detecten una situación así pueden comunicarlo a support@mystudyai.eu y se atenderá sin demora.
 
 ### Descargar una copia de tus datos
 Desde Ajustes, en la propia Aplicación, el Usuario puede obtener en cualquier momento y sin coste una copia de todo su contenido (un fichero JSON por cada categoría de datos, en formato estructurado y de uso común) y de los archivos que haya subido. Un clic pone en marcha el proceso de forma automática: si la biblioteca es grande, generar el archivo puede tardar unos minutos, y en cuanto está listo se envía por correo electrónico un enlace de descarga válido durante 7 días, sin que intervenga ningún miembro del equipo ni haga falta escribir a soporte. Esta función cubre el derecho de portabilidad del artículo 20 del RGPD.

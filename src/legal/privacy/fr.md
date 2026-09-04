@@ -1,6 +1,6 @@
 ## Politique de confidentialité de mystudyai.eu
 Bienvenue sur la politique de confidentialité de mystudyai.eu. La présente politique vous aidera à comprendre quelles données nous recueillons, pourquoi nous les recueillons et quels sont vos droits à cet égard.
-Dernière mise à jour :  3 septembre 2026
+Dernière mise à jour :  4 septembre 2026
 
 ## Table des matières
 - Résumé
@@ -231,7 +231,7 @@ Le fichier original (PDF ou photo) que l'utilisateur télécharge est conservé 
 Dans la fonction « Résoudre un exercice », l'énoncé et la solution de chaque exercice résolu sont automatiquement enregistrés pendant 10 jours afin que l'utilisateur puisse les consulter. Passé ce délai, ils sont automatiquement supprimés, avec un avis par e-mail envoyé à l'utilisateur 3 jours auparavant. L'utilisateur peut télécharger l'exercice sur son appareil avant son expiration et peut désactiver l'avis par e-mail depuis l'application.
 
 ### Mineurs
-Le Service ne s'adresse pas aux enfants de moins de 16 ans et les Conditions d'utilisation exigent cet âge minimum pour créer un compte. Aucune donnée n'est sciemment collectée auprès de personnes en dessous de cet âge. Si le Propriétaire apprend qu'un compte a été créé en violation de cette exigence, il sera supprimé avec ses données. Les parents ou tuteurs qui constatent une telle situation peuvent la signaler à support@mystudyai.eu ; elle sera traitée sans délai.
+Le Service ne s'adresse pas aux enfants de moins de 16 ans. Les Conditions d'utilisation exigent cet âge minimum pour créer un compte ou, si l'Utilisateur ne l'atteint pas, l'autorisation expresse de ses parents ou tuteurs légaux, dont l'Utilisateur déclare disposer lors de son inscription. Aucune donnée n'est sciemment collectée auprès de personnes en dessous de cet âge. Si le Propriétaire apprend qu'un compte a été créé en violation de cette exigence, il sera supprimé avec ses données. Les parents ou tuteurs qui constatent une telle situation peuvent la signaler à support@mystudyai.eu ; elle sera traitée sans délai.
 
 ### Télécharger une copie de vos données
 Depuis les Réglages, dans l'Application elle-même, l'Utilisateur peut obtenir à tout moment et gratuitement une copie de l'ensemble de son contenu (un fichier JSON par catégorie de données, dans un format structuré et couramment utilisé) ainsi que des fichiers qu'il a importés. Un clic déclenche le processus automatiquement : si la bibliothèque est volumineuse, la génération du fichier peut prendre quelques minutes, et dès qu'il est prêt, un lien de téléchargement valable 7 jours est envoyé par e-mail, sans intervention d'un membre de l'équipe ni besoin de contacter le support. Cette fonction couvre le droit à la portabilité prévu à l'article 20 du RGPD.

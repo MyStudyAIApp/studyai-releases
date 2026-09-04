@@ -1,6 +1,6 @@
 ## Allgemeine Nutzungsbedingungen von mystudyai.eu
 Willkommen bei der Seite der AGBs von mystudyai.eu. Dieses Dokument hilft Ihnen zu verstehen, wie Sie unsere Dienste nutzen können und was Sie von uns erwarten können.
-Letzte Aktualisierung:  3. September 2026
+Letzte Aktualisierung:  4. September 2026
 
 ## Inhaltsverzeichnis
 - Einleitung
@@ -25,7 +25,7 @@ Sergio Gómez Negrín (spanische Steuernummer / NIF 78696662T) - Calle Argenta d
 E-Mail-Adresse des Anbieters: support@mystudyai.eu
 
 ## Das Wichtigste auf einen Blick
-- Diese Anwendung ist nicht für Personen unter 16 Jahren bestimmt.
+- Diese Anwendung ist nicht für Personen unter 16 Jahren bestimmt, es sei denn, sie verfügen über die Zustimmung ihrer Eltern oder gesetzlichen Vertreter.
 - Es ist zu beachten, dass einzelne Vorschriften dieser AGB nur für bestimmte Nutzerkategorien einschlägig sein könnten, zum Beispiel nur für Verbraucher oder nur für Nutzer, die nicht als Verbraucher handeln. Auf derartige Einschränkungen des Anwendungsbereichs wird in jeder betroffenen Klausel ausdrücklich hingewiesen. Fehlt ein solcher Hinweis, so gilt die Klausel für alle Nutzer.
 - Das Widerrufsrecht steht nur europäischen Verbrauchern zu.
 - Der Zugriff auf diese Anwendung und den Dienst ist altersbeschränkt. Einzelheiten sind dem entsprechenden Abschnitt dieses Dokuments zu entnehmen.
@@ -35,7 +35,7 @@ Sofern nicht anders angegeben, gelten bei dem Zugriff auf diese Anwendung die in
 Einzelne oder zusätzliche Nutzungs- oder Zugriffsbedingungen können unter bestimmten Umständen anwendbar sein und werden in solchen Fällen in diesem Dokument ausdrücklich benannt.
 Durch Nutzen des Dienstes bestätigen Nutzer, die folgenden Bedingungen zu erfüllen:
 - Nutzer können Verbraucher oder Geschäftskunden sein;
-- Nutzer müssen älter als 16 sein;
+- Nutzer müssen mindestens 16 Jahre alt sein oder andernfalls über die ausdrückliche Zustimmung ihrer Eltern oder gesetzlichen Vertreter verfügen, sowohl für die Nutzung des Dienstes als auch für die Annahme dieser Bedingungen;
 - Nutzer befinden sich nicht in einem Land, das einem Embargo der US-Regierung unterliegt oder von der US-Regierung als “Terrorismus unterstützendes Land” eingestuft wurde;
 - Nutzer sind nicht auf einer Liste nicht oder eingeschränkt zugelassener Parteien der US-Regierung aufgeführt;
 - Nutzer erklären, sich nicht in einem von einer zuständigen Behörde sanktionierten Gebiet zu befinden, dem der Anbieter direkt oder indirekt unterliegt;

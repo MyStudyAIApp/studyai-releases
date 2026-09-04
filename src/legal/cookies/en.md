@@ -1,6 +1,6 @@
 ## Cookie Policy of mystudyai.eu
 Welcome to the cookie policy of mystudyai.eu. This policy will help you understand what cookies and tracking technologies we use, how we use them and what your rights are in relation to it.
-Latest update: September 3, 2026
+Latest update: September 4, 2026
 
 ## Table of contents
 - Introduction

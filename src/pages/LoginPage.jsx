@@ -526,6 +526,7 @@ export default function LoginPage() {
                 <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
                 {' '}y la{' '}
                 <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
+                , y confirmo que tengo al menos 16 años o cuento con la autorización de mis padres o tutores.
               </span>
             </label>
           )}
@@ -584,6 +585,7 @@ export default function LoginPage() {
             <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
             {' '}y la{' '}
             <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
+            , y confirmas que tienes al menos 16 años o autorización de tus padres o tutores.
           </p>
         )}
 

@@ -1,6 +1,6 @@
 ## Terms and Conditions of mystudyai.eu
 Welcome to the Terms & Conditions page of mystudyai.eu. This document will help you understand how you can use our services and what you can expect from us.
-Latest update: September 3, 2026
+Latest update: September 4, 2026
 
 ## Table of contents
 - Introduction
@@ -25,7 +25,7 @@ Sergio Gómez Negrín (Spanish tax ID / NIF 78696662T) - Calle Argenta de Franqu
 Owner contact email: support@mystudyai.eu
 
 ## What the User should know at a glance
-- This Application is not intended for use by anyone under the age of 16.
+- This Application is not intended for use by anyone under the age of 16, unless they have the authorisation of their parents or legal guardians.
 - Please note that some provisions in these Terms may only apply to certain categories of Users. In particular, certain provisions may only apply to Consumers or to those Users that do not qualify as Consumers. Such limitations are always explicitly mentioned within each affected clause. In the absence of any such mention, clauses apply to all Users.
 - The right of withdrawal only applies to European Consumers.
 - Usage of this Application and the Service is age-restricted, as detailed in the relevant section of this document.
@@ -35,7 +35,7 @@ Unless otherwise specified, the terms of use detailed in this section apply gene
 Single or additional conditions of use or access may apply in specific scenarios and in such cases are additionally indicated within this document.
 By using this Application, Users confirm to meet the following requirements:
 - There are no restrictions for Users in terms of being Consumers or Business Users.
-- Users must be older than 16
+- Users must be at least 16 years old or, failing that, must have the express authorisation of their parents or legal guardians, both to use the Service and to accept these Terms;
 - Users aren’t located in a country that is subject to a U.S. government embargo, or that has been designated by the U.S. government as a “terrorist-supporting” country.
 - Users aren’t listed on any U.S. government list of prohibited or restricted parties.
 - Users aren’t located in a sanctioned territory designated by an authority that the Owner is directly or indirectly subject to.

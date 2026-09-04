@@ -1,6 +1,6 @@
 ## Condiciones de Uso de mystudyai.eu
 Bienvenido a la página de Términos y Condiciones de mystudyai.eu. Este documento le ayudará a entender cómo puede utilizar nuestros servicios y qué puede esperar de nosotros.
-Última revisión:  3 septiembre 2026
+Última revisión:  4 septiembre 2026
 
 ## Índice
 - Introducción
@@ -25,7 +25,7 @@ Sergio Gómez Negrín (NIF 78696662T) - Calle Argenta de Franquis Luzardo, 41 (L
 Correo electrónico de contacto del Titular: support@mystudyai.eu
 
 ## Lo que el Usuario debería saber de un vistazo
-- Esta Aplicación no está destinada a menores de 16 años.
+- Esta Aplicación no está destinada a menores de 16 años, salvo que cuenten con la autorización de sus padres o tutores legales.
 - Por favor tenga en cuenta que algunas disposiciones de las presentes Condiciones solo son aplicables a determinadas categorías de Usuarios. En particular, ciertas disposiciones solo serán de aplicación a los Consumidores o a aquellos Usuarios que no entren en la categoría de Consumidores. Tales limitaciones se mencionan siempre de forma expresa en cada una de las cláusulas a las que se refieren. En ausencia de una mención de este tipo, las cláusulas serán aplicables a todos los Usuarios.
 - El derecho de desistimiento solo es aplicable a los Consumidores europeos.
 - El uso de esta Aplicación y del Servicio está restringido en función de la edad, según se detalla en la sección correspondiente del presente documento.
@@ -35,7 +35,7 @@ Salvo que se establezca lo contrario, las condiciones de uso detalladas en esta 
 En situaciones concretas pueden aplicarse condiciones de uso o de acceso individuales o adicionales y en tales supuestos se indicarán de forma adicional en el presente documento.
 Al utilizar esta Aplicación, los Usuarios confirman que cumplen los siguientes requisitos:
 - No existen restricciones referidas a los Usuarios en el sentido de que estos sean Consumidores o Usuarios Profesionales;
-- Los Usuarios deberán haber cumplido como mínimo 16 años;
+- Los Usuarios deberán haber cumplido como mínimo 16 años o, en caso contrario, contar con la autorización expresa de sus padres o tutores legales, tanto para utilizar el Servicio como para aceptar las presentes Condiciones;
 - Los Usuarios no deberán estar situados en un país que esté sometido a un embargo decretado por el gobierno de los EE. UU. o que haya sido calificado por el gobierno de los EE. UU. como un país “que apoya el terrorismo»;
 - Los Usuarios no deberán estar incluidos en ninguna lista de partes prohibidas o restringidas elaborada por el gobierno de EE. UU.;
 - Los Usuarios declaran no encontrarse en un territorio sancionado designado por una autoridad a la que el Titular esté directa o indirectamente sujeto;
