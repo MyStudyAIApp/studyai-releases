@@ -7,6 +7,7 @@
 
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
+import { useTranslation, Trans } from 'react-i18next'
 import { supabase, WEB_API } from '../lib/supabase'
 import { IS_WEB, IS_ELECTRON, IS_MOBILE } from '../store/appStore'
 import { App as CapacitorApp } from '@capacitor/app'
@@ -43,16 +44,8 @@ export function passwordProblem(pw) {
   return null
 }
 
-// Esta pantalla esta en espanol fijo (no usa i18n, como el resto del archivo).
-const PASSWORD_ERRORES = {
-  length: `La contraseña debe tener al menos ${PASSWORD_MIN} caracteres.`,
-  lower:  'La contraseña debe incluir alguna letra minúscula.',
-  upper:  'La contraseña debe incluir alguna letra mayúscula.',
-  digit:  'La contraseña debe incluir algún número.',
-  symbol: 'La contraseña debe incluir algún símbolo (por ejemplo # @ ! $ %).',
-}
-
 export default function LoginPage() {
+  const { t } = useTranslation()
   const { user, beginPasswordRecovery } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
@@ -99,9 +92,9 @@ export default function LoginPage() {
     const errorCode = params.get('error_code')
     const type = params.get('type')
     if (errorCode === 'otp_expired' || errorCode === 'otp_disabled') {
-      setError('El enlace de confirmación ha caducado. Regístrate de nuevo o usa el inicio de sesión con contraseña.')
+      setError(t('auth.err.linkExpired'))
     } else if (params.get('error')) {
-      setError('El enlace no es válido. Inténtalo de nuevo.')
+      setError(t('auth.err.linkInvalid'))
     } else if (type === 'signup' && params.get('access_token')) {
       setMode('confirmed')
     }
@@ -117,11 +110,11 @@ export default function LoginPage() {
       try {
         const { ok, isRecovery } = await completeNativeAuthFromUrl(url)
         if (!ok) setError(isRecovery
-          ? 'El enlace de la contraseña ha caducado. Pide uno nuevo.'
-          : 'No se pudo completar el login con Google.')
+          ? t('auth.err.recoveryExpired')
+          : t('auth.err.googleFailed'))
         else if (isRecovery) beginPasswordRecovery()
       } catch {
-        setError('No se pudo completar la operación. Inténtalo de nuevo.')
+        setError(t('auth.err.generic'))
       }
     })
     return off
@@ -139,10 +132,10 @@ export default function LoginPage() {
           try { await Browser.close() } catch {}
           if (isRecovery) beginPasswordRecovery()
         } else setError(isRecovery
-          ? 'El enlace de la contraseña ha caducado. Pide uno nuevo.'
-          : 'No se pudo completar el login con Google.')
+          ? t('auth.err.recoveryExpired')
+          : t('auth.err.googleFailed'))
       } catch {
-        setError('No se pudo completar la operación. Inténtalo de nuevo.')
+        setError(t('auth.err.generic'))
       }
     })
     return () => { listenerPromise.then(l => l.remove()) }
@@ -154,7 +147,7 @@ export default function LoginPage() {
     // que tiene que pasar por la misma aceptacion de Condiciones y Privacidad.
     // Sin esto se podian crear cuentas sin contrato aceptado (art. 13 RGPD).
     if (mode === 'register' && !acceptedTerms) {
-      setError('Debes aceptar los Términos y la Política de Privacidad para crear una cuenta.')
+      setError(t('auth.err.mustAccept'))
       return
     }
     if (IS_WEB) {
@@ -162,7 +155,7 @@ export default function LoginPage() {
         provider: 'google',
         options: { redirectTo: window.location.origin },
       })
-      if (error) setError('No se pudo iniciar sesión con Google. Inténtalo de nuevo.')
+      if (error) setError(t('auth.err.googleFailed'))
       return
     }
     try {
@@ -170,14 +163,14 @@ export default function LoginPage() {
       if (IS_MOBILE) await Browser.open({ url })
       else await window.electron.shell.openExternal(url)
     } catch {
-      setError('No se pudo iniciar sesión con Google. Inténtalo de nuevo.')
+      setError(t('auth.err.googleFailed'))
     }
   }
 
   const handleForgotPassword = async () => {
-    if (!email) { setError('Escribe tu email primero.'); return }
+    if (!email) { setError(t('auth.err.emailFirst')); return }
     if (turnstile.enabled && !turnstile.token) {
-      setError('Completa la verificación de seguridad.')
+      setError(t('auth.err.captcha'))
       return
     }
     setLoading(true); setError(null)
@@ -197,7 +190,7 @@ export default function LoginPage() {
       }
       setResetSent(true)
     } catch {
-      setError('No se pudo enviar el email. Inténtalo de nuevo.')
+      setError(t('auth.err.emailSend'))
     } finally {
       turnstile.reset()   // el token se consume en cada intento, salga bien o mal
       setLoading(false)
@@ -213,7 +206,7 @@ export default function LoginPage() {
       if (mode === 'login') {
         // ── Iniciar sesión ────────────────────────────────────────
         if (turnstile.enabled && !turnstile.token) {
-          setError('Completa la verificación de seguridad.')
+          setError(t('auth.err.captcha'))
           setLoading(false)
           return
         }
@@ -229,22 +222,22 @@ export default function LoginPage() {
         // ── Crear cuenta ──────────────────────────────────────────
         const problema = passwordProblem(password)
         if (problema) {
-          setError(PASSWORD_ERRORES[problema])
+          setError(t(`auth.err.pw${problema[0].toUpperCase()}${problema.slice(1)}`, { min: PASSWORD_MIN }))
           setLoading(false)
           return
         }
         if (password !== passwordConfirm) {
-          setError('Las contraseñas no coinciden.')
+          setError(t('auth.err.noMatch'))
           setLoading(false)
           return
         }
         if (!acceptedTerms) {
-          setError('Debes aceptar los Términos y la Política de Privacidad para crear una cuenta.')
+          setError(t('auth.err.mustAccept'))
           setLoading(false)
           return
         }
         if (turnstile.enabled && !turnstile.token) {
-          setError('Completa la verificación de seguridad.')
+          setError(t('auth.err.captcha'))
           setLoading(false)
           return
         }
@@ -264,28 +257,28 @@ export default function LoginPage() {
       // Traducir los errores más comunes al español
       const msg = err.message || ''
       if (msg.includes('Invalid login credentials'))
-        setError('Email o contraseña incorrectos.')
+        setError(t('auth.err.badCredentials'))
       else if (msg.includes('Email not confirmed'))
-        setError('Confirma tu email primero. Revisa tu bandeja de entrada.')
+        setError(t('auth.err.confirmFirst'))
       else if (msg.includes('User already registered'))
-        setError('Ya existe una cuenta con ese email. Inicia sesión.')
+        setError(t('auth.err.already'))
       else if (msg.includes('Password should be at least'))
-        setError('La contraseña debe tener al menos 6 caracteres.')
+        setError(t('auth.err.tooShort', { min: PASSWORD_MIN }))
       // El registro se cierra en Supabase (Authentication -> "Allow new users
       // to sign up"), no en la interfaz: ocultar el formulario no impedia nada,
       // y de hecho por el boton de Google se colaron dos cuentas. Cuando esta
       // cerrado, Supabase responde con estos mensajes: hay que traducirlos a
       // algo que el usuario entienda.
       else if (msg.includes('Signups not allowed') || msg.includes('signup is disabled') || msg.includes('Sign ups not allowed'))
-        setError('El registro está cerrado durante la fase beta. Escríbenos a support@mystudyai.eu si quieres participar.')
+        setError(t('auth.err.betaClosed'))
       // El cierre de la beta vive en la base de datos (trigger
       // comprobar_invitacion_beta sobre auth.users, con la lista
       // public.beta_invitados). Cuando rechaza, Supabase devuelve este mensaje
       // generico, asi que hay que traducirlo aqui.
       else if (msg.includes('Database error saving new user'))
-        setError('El registro está cerrado durante la fase beta. Escríbenos a support@mystudyai.eu si quieres participar.')
+        setError(t('auth.err.betaClosed'))
       else
-        setError(msg || 'Ha ocurrido un error. Inténtalo de nuevo.')
+        setError(msg || t('auth.err.unknown'))
       // El token de Turnstile es de un solo uso -- si el intento falló hay que
       // resetear el widget para que el usuario pueda reintentar
       turnstile.reset()
@@ -316,19 +309,19 @@ export default function LoginPage() {
         {ElectronTitleBar}
         <div className="bg-slate-800 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
           <div className="text-5xl mb-4">📧</div>
-          <h2 className="text-2xl font-bold text-slate-100 mb-2">¡Revisa tu email!</h2>
+          <h2 className="text-2xl font-bold text-slate-100 mb-2">{t('auth.checkEmailTitle')}</h2>
           <p className="text-slate-400 mb-6">
-            Te hemos enviado un enlace de confirmación a <strong className="text-slate-100">{email}</strong>.
-            Haz clic en él para activar tu cuenta.
+            <Trans i18nKey="auth.checkEmailBody" values={{ email }}
+                   components={[<strong className="text-slate-100" key="e" />]} />
           </p>
           <p className="text-slate-500 text-sm mb-6">
-            Si no lo ves, revisa la carpeta de spam.
+            {t('auth.spamNote')}
           </p>
           <button
             onClick={() => setMode('login')}
             className="text-primary-400 hover:text-primary-300 underline text-sm"
           >
-            Volver al inicio de sesión
+            {t('auth.backToLogin')}
           </button>
         </div>
       </div>
@@ -342,13 +335,13 @@ export default function LoginPage() {
         {ElectronTitleBar}
         <div className="bg-slate-800 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
           <div className="text-5xl mb-4">✅</div>
-          <h2 className="text-2xl font-bold text-slate-100 mb-2">¡Cuenta activada!</h2>
-          <p className="text-slate-400 mb-6">Tu cuenta ha sido verificada correctamente. Ya puedes iniciar sesión.</p>
+          <h2 className="text-2xl font-bold text-slate-100 mb-2">{t('auth.activatedTitle')}</h2>
+          <p className="text-slate-400 mb-6">{t('auth.activatedBody')}</p>
           <button
             onClick={() => setMode('login')}
             className="w-full bg-primary-600 hover:bg-primary-500 text-white font-semibold py-3 rounded-xl transition-all"
           >
-            Iniciar sesión
+            {t('auth.signIn')}
           </button>
         </div>
       </div>
@@ -397,7 +390,7 @@ export default function LoginPage() {
         {/* Logo y título */}
         <div className="text-center mb-8">
           <h1><Logo size="xl" className="justify-center" /></h1>
-          <p className="text-slate-400 mt-2">Tu asistente de estudio</p>
+          <p className="text-slate-400 mt-2">{t('auth.tagline')}</p>
         </div>
 
         {/* Registro cerrado SOLO en web: la fase beta es por invitacion y no
@@ -406,11 +399,9 @@ export default function LoginPage() {
             asi que ahi no hay nadie que pueda llegar de rebote. */}
         {IS_WEB && (
           <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3">
-            <p className="text-sm font-semibold text-amber-300 mb-1">Beta cerrada</p>
+            <p className="text-sm font-semibold text-amber-300 mb-1">{t('auth.betaTitle')}</p>
             <p className="text-xs text-slate-300">
-              MyStudy AI está en fase de pruebas y el registro está cerrado por ahora.
-              Si ya tienes cuenta, inicia sesión abajo. ¿Te interesa participar?
-              Escríbenos a{' '}
+              {t('auth.betaBody')}{' '}
               <a href="mailto:support@mystudyai.eu" className="text-amber-300 underline">
                 support@mystudyai.eu
               </a>.
@@ -428,7 +419,7 @@ export default function LoginPage() {
                 : 'text-slate-400 hover:text-slate-100'
             }`}
           >
-            Iniciar sesión
+            {t('auth.signIn')}
           </button>
           <button
             onClick={() => { setMode('register'); setError(null) }}
@@ -438,7 +429,7 @@ export default function LoginPage() {
                 : 'text-slate-400 hover:text-slate-100'
             }`}
           >
-            Crear cuenta
+            {t('auth.createAccount')}
           </button>
         </div>
 
@@ -448,12 +439,12 @@ export default function LoginPage() {
           {/* Nombre (solo en registro) */}
           {mode === 'register' && (
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Nombre</label>
+              <label className="block text-sm text-slate-400 mb-1">{t('auth.name')}</label>
               <input
                 type="text"
                 value={name}
                 onChange={e => setName(e.target.value)}
-                placeholder="Tu nombre"
+                placeholder={t('auth.namePlaceholder')}
                 required
                 className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-primary-500 transition"
               />
@@ -462,12 +453,12 @@ export default function LoginPage() {
 
           {/* Email */}
           <div>
-            <label className="block text-sm text-slate-400 mb-1">Email</label>
+            <label className="block text-sm text-slate-400 mb-1">{t('auth.email')}</label>
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="tu@email.com"
+              placeholder={t('auth.emailPlaceholder')}
               required
               autoComplete="email"
               className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-primary-500 transition"
@@ -476,11 +467,11 @@ export default function LoginPage() {
 
           {/* Contraseña */}
           <div>
-            <label className="block text-sm text-slate-400 mb-1">Contraseña</label>
+            <label className="block text-sm text-slate-400 mb-1">{t('auth.password')}</label>
             <PasswordInput
               value={password}
               onChange={e => setPassword(e.target.value)}
-              placeholder={mode === 'register' ? `Mínimo ${PASSWORD_MIN}: mayúscula, minúscula, número y símbolo` : '••••••••'}
+              placeholder={mode === 'register' ? t('auth.passwordHint', { min: PASSWORD_MIN }) : '••••••••'}
               required
               autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
               className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-primary-500 transition"
@@ -490,11 +481,11 @@ export default function LoginPage() {
           {/* Repetir contraseña (solo en registro) */}
           {mode === 'register' && (
             <div>
-              <label className="block text-sm text-slate-400 mb-1">Repite la contraseña</label>
+              <label className="block text-sm text-slate-400 mb-1">{t('auth.passwordRepeat')}</label>
               <PasswordInput
                 value={passwordConfirm}
                 onChange={e => setPasswordConfirm(e.target.value)}
-                placeholder="Repite la contraseña"
+                placeholder={t('auth.passwordRepeat')}
                 required
                 autoComplete="new-password"
                 className={`w-full bg-slate-700 border rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none transition ${
@@ -507,22 +498,22 @@ export default function LoginPage() {
           {/* Región fiscal (solo registro web, para aplicar IGIC o IVA en Stripe) */}
           {mode === 'register' && IS_WEB && (
             <div>
-              <label className="block text-sm text-slate-400 mb-1">¿Dónde resides?</label>
+              <label className="block text-sm text-slate-400 mb-1">{t('auth.residence')}</label>
               <div className="grid grid-cols-3 gap-2">
                 <button type="button" onClick={() => chooseBillingRegion('resto')}
                   className={`py-2.5 rounded-xl text-xs font-medium border transition ${
                     billingRegion === 'resto' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
-                  }`}>Resto España / extranjero</button>
+                  }`}>{t('auth.residenceRest')}</button>
                 <button type="button" onClick={() => chooseBillingRegion('canarias')}
                   className={`py-2.5 rounded-xl text-xs font-medium border transition ${
                     billingRegion === 'canarias' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
-                  }`}>Canarias</button>
+                  }`}>{t('auth.residenceCanarias')}</button>
                 <button type="button" onClick={() => chooseBillingRegion('ceuta_melilla')}
                   className={`py-2.5 rounded-xl text-xs font-medium border transition ${
                     billingRegion === 'ceuta_melilla' ? 'bg-primary-600 border-primary-600 text-white' : 'bg-slate-700 border-slate-600 text-slate-300'
-                  }`}>Ceuta / Melilla</button>
+                  }`}>{t('auth.residenceCeuta')}</button>
               </div>
-              <p className="text-xs text-slate-500 mt-1">Se usa para aplicarte el impuesto correcto si compras el plan Pro o bonos.</p>
+              <p className="text-xs text-slate-500 mt-1">{t('auth.residenceHelp')}</p>
             </div>
           )}
 
@@ -541,7 +532,7 @@ export default function LoginPage() {
           {/* Reset enviado */}
           {resetSent && (
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3 text-green-400 text-sm">
-              📧 Te hemos enviado un enlace para restablecer tu contraseña.
+              📧 {t('auth.resetSent')}
             </div>
           )}
 
@@ -555,11 +546,11 @@ export default function LoginPage() {
                 className="mt-0.5 accent-primary-500"
               />
               <span>
-                Acepto los{' '}
-                <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
-                {' '}y la{' '}
-                <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
-                , y confirmo que tengo al menos 16 años o cuento con la autorización de mis padres o tutores.
+                {t('auth.accept')}{' '}
+                <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">{t('auth.terms')}</Link>
+                {' '}{t('auth.and')}{' '}
+                <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">{t('auth.privacy')}</Link>
+                {t('auth.ageConfirm')}
               </span>
             </label>
           )}
@@ -570,7 +561,7 @@ export default function LoginPage() {
             disabled={loading || (turnstile.enabled && !turnstile.token) || (mode === 'register' && (!acceptedTerms || password !== passwordConfirm || (IS_WEB && !billingRegion)))}
             className="w-full bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all shadow-lg"
           >
-            {loading ? '...' : mode === 'login' ? 'Entrar' : 'Crear cuenta'}
+            {loading ? '...' : mode === 'login' ? t('auth.enter') : t('auth.createAccount')}
           </button>
 
           {/* Olvidé mi contraseña — solo en login */}
@@ -581,7 +572,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full text-slate-500 hover:text-slate-300 text-sm transition-colors"
             >
-              ¿Olvidaste tu contraseña?
+              {t('auth.forgot')}
             </button>
           )}
         </form>
@@ -589,7 +580,7 @@ export default function LoginPage() {
         {/* Separador */}
         <div className="flex items-center gap-3 my-5">
           <div className="h-px flex-1 bg-slate-700" />
-          <span className="text-xs text-slate-500">o</span>
+          <span className="text-xs text-slate-500">{t('auth.or')}</span>
           <div className="h-px flex-1 bg-slate-700" />
         </div>
 
@@ -606,7 +597,7 @@ export default function LoginPage() {
             <path fill="#FBBC05" d="M5.31 14.33A7.2 7.2 0 0 1 4.93 12c0-.81.14-1.6.38-2.33V6.58H1.3A11.98 11.98 0 0 0 0 12c0 1.94.46 3.77 1.3 5.42l4.01-3.09z"/>
             <path fill="#EA4335" d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.94 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.3 6.58l4.01 3.09C6.25 6.85 8.89 4.75 12 4.75z"/>
           </svg>
-          Continuar con Google
+          {t('auth.googleContinue')}
         </button>
 
         {/* En modo login, Google tambien puede dar de alta a alguien que no
@@ -614,11 +605,11 @@ export default function LoginPage() {
             se informa aqui de forma expresa antes de pulsar. */}
         {mode === 'login' && (
           <p className="text-[11px] text-slate-500 text-center mt-2">
-            Si continúas con Google y aún no tienes cuenta, aceptas los{' '}
-            <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
-            {' '}y la{' '}
-            <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
-            , y confirmas que tienes al menos 16 años o autorización de tus padres o tutores.
+            {t('auth.googleNotice')}{' '}
+            <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">{t('auth.terms')}</Link>
+            {' '}{t('auth.and')}{' '}
+            <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">{t('auth.privacy')}</Link>
+            {t('auth.googleAgeConfirm')}
           </p>
         )}
 
@@ -627,11 +618,11 @@ export default function LoginPage() {
           onClick={() => navigate('/delete-account')}
           className="w-full text-slate-700 hover:text-slate-500 text-[11px] transition-colors mt-4"
         >
-          ¿Quieres borrar tu cuenta?
+          {t('auth.deleteAccount')}
         </button>
 
         <div className="flex items-center justify-center gap-4 text-[11px] text-slate-600 mt-3">
-          <Link to="/terminos" className="hover:text-slate-400">Términos</Link>
+          <Link to="/terminos" className="hover:text-slate-400">{t('auth.terms')}</Link>
           <Link to="/privacidad" className="hover:text-slate-400">Privacidad</Link>
           <Link to="/cookies" className="hover:text-slate-400">Cookies</Link>
         </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Browser } from '@capacitor/browser'
 import { supabase } from '../lib/supabase'
 import { getGoogleOAuthUrl, startNativePasswordRecovery } from '../lib/googleAuth'
@@ -9,6 +10,7 @@ import Logo from '../components/UI/Logo'
 import PasswordInput from '../components/UI/PasswordInput'
 
 export default function MobileLoginPage() {
+  const { t } = useTranslation()
   const { user } = useAuth()
   const [email, setEmail]       = useState('')
   const [password, setPassword] = useState('')
@@ -31,14 +33,14 @@ export default function MobileLoginPage() {
       const url = await getGoogleOAuthUrl()
       await Browser.open({ url })
     } catch (err) {
-      setError('No se pudo iniciar sesión con Google. Inténtalo de nuevo.')
+      setError(t('auth.err.googleFailed'))
     }
   }
 
   const handleForgotPassword = async () => {
-    if (!email) { setError('Escribe tu email primero.'); return }
+    if (!email) { setError(t('auth.err.emailFirst')); return }
     if (turnstile.enabled && !turnstile.token) {
-      setError('Completa la verificación de seguridad.')
+      setError(t('auth.err.captcha'))
       return
     }
     setError('')
@@ -50,7 +52,7 @@ export default function MobileLoginPage() {
       await startNativePasswordRecovery(email, turnstile.token)
       setResetSent(true)
     } catch {
-      setError('No se pudo enviar el email. Inténtalo de nuevo.')
+      setError(t('auth.err.emailSend'))
     } finally {
       turnstile.reset()   // el token se consume en cada intento, salga bien o mal
       setLoading(false)
@@ -61,7 +63,7 @@ export default function MobileLoginPage() {
     e.preventDefault()
     setError('')
     if (turnstile.enabled && !turnstile.token) {
-      setError('Completa la verificación de seguridad.')
+      setError(t('auth.err.captcha'))
       return
     }
     setLoading(true)
@@ -75,7 +77,7 @@ export default function MobileLoginPage() {
       navigate('/')
     } catch (err) {
       setError(err.message === 'Invalid login credentials'
-        ? 'Email o contraseña incorrectos'
+        ? t('auth.err.badCredentials')
         : err.message)
       turnstile.reset()   // el token ya se ha consumido, hace falta uno nuevo
     } finally {
@@ -88,7 +90,7 @@ export default function MobileLoginPage() {
       {/* Logo */}
       <div className="mb-10 text-center">
         <h1><Logo size="xl" subtitle="Scan" /></h1>
-        <p className="text-slate-400 mt-1 text-sm">Escanea y graba tus apuntes</p>
+        <p className="text-slate-400 mt-1 text-sm">{t('auth.scanTagline')}</p>
       </div>
 
       {/* Info MyStudy AI */}
@@ -104,7 +106,7 @@ export default function MobileLoginPage() {
       <form onSubmit={login} className="w-full max-w-sm space-y-4">
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t('auth.email')}
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
@@ -112,7 +114,7 @@ export default function MobileLoginPage() {
                      border border-slate-700 focus:border-primary-500 outline-none text-base"
         />
         <PasswordInput
-          placeholder="Contraseña"
+          placeholder={t('auth.password')}
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
@@ -131,7 +133,7 @@ export default function MobileLoginPage() {
 
         {resetSent && (
           <p className="text-green-400 text-sm text-center">
-            📧 Te hemos enviado un enlace para restablecer tu contraseña.
+            📧 {t('auth.resetSent')}
           </p>
         )}
 
@@ -141,7 +143,7 @@ export default function MobileLoginPage() {
           className="w-full py-4 rounded-xl bg-primary-600 text-white font-bold text-base
                      active:bg-primary-700 disabled:opacity-50 transition-colors"
         >
-          {loading ? 'Entrando...' : 'Iniciar sesión'}
+          {loading ? t('auth.loading') : t('auth.signIn')}
         </button>
 
         <button
@@ -150,7 +152,7 @@ export default function MobileLoginPage() {
           disabled={loading}
           className="w-full text-slate-500 active:text-slate-300 text-sm transition-colors"
         >
-          ¿Olvidaste tu contraseña?
+          {t('auth.forgot')}
         </button>
       </form>
 
@@ -173,11 +175,11 @@ export default function MobileLoginPage() {
           <path fill="#FBBC05" d="M5.31 14.33A7.2 7.2 0 0 1 4.93 12c0-.81.14-1.6.38-2.33V6.58H1.3A11.98 11.98 0 0 0 0 12c0 1.94.46 3.77 1.3 5.42l4.01-3.09z"/>
           <path fill="#EA4335" d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.94 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.3 6.58l4.01 3.09C6.25 6.85 8.89 4.75 12 4.75z"/>
         </svg>
-        Continuar con Google
+        {t('auth.googleContinue')}
       </button>
 
       <p className="text-slate-500 text-xs mt-8 text-center">
-        Para crear una cuenta, usa la versión web de MyStudy AI
+        {t('auth.registerOnWeb')}
       </p>
     </div>
   )
