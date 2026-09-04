@@ -25,6 +25,33 @@ const SOCIAL_LINKS = [
   { Icon: IconBrandYoutube,   href: 'https://youtube.com/@mystudyai-h6p', label: 'YouTube' },
 ]
 
+// Requisitos de contrasena, comprobados ANTES de llamar a Supabase: asi el
+// usuario ve el motivo en su idioma en vez del error en ingles del servidor.
+// El freno de verdad es el del panel de Supabase (nadie lo salta llamando a la
+// API); esto es la capa amable de encima, y debe ir igual o mas estricta.
+export const PASSWORD_MIN = 8
+
+export function passwordProblem(pw) {
+  if (pw.length < PASSWORD_MIN) return 'length'
+  if (!/[a-zà-ÿ]/.test(pw)) return 'lower'
+  if (!/[A-ZÀ-Þ]/.test(pw)) return 'upper'
+  if (!/[0-9]/.test(pw)) return 'digit'
+  // Cualquier cosa que no sea letra ni numero cuenta como simbolo, incluido el
+  // espacio: no vale enumerar una lista y dejar fuera los teclados de otros
+  // idiomas.
+  if (!/[^a-zA-ZÀ-ÿ0-9]/.test(pw)) return 'symbol'
+  return null
+}
+
+// Esta pantalla esta en espanol fijo (no usa i18n, como el resto del archivo).
+const PASSWORD_ERRORES = {
+  length: `La contraseña debe tener al menos ${PASSWORD_MIN} caracteres.`,
+  lower:  'La contraseña debe incluir alguna letra minúscula.',
+  upper:  'La contraseña debe incluir alguna letra mayúscula.',
+  digit:  'La contraseña debe incluir algún número.',
+  symbol: 'La contraseña debe incluir algún símbolo (por ejemplo # @ ! $ %).',
+}
+
 export default function LoginPage() {
   const { user, beginPasswordRecovery } = useAuth()
   const navigate = useNavigate()
@@ -200,6 +227,12 @@ export default function LoginPage() {
 
       } else {
         // ── Crear cuenta ──────────────────────────────────────────
+        const problema = passwordProblem(password)
+        if (problema) {
+          setError(PASSWORD_ERRORES[problema])
+          setLoading(false)
+          return
+        }
         if (password !== passwordConfirm) {
           setError('Las contraseñas no coinciden.')
           setLoading(false)
@@ -447,7 +480,7 @@ export default function LoginPage() {
             <PasswordInput
               value={password}
               onChange={e => setPassword(e.target.value)}
-              placeholder={mode === 'register' ? 'Mínimo 6 caracteres' : '••••••••'}
+              placeholder={mode === 'register' ? `Mínimo ${PASSWORD_MIN}: mayúscula, minúscula, número y símbolo` : '••••••••'}
               required
               autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
               className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-primary-500 transition"
