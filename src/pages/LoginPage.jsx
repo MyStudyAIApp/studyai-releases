@@ -518,9 +518,9 @@ export default function LoginPage() {
               />
               <span>
                 Acepto los{' '}
-                <Link to="/terminos" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
+                <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
                 {' '}y la{' '}
-                <Link to="/privacidad" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
+                <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
               </span>
             </label>
           )}
@@ -576,9 +576,9 @@ export default function LoginPage() {
         {mode === 'login' && (
           <p className="text-[11px] text-slate-500 text-center mt-2">
             Si continúas con Google y aún no tienes cuenta, aceptas los{' '}
-            <Link to="/terminos" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
+            <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">Términos y Condiciones</Link>
             {' '}y la{' '}
-            <Link to="/privacidad" target="_blank" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
+            <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">Política de Privacidad</Link>
           </p>
         )}
 
@@ -591,9 +591,9 @@ export default function LoginPage() {
         </button>
 
         <div className="flex items-center justify-center gap-4 text-[11px] text-slate-600 mt-3">
-          <Link to="/terminos" target="_blank" className="hover:text-slate-400">Términos</Link>
-          <Link to="/privacidad" target="_blank" className="hover:text-slate-400">Privacidad</Link>
-          <Link to="/cookies" target="_blank" className="hover:text-slate-400">Cookies</Link>
+          <Link to="/terminos" className="hover:text-slate-400">Términos</Link>
+          <Link to="/privacidad" className="hover:text-slate-400">Privacidad</Link>
+          <Link to="/cookies" className="hover:text-slate-400">Cookies</Link>
         </div>
 
         <div className="flex items-center justify-center gap-4 mt-4">

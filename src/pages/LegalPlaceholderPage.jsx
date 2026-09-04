@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import Logo from '../components/UI/Logo'
 
@@ -26,7 +26,17 @@ const DOCS = {
 
 export default function LegalPlaceholderPage({ docKey }) {
   const { t, i18n } = useTranslation()
+  const navigate = useNavigate()
+  const location = useLocation()
   const doc = DOCS[docKey]
+
+  // Volver a la pantalla anterior, no a la portada: quien abre las Condiciones
+  // desde el formulario de registro tiene que poder regresar a lo que estaba
+  // rellenando. React Router marca con key 'default' la primera entrada del
+  // historial (se llego aqui por URL directa), y en ese caso no hay atras al
+  // que volver: se cae a la portada.
+  const hayAtras = location.key !== 'default'
+  const volver = () => (hayAtras ? navigate(-1) : navigate('/'))
 
   // Estas paginas llevan los datos identificativos del Titular (nombre,
   // domicilio y NIF) porque los exige el art. 10 LSSI. Que sean publicas es
@@ -59,9 +69,13 @@ export default function LegalPlaceholderPage({ docKey }) {
         </div>
 
         <div className="text-center my-6">
-          <Link to="/" className="text-slate-500 hover:text-slate-300 text-sm transition-colors">
+          <button
+            type="button"
+            onClick={volver}
+            className="text-slate-500 hover:text-slate-300 text-sm transition-colors"
+          >
             {t('landing.legal.backHome')}
-          </Link>
+          </button>
         </div>
       </div>
     </div>

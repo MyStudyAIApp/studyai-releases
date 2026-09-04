@@ -1010,7 +1010,7 @@ export default function SettingsPage() {
       {IS_WEB && (
         <CollapsibleCard icon="↩️" title="Derecho de desistimiento" defaultOpen={false}>
           <p className="text-sm text-slate-400 mb-3">
-            Si acaba de contratar un plan de pago o un bono, tiene derecho a desistir del contrato en los 14 días siguientes, sin necesidad de justificación. Más detalles en los <Link to="/terminos" target="_blank" className="underline">Términos y Condiciones</Link>.
+            Si acaba de contratar un plan de pago o un bono, tiene derecho a desistir del contrato en los 14 días siguientes, sin necesidad de justificación. Más detalles en los <Link to="/terminos" className="underline">Términos y Condiciones</Link>.
           </p>
           <button onClick={openWithdrawalModal} className="btn-secondary btn-sm">
             Ejercer mi derecho de desistimiento
@@ -1644,9 +1644,9 @@ export default function SettingsPage() {
 
       {/* ── Enlaces legales ──────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 pt-2">
-        <Link to="/terminos" target="_blank" className="hover:text-slate-300">{t('landing.footer.terms')}</Link>
-        <Link to="/privacidad" target="_blank" className="hover:text-slate-300">{t('landing.footer.privacy')}</Link>
-        <Link to="/cookies" target="_blank" className="hover:text-slate-300">Cookies</Link>
+        <Link to="/terminos" className="hover:text-slate-300">{t('landing.footer.terms')}</Link>
+        <Link to="/privacidad" className="hover:text-slate-300">{t('landing.footer.privacy')}</Link>
+        <Link to="/cookies" className="hover:text-slate-300">Cookies</Link>
         <a href="mailto:support@mystudyai.eu" className="hover:text-slate-300">support@mystudyai.eu</a>
       </div>
     </div>
