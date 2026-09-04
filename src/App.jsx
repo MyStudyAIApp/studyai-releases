@@ -39,16 +39,23 @@ import i18n from './i18n'
 // ── Candado de MyStudy Admin ──────────────────────────────────────────────────
 // La app MyStudy Admin (Capacitor aparte, solo para el dueño) navega aquí con
 // ?adminLock=1 (delante del #, así llega como parámetro real de la URL, no
-// como parte del hash de la SPA). Se persiste en ESTE dominio (localStorage
-// es por origen, la propia app no puede escribirlo por adelantado) para que
-// el candado se mantenga aunque se cierre y reabra la app más adelante.
-// ?adminLock=0 lo DESACTIVA: sin esta salida, cualquier navegador que abriera
-// una vez la URL con adminLock=1 se quedaba encerrado en el panel para siempre,
-// sin forma de volver a usar la web normal (le paso al dueno en su movil).
+// como parte del hash de la SPA), y el candado bloquea toda ruta que no sea el
+// panel para que ese acceso rápido no acabe navegando por el resto de la cuenta.
+//
+// ⚠️ Vive en sessionStorage, NO en localStorage. Con localStorage bastaba abrir
+// esa URL UNA vez en un navegador para dejarlo encerrado en el panel PARA
+// SIEMPRE, sin forma de volver a usar la web normal. No era hipotético: la app
+// Admin no tiene `server.allowNavigation`, así que Capacitor le pasaba la URL
+// al navegador del sistema, y cada arranque de la app candaba el Chrome del
+// dueño (3/9/2026). Persistir no aportaba nada, además, porque la app SIEMPRE
+// llega con el parámetro en la URL: el candado se vuelve a poner solo en cada
+// arranque. Por pestaña protege igual y se deshace al cerrarla.
 if (typeof window !== 'undefined') {
   const marca = new URLSearchParams(window.location.search).get('adminLock')
-  if (marca === '1') localStorage.setItem('studyai_admin_lock', '1')
-  else if (marca === '0') localStorage.removeItem('studyai_admin_lock')
+  if (marca === '1') sessionStorage.setItem('studyai_admin_lock', '1')
+  else if (marca === '0') sessionStorage.removeItem('studyai_admin_lock')
+  // Limpia el candado permanente que dejaron las versiones anteriores.
+  localStorage.removeItem('studyai_admin_lock')
 }
 
 // ── Guardia de rutas ──────────────────────────────────────────────────────────
@@ -229,7 +236,7 @@ function AppInner() {
   // hooks ejecutados varía entre renders y React lanza "Rendered more
   // hooks than during the previous render" (visto en producción vía Sentry,
   // solo en Android WebView, porque ahí SÍ se pasa por el return de móvil).
-  const isAdminLockedApp = typeof window !== 'undefined' && localStorage.getItem('studyai_admin_lock') === '1'
+  const isAdminLockedApp = typeof window !== 'undefined' && sessionStorage.getItem('studyai_admin_lock') === '1'
   useEffect(() => {
     if (!isAdminLockedApp) return
     // Las paginas legales quedan fuera del candado: son publicas, no dan

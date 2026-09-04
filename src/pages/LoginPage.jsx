@@ -35,7 +35,7 @@ export default function LoginPage() {
   // activo, o de donde ProtectedRoute redirigió) -- si no hay ninguno, /home.
   useEffect(() => {
     if (!user) return
-    const isAdminLockedApp = localStorage.getItem('studyai_admin_lock') === '1'
+    const isAdminLockedApp = sessionStorage.getItem('studyai_admin_lock') === '1'
     navigate(isAdminLockedApp ? '/admin' : (location.state?.from || '/home'), { replace: true })
   }, [user])
   const [mode, setMode]         = useState('login')   // 'login' | 'register' | 'sent' | 'confirmed'
