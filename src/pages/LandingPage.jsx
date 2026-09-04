@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import Logo from '../components/UI/Logo'
 import ParticleBackground from '../components/Landing/ParticleBackground'
 import { useScrollProgress } from '../hooks/useScrollProgress'
-import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconBrandYoutube } from '@tabler/icons-react'
+import { IconBrandInstagram, IconBrandFacebook, IconBrandTiktok, IconBrandYoutube, IconCrown } from '@tabler/icons-react'
 
 const SOCIAL_LINKS = [
   { Icon: IconBrandInstagram, href: 'https://instagram.com/mystudyaiapp', label: 'Instagram' },
@@ -298,16 +298,28 @@ export default function LandingPage() {
             </ul>
             <Link to="/login" className="btn-secondary w-full justify-center mt-auto">{t('landing.pricing.freeCta')}</Link>
           </div>
-          <div className="card border-primary-600/60 h-full flex flex-col">
-            <span className="badge-purple mb-3">{t('landing.pricing.proBadge')}</span>
-            <p className="text-2xl font-bold text-slate-100 mb-1">{t('landing.pricing.proPrice')}</p>
+          {/* Mismos ámbar y degradado que la tarjeta "Hazte Pro" de Home, que
+              destaca más que el morado y deja las dos pantallas coherentes. */}
+          <div className="card h-full flex flex-col border-amber-500/40 bg-gradient-to-br from-amber-500/10 to-yellow-600/10">
+            <span className="badge mb-3 self-start bg-amber-900/40 text-amber-300 border border-amber-600/60 inline-flex items-center gap-1">
+              <IconCrown size={13} /> {t('landing.pricing.proBadge')}
+            </span>
+            <p className="text-2xl font-bold text-slate-100">{t('landing.pricing.proPrice')}</p>
+            <p className="text-[11px] text-slate-500 mb-1">{t('landing.pricing.proTax')}</p>
+            <p className="text-xs font-semibold text-amber-300 mb-1">{t('landing.pricing.proTrial')}</p>
             <p className="text-xs text-slate-500 mb-4">{t('landing.pricing.proSubtitle')}</p>
             <ul className="text-sm text-slate-300 space-y-2 mb-6">
               <li>✓ {t('landing.pricing.proItem1')}</li>
               <li>✓ {t('landing.pricing.proItem2')}</li>
               <li>✓ {t('landing.pricing.proItem3')}</li>
+              <li>✓ {t('landing.pricing.proItem4')}</li>
             </ul>
-            <Link to="/login" className="btn-primary w-full justify-center mt-auto">{t('landing.pricing.proCta')}</Link>
+            <Link
+              to="/login"
+              className="w-full justify-center mt-auto py-3 rounded-xl font-semibold text-sm inline-flex items-center bg-amber-500 hover:bg-amber-600 text-slate-900 transition-colors"
+            >
+              {t('landing.pricing.proCta')}
+            </Link>
           </div>
         </div>
       </section>
