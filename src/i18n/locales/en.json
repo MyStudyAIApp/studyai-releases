@@ -1027,14 +1027,13 @@
       "freeCta": "Start for free",
       "proBadge": "PRO",
       "proPrice": "€15/month",
-      "proSubtitle": "Extended use, no monthly limits",
+      "proSubtitle": "For everyday studying",
       "proItem1": "Unlimited flashcards, summaries and exams",
       "proItem2": "20 h of lecture transcription a month",
       "proItem3": "20 podcasts a month",
       "proCta": "Go Pro",
       "proTrial": "Try it free for 7 days, no card",
-      "proItem4": "Unrestricted tutor and language practice",
-      "proTax": "Taxes depend on your region and are calculated at checkout"
+      "proItem4": "Unrestricted tutor and language practice"
     },
     "download": {
       "title": "Download the app",

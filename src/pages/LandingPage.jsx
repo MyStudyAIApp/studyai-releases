@@ -305,8 +305,7 @@ export default function LandingPage() {
               <IconCrown size={13} /> {t('landing.pricing.proBadge')}
             </span>
             <p className="text-2xl font-bold text-slate-100">{t('landing.pricing.proPrice')}</p>
-            <p className="text-[11px] text-slate-500 mb-1">{t('landing.pricing.proTax')}</p>
-            <p className="text-xs font-semibold text-amber-300 mb-1">{t('landing.pricing.proTrial')}</p>
+            <p className="text-xs font-semibold text-amber-300 mb-1 mt-1">{t('landing.pricing.proTrial')}</p>
             <p className="text-xs text-slate-500 mb-4">{t('landing.pricing.proSubtitle')}</p>
             <ul className="text-sm text-slate-300 space-y-2 mb-6">
               <li>✓ {t('landing.pricing.proItem1')}</li>
