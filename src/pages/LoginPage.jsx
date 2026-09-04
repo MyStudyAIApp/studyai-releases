@@ -62,7 +62,12 @@ export default function LoginPage() {
   useEffect(() => {
     if (!IS_WEB) return
     const hash = window.location.hash
-    if (!hash) return
+    // Bajo HashRouter el hash ES la ruta ("#/login", "#/terminos"...). Un
+    // callback de Supabase llega siempre como "#access_token=...", "#error=..."
+    // o similar, nunca empezando por "#/". Sin esta comprobacion, el
+    // replaceState del final borraba la ruta actual y devolvia al usuario a la
+    // portada: era imposible abrir Condiciones/Privacidad/Cookies.
+    if (!hash || hash.startsWith('#/')) return
     const params = new URLSearchParams(hash.slice(1))
     const errorCode = params.get('error_code')
     const type = params.get('type')

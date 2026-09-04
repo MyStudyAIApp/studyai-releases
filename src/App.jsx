@@ -42,8 +42,13 @@ import i18n from './i18n'
 // como parte del hash de la SPA). Se persiste en ESTE dominio (localStorage
 // es por origen, la propia app no puede escribirlo por adelantado) para que
 // el candado se mantenga aunque se cierre y reabra la app más adelante.
-if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('adminLock') === '1') {
-  localStorage.setItem('studyai_admin_lock', '1')
+// ?adminLock=0 lo DESACTIVA: sin esta salida, cualquier navegador que abriera
+// una vez la URL con adminLock=1 se quedaba encerrado en el panel para siempre,
+// sin forma de volver a usar la web normal (le paso al dueno en su movil).
+if (typeof window !== 'undefined') {
+  const marca = new URLSearchParams(window.location.search).get('adminLock')
+  if (marca === '1') localStorage.setItem('studyai_admin_lock', '1')
+  else if (marca === '0') localStorage.removeItem('studyai_admin_lock')
 }
 
 // ── Guardia de rutas ──────────────────────────────────────────────────────────
@@ -227,7 +232,10 @@ function AppInner() {
   const isAdminLockedApp = typeof window !== 'undefined' && localStorage.getItem('studyai_admin_lock') === '1'
   useEffect(() => {
     if (!isAdminLockedApp) return
-    if (routeLocation.pathname !== '/admin' && routeLocation.pathname !== '/login') {
+    // Las paginas legales quedan fuera del candado: son publicas, no dan
+    // acceso a nada de la cuenta, y la ley obliga a que se puedan consultar.
+    const PERMITIDAS = ['/admin', '/login', '/terminos', '/privacidad', '/cookies']
+    if (!PERMITIDAS.includes(routeLocation.pathname)) {
       navigate('/admin', { replace: true })
     }
   }, [isAdminLockedApp, routeLocation.pathname])
