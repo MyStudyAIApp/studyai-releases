@@ -869,8 +869,8 @@ export default function Library() {
             <div className="flex items-start gap-3">
               <span className="text-lg leading-none mt-0.5">⏳</span>
               <p className="flex-1 text-xs text-amber-200/90 leading-relaxed">
-                El archivo original (PDF/foto) que subes se borra automáticamente a los <b>10 días</b> para
-                ahorrar espacio (te avisamos por email 3 días antes) — tus resúmenes, fichas y exámenes
+                El archivo original (PDF/foto) que subes se borra automáticamente a los <b>10 días</b>
+                (te avisamos por email 3 días antes) — tus resúmenes, fichas y exámenes
                 generados <b>se conservan siempre</b>.
                 Si quieres guardar el archivo original, descárgalo a tu ordenador o móvil antes de que pasen esos días.
               </p>

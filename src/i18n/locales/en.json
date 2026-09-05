@@ -753,6 +753,14 @@
       "preparing": "Preparing…",
       "requested": "Done. We'll email you the download link as soon as it's ready.",
       "error": "The download could not be generated."
+    },
+    "retention": {
+      "title": "How long your files are kept",
+      "subtitle": "What gets deleted on its own, and when",
+      "originals": "The original files you upload (PDF or photo) are deleted automatically after 10 days.",
+      "exercises": "Exercises you solve are kept for 10 days.",
+      "generated": "Your summaries, flashcards and exams are kept forever.",
+      "download": "To keep an original file or an exercise, download it before the deadline."
     }
   },
   "languages": {

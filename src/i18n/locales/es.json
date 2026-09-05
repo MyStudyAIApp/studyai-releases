@@ -753,6 +753,14 @@
       "preparing": "Preparando…",
       "requested": "Hecho. Te avisaremos por email con el enlace de descarga en cuanto esté listo.",
       "error": "No se pudo generar la descarga."
+    },
+    "retention": {
+      "title": "Conservación de tus archivos",
+      "subtitle": "Qué se borra solo y cuándo",
+      "originals": "Los archivos originales que subes (PDF o foto) se borran automáticamente a los 10 días.",
+      "exercises": "Los ejercicios que resuelves se conservan 10 días.",
+      "generated": "Tus resúmenes, fichas y exámenes se conservan siempre.",
+      "download": "Si quieres quedarte con un original o un ejercicio, descárgalo antes de que pase el plazo."
     }
   },
   "languages": {

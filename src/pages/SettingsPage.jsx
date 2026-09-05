@@ -22,6 +22,7 @@ import WeeklyHoursWidget, { loadWeeklyHours, saveWeeklyHours } from '../componen
 import FeedbackModal from '../components/UI/FeedbackModal'
 import Modal from '../components/UI/Modal'
 import CanariasPromptModal from '../components/UI/CanariasPromptModal'
+import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
 import { useBillingRegion } from '../hooks/useBillingRegion'
 import { subscribeToPush, unsubscribeFromPush, isPushSubscribed, isPushSupported } from '../services/pushNotifications'
 import { THEMES, getTheme, applyTheme } from '../services/themeService'
@@ -1373,6 +1374,29 @@ export default function SettingsPage() {
             )}
           </>
         )}
+      </CollapsibleCard>
+
+      {/* ── Conservación de archivos ─────────────────────────── */}
+      {/* Los avisos de la Biblioteca y de Resolver ejercicio se cierran con una
+          X que es PERMANENTE (no hay endpoint para restaurarlos), y arrastraban
+          consigo el interruptor de avisos por email. Aquí la información queda
+          siempre accesible, que es lo que se busca cuando uno se pregunta
+          cuánto le duran los archivos. */}
+      <CollapsibleCard
+        icon="⏳"
+        title={t('settings.retention.title')}
+        subtitle={t('settings.retention.subtitle')}
+        defaultOpen={false}
+      >
+        <ul className="space-y-2 text-xs text-slate-400 leading-relaxed">
+          <li>• {t('settings.retention.originals')}</li>
+          <li>• {t('settings.retention.exercises')}</li>
+          <li>• {t('settings.retention.generated')}</li>
+          <li>• {t('settings.retention.download')}</li>
+        </ul>
+        <div className="mt-4 pt-3 border-t border-slate-700/40">
+          <EmailWarningsToggle />
+        </div>
       </CollapsibleCard>
 
       {/* ── Copias de seguridad (solo escritorio) ───────────────────── */}

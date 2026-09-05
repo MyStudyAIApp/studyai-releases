@@ -753,6 +753,14 @@
       "preparing": "Wird vorbereitet…",
       "requested": "Erledigt. Wir senden dir den Download-Link per E-Mail, sobald er bereit ist.",
       "error": "Der Download konnte nicht erstellt werden."
+    },
+    "retention": {
+      "title": "Aufbewahrung deiner Dateien",
+      "subtitle": "Was von selbst gelöscht wird und wann",
+      "originals": "Die von dir hochgeladenen Originaldateien (PDF oder Foto) werden nach 10 Tagen automatisch gelöscht.",
+      "exercises": "Gelöste Aufgaben werden 10 Tage lang aufbewahrt.",
+      "generated": "Deine Zusammenfassungen, Karteikarten und Prüfungen bleiben dauerhaft erhalten.",
+      "download": "Wenn du eine Originaldatei oder eine Aufgabe behalten möchtest, lade sie vor Ablauf der Frist herunter."
     }
   },
   "languages": {
