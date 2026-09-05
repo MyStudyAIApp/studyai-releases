@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import { supabase, WEB_API } from '../lib/supabase'
-import { marcarRecuperacionPendiente } from '../lib/recoveryWeb'
+import { marcarRecuperacionPendiente, errorDeEnlace, URL_DE_ENTRADA } from '../lib/recoveryWeb'
 import { IS_WEB, IS_ELECTRON, IS_MOBILE } from '../store/appStore'
 import { App as CapacitorApp } from '@capacitor/app'
 import { Browser } from '@capacitor/browser'
@@ -88,6 +88,15 @@ export default function LoginPage() {
     // o similar, nunca empezando por "#/". Sin esta comprobacion, el
     // replaceState del final borraba la ruta actual y devolvia al usuario a la
     // portada: era imposible abrir Condiciones/Privacidad/Cookies.
+    // Con PKCE el error NO viene en el hash sino en la query (?error=...), asi
+    // que se mira la URL de entrada entera. Sin esto, un enlace ya usado o
+    // caducado dejaba al usuario en el login sin ninguna explicacion.
+    const fallo = errorDeEnlace(URL_DE_ENTRADA)
+    if (fallo) {
+      setError(fallo === 'caducado' ? t('auth.err.recoveryExpired') : t('auth.err.linkInvalid'))
+      window.history.replaceState(null, '', window.location.pathname)
+      return
+    }
     if (!hash || hash.startsWith('#/')) return
     const params = new URLSearchParams(hash.slice(1))
     const errorCode = params.get('error_code')

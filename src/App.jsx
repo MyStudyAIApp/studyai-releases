@@ -22,6 +22,7 @@ import OnboardingTutorial from './components/Onboarding/OnboardingTutorial'
 import WelcomeCard from './components/Onboarding/WelcomeCard'
 import LoginPage from './pages/LoginPage'
 import LandingPage from './pages/LandingPage'
+import { errorDeEnlace, URL_DE_ENTRADA } from './lib/recoveryWeb'
 import LegalPlaceholderPage from './pages/LegalPlaceholderPage'
 import AdminPage from './pages/AdminPage'
 import SyncPage from './pages/SyncPage'
@@ -84,6 +85,10 @@ function RootRoute() {
     </div>
   )
   if (user) return <Navigate to="/home" replace />
+  // Supabase manda los enlaces fallidos (caducado, ya usado) a la RAIZ, no a
+  // /login: el aviso vive en LoginPage, asi que sin este desvio el usuario
+  // aterrizaba en la portada sin enterarse de por que no habia pasado nada.
+  if (errorDeEnlace(URL_DE_ENTRADA)) return <Navigate to="/login" replace />
   if (!IS_WEB) return <Navigate to="/login" replace />
   return <LandingPage />
 }

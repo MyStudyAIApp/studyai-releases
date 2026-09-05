@@ -26,10 +26,35 @@ export function marcarRecuperacionPendiente() {
   try { localStorage.setItem(MARCA, String(Date.now())) } catch { /* modo privado */ }
 }
 
+/**
+ * Error devuelto por Supabase al volver de un enlace, o null si no lo hay.
+ * Con PKCE llega en la QUERY (?error=...); en el flujo antiguo, en el hash.
+ * Se miran los dos: un enlace ya usado o caducado dejaba al usuario en el
+ * login sin ninguna explicación.
+ */
+export function errorDeEnlace(url) {
+  if (!url) return null
+  const trozos = []
+  const q = url.indexOf('?')
+  if (q !== -1) trozos.push(url.slice(q + 1).split('#')[0])
+  const h = url.indexOf('#')
+  // Bajo HashRouter el hash es la ruta ("#/login"), no un callback.
+  if (h !== -1 && !url.slice(h).startsWith('#/')) trozos.push(url.slice(h + 1))
+
+  for (const t of trozos) {
+    const p = new URLSearchParams(t)
+    const codigo = p.get('error_code')
+    if (codigo === 'otp_expired' || codigo === 'otp_disabled') return 'caducado'
+    if (p.get('error')) return 'invalido'
+  }
+  return null
+}
+
 /** Decisión pura, para poder probarla sin navegador. */
 export function esVueltaDeRecuperacion(url, marcaMs, ahoraMs) {
   if (!url || !marcaMs) return false
   if (ahoraMs - marcaMs > TTL_MS) return false          // marca caducada
+  if (errorDeEnlace(url)) return false                   // el enlace ya no valía
   return url.includes('code=')                           // volvemos de un enlace
 }
 
