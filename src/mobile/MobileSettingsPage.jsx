@@ -10,6 +10,7 @@ import { api, useAppStore, detectIsFullMobileApp } from '../store/appStore'
 import Billing from '../lib/billingPlugin'
 import MobileTabBar from './MobileTabBar'
 import FeedbackModal from '../components/UI/FeedbackModal'
+import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
 import { IconSettings, IconLoader2, IconCircleCheck, IconDeviceFloppy, IconMessageCircle, IconLogout, IconCrown } from '@tabler/icons-react'
 
 const DAY_OPTIONS = [1, 2, 3, 5, 7, 14]
@@ -298,6 +299,27 @@ export default function MobileSettingsPage() {
             )}
           </section>
         )}
+
+        {/* ── Conservación de archivos ── */}
+        {/* El aviso de Resolver ejercicio se cierra con una X permanente, y en
+            móvil ni siquiera lleva el interruptor de avisos por email. Aquí la
+            información y el control quedan siempre a mano. */}
+        <section>
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
+            Conservación de tus archivos
+          </p>
+          <div className="bg-slate-800 rounded-2xl px-4 py-4 space-y-3">
+            <ul className="space-y-2 text-xs text-slate-400 leading-relaxed">
+              <li>• Los archivos originales que subes (PDF o foto) se borran automáticamente a los 10 días.</li>
+              <li>• Los ejercicios que resuelves se conservan 10 días.</li>
+              <li>• Tus resúmenes, fichas y exámenes se conservan siempre.</li>
+              <li>• Si quieres quedarte con un original o un ejercicio, descárgalo antes de que pase el plazo.</li>
+            </ul>
+            <div className="pt-3 border-t border-slate-700/40">
+              <EmailWarningsToggle />
+            </div>
+          </div>
+        </section>
 
         {/* ── Feedback ── */}
         <section>
