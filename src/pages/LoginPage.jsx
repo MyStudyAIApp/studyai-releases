@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useTranslation, Trans } from 'react-i18next'
 import { supabase, WEB_API } from '../lib/supabase'
+import { marcarRecuperacionPendiente } from '../lib/recoveryWeb'
 import { IS_WEB, IS_ELECTRON, IS_MOBILE } from '../store/appStore'
 import { App as CapacitorApp } from '@capacitor/app'
 import { Browser } from '@capacitor/browser'
@@ -181,6 +182,9 @@ export default function LoginPage() {
           ...(turnstile.enabled ? { captchaToken: turnstile.token } : {}),
         })
         if (error) throw error
+        // La vuelta del enlace se detecta con esta marca, no con el evento
+        // PASSWORD_RECOVERY: se dispara antes de que AuthContext escuche.
+        marcarRecuperacionPendiente()
       } else {
         // Escritorio y móvil: el enlace debe volver A LA APP, no a la web. Con
         // PKCE el código solo se canjea donde se guardó el verificador; si abre

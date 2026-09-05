@@ -14,6 +14,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { consumirVueltaDeRecuperacion } from '../lib/recoveryWeb'
 
 // Crear el "canal de comunicación" (contexto)
 const AuthContext = createContext(null)
@@ -27,6 +28,12 @@ export function AuthProvider({ children }) {
   const [isPasswordRecovery, setIsPasswordRecovery] = useState(false)
 
   useEffect(() => {
+    // WEB: el evento PASSWORD_RECOVERY se dispara al canjear el ?code=, que
+    // ocurre al importar supabase-js — antes de que esto se suscriba. Así que
+    // no basta con escucharlo: se comprueba también la marca que dejó
+    // LoginPage al pedir el correo (ver src/lib/recoveryWeb.js).
+    if (consumirVueltaDeRecuperacion()) setIsPasswordRecovery(true)
+
     // Al arrancar: recuperar la sesión guardada en el navegador (si existe)
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
