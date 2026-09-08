@@ -150,11 +150,14 @@ export default function NotebookPage() {
   // impresion del navegador ya trae "Guardar como PDF" en los tres sistemas.
   // Montar un generador de PDF propio seria mucho codigo para lo mismo.
   const imprimir = (c) => {
-    document.body.classList.add('imprimiendo')
-    document.getElementById(`cuaderno-${c.id}`)?.classList.add('hoja')
+    // `print-target` y `no-print` salen de src/styles/print.css, que ya carga
+    // main.jsx para toda la app: oculta lo demas, pone A4 con margenes, la
+    // tipografia y los colores en claro sobre el tema oscuro. Reutilizarlo
+    // evita tener dos hojas de impresion distintas que se van separando.
+    const el = document.getElementById(`cuaderno-${c.id}`)
+    el?.classList.add('print-target')
     const limpiar = () => {
-      document.body.classList.remove('imprimiendo')
-      document.getElementById(`cuaderno-${c.id}`)?.classList.remove('hoja')
+      el?.classList.remove('print-target')
       window.removeEventListener('afterprint', limpiar)
     }
     window.addEventListener('afterprint', limpiar)
@@ -184,21 +187,6 @@ export default function NotebookPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      {/* Al imprimir se oculta la app entera y solo queda el cuaderno, en
-          negro sobre blanco: la pantalla es oscura y saldria un folio negro. */}
-      <style>{`
-        @media print {
-          body.imprimiendo * { visibility: hidden; }
-          body.imprimiendo .hoja, body.imprimiendo .hoja * {
-            visibility: visible; color: #000 !important; background: #fff !important;
-            border-color: #ccc !important;
-          }
-          body.imprimiendo .hoja {
-            position: absolute; left: 0; top: 0; width: 100%;
-          }
-          body.imprimiendo .hoja button { display: none; }
-        }
-      `}</style>
       <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2 mb-1">
         <IconNotebook size={24} className="text-primary-400" /> Mi cuaderno
       </h1>
@@ -315,7 +303,7 @@ export default function NotebookPage() {
               <div key={c.id} id={`cuaderno-${c.id}`}
                    className="bg-slate-800 rounded-xl border border-slate-700 mb-2 overflow-hidden">
                 <div className="flex items-center gap-3 px-4 py-3">
-                  <button onClick={() => desplegar(c.id)} className="text-slate-500 shrink-0">
+                  <button onClick={() => desplegar(c.id)} className="no-print text-slate-500 shrink-0">
                     {abierto === c.id ? <IconChevronDown size={16} /> : <IconChevronRight size={16} />}
                   </button>
                   <button onClick={() => desplegar(c.id)} className="flex-1 text-left min-w-0">
@@ -331,14 +319,14 @@ export default function NotebookPage() {
                       <button
                         onClick={() => imprimir(c)}
                         title="Imprimir o guardar en PDF"
-                        className="shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
+                        className="no-print shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
                       >
                         <IconPrinter size={16} />
                       </button>
                       <button
                         onClick={() => descargarWord(c)}
                         title="Descargar para Word"
-                        className="shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
+                        className="no-print shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
                       >
                         <IconFileTypeDoc size={16} />
                       </button>
@@ -346,7 +334,7 @@ export default function NotebookPage() {
                   )}
                   <button
                     onClick={() => navigate(`/document/${c.id}`)}
-                    className="shrink-0 text-xs text-primary-400 hover:text-primary-300 px-2 py-1"
+                    className="no-print shrink-0 text-xs text-primary-400 hover:text-primary-300 px-2 py-1"
                   >
                     Estudiar
                   </button>
