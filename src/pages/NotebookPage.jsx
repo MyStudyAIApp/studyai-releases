@@ -4,6 +4,7 @@ import { api, apiUpload, useAppStore } from '../store/appStore'
 import {
   IconNotebook, IconCamera, IconPlus, IconLoader2, IconFolder,
   IconBooks, IconCalendar, IconChevronDown, IconChevronRight,
+  IconPrinter, IconFileTypeDoc,
 } from '@tabler/icons-react'
 
 /**
@@ -129,6 +130,51 @@ export default function NotebookPage() {
     day: 'numeric', month: 'long', year: 'numeric',
   })
 
+  // Los apuntes en un solo documento, para llevarlos al papel o a Word. Se
+  // arma aqui y no en el servidor porque el texto ya esta descargado: no hace
+  // falta pedir nada ni gastar cupo por imprimir lo que el alumno ya tiene.
+  const comoHtml = (c) => {
+    const dias = (entradas[c.id] || [])
+      .map(e => `<h2>${fecha(e.date)}</h2><p>${e.text
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>')}</p>`)
+      .join('')
+    return `<html><head><meta charset="utf-8"><title>${c.title}</title></head>
+      <body style="font-family:Georgia,serif;line-height:1.6;max-width:800px;margin:auto">
+      <h1>${c.title}</h1>
+      <p style="color:#666">${c.subject_name}${c.topic_name ? ' — ' + c.topic_name : ''}</p>
+      ${dias}</body></html>`
+  }
+
+  // Un solo boton para imprimir Y para guardar en PDF: el dialogo de
+  // impresion del navegador ya trae "Guardar como PDF" en los tres sistemas.
+  // Montar un generador de PDF propio seria mucho codigo para lo mismo.
+  const imprimir = (c) => {
+    document.body.classList.add('imprimiendo')
+    document.getElementById(`cuaderno-${c.id}`)?.classList.add('hoja')
+    const limpiar = () => {
+      document.body.classList.remove('imprimiendo')
+      document.getElementById(`cuaderno-${c.id}`)?.classList.remove('hoja')
+      window.removeEventListener('afterprint', limpiar)
+    }
+    window.addEventListener('afterprint', limpiar)
+    window.print()
+  }
+
+  // Word abre HTML sin rechistar si el fichero se llama .doc; es la via mas
+  // corta que conserva titulos y saltos de pagina, sin meter una libreria.
+  const descargarWord = (c) => {
+    const blob = new Blob(['\ufeff', comoHtml(c)], { type: 'application/msword' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${c.title}.doc`
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    setTimeout(() => URL.revokeObjectURL(url), 1000)
+  }
+
   // Agrupar por asignatura para que se lea como su horario, no como una lista
   const porAsignatura = cuadernos.reduce((acc, c) => {
     const clave = c.subject_name || 'Sin asignatura'
@@ -138,6 +184,21 @@ export default function NotebookPage() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
+      {/* Al imprimir se oculta la app entera y solo queda el cuaderno, en
+          negro sobre blanco: la pantalla es oscura y saldria un folio negro. */}
+      <style>{`
+        @media print {
+          body.imprimiendo * { visibility: hidden; }
+          body.imprimiendo .hoja, body.imprimiendo .hoja * {
+            visibility: visible; color: #000 !important; background: #fff !important;
+            border-color: #ccc !important;
+          }
+          body.imprimiendo .hoja {
+            position: absolute; left: 0; top: 0; width: 100%;
+          }
+          body.imprimiendo .hoja button { display: none; }
+        }
+      `}</style>
       <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2 mb-1">
         <IconNotebook size={24} className="text-primary-400" /> Mi cuaderno
       </h1>
@@ -251,7 +312,8 @@ export default function NotebookPage() {
             </div>
 
             {lista.map(c => (
-              <div key={c.id} className="bg-slate-800 rounded-xl border border-slate-700 mb-2 overflow-hidden">
+              <div key={c.id} id={`cuaderno-${c.id}`}
+                   className="bg-slate-800 rounded-xl border border-slate-700 mb-2 overflow-hidden">
                 <div className="flex items-center gap-3 px-4 py-3">
                   <button onClick={() => desplegar(c.id)} className="text-slate-500 shrink-0">
                     {abierto === c.id ? <IconChevronDown size={16} /> : <IconChevronRight size={16} />}
@@ -264,6 +326,24 @@ export default function NotebookPage() {
                       {c.last_date && <> · último: {fecha(c.last_date)}</>}
                     </p>
                   </button>
+                  {abierto === c.id && entradas[c.id]?.length > 0 && (
+                    <>
+                      <button
+                        onClick={() => imprimir(c)}
+                        title="Imprimir o guardar en PDF"
+                        className="shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
+                      >
+                        <IconPrinter size={16} />
+                      </button>
+                      <button
+                        onClick={() => descargarWord(c)}
+                        title="Descargar para Word"
+                        className="shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
+                      >
+                        <IconFileTypeDoc size={16} />
+                      </button>
+                    </>
+                  )}
                   <button
                     onClick={() => navigate(`/document/${c.id}`)}
                     className="shrink-0 text-xs text-primary-400 hover:text-primary-300 px-2 py-1"
