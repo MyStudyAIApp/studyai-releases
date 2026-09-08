@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Filesystem, Directory } from '@capacitor/filesystem'
 import { Preferences } from '@capacitor/preferences'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
+import { verFuncion } from '../lib/betaFlags'
 import { api, apiUpload, useAppStore } from '../store/appStore'
 import { useDocumentScan } from './useDocumentScan'
 import {
   IconArrowLeft, IconCamera, IconPackage, IconCircleCheck, IconPencil, IconBooks,
   IconFolder, IconLoader2, IconRefresh, IconFileText, IconAlertTriangle,
-  IconFileTypePdf, IconWriting,
+  IconFileTypePdf, IconWriting, IconNotebook,
 } from '@tabler/icons-react'
 
 // Dónde se persiste el escaneo ANTES de intentar subirlo, en almacenamiento
@@ -44,7 +46,10 @@ export default function MobileScannerPage() {
   const [pdfUri, setPdfUri]         = useState(null)  // PDF file:// URI para subir (ya persistido)
   // Elegido por el alumno ANTES de abrir la cámara -- decide qué IA de OCR se
   // usa al subir (texto impreso: más barata; apuntes a mano: más cauta, sin probar)
-  const [contentType, setContentType] = useState(null)  // null | 'printed' | 'handwritten'
+  const [contentType, setContentType] = useState(
+    new URLSearchParams(window.location.hash.split('?')[1] || '').get('modo') === 'cuaderno'
+      ? 'handwritten' : null,
+  )  // null | 'printed' | 'handwritten'
   const [docName, setDocName]       = useState('')
   const [loading, setLoading]       = useState(false)
   const [subjects, setSubjects]     = useState([])
@@ -53,6 +58,13 @@ export default function MobileScannerPage() {
   const [topicId, setTopicId]       = useState('')
   const { scan: docScan, installing, installProgress } = useDocumentScan()
   const { addToast }                = useAppStore()
+  const { user }                    = useAuth()
+  const [params]                    = useSearchParams()
+  // 'cuaderno': en vez de crear un documento suelto, la transcripcion se SUMA
+  // al cuaderno de esa asignatura bajo la fecha de hoy. Se puede llegar aqui
+  // desde el acceso rapido del inicio (?modo=cuaderno) o eligiendolo abajo.
+  const [modoCuaderno, setModoCuaderno] = useState(params.get('modo') === 'cuaderno')
+  const verCuaderno                 = verFuncion('cuaderno', user)
   const navigate                    = useNavigate()
 
   // Cargar asignaturas solo una vez, no bloquea el escaneo si falla
@@ -153,6 +165,12 @@ export default function MobileScannerPage() {
 
   const guardar = async () => {
     if (!pdfUri && !previewB64) return
+    // En modo cuaderno la asignatura no es opcional: es donde se suman los
+    // apuntes. Sin ella el backend responderia 400 y el alumno perderia el
+    // escaneo sin entender por que.
+    if (modoCuaderno && !subjectId && !topicId) {
+      return addToast('Elige la asignatura para sumar estos apuntes', 'info', 4000)
+    }
     setLoading(true)
     const now = new Date()
     const fecha = now.toLocaleDateString('es-ES')
@@ -178,7 +196,14 @@ export default function MobileScannerPage() {
         if (pdfUri) {
           const blob = await fileUriToBlob(pdfUri, 'application/pdf')
           form.append('file', new File([blob], `${nombre}.pdf`, { type: 'application/pdf' }))
-          await apiUpload('/documents/upload', form)
+          await apiUpload(modoCuaderno ? '/notebooks/append' : '/documents/upload', form)
+        } else if (modoCuaderno) {
+          const binary = atob(previewB64)
+          const bytes  = new Uint8Array(binary.length)
+          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+          const blob = new Blob([bytes], { type: 'image/jpeg' })
+          form.append('file', new File([blob], `${nombre}.jpg`, { type: 'image/jpeg' }))
+          await apiUpload('/notebooks/append', form)
         } else {
           // Fallback: subir la imagen JPEG que ya tenemos en base64
           const binary = atob(previewB64)
@@ -191,7 +216,9 @@ export default function MobileScannerPage() {
       })
 
       await limpiarPendiente()
-      addToast('¡Apuntes guardados en tu biblioteca!', 'success')
+      addToast(modoCuaderno
+        ? '¡Apuntes sumados a tu cuaderno!'
+        : '¡Apuntes guardados en tu biblioteca!', 'success')
       navigate('/')
     } catch (e) {
       console.error('SCANNER_UPLOAD_ERROR', e?.message ?? String(e), e?.status, e?.name)
@@ -312,7 +339,9 @@ export default function MobileScannerPage() {
             >
               {loading
                 ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={18} className="animate-spin" /> Guardando...</span>
-                : <span className="flex items-center justify-center gap-2"><IconCircleCheck size={18} /> Guardar en biblioteca</span>}
+                : <span className="flex items-center justify-center gap-2">
+                    <IconCircleCheck size={18} /> {modoCuaderno ? 'Sumar a mi cuaderno' : 'Guardar en biblioteca'}
+                  </span>}
             </button>
             <button
               onClick={descartar}
@@ -357,6 +386,20 @@ export default function MobileScannerPage() {
                 <span className="block text-slate-500 text-xs">Tu propia letra manuscrita</span>
               </span>
             </button>
+
+            {verCuaderno && (
+              <button
+                onClick={() => { setModoCuaderno(true); chooseAndScan('handwritten') }}
+                className="w-full py-5 rounded-2xl bg-slate-800 border border-teal-700/60 active:bg-slate-700
+                           flex items-center gap-3 px-5 transition-colors"
+              >
+                <IconNotebook size={28} className="text-teal-400 shrink-0" />
+                <span className="text-left">
+                  <span className="block text-slate-100 font-semibold">Sumar a mi cuaderno</span>
+                  <span className="block text-slate-500 text-xs">Se junta con los apuntes de esa asignatura</span>
+                </span>
+              </button>
+            )}
 
             <p className="flex items-center justify-center gap-1.5 text-xs text-amber-500/80 text-center px-4">
               <IconAlertTriangle size={14} className="shrink-0" /> No escanees datos personales sensibles (DNI, nombres de terceros, etc.)

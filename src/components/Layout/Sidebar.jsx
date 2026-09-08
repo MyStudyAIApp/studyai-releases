@@ -4,8 +4,9 @@ import { useAppStore, IS_WEB, api } from '../../store/appStore'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
 import { getPlanTier } from '../../lib/plan'
+import { verFuncion } from '../../lib/betaFlags'
 import {
-  IconHome, IconBooks, IconBrain, IconFileText, IconWorld, IconMicrophone2,
+  IconHome, IconBooks, IconNotebook, IconBrain, IconFileText, IconWorld, IconMicrophone2,
   IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings, IconCloud,
   IconLogout,
 } from '@tabler/icons-react'
@@ -38,6 +39,11 @@ export default function Sidebar() {
   const navItems = [
     { to: '/home',      Icon: IconHome,        color: 'blue',   label: t('sidebar.home') },
     { to: '/library',   Icon: IconBooks,       color: 'purple', label: t('sidebar.library') },
+    // En pruebas: hasta que este rodado solo lo ve el propietario (lib/betaFlags).
+    // El backend ademas devuelve 404 a los demas, ocultar el boton no basta.
+    ...(verFuncion('cuaderno', user)
+      ? [{ to: '/cuaderno', Icon: IconNotebook, color: 'teal', label: t('sidebar.notebook') }]
+      : []),
     { to: '/study',     Icon: IconBrain,       color: 'green',  label: t('sidebar.study') },
     { to: '/exam',      Icon: IconFileText,    color: 'amber',  label: t('sidebar.exam') },
     { to: '/tutor',     emoji: '🦉', color: 'purple', label: t('sidebar.tutor') },

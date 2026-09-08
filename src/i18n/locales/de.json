@@ -14,6 +14,7 @@
   "sidebar": {
     "home": "Start",
     "library": "Bibliothek",
+    "notebook": "Mein Heft",
     "study": "Ausstehend",
     "exam": "Prüfung",
     "tutor": "Tutor",

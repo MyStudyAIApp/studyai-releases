@@ -14,6 +14,7 @@
   "sidebar": {
     "home": "Home",
     "library": "Library",
+    "notebook": "My notebook",
     "study": "Pending",
     "exam": "Exam",
     "tutor": "Tutor",

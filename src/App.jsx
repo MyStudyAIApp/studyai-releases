@@ -5,6 +5,7 @@ import MobileApp from './mobile/MobileApp'
 import Layout from './components/Layout/Layout'
 import Home from './pages/Home'
 import Library from './pages/Library'
+import NotebookPage from './pages/NotebookPage'
 import DocumentPage from './pages/DocumentPage'
 import TopicPage from './pages/TopicPage'
 import StudySession from './pages/StudySession'
@@ -298,6 +299,7 @@ function AppInner() {
         <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
           <Route path="/home"        element={<Home />} />
           <Route path="/library"     element={<Library />} />
+          <Route path="/cuaderno"   element={<NotebookPage />} />
           <Route path="/document/:id" element={<DocumentPage />} />
           <Route path="/topic/:id"    element={<TopicPage />} />
           <Route path="/study/:subjectId?" element={<StudySession />} />

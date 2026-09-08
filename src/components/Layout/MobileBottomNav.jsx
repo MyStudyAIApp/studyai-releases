@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../contexts/AuthContext'
+import { verFuncion } from '../../lib/betaFlags'
 import {
-  IconHome, IconBooks, IconBrain, IconFileText, IconWorld, IconMicrophone2,
+  IconHome, IconBooks, IconNotebook, IconBrain, IconFileText, IconWorld, IconMicrophone2,
   IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings,
   IconMenu2, IconX, IconLogout,
 } from '@tabler/icons-react'
@@ -19,6 +20,8 @@ const PRIMARY = [
 ]
 
 const MORE_ITEMS = [
+  // 'beta' = solo se pinta si lib/betaFlags deja ver esa funcion a este usuario
+  { to: '/cuaderno',  Icon: IconNotebook,    label: 'Mi cuaderno', beta: 'cuaderno' },
   { to: '/tutor',     emoji: '🦉', label: 'Tutor' },
   { to: '/languages', Icon: IconWorld,       label: 'Idiomas' },
   { to: '/lecture',   Icon: IconMicrophone2, label: 'Apuntes por voz' },
@@ -31,7 +34,7 @@ const MORE_ITEMS = [
 
 export default function MobileBottomNav() {
   const { t } = useTranslation()
-  const { signOut } = useAuth()
+  const { signOut, user } = useAuth()
   const navigate = useNavigate()
   const [showMore, setShowMore] = useState(false)
 
@@ -70,7 +73,7 @@ export default function MobileBottomNav() {
               <button onClick={() => setShowMore(false)} className="text-slate-400 leading-none"><IconX size={20} /></button>
             </div>
             <div className="overflow-y-auto flex-1 p-3 grid grid-cols-3 gap-2">
-              {MORE_ITEMS.map(({ to, Icon, emoji, label }) => (
+              {MORE_ITEMS.filter(i => !i.beta || verFuncion(i.beta, user)).map(({ to, Icon, emoji, label }) => (
                 <button
                   key={to}
                   onClick={() => { setShowMore(false); navigate(to) }}
