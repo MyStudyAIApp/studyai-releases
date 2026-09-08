@@ -24,7 +24,7 @@ DESCRIPCION = (
     "examenes de practica, podcasts para escuchar y un tutor que resuelve tus "
     "dudas.\n\n"
     "Aqui publicamos trucos de estudio y como sacarle partido a la app.\n\n"
-    "Pruebalo gratis: https://mystudyai.eu\n"
+    "Pruebalo gratis: https://mystudyai.eu/?de=youtube\n"
     "Tambien en Google Play: MyStudy App y MyStudy Scan"
 )
 
