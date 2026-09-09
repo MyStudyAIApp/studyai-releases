@@ -405,13 +405,6 @@ export default function MobileScannerPage() {
             >
               <IconCamera size={28} /> Escanear documento
             </button>
-
-            <button
-              onClick={() => setContentType(null)}
-              className="w-full text-slate-500 text-xs text-center"
-            >
-              ← Cambiar tipo de contenido
-            </button>
           </>
         )}
       </div>
