@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Filesystem, Directory } from '@capacitor/filesystem'
 import { Preferences } from '@capacitor/preferences'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -56,6 +56,7 @@ export default function MobileScannerPage() {
   const [subjectId, setSubjectId]   = useState('')
   const [topics, setTopics]         = useState([])
   const [topicId, setTopicId]       = useState('')
+  const [pendienteRevisado, setPendienteRevisado] = useState(false)
   const { scan: docScan, installing, installProgress } = useDocumentScan()
   const { addToast }                = useAppStore()
   const { user }                    = useAuth()
@@ -81,6 +82,18 @@ export default function MobileScannerPage() {
       .catch(() => setTopics([]))
   }, [subjectId])
 
+  // Desde el inicio el alumno ya ha dicho lo que quiere ("Escanear apuntes" o
+  // "Mi cuaderno"), asi que aqui no se le vuelve a preguntar: se abre la camara
+  // directamente. Solo se espera a saber si hay un escaneo a medias, para no
+  // pisarlo. Si cancela la camara, queda la pantalla con el boton de reintentar.
+  const yaAbierto = useRef(false)
+  useEffect(() => {
+    if (yaAbierto.current || pendienteRevisado === false) return
+    if (previewB64 || installing) return
+    yaAbierto.current = true
+    scan()
+  }, [pendienteRevisado, previewB64, installing])
+
   // Al abrir la pantalla, comprobar si quedó un escaneo sin guardar de una
   // sesión anterior (subida fallida, cierre inesperado de la app, etc.) y
   // recuperarlo en vez de perderlo silenciosamente.
@@ -88,7 +101,7 @@ export default function MobileScannerPage() {
     (async () => {
       try {
         const { value } = await Preferences.get({ key: PENDING_META_KEY })
-        if (!value) return
+        if (!value) return   // el `finally` marca que ya se ha revisado
         const meta = JSON.parse(value)
 
         const preview = await Filesystem.readFile({ path: PENDING_PREVIEW_PATH, directory: Directory.Data })
@@ -104,6 +117,8 @@ export default function MobileScannerPage() {
       } catch {
         // Metadata huérfana sin archivos detrás — limpiar por si acaso
         await limpiarPendiente().catch(() => {})
+      } finally {
+        setPendienteRevisado(true)
       }
     })()
   }, [])
@@ -245,8 +260,13 @@ export default function MobileScannerPage() {
     setContentType(null)
   }
 
-  const salir = () => {
+  const salir = async () => {
     if (previewB64 && !window.confirm('¿Salir sin guardar? Vas a perder el escaneo.')) return
+    // Si ha confirmado, se borra de verdad. Antes solo se navegaba fuera y el
+    // escaneo seguia guardado en Directory.Data, asi que reaparecia cada vez
+    // que volvia a entrar. La recuperacion es para cuando la app se cierra
+    // sola o falla la subida, no para cuando el alumno dice que lo descarta.
+    if (previewB64) await limpiarPendiente().catch(() => {})
     navigate('/')
   }
 
@@ -361,55 +381,8 @@ export default function MobileScannerPage() {
           </>
         )}
 
-        {/* Elegir tipo de contenido ANTES de abrir la cámara */}
-        {!installing && !previewB64 && !contentType && (
-          <>
-            {/* Antes aqui se preguntaba "¿texto impreso o apuntes a mano?" para
-                elegir con que se leia. Se quito: es una decision tecnica que el
-                alumno no puede tomar bien, y equivocarse le llenaba los apuntes
-                de palabras inventadas que acababan en sus resumenes y examenes.
-                Ahora se usa siempre la mejor lectura, que cuesta 0,0038 $ mas
-                por pagina (unos 0,14 €/mes) — ruido frente al margen. */}
-            <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center px-2">
-              <IconCamera size={40} className="text-slate-500 mb-2" />
-              <p className="text-slate-300 font-semibold">¿Qué quieres hacer?</p>
-              <p className="text-slate-500 text-sm px-4">Coloca la hoja bien iluminada y plana</p>
-            </div>
-
-            <button
-              onClick={() => chooseAndScan('handwritten')}
-              className="w-full py-5 rounded-2xl bg-slate-800 border border-slate-700 active:bg-slate-700
-                         flex items-center gap-3 px-5 transition-colors"
-            >
-              <IconWriting size={28} className="text-amber-400 shrink-0" />
-              <span className="text-left">
-                <span className="block text-slate-100 font-semibold">Guardar como documento</span>
-                <span className="block text-slate-500 text-xs">Apuntes a mano, libro o fotocopia</span>
-              </span>
-            </button>
-
-            {verCuaderno && (
-              <button
-                onClick={() => { setModoCuaderno(true); chooseAndScan('handwritten') }}
-                className="w-full py-5 rounded-2xl bg-slate-800 border border-teal-700/60 active:bg-slate-700
-                           flex items-center gap-3 px-5 transition-colors"
-              >
-                <IconNotebook size={28} className="text-teal-400 shrink-0" />
-                <span className="text-left">
-                  <span className="block text-slate-100 font-semibold">Sumar a mi cuaderno</span>
-                  <span className="block text-slate-500 text-xs">Se junta con los apuntes de esa asignatura</span>
-                </span>
-              </button>
-            )}
-
-            <p className="flex items-center justify-center gap-1.5 text-xs text-amber-500/80 text-center px-4">
-              <IconAlertTriangle size={14} className="shrink-0" /> No escanees datos personales sensibles (DNI, nombres de terceros, etc.)
-            </p>
-          </>
-        )}
-
-        {/* Estado inicial (ya elegido el tipo, listo para escanear) */}
-        {!installing && !previewB64 && contentType && (
+        {/* Respaldo: solo se ve si cancela la camara o quiere repetir */}
+        {!installing && !previewB64 && (
           <>
             <div className="flex-1 flex items-center justify-center">
               <div className="w-full h-52 rounded-2xl border-2 border-dashed border-slate-600

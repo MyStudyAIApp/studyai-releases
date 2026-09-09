@@ -115,7 +115,7 @@ export default function MobileHomePage() {
         >
           <IconCamera size={44} className="text-white" />
           <span className="text-xl font-bold text-white">Escanear apuntes</span>
-          <span className="text-primary-200 text-sm">Fotografía tus apuntes en papel</span>
+          <span className="text-primary-200 text-sm">Se guardan sueltos en tu biblioteca</span>
         </button>
 
         {verFuncion('cuaderno', user) && (
@@ -125,8 +125,8 @@ export default function MobileHomePage() {
                        flex flex-col items-center gap-2 transition-colors shadow-lg"
           >
             <IconNotebook size={44} className="text-white" />
-            <span className="text-xl font-bold text-white">Sumar a mi cuaderno</span>
-            <span className="text-teal-200 text-sm">Los apuntes de hoy, con los de esa asignatura</span>
+            <span className="text-xl font-bold text-white">Mi cuaderno</span>
+            <span className="text-teal-200 text-sm">Suma los apuntes de hoy a los de esa asignatura</span>
           </button>
         )}
 
