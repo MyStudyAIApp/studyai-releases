@@ -566,7 +566,8 @@ export default function Home() {
             {[
               { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
               { label: 'Podcasts', used: usage.podcasts_used, max: usage.podcasts_max },
-              { label: 'Transcripción y análisis de imagen (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+              { label: 'Transcripción (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+              { label: 'Páginas escaneadas', used: usage.scan_pages_used, max: usage.scan_pages_max },
             ].map(({ label, used, max }) => (
               <div key={label}>
                 <div className="flex items-center justify-between text-xs mb-1">
@@ -586,6 +587,7 @@ export default function Home() {
           <div className="card space-y-3">
             {[
               { label: '🎙️ Transcripción', b: usage.voice_budget.transcription },
+              { label: '📄 Escaneo', b: usage.voice_budget.scan },
               { label: '🎧 Podcasts', b: usage.voice_budget.podcast },
             ].map(({ label, b }) => {
               const pct = b?.spent_pct ?? 0
@@ -607,7 +609,7 @@ export default function Home() {
                 Tu saldo de bonos caduca el {new Date(usage.bono_expires_at).toLocaleDateString()}. Vuelve a Pro para conservarlo.
               </p>
             )}
-            {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
+            {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.scan?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
               <p className="text-xs text-amber-400">
                 Te estás quedando sin cupo de voz este ciclo.{' '}
                 <a href="mailto:soporte@mystudyai.eu" className="underline">Escríbenos</a> para ampliarlo.
