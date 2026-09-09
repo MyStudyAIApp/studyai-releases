@@ -16,7 +16,7 @@
 const OWNER_USER_ID = '61c1df2a-adcd-43b5-a141-2fb2d517b4b9'
 
 // Funciones aun en pruebas. Vaciar el array = abierta a todo el mundo.
-const EN_PRUEBAS = ['cuaderno']
+const EN_PRUEBAS = []
 
 export function verFuncion(nombre, user) {
   if (!EN_PRUEBAS.includes(nombre)) return true
