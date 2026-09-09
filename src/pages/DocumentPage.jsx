@@ -334,7 +334,18 @@ export default function DocumentPage() {
   const docViewerEl = (
     isOfflineCache && offlinePdfBase64
       ? <PDFViewer document={doc} localBase64={offlinePdfBase64} />
-      : isOfflineCache || doc.title?.startsWith('[Clase]') || doc.title?.startsWith('[Foto]') || !doc.file_path
+      : isOfflineCache || doc.title?.startsWith('[Clase]') || doc.title?.startsWith('[Foto]')
+        || doc.file_type === 'escaneado' || !doc.file_path
+        // Un ESCANEADO se muestra como texto, no como PDF. Tres razones:
+        //   1. El PDF original se borra a los 10 dias (ver cleanup-old-pdfs) y
+        //      entonces este mismo `if` lo mandaria al texto igualmente: el visor
+        //      solo funcionaba 10 dias de la vida infinita del documento.
+        //   2. En el movil el PDF salia ampliado y cortado; el texto se adapta
+        //      al ancho, se puede ampliar, copiar, buscar y escuchar.
+        //   3. El texto es lo que alimenta resumenes y examenes, asi que es lo
+        //      que de verdad le importa al alumno.
+        // El original sigue descargable esos 10 dias desde la Biblioteca. Los
+        // PDF SUBIDOS (un libro, apuntes ya en PDF) siguen yendo al visor.
         ? <TextViewer docId={doc.id} title={doc.title} cachedText={isOfflineCache ? offlineText : undefined} />
         : !doc.file_path.includes('/')
           // file_path sin "/" no es una ruta de almacenamiento real -- pasa esto

@@ -28,15 +28,27 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
     pageRefs.current[n - 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  // Medir el ancho del contenedor para que la página llene el espacio
+  // Medir el ancho del contenedor para que la página llene el espacio.
+  //
+  // ⚠️ Depende de `loading`/`error` A PROPOSITO. Con `[]` este efecto corria una
+  // sola vez, al montar, cuando el componente todavia pinta "Cargando PDF…" y el
+  // contenedor NO existe en el DOM: salia por el `if` de abajo y no volvia a
+  // ejecutarse nunca. `containerWidth` se quedaba en null, react-pdf recibia
+  // width={undefined} y pintaba la pagina a su TAMAÑO NATURAL. En escritorio no
+  // se notaba (un A4 cabe a lo ancho); en el movil la pagina se salia de la
+  // pantalla y se veia ampliada y cortada por los lados.
   useEffect(() => {
-    if (!containerRef.current) return
+    const el = containerRef.current
+    if (!el) return
+    // Medida inmediata: el observer no dispara hasta el siguiente frame y sin
+    // esto la primera pintura seguiria saliendo a tamaño natural.
+    setContainerWidth(el.clientWidth)
     const ro = new ResizeObserver(([entry]) => {
       setContainerWidth(entry.contentRect.width)
     })
-    ro.observe(containerRef.current)
+    ro.observe(el)
     return () => ro.disconnect()
-  }, [])
+  }, [loading, error])
 
   // Si hay una copia local (móvil sin conexión, ver offlineDocs.js) se usa
   // directamente esa — sin red de por medio. Si no, se descarga con las
