@@ -9,7 +9,7 @@ import { useDocumentScan } from './useDocumentScan'
 import {
   IconArrowLeft, IconCamera, IconPackage, IconCircleCheck, IconPencil, IconBooks,
   IconFolder, IconLoader2, IconRefresh, IconFileText, IconAlertTriangle,
-  IconFileTypePdf, IconWriting, IconNotebook,
+  IconWriting, IconNotebook,
 } from '@tabler/icons-react'
 
 // Dónde se persiste el escaneo ANTES de intentar subirlo, en almacenamiento
@@ -49,7 +49,7 @@ export default function MobileScannerPage() {
   const [contentType, setContentType] = useState(
     new URLSearchParams(window.location.hash.split('?')[1] || '').get('modo') === 'cuaderno'
       ? 'handwritten' : null,
-  )  // null | 'printed' | 'handwritten'
+  )  // null hasta que elige; 'handwritten' es el unico valor real que queda
   const [docName, setDocName]       = useState('')
   const [loading, setLoading]       = useState(false)
   const [subjects, setSubjects]     = useState([])
@@ -187,6 +187,7 @@ export default function MobileScannerPage() {
     } catch { /* no crítico */ }
 
     try {
+      let resp = null
       await withRetry(async () => {
         const form = new FormData()
         if (topicId) form.append('topic_id', topicId)
@@ -196,14 +197,14 @@ export default function MobileScannerPage() {
         if (pdfUri) {
           const blob = await fileUriToBlob(pdfUri, 'application/pdf')
           form.append('file', new File([blob], `${nombre}.pdf`, { type: 'application/pdf' }))
-          await apiUpload(modoCuaderno ? '/notebooks/append' : '/documents/upload', form)
+          resp = await apiUpload(modoCuaderno ? '/notebooks/append' : '/documents/upload', form)
         } else if (modoCuaderno) {
           const binary = atob(previewB64)
           const bytes  = new Uint8Array(binary.length)
           for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
           const blob = new Blob([bytes], { type: 'image/jpeg' })
           form.append('file', new File([blob], `${nombre}.jpg`, { type: 'image/jpeg' }))
-          await apiUpload('/notebooks/append', form)
+          resp = await apiUpload('/notebooks/append', form)
         } else {
           // Fallback: subir la imagen JPEG que ya tenemos en base64
           const binary = atob(previewB64)
@@ -211,7 +212,7 @@ export default function MobileScannerPage() {
           for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
           const blob = new Blob([bytes], { type: 'image/jpeg' })
           form.append('file', new File([blob], `${nombre}.jpg`, { type: 'image/jpeg' }))
-          await apiUpload('/documents/upload-image', form)
+          resp = await apiUpload('/documents/upload-image', form)
         }
       })
 
@@ -219,6 +220,12 @@ export default function MobileScannerPage() {
       addToast(modoCuaderno
         ? '¡Apuntes sumados a tu cuaderno!'
         : '¡Apuntes guardados en tu biblioteca!', 'success')
+      // Si la foto salio mal se guarda igual (mejor un apunte a medias que
+      // ninguno), pero se avisa: antes el alumno no se enteraba hasta leer un
+      // resumen sin sentido.
+      if (resp?.calidad?.pobre) {
+        addToast(resp.calidad.motivo, 'warning', 7000)
+      }
       navigate('/')
     } catch (e) {
       console.error('SCANNER_UPLOAD_ERROR', e?.message ?? String(e), e?.status, e?.name)
@@ -357,23 +364,17 @@ export default function MobileScannerPage() {
         {/* Elegir tipo de contenido ANTES de abrir la cámara */}
         {!installing && !previewB64 && !contentType && (
           <>
+            {/* Antes aqui se preguntaba "¿texto impreso o apuntes a mano?" para
+                elegir con que se leia. Se quito: es una decision tecnica que el
+                alumno no puede tomar bien, y equivocarse le llenaba los apuntes
+                de palabras inventadas que acababan en sus resumenes y examenes.
+                Ahora se usa siempre la mejor lectura, que cuesta 0,0038 $ mas
+                por pagina (unos 0,14 €/mes) — ruido frente al margen. */}
             <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center px-2">
               <IconCamera size={40} className="text-slate-500 mb-2" />
-              <p className="text-slate-300 font-semibold">¿Qué vas a escanear?</p>
-              <p className="text-slate-500 text-sm px-4">Así elegimos la mejor forma de leerlo</p>
+              <p className="text-slate-300 font-semibold">¿Qué quieres hacer?</p>
+              <p className="text-slate-500 text-sm px-4">Coloca la hoja bien iluminada y plana</p>
             </div>
-
-            <button
-              onClick={() => chooseAndScan('printed')}
-              className="w-full py-5 rounded-2xl bg-slate-800 border border-slate-700 active:bg-slate-700
-                         flex items-center gap-3 px-5 transition-colors"
-            >
-              <IconFileTypePdf size={28} className="text-sky-400 shrink-0" />
-              <span className="text-left">
-                <span className="block text-slate-100 font-semibold">Texto impreso</span>
-                <span className="block text-slate-500 text-xs">Libro, apuntes fotocopiados, PDF impreso</span>
-              </span>
-            </button>
 
             <button
               onClick={() => chooseAndScan('handwritten')}
@@ -382,8 +383,8 @@ export default function MobileScannerPage() {
             >
               <IconWriting size={28} className="text-amber-400 shrink-0" />
               <span className="text-left">
-                <span className="block text-slate-100 font-semibold">Apuntes a mano</span>
-                <span className="block text-slate-500 text-xs">Tu propia letra manuscrita</span>
+                <span className="block text-slate-100 font-semibold">Guardar como documento</span>
+                <span className="block text-slate-500 text-xs">Apuntes a mano, libro o fotocopia</span>
               </span>
             </button>
 
