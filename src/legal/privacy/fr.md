@@ -102,11 +102,11 @@ Supabase est un service d'hébergement et de backend fourni par Supabase, Inc.
 ### DeepInfra
 Société : Deep Infra, Inc. (États-Unis)
 Lieu de traitement : États-Unis et autres pays
-DeepInfra est un service d’inférence IA utilisé pour deux tâches précises : transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper) et transcrire en texte les photographies de pages de notes manuscrites que l’Utilisateur numérise via les fonctions « Numériser des notes » et « Mon cahier » (modèle Qwen3-VL). L’audio ou l’image est transmis au service, qui renvoie la transcription ; la photographie n’est conservée ni par le service ni par l’Application : seul le texte obtenu est enregistré. Ni l’audio, ni les images, ni les transcriptions ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription audio sur l’appareil lui-même, sans rien transmettre.
+DeepInfra est un service d’inférence IA utilisé pour deux tâches précises : transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper) et lire les photographies que l’Utilisateur numérise via les fonctions « Numériser des notes », « Mon cahier » et « Résoudre un exercice ». L’audio ou l’image est transmis au service, qui renvoie le texte transcrit et, dans le cas de « Résoudre un exercice », la solution détaillée. La photographie n’est conservée ni par le service ni par l’Application : seul le texte obtenu est enregistré. Ni l’audio, ni les images, ni les transcriptions ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription audio sur l’appareil lui-même, sans rien transmettre.
 
 ### Données personnelles traitées :
 - Enregistrements audio transmis par l’Utilisateur pour transcription
-- Photographies de pages de notes manuscrites transmises par l’Utilisateur pour transcription
+- Photographies de pages de notes manuscrites et d’exercices transmises par l’Utilisateur pour lecture
 - Texte issu de la transcription
 - Données d’usage (durée de l’audio, nombre de pages numérisées)
 - Adresse IP

@@ -91,11 +91,11 @@ Supabase is a hosting and backend service provided by Supabase, Inc.
 ### DeepInfra
 Company: Deep Infra, Inc. (United States)
 Place of processing: USA and other countries
-DeepInfra is an AI inference service used for two specific tasks: transcribing into text the audio recordings made by the User within this Application (Whisper model), and transcribing into text the photographs of handwritten notebook pages that the User scans through the “Scan notes” and “My notebook” features (Qwen3-VL model). The audio or the image is sent to the service, which returns the transcription; the photograph is not retained, neither by the service nor by the Application: only the resulting text is stored. Neither the audio, nor the images, nor the transcriptions are used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes audio on the device itself, without sending anything.
+DeepInfra is an AI inference service used for two specific tasks: transcribing into text the audio recordings made by the User within this Application (Whisper model), and reading the photographs the User scans through the “Scan notes”, “My notebook” and “Solve exercise” features. The audio or the image is sent to the service, which returns the transcribed text and, in the case of “Solve exercise”, the step-by-step solution as well. The photograph is not retained, neither by the service nor by the Application: only the resulting text is stored. Neither the audio, nor the images, nor the transcriptions are used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes audio on the device itself, without sending anything.
 
 ### Personal Data processed:
 - Audio recordings submitted by the User for transcription
-- Photographs of handwritten notebook pages submitted by the User for transcription
+- Photographs of handwritten notebook pages and of exercises submitted by the User to be read
 - Text resulting from the transcription
 - Usage Data (audio duration, number of pages scanned)
 - IP address

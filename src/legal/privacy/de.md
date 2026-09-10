@@ -102,11 +102,11 @@ Supabase ist ein Hosting- und Backend-Dienst von Supabase, Inc.
 ### DeepInfra
 Unternehmen: Deep Infra, Inc. (Vereinigte Staaten)
 Ort der Verarbeitung: USA und weitere Länder
-DeepInfra ist ein KI-Inferenzdienst, der für zwei konkrete Aufgaben eingesetzt wird: die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell) und die Fotos handschriftlicher Heftseiten, die der Nutzer über die Funktionen „Notizen scannen“ und „Mein Heft“ einscannt, in Text umzuwandeln (Qwen3-VL-Modell). Die Audiodaten bzw. das Bild werden an den Dienst übermittelt, der die Transkription zurückgibt; das Foto wird weder vom Dienst noch von der Anwendung aufbewahrt: gespeichert wird ausschließlich der resultierende Text. Weder die Audiodaten noch die Bilder noch die Transkriptionen werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert Audio lokal auf dem Gerät, ohne Daten zu übermitteln.
+DeepInfra ist ein KI-Inferenzdienst, der für zwei konkrete Aufgaben eingesetzt wird: die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell) und die Fotos zu lesen, die der Nutzer über die Funktionen „Notizen scannen“, „Mein Heft“ und „Aufgabe lösen“ einscannt. Die Audiodaten bzw. das Bild werden an den Dienst übermittelt, der den transkribierten Text und im Fall von „Aufgabe lösen“ auch die schrittweise Lösung zurückgibt. Das Foto wird weder vom Dienst noch von der Anwendung aufbewahrt: gespeichert wird ausschließlich der resultierende Text. Weder die Audiodaten noch die Bilder noch die Transkriptionen werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert Audio lokal auf dem Gerät, ohne Daten zu übermitteln.
 
 ### Verarbeitete personenbezogene Daten:
 - Vom Nutzer zur Transkription übermittelte Audioaufnahmen
-- Vom Nutzer zur Transkription übermittelte Fotos handschriftlicher Heftseiten
+- Vom Nutzer zum Auslesen übermittelte Fotos handschriftlicher Heftseiten und von Aufgaben
 - Aus der Transkription resultierender Text
 - Nutzungsdaten (Dauer der Audioaufnahme, Anzahl der gescannten Seiten)
 - IP-Adresse

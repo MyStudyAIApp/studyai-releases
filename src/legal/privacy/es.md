@@ -108,11 +108,11 @@ Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
 Empresa: Deep Infra, Inc. (Estados Unidos)
 Lugar de tratamiento: EE.UU. y otros países
 Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
-DeepInfra es un servicio de inferencia de IA utilizado para dos tareas concretas: transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper) y transcribir a texto las fotografías de páginas de apuntes que el Usuario escanea en las funciones «Escanear apuntes» y «Mi cuaderno» (modelo Qwen3-VL). El audio o la imagen se envían al servicio, que devuelve la transcripción; la fotografía no se conserva, ni en el servicio ni en la Aplicación: únicamente se guarda el texto resultante. Ni el audio, ni las imágenes, ni las transcripciones se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe el audio en el propio dispositivo, sin enviar nada.
+DeepInfra es un servicio de inferencia de IA utilizado para dos tareas concretas: transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper) y leer las fotografías que el Usuario escanea en las funciones «Escanear apuntes», «Mi cuaderno» y «Resolver ejercicio». El audio o la imagen se envían al servicio, que devuelve el texto transcrito y, en el caso de «Resolver ejercicio», también la solución paso a paso. La fotografía no se conserva, ni en el servicio ni en la Aplicación: únicamente se guarda el texto resultante. Ni el audio, ni las imágenes, ni las transcripciones se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe el audio en el propio dispositivo, sin enviar nada.
 
 ### Datos Personales tratados:
 - Grabaciones de audio enviadas por el Usuario para su transcripción
-- Fotografías de páginas de apuntes enviadas por el Usuario para su transcripción
+- Fotografías de páginas de apuntes y de ejercicios enviadas por el Usuario para su lectura
 - Texto resultante de la transcripción
 - Datos de uso (duración del audio, número de páginas escaneadas)
 - Dirección IP
