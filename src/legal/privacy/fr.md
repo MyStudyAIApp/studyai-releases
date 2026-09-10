@@ -102,16 +102,17 @@ Supabase est un service d'hébergement et de backend fourni par Supabase, Inc.
 ### DeepInfra
 Société : Deep Infra, Inc. (États-Unis)
 Lieu de traitement : États-Unis et autres pays
-DeepInfra est un service d’inférence IA utilisé uniquement pour transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper). L’audio est transmis au service, qui renvoie la transcription ; ni l’audio ni la transcription ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription sur l’appareil lui-même, sans rien transmettre.
+DeepInfra est un service d’inférence IA utilisé pour deux tâches précises : transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper) et transcrire en texte les photographies de pages de notes manuscrites que l’Utilisateur numérise via les fonctions « Numériser des notes » et « Mon cahier » (modèle Qwen3-VL). L’audio ou l’image est transmis au service, qui renvoie la transcription ; la photographie n’est conservée ni par le service ni par l’Application : seul le texte obtenu est enregistré. Ni l’audio, ni les images, ni les transcriptions ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription audio sur l’appareil lui-même, sans rien transmettre.
 
 ### Données personnelles traitées :
 - Enregistrements audio transmis par l’Utilisateur pour transcription
+- Photographies de pages de notes manuscrites transmises par l’Utilisateur pour transcription
 - Texte issu de la transcription
-- Données d’usage (durée de l’audio)
+- Données d’usage (durée de l’audio, nombre de pages numérisées)
 - Adresse IP
 
 ### Service fourni par :
-- Deep Infra, Inc. (Palo Alto, Californie, États-Unis), entité contractante. Le traitement a lieu aux États-Unis, encadré par les Clauses Contractuelles Types approuvées par la Commission européenne (décision 2021/914), intégrées à l’accord de traitement des données conclu avec le prestataire. Cet accord interdit expressément l’utilisation des données pour entraîner ou améliorer des modèles d’intelligence artificielle et prévoit que le prestataire ne conserve ni l’audio ni la transcription au-delà du temps nécessaire pour renvoyer le résultat. – Politique de confidentialité
+- Deep Infra, Inc. (Palo Alto, Californie, États-Unis), entité contractante. Le traitement a lieu aux États-Unis, encadré par les Clauses Contractuelles Types approuvées par la Commission européenne (décision 2021/914), intégrées à l’accord de traitement des données conclu avec le prestataire. Cet accord interdit expressément l’utilisation des données pour entraîner ou améliorer des modèles d’intelligence artificielle et prévoit que le prestataire ne conserve ni l’audio, ni les images, ni la transcription au-delà du temps nécessaire pour renvoyer le résultat. – Politique de confidentialité
 
 ### Microsoft Azure
 Société : Microsoft Corporation

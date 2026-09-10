@@ -102,16 +102,17 @@ Supabase ist ein Hosting- und Backend-Dienst von Supabase, Inc.
 ### DeepInfra
 Unternehmen: Deep Infra, Inc. (Vereinigte Staaten)
 Ort der Verarbeitung: USA und weitere Länder
-DeepInfra ist ein KI-Inferenzdienst, der ausschließlich dazu dient, die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell). Die Audiodaten werden an den Dienst übermittelt, der die Transkription zurückgibt; weder die Audiodaten noch die Transkription werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert lokal auf dem Gerät, ohne Daten zu übermitteln.
+DeepInfra ist ein KI-Inferenzdienst, der für zwei konkrete Aufgaben eingesetzt wird: die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell) und die Fotos handschriftlicher Heftseiten, die der Nutzer über die Funktionen „Notizen scannen“ und „Mein Heft“ einscannt, in Text umzuwandeln (Qwen3-VL-Modell). Die Audiodaten bzw. das Bild werden an den Dienst übermittelt, der die Transkription zurückgibt; das Foto wird weder vom Dienst noch von der Anwendung aufbewahrt: gespeichert wird ausschließlich der resultierende Text. Weder die Audiodaten noch die Bilder noch die Transkriptionen werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert Audio lokal auf dem Gerät, ohne Daten zu übermitteln.
 
 ### Verarbeitete personenbezogene Daten:
 - Vom Nutzer zur Transkription übermittelte Audioaufnahmen
+- Vom Nutzer zur Transkription übermittelte Fotos handschriftlicher Heftseiten
 - Aus der Transkription resultierender Text
-- Nutzungsdaten (Dauer der Audioaufnahme)
+- Nutzungsdaten (Dauer der Audioaufnahme, Anzahl der gescannten Seiten)
 - IP-Adresse
 
 ### Dienst bereitgestellt von:
-- Deep Infra, Inc. (Palo Alto, Kalifornien, Vereinigte Staaten), Vertragspartner. Die Verarbeitung erfolgt in den USA, abgesichert durch die von der Europäischen Kommission genehmigten Standardvertragsklauseln (Beschluss 2021/914), die Bestandteil des mit dem Anbieter geschlossenen Auftragsverarbeitungsvertrags sind. Dieser Vertrag untersagt ausdrücklich die Nutzung der Daten zum Trainieren oder Verbessern von Modellen künstlicher Intelligenz und sieht vor, dass der Anbieter weder die Audiodaten noch die Transkription über die zur Rückgabe des Ergebnisses erforderliche Zeit hinaus speichert. – Datenschutzerklärung
+- Deep Infra, Inc. (Palo Alto, Kalifornien, Vereinigte Staaten), Vertragspartner. Die Verarbeitung erfolgt in den USA, abgesichert durch die von der Europäischen Kommission genehmigten Standardvertragsklauseln (Beschluss 2021/914), die Bestandteil des mit dem Anbieter geschlossenen Auftragsverarbeitungsvertrags sind. Dieser Vertrag untersagt ausdrücklich die Nutzung der Daten zum Trainieren oder Verbessern von Modellen künstlicher Intelligenz und sieht vor, dass der Anbieter weder die Audiodaten noch die Bilder noch die Transkription über die zur Rückgabe des Ergebnisses erforderliche Zeit hinaus speichert. – Datenschutzerklärung
 
 ### Microsoft Azure
 Unternehmen: Microsoft Corporation

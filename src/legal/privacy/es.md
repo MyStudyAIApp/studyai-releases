@@ -91,7 +91,7 @@ Algunos servicios de los enumerados más adelante, en su caso, pueden funcionar 
 ### Supabase
 Empresa: Supabase, Inc.
 Lugar de tratamiento: Europa
-Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
+Datos Personales tratados: grabaciones de audio, fotografías de páginas de apuntes, transcripciones, datos de uso y dirección IP
 Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
 
 ### Datos Personales tratados:
@@ -108,16 +108,17 @@ Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
 Empresa: Deep Infra, Inc. (Estados Unidos)
 Lugar de tratamiento: EE.UU. y otros países
 Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
-DeepInfra es un servicio de inferencia de IA utilizado únicamente para transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper). El audio se envía al servicio, que devuelve la transcripción; ni el audio ni la transcripción se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe en el propio dispositivo, sin enviar nada.
+DeepInfra es un servicio de inferencia de IA utilizado para dos tareas concretas: transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper) y transcribir a texto las fotografías de páginas de apuntes que el Usuario escanea en las funciones «Escanear apuntes» y «Mi cuaderno» (modelo Qwen3-VL). El audio o la imagen se envían al servicio, que devuelve la transcripción; la fotografía no se conserva, ni en el servicio ni en la Aplicación: únicamente se guarda el texto resultante. Ni el audio, ni las imágenes, ni las transcripciones se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe el audio en el propio dispositivo, sin enviar nada.
 
 ### Datos Personales tratados:
 - Grabaciones de audio enviadas por el Usuario para su transcripción
+- Fotografías de páginas de apuntes enviadas por el Usuario para su transcripción
 - Texto resultante de la transcripción
-- Datos de uso (duración del audio)
+- Datos de uso (duración del audio, número de páginas escaneadas)
 - Dirección IP
 
 ### Servicio prestado por:
-- Deep Infra, Inc. (Palo Alto, California, Estados Unidos), entidad contratante. El tratamiento se realiza en EE.UU., amparado por las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea (Decisión 2021/914), incorporadas al acuerdo de tratamiento de datos suscrito con el proveedor. Dicho acuerdo prohíbe expresamente el uso de los datos para entrenar o mejorar modelos de inteligencia artificial y establece que el proveedor no conserva el audio ni la transcripción más allá del tiempo necesario para devolver el resultado.
+- Deep Infra, Inc. (Palo Alto, California, Estados Unidos), entidad contratante. El tratamiento se realiza en EE.UU., amparado por las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea (Decisión 2021/914), incorporadas al acuerdo de tratamiento de datos suscrito con el proveedor. Dicho acuerdo prohíbe expresamente el uso de los datos para entrenar o mejorar modelos de inteligencia artificial y establece que el proveedor no conserva el audio, las imágenes ni la transcripción más allá del tiempo necesario para devolver el resultado.
 
                               – Política de privacidad
 

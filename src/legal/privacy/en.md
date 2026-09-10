@@ -91,16 +91,17 @@ Supabase is a hosting and backend service provided by Supabase, Inc.
 ### DeepInfra
 Company: Deep Infra, Inc. (United States)
 Place of processing: USA and other countries
-DeepInfra is an AI inference service used solely to transcribe into text the audio recordings made by the User within this Application (Whisper model). The audio is sent to the service, which returns the transcription; neither the audio nor the transcription is used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes on the device itself, without sending anything.
+DeepInfra is an AI inference service used for two specific tasks: transcribing into text the audio recordings made by the User within this Application (Whisper model), and transcribing into text the photographs of handwritten notebook pages that the User scans through the “Scan notes” and “My notebook” features (Qwen3-VL model). The audio or the image is sent to the service, which returns the transcription; the photograph is not retained, neither by the service nor by the Application: only the resulting text is stored. Neither the audio, nor the images, nor the transcriptions are used for profiling or advertising purposes. It is used only in the web version and the mobile applications: the desktop application transcribes audio on the device itself, without sending anything.
 
 ### Personal Data processed:
 - Audio recordings submitted by the User for transcription
+- Photographs of handwritten notebook pages submitted by the User for transcription
 - Text resulting from the transcription
-- Usage Data (audio duration)
+- Usage Data (audio duration, number of pages scanned)
 - IP address
 
 ### Service provided by:
-- Deep Infra, Inc. (Palo Alto, California, United States), the contracting entity. Processing takes place in the USA, covered by the Standard Contractual Clauses approved by the European Commission (Decision 2021/914), incorporated into the data processing agreement signed with the provider. That agreement expressly prohibits using the data to train or improve artificial intelligence models and provides that the provider does not retain the audio or the transcription beyond the time needed to return the result. – Privacy Policy
+- Deep Infra, Inc. (Palo Alto, California, United States), the contracting entity. Processing takes place in the USA, covered by the Standard Contractual Clauses approved by the European Commission (Decision 2021/914), incorporated into the data processing agreement signed with the provider. That agreement expressly prohibits using the data to train or improve artificial intelligence models and provides that the provider does not retain the audio, the images or the transcription beyond the time needed to return the result. – Privacy Policy
 
 ### Microsoft Azure
 Company: Microsoft Corporation

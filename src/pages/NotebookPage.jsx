@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkMath from 'remark-math'
+import remarkGfm from 'remark-gfm'
+import rehypeKatex from 'rehype-katex'
+import 'katex/dist/katex.min.css'
 import { api, apiUpload, useAppStore } from '../store/appStore'
 import {
   IconNotebook, IconCamera, IconPlus, IconLoader2, IconFolder,
@@ -347,9 +352,17 @@ export default function NotebookPage() {
                     ) : entradas[c.id].map(e => (
                       <div key={e.date}>
                         <p className="text-xs font-semibold text-primary-400 mb-1">{fecha(e.date)}</p>
-                        <p className="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">
-                          {e.text}
-                        </p>
+                        {/* Las formulas llegan del OCR en LaTeX entre $...$ (lo pide
+                            OCR_SYSTEM). Sin esto se veian crudas: "$\sqrt[3]{8}$" en
+                            pantalla. Mismo trio de plugins que DocumentPage. */}
+                        <div className="text-sm text-slate-300 leading-relaxed prose-studyai">
+                          <ReactMarkdown
+                            remarkPlugins={[remarkMath, remarkGfm]}
+                            rehypePlugins={[rehypeKatex]}
+                          >
+                            {e.text}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                     ))}
                   </div>
