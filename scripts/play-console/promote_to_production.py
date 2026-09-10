@@ -5,17 +5,22 @@
 
 Que hace exactamente: copia el versionCode que hay en el track 'internal' al
 track 'production', con sus notas de version. NO sube ningun AAB nuevo (ya esta
-subido) y NO publica nada en vivo.
+subido).
 
-⚠️ POR QUE ESTO NO SACA LA APP AL PUBLICO
-Las apps tienen "Publicacion gestionada" activada: cualquier cambio queda
-retenido en 'Resumen de publicacion' hasta que una persona pulsa
-"Publicar N cambios" en el navegador. Este script solo mete la version en esa
-cola, que es lo que dispara la revision de Google para produccion. La salida en
-vivo sigue siendo una decision manual.
+[!][!] ESTO SACA LA APP AL PUBLICO. NO HAY NINGUN BOTON DESPUES.
+La "Publicacion gestionada" esta DESACTIVADA en esta cuenta (confirmado por el
+dueno el 2026-09-10). En cuanto Google aprueba la revision, la version sale sola
+a TODOS los usuarios: no queda retenida en ningun sitio y nadie tiene que pulsar
+nada.
+
+Este aviso decia justo lo CONTRARIO hasta el 2026-09-10 -- que la publicacion
+gestionada estaba activada y que nada salia sin intervencion humana. Alguien se
+lo creyo y le dijo al dueno que sus apps estaban retenidas cuando ya iban camino
+de produccion. Si algun dia se vuelve a activar la publicacion gestionada,
+ACTUALIZAR ESTE TEXTO: es lo primero que se lee antes de ejecutar esto.
 
 Comprobar despues en:
-Play Console -> la app -> Resumen de publicacion -> "Cambios listos para publicarse"
+Play Console -> la app -> Produccion -> Publicaciones
 """
 import sys
 from pathlib import Path
@@ -66,7 +71,7 @@ def promocionar(svc, pkg):
         svc.edits().tracks().update(
             packageName=pkg, editId=eid, track="production", body=cuerpo).execute()
         svc.edits().commit(packageName=pkg, editId=eid).execute()
-        print(f"  OK -> produccion {rel.get('name')} en cola, esperando revision de Google")
+        print(f"  OK -> produccion {rel.get('name')} ENVIADA. Saldra sola al aprobar Google.")
     except Exception as e:
         print(f"  ERROR: {e}")
         try:
@@ -87,8 +92,10 @@ def main():
     for pkg in objetivos:
         promocionar(svc, pkg)
 
-    print("\nHecho. NADA esta en vivo todavia: revisa la cola en")
-    print("Play Console -> app -> Resumen de publicacion antes de publicar.")
+    print("")
+    print("[!] Hecho. La publicacion gestionada esta DESACTIVADA: estas versiones")
+    print("    saldran SOLAS a todos los usuarios en cuanto Google apruebe la")
+    print("    revision. No hay ningun paso manual despues de esto.")
 
 
 if __name__ == "__main__":
