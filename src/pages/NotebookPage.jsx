@@ -7,6 +7,7 @@ import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import { api, apiUpload, useAppStore } from '../store/appStore'
 import { prepararTexto, resolverDuda, contarDudas } from '../lib/dudas'
+import { textoAHtml, htmlATexto } from '../lib/formato'
 import {
   IconNotebook, IconCamera, IconPlus, IconLoader2, IconFolder,
   IconBooks, IconCalendar, IconChevronDown, IconChevronRight,
@@ -204,27 +205,12 @@ export default function NotebookPage() {
   // Los apuntes en un solo documento, para llevarlos al papel o a Word. Se
   // arma aqui y no en el servidor porque el texto ya esta descargado: no hace
   // falta pedir nada ni gastar cupo por imprimir lo que el alumno ya tiene.
-  // El texto guardado lleva marcas: <u>subrayado</u>, **negrita**, *cursiva*,
-  // ~~tachado~~ y "## " de titulo. En pantalla las pinta ReactMarkdown, pero
-  // el fichero de Word se arma aqui a mano: sin esto, el alumno abria su
-  // apunte en Word y veia los asteriscos en crudo.
-  //
-  // Se escapa TODO primero y luego se devuelve a la vida solo lo que se
-  // reconoce. Asi el apunte no puede meter HTML en el documento por accidente.
-  // ponytail: cuatro sustituciones, no un conversor de markdown entero. Si
-  // algun dia hace falta markdown completo en Word, ahi entra una libreria.
-  const conFormato = (t) => t
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/&lt;u&gt;([^&\n]+)&lt;\/u&gt;/g, '<u>$1</u>')
-    .replace(/^##\s+(.+)$/gm, '<h3>$1</h3>')
-    .replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')
-    .replace(/~~([^~\n]+)~~/g, '<s>$1</s>')
-    .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<i>$2</i>')
-
+  // El fichero de Word usa la MISMA conversion que el editor (lib/formato):
+  // sin ella el alumno abria su apunte en Word y veia los asteriscos en crudo,
+  // y teniendo dos conversiones distintas acabarian pintando cosas distintas.
   const comoHtml = (c) => {
     const dias = (entradas[c.id] || [])
-      .map(e => `<h2>${fecha(e.date)}</h2><p>${conFormato(e.text)
-        .replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>')}</p>`)
+      .map(e => `<h2>${fecha(e.date)}</h2>${textoAHtml(e.text)}`)
       .join('')
     return `<html><head><meta charset="utf-8"><title>${c.title}</title></head>
       <body style="font-family:Georgia,serif;line-height:1.6;max-width:800px;margin:auto">
@@ -524,59 +510,63 @@ export default function NotebookPage() {
 /**
  * Editor de UN dia de apuntes.
  *
- * Es un textarea normal con una barra de botones que mete las marcas de
- * siempre (negrita con asteriscos, subrayado con etiqueta u, "## titulo"...),
- * no un editor visual.
- * A proposito: el apunte lleva formulas en LaTeX ($...$) y palabras dudosas
- * marcadas con (?), y en un editor visual las dos cosas se verian en crudo
- * mientras el alumno escribe. Aqui el texto guardado es exactamente el que
- * salio de la transcripcion, asi que nada de lo que ya funciona se entera.
+ * Lo que el alumno ve es el resultado: al pulsar Negrita, la palabra se pone
+ * en negrita. Antes se le metian los asteriscos en el texto y eso despistaba
+ * -- es la queja que lo cambio.
  *
- * El boton del ojo ensena como va a quedar, con las formulas pintadas.
+ * Por dentro sigue guardandose el MISMO texto con marcas de siempre. La ida y
+ * la vuelta viven en src/lib/formato.js, con su prueba de que editar sin tocar
+ * nada devuelve el apunte identico.
+ *
+ * Se usa `contentEditable` con `document.execCommand`, que es lo que trae el
+ * navegador: sin librerias de editor y funciona igual dentro de las apps.
+ *
+ * Lo que NO se ve con formato mientras se edita son las formulas ($...$) y las
+ * palabras dudosas ((?)) -- ahi sigue viendose el texto tal cual. Para eso
+ * esta el boton del ojo, que lo pinta todo de verdad.
  */
 function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
-  const [valor, setValor] = useState(texto)
-  const [previa, setPrevia] = useState(false)
   const ref = useRef(null)
+  const [previa, setPrevia] = useState(false)
+  // Solo para la vista previa y para saber si hay algo que guardar. El texto
+  // que manda es SIEMPRE el que se lee del editor al pulsar Guardar: llevar el
+  // contenido en un estado de React y devolverselo al div en cada tecla le
+  // mueve el cursor al alumno mientras escribe.
+  const [valor, setValor] = useState(texto)
 
-  // Envuelve lo seleccionado. Sin seleccion, deja el cursor entre las dos
-  // marcas para poder escribir ya con el estilo puesto.
-  const envolver = (abre, cierra = abre) => {
-    const ta = ref.current
-    if (!ta) return
-    const ini = ta.selectionStart, fin = ta.selectionEnd
-    const dentro = valor.slice(ini, fin)
-    setValor(valor.slice(0, ini) + abre + dentro + cierra + valor.slice(fin))
-    requestAnimationFrame(() => {
-      ta.focus()
-      ta.setSelectionRange(ini + abre.length, ini + abre.length + dentro.length)
-    })
-  }
+  // Solo al montar. Si el HTML se reescribiera en cada render, se perderia el
+  // sitio del cursor.
+  useEffect(() => {
+    if (ref.current) ref.current.innerHTML = textoAHtml(texto)
+  }, [])
 
-  // Marcas que van al PRINCIPIO de la linea: titulos y lista.
-  const prefijoLinea = (prefijo) => {
-    const ta = ref.current
-    if (!ta) return
-    const cursor = ta.selectionStart
-    const ini = valor.lastIndexOf('\n', cursor - 1) + 1
-    setValor(valor.slice(0, ini) + prefijo + valor.slice(ini))
-    requestAnimationFrame(() => {
-      ta.focus()
-      ta.setSelectionRange(cursor + prefijo.length, cursor + prefijo.length)
-    })
+  const leer = () => (ref.current ? htmlATexto(ref.current) : valor)
+
+  const mandar = (orden, arg) => {
+    ref.current?.focus()
+    document.execCommand(orden, false, arg)
+    setValor(leer())
   }
 
   const botones = [
-    { Icono: IconBold,          titulo: 'Negrita',        accion: () => envolver('**') },
-    { Icono: IconItalic,        titulo: 'Cursiva',        accion: () => envolver('*') },
-    { Icono: IconUnderline,     titulo: 'Subrayado',      accion: () => envolver('<u>', '</u>') },
-    { Icono: IconStrikethrough, titulo: 'Tachado',        accion: () => envolver('~~') },
-    { Icono: IconH1,            titulo: 'Título grande',  accion: () => prefijoLinea('# ') },
-    { Icono: IconH2,            titulo: 'Título mediano', accion: () => prefijoLinea('## ') },
-    { Icono: IconList,          titulo: 'Lista',          accion: () => prefijoLinea('- ') },
+    { Icono: IconBold,          titulo: 'Negrita',        accion: () => mandar('bold') },
+    { Icono: IconItalic,        titulo: 'Cursiva',        accion: () => mandar('italic') },
+    { Icono: IconUnderline,     titulo: 'Subrayado',      accion: () => mandar('underline') },
+    { Icono: IconStrikethrough, titulo: 'Tachado',        accion: () => mandar('strikeThrough') },
+    { Icono: IconH1,            titulo: 'Título grande',  accion: () => mandar('formatBlock', 'h2') },
+    { Icono: IconH2,            titulo: 'Título mediano', accion: () => mandar('formatBlock', 'h3') },
+    { Icono: IconList,          titulo: 'Lista',          accion: () => mandar('insertUnorderedList') },
   ]
 
-  const filas = Math.min(30, Math.max(8, valor.split('\n').length + 2))
+  // Pegar SIEMPRE como texto plano. Sin esto, pegar de una web mete su HTML
+  // dentro del apunte y el alumno acaba con letras de otro color y otro
+  // tamano que no puede quitar.
+  const pegar = (ev) => {
+    ev.preventDefault()
+    const plano = (ev.clipboardData || window.clipboardData).getData('text/plain')
+    document.execCommand('insertText', false, plano)
+    setValor(leer())
+  }
 
   return (
     <div className="no-print">
@@ -585,7 +575,10 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
           <button
             key={titulo}
             type="button"
-            onClick={accion}
+            // onMouseDown y no onClick: al hacer clic en el boton, el editor
+            // pierde el foco y con el la seleccion, y el formato se aplicaria
+            // a la nada. Con preventDefault el foco no se mueve.
+            onMouseDown={ev => { ev.preventDefault(); accion() }}
             title={titulo}
             disabled={guardando || previa}
             className="p-1.5 rounded-lg text-slate-400 hover:text-primary-300 hover:bg-slate-700
@@ -596,8 +589,8 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
         ))}
         <button
           type="button"
-          onClick={() => setPrevia(p => !p)}
-          title={previa ? 'Volver a editar' : 'Ver cómo queda'}
+          onClick={() => { setValor(leer()); setPrevia(p => !p) }}
+          title={previa ? 'Volver a editar' : 'Ver cómo queda con las fórmulas'}
           className="ml-auto p-1.5 rounded-lg text-slate-400 hover:text-primary-300 hover:bg-slate-700
                      transition-colors"
         >
@@ -605,9 +598,9 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
         </button>
       </div>
 
-      {previa ? (
+      {previa && (
         <div className="text-sm text-slate-300 leading-relaxed prose-studyai bg-slate-900/60
-                        border border-slate-700 rounded-xl px-3 py-2 min-h-[8rem]">
+                        border border-slate-700 rounded-xl px-3 py-2 min-h-[8rem] mb-2">
           <ReactMarkdown
             remarkPlugins={[remarkMath, remarkGfm]}
             rehypePlugins={[rehypeKatex]}
@@ -617,19 +610,24 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
             {prepararTexto(valor)}
           </ReactMarkdown>
         </div>
-      ) : (
-        <textarea
-          ref={ref}
-          value={valor}
-          onChange={ev => setValor(ev.target.value)}
-          rows={filas}
-          disabled={guardando}
-          className="w-full bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-sm
-                     text-slate-100 leading-relaxed focus:border-primary-500 focus:outline-none
-                     disabled:opacity-50 resize-y"
-          spellCheck={false}
-        />
       )}
+
+      {/* El editor no se desmonta al ver la vista previa, solo se esconde: si
+          se desmontara, el efecto de montaje volveria a escribir el HTML y se
+          perderia lo que el alumno lleve escrito. */}
+      <div
+        ref={ref}
+        contentEditable={!guardando}
+        suppressContentEditableWarning
+        onInput={() => setValor(leer())}
+        onPaste={pegar}
+        hidden={previa}
+        className="w-full min-h-[10rem] max-h-[70vh] overflow-y-auto bg-slate-900 border
+                   border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-100
+                   leading-relaxed focus:border-primary-500 focus:outline-none
+                   prose-studyai [&_h2]:text-lg [&_h3]:text-base [&_ul]:list-disc
+                   [&_ul]:pl-5 disabled:opacity-50"
+      />
 
       <p className="text-xs text-slate-500 mt-2">
         Escribe, borra o cambia lo que quieras. Cuando escanees una página nueva
@@ -638,7 +636,7 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
 
       <div className="flex gap-2 mt-3">
         <button
-          onClick={() => onGuardar(valor)}
+          onClick={() => onGuardar(leer())}
           disabled={guardando || !valor.trim()}
           className="flex items-center justify-center gap-1.5 bg-primary-600 hover:bg-primary-500
                      text-white rounded-xl px-4 py-2 text-sm font-medium
