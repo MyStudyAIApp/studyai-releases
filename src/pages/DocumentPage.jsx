@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
-import 'katex/dist/katex.min.css'
 import { useAppStore, api, apiStream, IS_WEB, IS_MOBILE } from '../store/appStore'
 import Spinner from '../components/UI/Spinner'
 import ResultPanel from '../components/Results/ResultPanel'
@@ -15,8 +13,8 @@ import Modal from '../components/UI/Modal'
 import { useTranslation } from 'react-i18next'
 import { getCached as getCachedOfflineDoc, getCachedPdfBase64 } from '../services/offlineDocs'
 import { ensureMathDelimiters } from '../utils/mathText'
+import TextoApunte from '../components/TextoApunte'
 
-const TEXT_MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 import {
   IconLoader2, IconVolume, IconHeadphones, IconArrowLeft, IconFileText,
   IconBooks, IconFolder, IconChevronUp, IconChevronDown, IconSparkles, IconX, IconWifiOff,
@@ -105,11 +103,12 @@ function TextViewer({ docId, title, cachedText }) {
         {/* Cada línea como su propio párrafo, para conservar los saltos de
             línea (ej. los pasos de un ejercicio guardado) — si no, Markdown
             fusiona líneas sueltas en un solo párrafo. */}
-        <div className="prose-studyai text-sm text-slate-300 leading-relaxed">
-          <ReactMarkdown {...TEXT_MD_OPTS}>
-            {ensureMathDelimiters(text).replace(/\n/g, '\n\n')}
-          </ReactMarkdown>
-        </div>
+        <TextoApunte
+          docId={docId}
+          texto={text}
+          onTextoCambiado={setText}
+          className="prose-studyai text-sm text-slate-300 leading-relaxed"
+        />
       </div>
     </div>
   )

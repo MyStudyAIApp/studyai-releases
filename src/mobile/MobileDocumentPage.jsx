@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react'
 import TextToSpeech from '../components/Audio/TextToSpeech'
 import { useParams, useNavigate } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
-import 'katex/dist/katex.min.css'
 import { api, useAppStore } from '../store/appStore'
 import { ensureMathDelimiters } from '../utils/mathText'
+import TextoApunte from '../components/TextoApunte'
 import {
   IconArrowLeft, IconCamera, IconPhoto, IconFileText, IconFolder, IconMoodSad,
   IconLoader2, IconPaperclip,
 } from '@tabler/icons-react'
 
 const TYPE_ICON = { escaneado: IconCamera, foto: IconPhoto, pdf: IconFileText }
-const TEXT_MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 
 export default function MobileDocumentPage() {
   const { id } = useParams()
@@ -135,11 +133,12 @@ export default function MobileDocumentPage() {
 
           {doc.text_content ? (
             <div className="bg-slate-800 rounded-2xl p-4 border border-slate-700">
-              <div className="prose-studyai text-slate-200 text-sm leading-relaxed">
-                <ReactMarkdown {...TEXT_MD_OPTS}>
-                  {ensureMathDelimiters(doc.text_content).replace(/\n/g, '\n\n')}
-                </ReactMarkdown>
-              </div>
+              <TextoApunte
+                docId={doc.id}
+                texto={doc.text_content}
+                onTextoCambiado={t => setDoc(d => ({ ...d, text_content: t }))}
+                className="prose-studyai text-slate-200 text-sm leading-relaxed"
+              />
             </div>
           ) : (
             <div className="bg-slate-800/60 rounded-2xl p-6 border border-slate-700 text-center">
