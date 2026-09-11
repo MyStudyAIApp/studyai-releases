@@ -1,7 +1,7 @@
 // Comprobaciones de las palabras dudosas del cuaderno.
 // Ejecutar:  node src/lib/dudas.test.mjs
 import assert from 'node:assert/strict'
-import { marcarDudas, resolverDuda, contarDudas } from './dudas.js'
+import { marcarDudas, resolverDuda, contarDudas, marcarSubrayado, prepararTexto } from './dudas.js'
 
 const casos = {
   'cuenta las dudas'() {
@@ -53,6 +53,37 @@ const casos = {
     const t = 'los reales (R) y los enteros (Z)'
     assert.equal(contarDudas(t), 0)
     assert.equal(marcarDudas(t), t)
+  },
+
+  'el subrayado se convierte en enlace propio'() {
+    assert.equal(marcarSubrayado('esto es <u>importante</u> de verdad'),
+                 'esto es [importante](u:) de verdad')
+    // Dos subrayados en la misma linea (caso real: dos titulos seguidos)
+    assert.equal(marcarSubrayado('<u>Uno</u> y <u>Dos</u>'), '[Uno](u:) y [Dos](u:)')
+  },
+
+  'no toca las formulas ni los signos sueltos'() {
+    const f = 'la ecuacion $x^2 = 4$ tiene dos soluciones y 3 < 5'
+    assert.equal(marcarSubrayado(f), f)
+    // Una etiqueta suelta no es un subrayado: se queda como texto a la vista
+    assert.equal(marcarSubrayado('mira <u> esto'), 'mira <u> esto')
+  },
+
+  'un subrayado sin cerrar se queda como esta'() {
+    const t = 'esto <u>empieza pero no acaba'
+    assert.equal(marcarSubrayado(t), t)
+  },
+
+  'dudas y subrayado conviven en el mismo texto'() {
+    assert.equal(prepararTexto('el <u>tema</u> es decir(?) eso'),
+                 'el [tema](u:) es [decir](duda:0) eso')
+  },
+
+  'una palabra dudosa DENTRO de un subrayado no rompe el markdown'() {
+    // Anidar enlaces romperia el render; se prefiere perder el subrayado.
+    // En cuanto el alumno confirma la palabra, el subrayado vuelve.
+    const salida = prepararTexto('el <u>tema decir(?)</u> va aqui')
+    assert.equal(salida, 'el <u>tema [decir](duda:0)</u> va aqui')
   },
 
   'resolver dos veces seguidas deja el texto limpio'() {

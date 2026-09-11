@@ -6,11 +6,13 @@ import remarkGfm from 'remark-gfm'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import { api, apiUpload, useAppStore } from '../store/appStore'
-import { marcarDudas, resolverDuda, contarDudas } from '../lib/dudas'
+import { prepararTexto, resolverDuda, contarDudas } from '../lib/dudas'
 import {
   IconNotebook, IconCamera, IconPlus, IconLoader2, IconFolder,
   IconBooks, IconCalendar, IconChevronDown, IconChevronRight,
   IconPrinter, IconFileTypeDoc, IconCheck, IconX,
+  IconPencil, IconBold, IconItalic, IconUnderline, IconStrikethrough,
+  IconH1, IconH2, IconList, IconEye, IconEyeOff, IconDeviceFloppy,
 } from '@tabler/icons-react'
 
 /**
@@ -39,6 +41,8 @@ export default function NotebookPage() {
   // Duda abierta: {cuaderno, fecha, indice, palabra}. Solo puede haber una.
   const [duda, setDuda] = useState(null)
   const [guardando, setGuardando] = useState(false)
+  // Apunte que se esta editando: {cuaderno, fecha}. Tambien uno solo a la vez.
+  const [editando, setEditando] = useState(null)
   const { addToast } = useAppStore()
   const navigate = useNavigate()
 
@@ -123,10 +127,7 @@ export default function NotebookPage() {
     }
   }
 
-  const desplegar = async (id) => {
-    if (abierto === id) return setAbierto(null)
-    setAbierto(id)
-    if (entradas[id]) return
+  const recargarEntradas = async (id) => {
     try {
       const d = await api('GET', `/notebooks/${id}`)
       setEntradas(prev => ({ ...prev, [id]: d.entries || [] }))
@@ -135,39 +136,64 @@ export default function NotebookPage() {
     }
   }
 
-  // Confirmar o corregir UNA palabra dudosa. Se manda el texto entero con
-  // `esperado` para que el servidor rechace la edicion si el apunte cambio
-  // mientras tanto (otra pestana, otro movil, o un escaneo nuevo de hoy).
+  const desplegar = async (id) => {
+    if (abierto === id) return setAbierto(null)
+    setAbierto(id)
+    if (entradas[id]) return
+    await recargarEntradas(id)
+  }
+
+  // Guarda el texto de UN dia. Lo usan las DOS formas de editar que hay:
+  // corregir una palabra dudosa y reescribir el apunte entero en el editor.
+  // Estar en un solo sitio es lo que evita que una de las dos se quede sin la
+  // proteccion del 409 al cambiar algo aqui.
+  //
+  // `esperado` es el texto que el alumno tenia delante. Si en el servidor ya
+  // no es ese —entro un escaneo nuevo del mismo dia, u otra pestana— el
+  // servidor rechaza la edicion en vez de pisar lo que hubiera, y aqui se
+  // recarga para que no siga escribiendo sobre una version vieja.
+  const guardarTexto = async (cuaderno, fechaEntrada, nuevo, esperado) => {
+    setGuardando(true)
+    try {
+      await api('PATCH', `/notebooks/${cuaderno}/entries/${fechaEntrada}`,
+                { text: nuevo, esperado })
+      setEntradas(prev => ({
+        ...prev,
+        [cuaderno]: prev[cuaderno].map(
+          e => e.date === fechaEntrada ? { ...e, text: nuevo } : e),
+      }))
+      return true
+    } catch (err) {
+      addToast(err?.message || 'No se pudieron guardar los cambios', 'error', 5000)
+      if (String(err?.message || '').includes('cambiado')) await recargarEntradas(cuaderno)
+      return false
+    } finally {
+      setGuardando(false)
+    }
+  }
+
+  // Confirmar o corregir UNA palabra dudosa.
   const resolver = async (palabraNueva) => {
     if (!duda) return
-    const lista = entradas[duda.cuaderno] || []
-    const entrada = lista.find(e => e.date === duda.fecha)
+    const entrada = (entradas[duda.cuaderno] || []).find(e => e.date === duda.fecha)
     if (!entrada) return setDuda(null)
 
     const nuevo = resolverDuda(entrada.text, duda.indice, palabraNueva)
     if (nuevo === entrada.text) return setDuda(null)
 
-    setGuardando(true)
-    try {
-      await api('PATCH', `/notebooks/${duda.cuaderno}/entries/${duda.fecha}`,
-                { text: nuevo, esperado: entrada.text })
-      setEntradas(prev => ({
-        ...prev,
-        [duda.cuaderno]: prev[duda.cuaderno].map(
-          e => e.date === duda.fecha ? { ...e, text: nuevo } : e),
-      }))
-      setDuda(null)
-    } catch (err) {
-      // El 409 es el caso interesante: no es un fallo, es que hay algo mas
-      // nuevo. Se recarga para que no siga corrigiendo sobre texto viejo.
-      addToast(err?.message || 'No se pudo guardar la corrección', 'error', 5000)
-      if (String(err?.message || '').includes('cambiado')) {
-        setEntradas(prev => ({ ...prev, [duda.cuaderno]: null }))
-        desplegar(duda.cuaderno)
-      }
-      setDuda(null)
-    } finally {
-      setGuardando(false)
+    await guardarTexto(duda.cuaderno, duda.fecha, nuevo, entrada.text)
+    setDuda(null)
+  }
+
+  // Guardar el apunte reescrito en el editor. Se cierra solo si se guardo:
+  // si el servidor lo rechazo, el alumno se queda con su texto delante.
+  const guardarEdicion = async (texto, original) => {
+    if (!editando) return
+    if (texto.trim() === original.trim()) return setEditando(null)
+    const ok = await guardarTexto(editando.cuaderno, editando.fecha, texto.trim(), original)
+    if (ok) {
+      setEditando(null)
+      addToast('Apunte guardado', 'success')
     }
   }
 
@@ -178,10 +204,26 @@ export default function NotebookPage() {
   // Los apuntes en un solo documento, para llevarlos al papel o a Word. Se
   // arma aqui y no en el servidor porque el texto ya esta descargado: no hace
   // falta pedir nada ni gastar cupo por imprimir lo que el alumno ya tiene.
+  // El texto guardado lleva marcas: <u>subrayado</u>, **negrita**, *cursiva*,
+  // ~~tachado~~ y "## " de titulo. En pantalla las pinta ReactMarkdown, pero
+  // el fichero de Word se arma aqui a mano: sin esto, el alumno abria su
+  // apunte en Word y veia los asteriscos en crudo.
+  //
+  // Se escapa TODO primero y luego se devuelve a la vida solo lo que se
+  // reconoce. Asi el apunte no puede meter HTML en el documento por accidente.
+  // ponytail: cuatro sustituciones, no un conversor de markdown entero. Si
+  // algun dia hace falta markdown completo en Word, ahi entra una libreria.
+  const conFormato = (t) => t
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/&lt;u&gt;([^&\n]+)&lt;\/u&gt;/g, '<u>$1</u>')
+    .replace(/^##\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*([^*\n]+)\*\*/g, '<b>$1</b>')
+    .replace(/~~([^~\n]+)~~/g, '<s>$1</s>')
+    .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<i>$2</i>')
+
   const comoHtml = (c) => {
     const dias = (entradas[c.id] || [])
-      .map(e => `<h2>${fecha(e.date)}</h2><p>${e.text
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .map(e => `<h2>${fecha(e.date)}</h2><p>${conFormato(e.text)
         .replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>')}</p>`)
       .join('')
     return `<html><head><meta charset="utf-8"><title>${c.title}</title></head>
@@ -391,8 +433,28 @@ export default function NotebookPage() {
                       <IconLoader2 size={18} className="animate-spin text-slate-600 mx-auto" />
                     ) : entradas[c.id].map(e => (
                       <div key={e.date}>
-                        <p className="text-xs font-semibold text-primary-400 mb-1">{fecha(e.date)}</p>
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-xs font-semibold text-primary-400">{fecha(e.date)}</p>
+                          {!(editando?.cuaderno === c.id && editando?.fecha === e.date) && (
+                            <button
+                              onClick={() => setEditando({ cuaderno: c.id, fecha: e.date })}
+                              title="Editar estos apuntes"
+                              className="no-print text-slate-500 hover:text-primary-400 p-0.5 transition-colors"
+                            >
+                              <IconPencil size={14} />
+                            </button>
+                          )}
+                        </div>
 
+                        {editando?.cuaderno === c.id && editando?.fecha === e.date ? (
+                          <EditorApunte
+                            texto={e.text}
+                            guardando={guardando}
+                            onGuardar={t => guardarEdicion(t, e.text)}
+                            onCancelar={() => setEditando(null)}
+                          />
+                        ) : (
+                        <>
                         {contarDudas(e.text) > 0 && (
                           <p className="no-print text-xs text-amber-400/90 mb-2 flex items-center gap-1.5">
                             <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
@@ -409,9 +471,13 @@ export default function NotebookPage() {
                             remarkPlugins={[remarkMath, remarkGfm]}
                             rehypePlugins={[rehypeKatex]}
                             components={{
-                              // Las dudas viajan como [palabra](duda:N) — ver
-                              // marcarDudas(). Cualquier otro enlace se pinta normal.
+                              // Las dudas viajan como [palabra](duda:N) y lo
+                              // subrayado como [texto](u:) — ver dudas.js.
+                              // Cualquier otro enlace se pinta normal.
                               a: ({ href, children, ...props }) => {
+                                if (String(href || '') === 'u:') {
+                                  return <u>{children}</u>
+                                }
                                 if (!String(href || '').startsWith('duda:')) {
                                   return <a href={href} {...props}>{children}</a>
                                 }
@@ -430,9 +496,11 @@ export default function NotebookPage() {
                               },
                             }}
                           >
-                            {marcarDudas(e.text)}
+                            {prepararTexto(e.text)}
                           </ReactMarkdown>
                         </div>
+                        </>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -448,6 +516,146 @@ export default function NotebookPage() {
           el teclado justo cuando el alumno va a escribir. */}
       {duda && <DudaModal duda={duda} guardando={guardando}
                           onCerrar={() => setDuda(null)} onResolver={resolver} />}
+    </div>
+  )
+}
+
+
+/**
+ * Editor de UN dia de apuntes.
+ *
+ * Es un textarea normal con una barra de botones que mete las marcas de
+ * siempre (negrita con asteriscos, subrayado con etiqueta u, "## titulo"...),
+ * no un editor visual.
+ * A proposito: el apunte lleva formulas en LaTeX ($...$) y palabras dudosas
+ * marcadas con (?), y en un editor visual las dos cosas se verian en crudo
+ * mientras el alumno escribe. Aqui el texto guardado es exactamente el que
+ * salio de la transcripcion, asi que nada de lo que ya funciona se entera.
+ *
+ * El boton del ojo ensena como va a quedar, con las formulas pintadas.
+ */
+function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
+  const [valor, setValor] = useState(texto)
+  const [previa, setPrevia] = useState(false)
+  const ref = useRef(null)
+
+  // Envuelve lo seleccionado. Sin seleccion, deja el cursor entre las dos
+  // marcas para poder escribir ya con el estilo puesto.
+  const envolver = (abre, cierra = abre) => {
+    const ta = ref.current
+    if (!ta) return
+    const ini = ta.selectionStart, fin = ta.selectionEnd
+    const dentro = valor.slice(ini, fin)
+    setValor(valor.slice(0, ini) + abre + dentro + cierra + valor.slice(fin))
+    requestAnimationFrame(() => {
+      ta.focus()
+      ta.setSelectionRange(ini + abre.length, ini + abre.length + dentro.length)
+    })
+  }
+
+  // Marcas que van al PRINCIPIO de la linea: titulos y lista.
+  const prefijoLinea = (prefijo) => {
+    const ta = ref.current
+    if (!ta) return
+    const cursor = ta.selectionStart
+    const ini = valor.lastIndexOf('\n', cursor - 1) + 1
+    setValor(valor.slice(0, ini) + prefijo + valor.slice(ini))
+    requestAnimationFrame(() => {
+      ta.focus()
+      ta.setSelectionRange(cursor + prefijo.length, cursor + prefijo.length)
+    })
+  }
+
+  const botones = [
+    { Icono: IconBold,          titulo: 'Negrita',        accion: () => envolver('**') },
+    { Icono: IconItalic,        titulo: 'Cursiva',        accion: () => envolver('*') },
+    { Icono: IconUnderline,     titulo: 'Subrayado',      accion: () => envolver('<u>', '</u>') },
+    { Icono: IconStrikethrough, titulo: 'Tachado',        accion: () => envolver('~~') },
+    { Icono: IconH1,            titulo: 'Título grande',  accion: () => prefijoLinea('# ') },
+    { Icono: IconH2,            titulo: 'Título mediano', accion: () => prefijoLinea('## ') },
+    { Icono: IconList,          titulo: 'Lista',          accion: () => prefijoLinea('- ') },
+  ]
+
+  const filas = Math.min(30, Math.max(8, valor.split('\n').length + 2))
+
+  return (
+    <div className="no-print">
+      <div className="flex flex-wrap items-center gap-1 mb-2">
+        {botones.map(({ Icono, titulo, accion }) => (
+          <button
+            key={titulo}
+            type="button"
+            onClick={accion}
+            title={titulo}
+            disabled={guardando || previa}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-primary-300 hover:bg-slate-700
+                       disabled:opacity-30 transition-colors"
+          >
+            <Icono size={16} />
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => setPrevia(p => !p)}
+          title={previa ? 'Volver a editar' : 'Ver cómo queda'}
+          className="ml-auto p-1.5 rounded-lg text-slate-400 hover:text-primary-300 hover:bg-slate-700
+                     transition-colors"
+        >
+          {previa ? <IconEyeOff size={16} /> : <IconEye size={16} />}
+        </button>
+      </div>
+
+      {previa ? (
+        <div className="text-sm text-slate-300 leading-relaxed prose-studyai bg-slate-900/60
+                        border border-slate-700 rounded-xl px-3 py-2 min-h-[8rem]">
+          <ReactMarkdown
+            remarkPlugins={[remarkMath, remarkGfm]}
+            rehypePlugins={[rehypeKatex]}
+            components={{ a: ({ href, children }) =>
+              String(href || '') === 'u:' ? <u>{children}</u> : <span>{children}</span> }}
+          >
+            {prepararTexto(valor)}
+          </ReactMarkdown>
+        </div>
+      ) : (
+        <textarea
+          ref={ref}
+          value={valor}
+          onChange={ev => setValor(ev.target.value)}
+          rows={filas}
+          disabled={guardando}
+          className="w-full bg-slate-900 border border-slate-600 rounded-xl px-3 py-2 text-sm
+                     text-slate-100 leading-relaxed focus:border-primary-500 focus:outline-none
+                     disabled:opacity-50 resize-y"
+          spellCheck={false}
+        />
+      )}
+
+      <p className="text-xs text-slate-500 mt-2">
+        Escribe, borra o cambia lo que quieras. Cuando escanees una página nueva
+        se añadirá <strong className="text-slate-400">debajo</strong>, sin tocar esto.
+      </p>
+
+      <div className="flex gap-2 mt-3">
+        <button
+          onClick={() => onGuardar(valor)}
+          disabled={guardando || !valor.trim()}
+          className="flex items-center justify-center gap-1.5 bg-primary-600 hover:bg-primary-500
+                     text-white rounded-xl px-4 py-2 text-sm font-medium
+                     disabled:opacity-40 disabled:hover:bg-primary-600"
+        >
+          {guardando ? <IconLoader2 size={16} className="animate-spin" /> : <IconDeviceFloppy size={16} />}
+          Guardar
+        </button>
+        <button
+          onClick={onCancelar}
+          disabled={guardando}
+          className="flex items-center justify-center gap-1.5 bg-slate-700 hover:bg-slate-600
+                     text-slate-100 rounded-xl px-4 py-2 text-sm font-medium disabled:opacity-50"
+        >
+          <IconX size={16} /> Cancelar
+        </button>
+      </div>
     </div>
   )
 }
