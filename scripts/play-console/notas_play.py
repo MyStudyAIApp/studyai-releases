@@ -5,7 +5,7 @@ Pone las novedades de la version en curso en la pista indicada, en los 4 idiomas
 Uso:  python notas_play.py <internal|production>
 
 Este fichero se REESCRIBE en cada version: lleva el texto de la que se esta
-publicando ahora (Scan 1.39 / App 1.43, editor del cuaderno). Las notas de las
+publicando ahora (Scan 1.40 / App 1.44, editor del cuaderno y dudas en Apuntes). Las notas de las
 versiones anteriores estan en el historial de git.
 
 Sin emojis, sin exclamaciones y sin la palabra "IA" (norma del proyecto):
@@ -26,35 +26,36 @@ CRED = Path(__file__).resolve().parents[2] / "credentials" / "play-console-servi
 TEXTOS = {
  "es-ES": """Edita tus apuntes
 
-Ya puedes retocar a mano lo que hay en Mi cuaderno: cambiar o borrar una palabra, poner negrita, subrayado o un título más grande. Cuando escanees una página nueva, se añade debajo sin tocar nada de lo que hayas editado.
+Ya puedes retocar a mano lo que hay en Mi cuaderno: cambiar o borrar una palabra, poner negrita, subrayado o un título más grande, y verlo aplicado mientras escribes. Una página nueva se añade debajo, sin tocar lo que hayas editado.
 
-Al pasar tu libreta a texto ahora respetamos lo que llevas subrayado, las mayúsculas y las comillas.
+Las palabras que no se leyeron con seguridad salen ahora en ámbar también en Apuntes: tócalas para corregirlas o darlas por buenas.
 
-Y la app te avisa por dentro cuando hay una versión nueva.""",
+Y al pasar tu libreta a texto respetamos lo subrayado, las mayúsculas y las comillas.""",
 
  "en-US": """Edit your notes
 
-You can now touch up by hand what is in My notebook: change or delete a word, add bold, underline or a bigger heading. When you scan a new page, it is added below without touching anything you edited.
+You can now touch up My notebook by hand: change or delete a word, add bold, underline or a bigger heading, and see it applied as you type. A new page is added below, without touching what you edited.
 
-When we turn your notebook into text we now keep what you underlined, the capital letters and the quotation marks.
+Words we could not read with confidence now show in amber in Notes too: tap them to fix them or confirm them.
 
-And the app tells you from the inside when a new version is out.""",
+And when we turn your notebook into text we keep underlining, capital letters and quotation marks.""",
 
  "de-DE": """Notizen bearbeiten
 
-Du kannst jetzt in Mein Heft von Hand nachbessern: ein Wort ändern oder löschen, Fettdruck, Unterstreichung oder eine größere Überschrift setzen. Eine neu gescannte Seite kommt darunter dazu, ohne deine Änderungen anzurühren.
+Du kannst Mein Heft jetzt von Hand nachbessern: ein Wort ändern oder löschen, Fettdruck, Unterstreichung oder eine größere Überschrift setzen — und siehst es beim Tippen. Eine neue Seite kommt darunter dazu, ohne deine Änderungen anzurühren.
 
-Beim Umwandeln in Text übernehmen wir jetzt Unterstreichungen, Großbuchstaben und Anführungszeichen.
+Unsicher gelesene Wörter erscheinen jetzt auch in Notizen bernsteinfarben: antippen, um sie zu korrigieren oder zu bestätigen.
 
-Und die App sagt dir selbst Bescheid, wenn es eine neue Version gibt.""",
+Beim Umwandeln in Text übernehmen wir Unterstreichungen, Großbuchstaben und Anführungszeichen.""",
 
  "fr-FR": """Modifier tes notes
 
-Tu peux maintenant retoucher à la main ce qui se trouve dans Mon cahier : changer ou supprimer un mot, mettre en gras, souligner ou agrandir un titre. Une page numérisée s'ajoute en dessous sans toucher à ce que tu as modifié.
+Tu peux maintenant retoucher Mon cahier à la main : changer ou supprimer un mot, mettre en gras, souligner ou agrandir un titre, et le voir appliqué en écrivant. Une nouvelle page s'ajoute en dessous, sans toucher à ce que tu as modifié.
 
-En passant ton cahier au texte, nous conservons désormais les soulignements, les majuscules et les guillemets.
+Les mots lus sans certitude apparaissent désormais en ambre dans Notes aussi : touche-les pour les corriger ou les valider.
 
-Et l'application te prévient elle-même quand une nouvelle version sort.""",
+Et en passant ton cahier au texte, nous conservons les soulignements, les majuscules et les guillemets.""",
+
 }
 
 NOTAS = {
