@@ -1,7 +1,8 @@
 // Comprobaciones de las palabras dudosas del cuaderno.
 // Ejecutar:  node src/lib/dudas.test.mjs
 import assert from 'node:assert/strict'
-import { marcarDudas, resolverDuda, contarDudas, marcarSubrayado, prepararTexto } from './dudas.js'
+import { marcarDudas, resolverDuda, contarDudas, marcarSubrayado, prepararTexto, transformarUrl } from './dudas.js'
+import { defaultUrlTransform } from 'react-markdown'
 
 const casos = {
   'cuenta las dudas'() {
@@ -84,6 +85,19 @@ const casos = {
     // En cuanto el alumno confirma la palabra, el subrayado vuelve.
     const salida = prepararTexto('el <u>tema decir(?)</u> va aqui')
     assert.equal(salida, 'el <u>tema [decir](duda:0)</u> va aqui')
+  },
+
+  'nuestros dos esquemas sobreviven al filtro de react-markdown'() {
+    // Sin esto react-markdown los vacia y el componente recibe href="": no se
+    // ve el subrayado y las palabras dudosas dejan de ser botones.
+    assert.equal(defaultUrlTransform('u:'), '', 'ojo: react-markdown ya no los borra, revisar esto')
+    assert.equal(transformarUrl('u:', defaultUrlTransform), 'u:')
+    assert.equal(transformarUrl('duda:3', defaultUrlTransform), 'duda:3')
+  },
+
+  'pero un enlace peligroso SIGUE bloqueado'() {
+    assert.equal(transformarUrl('javascript:alert(1)', defaultUrlTransform), '')
+    assert.equal(transformarUrl('https://mystudyai.eu', defaultUrlTransform), 'https://mystudyai.eu')
   },
 
   'resolver dos veces seguidas deja el texto limpio'() {

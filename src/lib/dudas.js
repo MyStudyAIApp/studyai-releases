@@ -65,3 +65,22 @@ export function marcarSubrayado(texto) {
 export function prepararTexto(texto) {
   return marcarSubrayado(marcarDudas(texto))
 }
+
+
+// ── Dejar pasar NUESTROS dos esquemas ─────────────────────────────────────
+// react-markdown limpia por seguridad la direccion de todo enlace que no sea
+// http/https/mailto/tel: la deja VACIA. Como `duda:N` y `u:` no estan en esa
+// lista, al componente le llegaba `href=""` y no habia forma de distinguirlos.
+//
+// Esto no era un detalle: rompia las dos cosas a la vez -- el subrayado no se
+// veia y los botones ambar de las palabras dudosas dejaban de ser botones.
+// Se descubrio el 11/9/2026 renderizando de verdad en node, porque a simple
+// vista el markdown que entraba era correcto.
+//
+// Se dejan pasar SOLO esos dos y el resto sigue pasando por el filtro de
+// siempre: un apunte puede traer lo que sea (lo escribe un modelo o el propio
+// alumno) y un `javascript:` en un enlace seguiria siendo un agujero.
+export function transformarUrl(url, defecto) {
+  const u = String(url || '')
+  return (u === 'u:' || u.startsWith('duda:')) ? u : defecto(url)
+}

@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown, { defaultUrlTransform } from 'react-markdown'
 import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import { api, apiUpload, useAppStore } from '../store/appStore'
-import { prepararTexto, resolverDuda, contarDudas } from '../lib/dudas'
+import { prepararTexto, resolverDuda, contarDudas, transformarUrl } from '../lib/dudas'
 import { textoAHtml, htmlATexto } from '../lib/formato'
 import {
   IconNotebook, IconCamera, IconPlus, IconLoader2, IconFolder,
@@ -456,6 +456,7 @@ export default function NotebookPage() {
                           <ReactMarkdown
                             remarkPlugins={[remarkMath, remarkGfm]}
                             rehypePlugins={[rehypeKatex]}
+                            urlTransform={u => transformarUrl(u, defaultUrlTransform)}
                             components={{
                               // Las dudas viajan como [palabra](duda:N) y lo
                               // subrayado como [texto](u:) — ver dudas.js.
@@ -604,6 +605,7 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
           <ReactMarkdown
             remarkPlugins={[remarkMath, remarkGfm]}
             rehypePlugins={[rehypeKatex]}
+            urlTransform={u => transformarUrl(u, defaultUrlTransform)}
             components={{ a: ({ href, children }) =>
               String(href || '') === 'u:' ? <u>{children}</u> : <span>{children}</span> }}
           >
