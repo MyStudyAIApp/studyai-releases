@@ -14,6 +14,7 @@ const RESPONSE_LANGS = [
   { code: 'fr', label: 'Français', flag: '🇫🇷' },
 ]
 import { useAuth } from '../contexts/AuthContext'
+import { verFuncion } from '../lib/betaFlags'
 import PasswordInput from '../components/UI/PasswordInput'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { supabase, WEB_API } from '../lib/supabase'
@@ -29,7 +30,7 @@ import { THEMES, getTheme, applyTheme } from '../services/themeService'
 import { pushSettings } from '../services/settingsSync'
 import {
   IconHome, IconBooks, IconBrain, IconFileText, IconWorld, IconMicrophone2,
-  IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings,
+  IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings, IconNotebook,
 } from '@tabler/icons-react'
 import IconBadge from '../components/UI/IconBadge'
 
@@ -38,6 +39,7 @@ import IconBadge from '../components/UI/IconBadge'
 const TUTORIAL_SECTION_ICONS = {
   home:      { Icon: IconHome,        color: 'blue'   },
   library:   { Icon: IconBooks,       color: 'purple' },
+  cuaderno:  { Icon: IconNotebook,    color: 'teal'   },
   study:     { Icon: IconBrain,       color: 'green'  },
   exam:      { Icon: IconFileText,    color: 'amber'  },
   tutor:     { emoji: '🦉',           color: 'purple' },
@@ -92,7 +94,7 @@ const PODCAST_VOICE_GROUPS = [
 
 // ── Orden de las secciones en "Tutoriales" (mismo orden que la barra lateral) ──
 const TUTORIAL_SECTION_KEYS = [
-  'home', 'library', 'study', 'exam', 'tutor', 'languages',
+  'home', 'library', 'cuaderno', 'study', 'exam', 'tutor', 'languages',
   'lecture', 'solve', 'compare', 'stats', 'calendar', 'settings',
 ]
 
@@ -1485,7 +1487,10 @@ export default function SettingsPage() {
         defaultOpen={tutorialsOpen}
       >
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {TUTORIAL_SECTION_KEYS.map(key => (
+          {/* El cuaderno se oculta igual que en la barra lateral: si algún día
+              vuelve a estar en pruebas, su tutorial no puede quedarse a la
+              vista enseñando una pantalla que el alumno no tiene. */}
+          {TUTORIAL_SECTION_KEYS.filter(k => k !== 'cuaderno' || verFuncion('cuaderno', user)).map(key => (
             <button
               key={key}
               onClick={() => window.dispatchEvent(new CustomEvent('studyai:show-onboarding', { detail: { section: key } }))}

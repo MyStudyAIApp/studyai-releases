@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import { useAppStore, api } from '../../store/appStore'
 import ReactMarkdown from 'react-markdown'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import { ensureMathDelimiters } from '../../utils/mathText'
+
+// Mismo trio que en ProblemsView: sin esto, un "10^n" o una raiz se veian en
+// crudo justo en la pantalla donde el alumno compara su respuesta con la buena.
+const MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 
 export default function DevelopmentExamView({ result, doc }) {
   const { questions = [] } = result
@@ -37,7 +44,12 @@ export default function DevelopmentExamView({ result, doc }) {
             {/* Question */}
             <div className="flex items-start gap-2">
               <span className="text-primary-400 font-bold text-sm shrink-0 mt-0.5">{i + 1}.</span>
-              <p className="text-sm font-medium text-slate-100">{q.question}</p>
+              {/* La pregunta tambien pasa por el render: es donde mas aparece
+                  una formula ("calcula 10^3..."), y verla en crudo ahi es peor
+                  que en la respuesta. */}
+              <div className="prose-studyai text-sm font-medium text-slate-100">
+                <ReactMarkdown {...MD_OPTS}>{ensureMathDelimiters(q.question)}</ReactMarkdown>
+              </div>
             </div>
 
             {q.points && <span className="badge-blue text-xs">{q.points} puntos</span>}
@@ -73,7 +85,7 @@ export default function DevelopmentExamView({ result, doc }) {
               <div className="bg-slate-900/60 rounded-lg p-3 border border-slate-600">
                 <p className="text-xs text-slate-400 mb-2 font-semibold uppercase tracking-wider">Respuesta modelo</p>
                 <div className="prose-studyai text-sm">
-                  <ReactMarkdown>{q.model_answer}</ReactMarkdown>
+                  <ReactMarkdown {...MD_OPTS}>{ensureMathDelimiters(q.model_answer)}</ReactMarkdown>
                 </div>
               </div>
             )}

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   IconHome, IconBooks, IconBrain, IconFileText, IconWorld, IconMicrophone2,
-  IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings,
+  IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings, IconNotebook,
 } from '@tabler/icons-react'
 import IconBadge from '../UI/IconBadge'
 
@@ -12,6 +12,7 @@ import IconBadge from '../UI/IconBadge'
 const SECTION_ICONS = {
   home:      { Icon: IconHome,        color: 'blue'   },
   library:   { Icon: IconBooks,       color: 'purple' },
+  cuaderno:  { Icon: IconNotebook,    color: 'teal'   },
   study:     { Icon: IconBrain,       color: 'green'  },
   exam:      { Icon: IconFileText,    color: 'amber'  },
   tutor:     { emoji: '🦉',           color: 'purple' },
@@ -97,9 +98,46 @@ const ALL_STEPS = [
     body: 'En cualquier documento o resumen guardado hay un icono de auriculares — genera un podcast narrado que puedes descargar o enviar a "Mis podcasts" en tu móvil para escucharlo sin conexión. Disponible en escritorio, web y también en MyStudy Scan.',
   },
   {
+    id: 'library-dudas', section: 'library', route: '/library', target: null,
+    icon: '🟡', title: 'Palabras en ámbar y subrayado',
+    body: 'En un documento escaneado, el texto respeta lo que subrayaste a mano, y las palabras que no se leyeron con seguridad salen en ámbar: tócalas para corregirlas o confirmarlas. Es lo mismo que hace Mi cuaderno, así que no tienes que aprenderlo dos veces.',
+  },
+  {
     id: 'library-sync', section: 'library', route: '/library', target: null,
     icon: '☁️', title: 'Sincronización con la nube (escritorio)',
     body: 'En la app de escritorio, cada documento muestra un icono: ámbar si solo está en este ordenador (pulsa para subirlo), verde si ya está también en la nube.',
+  },
+
+  // ── Mi cuaderno (NotebookPage.jsx) ───────────────────────────────────────
+  {
+    id: 'cuaderno-1', section: 'cuaderno', route: '/cuaderno', target: null,
+    icon: '📓', title: 'Mi cuaderno — tu libreta, pasada a limpio',
+    body: 'Fotografía la página de tu libreta y se suma a los apuntes de esa asignatura, bajo la fecha de hoy. Día a día se va formando un cuaderno entero, en vez de quedarte con fotos sueltas.',
+  },
+  {
+    id: 'cuaderno-2', section: 'cuaderno', route: '/cuaderno', target: null,
+    icon: '📸', title: 'Elige asignatura y añade la página',
+    body: 'La asignatura la eliges tú siempre (el tema es opcional): así nada acaba en la carpeta equivocada. Pulsa "Añadir página de la libreta" — en el móvil se abre la cámara directamente. La foto NO se guarda: solo se queda el texto.',
+  },
+  {
+    id: 'cuaderno-3', section: 'cuaderno', route: '/cuaderno', target: null,
+    icon: '🟡', title: 'Las palabras en ámbar',
+    body: 'La letra a mano no siempre se lee segura. Lo dudoso sale en ámbar: tócalo y confirma la palabra o escríbela bien. Lo que subrayaste en tu libreta aparece subrayado, y las fórmulas y raíces se pintan de verdad, no en código.',
+  },
+  {
+    id: 'cuaderno-4', section: 'cuaderno', route: '/cuaderno', target: null,
+    icon: '🖊️', title: 'Editar con el bolígrafo',
+    body: 'El icono del bolígrafo, junto a la fecha, abre el apunte para reescribirlo. Tienes negrita, cursiva, subrayado, tachado, títulos y listas — y lo ves aplicado mientras escribes, no con símbolos raros. El ojo (arriba a la derecha) enseña cómo queda con las fórmulas pintadas.',
+  },
+  {
+    id: 'cuaderno-5', section: 'cuaderno', route: '/cuaderno', target: null,
+    icon: '🖨️', title: 'Imprimir, Word y estudiar',
+    body: 'Con el cuaderno desplegado tienes la impresora (que también sirve para guardarlo en PDF) y la descarga para Word, con tu formato incluido. Y "Estudiar" lo abre como un documento más: resumen, fichas, examen y podcast sobre tus propios apuntes.',
+  },
+  {
+    id: 'cuaderno-6', section: 'cuaderno', route: '/cuaderno', target: null,
+    icon: '📱', title: 'En el móvil',
+    body: 'En MyStudy App tienes esta misma pantalla, con el bolígrafo incluido. En MyStudy Scan, el botón "Mi cuaderno" del inicio va directo a la cámara para sumar la página del día — lo escaneas en clase y lo repasas luego donde quieras.',
   },
 
   // ── Pendiente (StudySession.jsx) ─────────────────────────────────────────
@@ -286,6 +324,16 @@ const ALL_STEPS = [
     id: 'settings-3', section: 'settings', route: '/settings', target: null,
     icon: '🔔', title: 'Avisos de examen',
     body: 'Activa o desactiva las notificaciones de examen, y elige con cuántos días de antelación quieres que te avisen.',
+  },
+  {
+    id: 'settings-plan', section: 'settings', route: '/settings', target: null,
+    icon: '💳', title: 'Plan y facturación',
+    body: 'Aquí ves tu plan (Free, Prueba o Pro) y lo que llevas gastado del mes: generaciones, podcasts, minutos de transcripción y páginas escaneadas van por separado. Puedes pasarte a Pro, comprar bonos sueltos si te quedas corto en algo, o gestionar tu suscripción y tus facturas.',
+  },
+  {
+    id: 'settings-retencion', section: 'settings', route: '/settings', target: null,
+    icon: '🗂️', title: 'Qué se guarda y qué se borra solo',
+    body: 'Los archivos originales que subes (PDF o foto) y los ejercicios resueltos se borran a los 10 días — si quieres uno, descárgalo antes. Tus resúmenes, fichas y exámenes se conservan siempre. Y con "Archivo del curso" guardas o restauras una copia completa de un curso entero.',
   },
   {
     id: 'settings-4', section: 'settings', route: '/settings', target: null,

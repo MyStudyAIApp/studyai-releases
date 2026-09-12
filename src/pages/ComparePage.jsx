@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { useAppStore, api } from '../store/appStore'
 import Spinner from '../components/UI/Spinner'
 import ReactMarkdown from 'react-markdown'
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+import { ensureMathDelimiters } from '../utils/mathText'
 import { useTranslation } from 'react-i18next'
 
 export default function ComparePage() {
@@ -118,7 +121,11 @@ export default function ComparePage() {
           {/* Analysis */}
           {result.analysis && (
             <div className="card prose-studyai">
-              <ReactMarkdown>{result.analysis}</ReactMarkdown>
+              {/* Con motor de formulas: el analisis compara dos temarios y
+                  arrastra los exponentes y las raices de ambos. */}
+              <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                {ensureMathDelimiters(result.analysis)}
+              </ReactMarkdown>
             </div>
           )}
         </div>

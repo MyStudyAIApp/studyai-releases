@@ -12,6 +12,8 @@
 //
 // N es la POSICION de la duda, no la palabra: si "decir(?)" sale tres veces,
 // hay que saber cual toco el alumno.
+import { marcarExponentes } from '../utils/mathText.js'
+
 export const DUDA_RE = /([\wÁÉÍÓÚÜÑáéíóúüñ'’.,-]+)\(\?\)/g
 
 export function marcarDudas(texto) {
@@ -61,9 +63,13 @@ export function marcarSubrayado(texto) {
   )
 }
 
-/** Lo que se le pasa a ReactMarkdown: dudas primero, subrayado despues. */
+/** Lo que se le pasa a ReactMarkdown: dudas primero, subrayado despues y los
+ *  exponentes sueltos ("10^n") al final, ya sobre el texto marcado.
+ *
+ *  Van los ultimos a proposito: envuelven trozos en $...$ y hacerlo antes
+ *  dejaria la marca de duda separada de su palabra. */
 export function prepararTexto(texto) {
-  return marcarSubrayado(marcarDudas(texto))
+  return marcarExponentes(marcarSubrayado(marcarDudas(texto)))
 }
 
 

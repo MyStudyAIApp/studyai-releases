@@ -156,6 +156,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   p, h1, h2, h3, h4, h5, h6, span, li, td, th, .selectable {
     user-select: text;
   }
+
+  /* Lo editable SIEMPRE se puede seleccionar. El `user-select: none` del body
+     lo hereda el <div contentEditable> del editor del cuaderno: en el
+     ordenador Chrome lo deja escribir igual, pero en el WebView de Android
+     (MyStudy App) no se puede ni poner el cursor — el bolígrafo abría el
+     editor y ahí se acababa. Va con prefijo porque el WebView mira el
+     -webkit-. */
+  [contenteditable], input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
 }
 
 @layer components {

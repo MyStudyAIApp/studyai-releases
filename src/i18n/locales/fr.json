@@ -695,6 +695,10 @@
           "icon": "📚",
           "label": "Bibliothèque"
         },
+        "cuaderno": {
+          "icon": "📓",
+          "label": "Mon cahier"
+        },
         "study": {
           "icon": "🧠",
           "label": "En attente"

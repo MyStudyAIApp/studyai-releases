@@ -695,6 +695,10 @@
           "icon": "📚",
           "label": "Bibliothek"
         },
+        "cuaderno": {
+          "icon": "📓",
+          "label": "Mein Heft"
+        },
         "study": {
           "icon": "🧠",
           "label": "Ausstehend"
