@@ -31,6 +31,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage'
 import DeleteAccountInfoPage from './pages/DeleteAccountInfoPage'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import UpdateNotification from './components/UpdateNotification'
+import AppUpdater from './components/AppUpdater'
 import WhisperSetup from './components/WhisperSetup'
 import { pullFromCloud } from './services/syncService'
 import { fetchSettings } from './services/settingsSync'
@@ -280,6 +281,7 @@ function AppInner() {
         <>
           <MobileApp />
           <ToastContainer />
+          <AppUpdater />
         </>
       )
     }
@@ -332,6 +334,7 @@ function AppInner() {
 
       <ToastContainer />
       <UpdateNotification />
+      {IS_MOBILE && <AppUpdater />}
     </div>
   )
 }

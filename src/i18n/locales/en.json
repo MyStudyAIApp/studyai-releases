@@ -1146,5 +1146,13 @@
     "scanTagline": "Scan and record your notes",
     "registerOnWeb": "To create an account, use the MyStudy AI web version",
     "enter": "Log in"
+  },
+  "appUpdate": {
+    "available": "A new version of the app is available",
+    "downloading": "Downloading the new version…",
+    "ready": "New version ready to install",
+    "update": "Update",
+    "restart": "Restart",
+    "later": "Not now"
   }
 }

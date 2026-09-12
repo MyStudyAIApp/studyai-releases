@@ -1146,5 +1146,13 @@
     "scanTagline": "Scanne und nimm deine Notizen auf",
     "registerOnWeb": "Um ein Konto zu erstellen, nutze die Webversion von MyStudy AI",
     "enter": "Einloggen"
+  },
+  "appUpdate": {
+    "available": "Eine neue Version der App ist verfügbar",
+    "downloading": "Neue Version wird heruntergeladen…",
+    "ready": "Neue Version bereit zur Installation",
+    "update": "Aktualisieren",
+    "restart": "Neu starten",
+    "later": "Nicht jetzt"
   }
 }
