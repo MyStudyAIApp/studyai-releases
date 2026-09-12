@@ -63,13 +63,30 @@ export function marcarSubrayado(texto) {
   )
 }
 
-/** Lo que se le pasa a ReactMarkdown: dudas primero, subrayado despues y los
- *  exponentes sueltos ("10^n") al final, ya sobre el texto marcado.
+// ── Saltos de linea ───────────────────────────────────────────────────────
+// En markdown, un salto de linea suelto NO es un salto: dos renglones seguidos
+// se pegan en el mismo parrafo. El alumno escribe su libreta en renglones, y
+// en el cuaderno los veia todos corridos aunque la transcripcion los traia
+// bien separados (lo conto un usuario el 12/9/2026).
+//
+// Se marca como salto DE VERDAD (dos espacios al final, que en markdown es el
+// salto duro) en vez de convertir cada linea en su propio parrafo: partir por
+// parrafos rompe las TABLAS, que necesitan sus filas seguidas, y el cuaderno
+// las pinta (remark-gfm). Las lineas en blanco se quedan como estan y siguen
+// separando parrafos.
+export function respetarSaltos(texto) {
+  return String(texto ?? '').replace(/([^\n])\n(?!\n)/g, '$1  \n')
+}
+
+/** Lo que se le pasa a ReactMarkdown: dudas primero, subrayado despues, los
+ *  exponentes sueltos ("10^n") sobre el texto ya marcado, y los saltos de
+ *  linea al final.
  *
- *  Van los ultimos a proposito: envuelven trozos en $...$ y hacerlo antes
- *  dejaria la marca de duda separada de su palabra. */
+ *  El orden importa: los exponentes envuelven trozos en $...$ y hacerlo antes
+ *  dejaria la marca de duda separada de su palabra; los saltos van los ultimos
+ *  para no tener que esquivar los dos espacios en cada regex anterior. */
 export function prepararTexto(texto) {
-  return marcarExponentes(marcarSubrayado(marcarDudas(texto)))
+  return respetarSaltos(marcarExponentes(marcarSubrayado(marcarDudas(texto))))
 }
 
 

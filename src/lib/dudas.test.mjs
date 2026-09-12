@@ -1,7 +1,7 @@
 // Comprobaciones de las palabras dudosas del cuaderno.
 // Ejecutar:  node src/lib/dudas.test.mjs
 import assert from 'node:assert/strict'
-import { marcarDudas, resolverDuda, contarDudas, marcarSubrayado, prepararTexto, transformarUrl } from './dudas.js'
+import { marcarDudas, resolverDuda, contarDudas, marcarSubrayado, prepararTexto, transformarUrl, respetarSaltos } from './dudas.js'
 import { defaultUrlTransform } from 'react-markdown'
 
 const casos = {
@@ -107,6 +107,28 @@ const casos = {
     t = resolverDuda(t, 0, 'fracciones')
     assert.equal(t, 'en decir decimales y fracciones')
     assert.equal(contarDudas(t), 0)
+  },
+
+  'los renglones no se pegan entre si'() {
+    // Es el fallo que conto un usuario: dos renglones de la libreta salian
+    // corridos en la misma linea.
+    assert.equal(respetarSaltos('una\notra'), 'una  \notra')
+    assert.equal(prepararTexto('una\notra'), 'una  \notra')
+  },
+
+  'la linea en blanco se queda como esta'() {
+    // Separa parrafos por si sola; meterle el salto duro sobraria.
+    assert.equal(respetarSaltos('una\n\notra'), 'una\n\notra')
+    assert.equal(respetarSaltos('una\n\n\n\notra'), 'una\n\n\n\notra')
+    assert.equal(respetarSaltos(''), '')
+    assert.equal(respetarSaltos(null), '')
+  },
+
+  'una tabla no se rompe'() {
+    // Las filas tienen que seguir pegadas: por eso NO se parte en parrafos.
+    const tabla = '| a | b |\n|---|---|\n| 1 | 2 |'
+    assert.ok(!respetarSaltos(tabla).includes('\n\n'),
+              'se colo una linea en blanco dentro de la tabla')
   },
 }
 
