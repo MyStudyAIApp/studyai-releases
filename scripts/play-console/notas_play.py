@@ -5,7 +5,7 @@ Pone las novedades de la version en curso en la pista indicada, en los 4 idiomas
 Uso:  python notas_play.py <internal|production>
 
 Este fichero se REESCRIBE en cada version: lleva el texto de la que se esta
-publicando ahora (Scan 1.42 / App 1.46, aviso de version nueva dentro de la app). Las notas de las
+publicando ahora (Scan 1.43 / App 1.47, aviso de version nueva en negro y dorado). Las notas de las
 versiones anteriores estan en el historial de git.
 
 Esta vez el usuario las quiere ESCUETAS: arreglo de errores y ya.

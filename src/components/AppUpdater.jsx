@@ -69,27 +69,28 @@ export default function AppUpdater() {
   }
 
   return (
-    // Por encima de la barra inferior de las dos apps (~4 rem) y de la zona segura del sistema.
-    <div className="fixed left-3 right-3 bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-[60] mx-auto max-w-lg">
-      <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-emerald-600 text-white shadow-lg">
-        {estado === 'lista' ? <IconRefresh size={20} className="shrink-0" /> : <IconDownload size={20} className="shrink-0" />}
-        <p className="flex-1 text-sm font-medium">
+    // Tarjeta negra y dorada en el centro de la pantalla, para que no pase desapercibida.
+    // Sin fondo que bloquee: se puede seguir usando la app mientras descarga.
+    <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-[60] mx-auto max-w-sm">
+      <div className="relative flex flex-col items-center gap-3 px-6 py-5 rounded-2xl bg-black text-amber-300 border border-amber-400/60 shadow-2xl text-center">
+        {estado === 'disponible' && (
+          <button onClick={() => setEstado(null)} aria-label={t('appUpdate.later')} className="absolute top-2 right-2 p-1.5 text-amber-300/70">
+            <IconX size={18} />
+          </button>
+        )}
+        {estado === 'lista' ? <IconRefresh size={28} /> : <IconDownload size={28} />}
+        <p className="text-base font-semibold">
           {estado === 'disponible' && t('appUpdate.available')}
           {estado === 'descargando' && t('appUpdate.downloading')}
           {estado === 'lista' && t('appUpdate.ready')}
         </p>
         {estado === 'disponible' && (
-          <>
-            <button onClick={actualizar} className="px-3 py-1.5 rounded-xl bg-white text-emerald-700 text-sm font-semibold">
-              {t('appUpdate.update')}
-            </button>
-            <button onClick={() => setEstado(null)} aria-label={t('appUpdate.later')} className="p-1 text-white/80">
-              <IconX size={16} />
-            </button>
-          </>
+          <button onClick={actualizar} className="px-5 py-2 rounded-xl bg-amber-400 text-black text-sm font-bold">
+            {t('appUpdate.update')}
+          </button>
         )}
         {estado === 'lista' && (
-          <button onClick={() => AppUpdate.completeFlexibleUpdate()} className="px-3 py-1.5 rounded-xl bg-white text-emerald-700 text-sm font-semibold">
+          <button onClick={() => AppUpdate.completeFlexibleUpdate()} className="px-5 py-2 rounded-xl bg-amber-400 text-black text-sm font-bold">
             {t('appUpdate.restart')}
           </button>
         )}
