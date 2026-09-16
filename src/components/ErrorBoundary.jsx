@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { Component } from 'react'
 import * as Sentry from '@sentry/react'
 
@@ -31,7 +32,7 @@ export default class ErrorBoundary extends Component {
       'Stack:',
       error?.stack,
       '',
-      'Componente:',
+      'Component:',
       errorInfo?.componentStack,
     ].join('\n')
     // En Electron, navigator.clipboard no funciona sin permisos especiales
@@ -93,11 +94,11 @@ export default class ErrorBoundary extends Component {
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>😵</div>
 
             <h1 style={{ fontSize: '22px', fontWeight: '700', marginBottom: '8px', color: '#f1f5f9' }}>
-              Algo ha ido mal
+              {i18n.t('errorBoundary.title')}
             </h1>
             <p style={{ color: '#94a3b8', fontSize: '15px', marginBottom: '32px', maxWidth: '420px', lineHeight: '1.6' }}>
-              La aplicación ha encontrado un error inesperado.
-              El equipo de MyStudy AI ya ha sido notificado automáticamente.
+              {i18n.t('errorBoundary.desc1')}
+              {i18n.t('errorBoundary.desc2')}
             </p>
 
             {/* Botones principales */}
@@ -110,7 +111,7 @@ export default class ErrorBoundary extends Component {
                   cursor: 'pointer', fontSize: '14px', fontWeight: '600',
                 }}
               >
-                Reintentar
+                {i18n.t('errorBoundary.retry')}
               </button>
               <button
                 onClick={() => window.location.reload()}
@@ -120,7 +121,7 @@ export default class ErrorBoundary extends Component {
                   cursor: 'pointer', fontSize: '14px',
                 }}
               >
-                Recargar app
+                {i18n.t('errorBoundary.reload')}
               </button>
             </div>
 
@@ -132,7 +133,7 @@ export default class ErrorBoundary extends Component {
                 fontSize: '12px', cursor: 'pointer', textDecoration: 'underline',
               }}
             >
-              {showDetails ? 'Ocultar detalles técnicos' : 'Ver detalles técnicos (soporte)'}
+              {showDetails ? i18n.t('errorBoundary.hideDetails') : i18n.t('errorBoundary.showDetails')}
             </button>
 
             {/* Detalles técnicos — solo si el usuario los pide explícitamente */}
@@ -161,7 +162,7 @@ export default class ErrorBoundary extends Component {
                       cursor: 'pointer', fontSize: '11px', flexShrink: 0, marginLeft: '8px',
                     }}
                   >
-                    Copiar
+                    {i18n.t('mobile.doc.copy')}
                   </button>
                 </div>
                 <pre style={{

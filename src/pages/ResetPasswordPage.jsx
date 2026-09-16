@@ -1,3 +1,6 @@
+import { passwordProblem, PASSWORD_MIN } from './LoginPage'
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 /**
  * ResetPasswordPage — se muestra cuando el usuario llega desde el enlace
  * de "Restablecer contraseña" del email. Supabase dispara el evento
@@ -9,6 +12,7 @@ import { useAuth } from '../contexts/AuthContext'
 import PasswordInput from '../components/UI/PasswordInput'
 
 export default function ResetPasswordPage() {
+  useTranslation() // re-render al cambiar de idioma
   const { clearPasswordRecovery } = useAuth()
   const [password, setPassword]   = useState('')
   const [confirm, setConfirm]     = useState('')
@@ -20,12 +24,13 @@ export default function ResetPasswordPage() {
     e.preventDefault()
     setError(null)
 
-    if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.')
+    const problema = passwordProblem(password)
+    if (problema) {
+      setError(i18n.t(`auth.err.pw${problema[0].toUpperCase()}${problema.slice(1)}`, { min: PASSWORD_MIN }))
       return
     }
     if (password !== confirm) {
-      setError('Las contraseñas no coinciden.')
+      setError(i18n.t('resetPw.errMatch'))
       return
     }
 
@@ -34,7 +39,7 @@ export default function ResetPasswordPage() {
     setLoading(false)
 
     if (error) {
-      setError('No se pudo actualizar la contraseña. Inténtalo de nuevo.')
+      setError(i18n.t('resetPw.errUpdate'))
       return
     }
 
@@ -50,8 +55,8 @@ export default function ResetPasswordPage() {
         {/* Logo / título */}
         <div className="text-center mb-8">
           <div className="text-5xl mb-3">🔐</div>
-          <h1 className="text-2xl font-bold text-slate-100">Nueva contraseña</h1>
-          <p className="text-slate-400 text-sm mt-2">Elige una contraseña segura para tu cuenta</p>
+          <h1 className="text-2xl font-bold text-slate-100">{i18n.t('settings.profile.newPassword')}</h1>
+          <p className="text-slate-400 text-sm mt-2">{i18n.t('resetPw.subtitle')}</p>
         </div>
 
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
@@ -59,8 +64,8 @@ export default function ResetPasswordPage() {
           {success ? (
             <div className="text-center space-y-4">
               <div className="text-5xl">✅</div>
-              <p className="text-green-400 font-semibold">¡Contraseña actualizada!</p>
-              <p className="text-slate-400 text-sm">Redirigiendo a la app…</p>
+              <p className="text-green-400 font-semibold">{i18n.t('resetPw.done')}</p>
+              <p className="text-slate-400 text-sm">{i18n.t('resetPw.redirecting')}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -72,11 +77,11 @@ export default function ResetPasswordPage() {
               )}
 
               <div>
-                <label className="block text-sm text-slate-400 mb-1">Nueva contraseña</label>
+                <label className="block text-sm text-slate-400 mb-1">{i18n.t('settings.profile.newPassword')}</label>
                 <PasswordInput
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder={i18n.t('auth.passwordHint', { min: PASSWORD_MIN })}
                   required
                   autoFocus
                   autoComplete="new-password"
@@ -85,7 +90,7 @@ export default function ResetPasswordPage() {
               </div>
 
               <div>
-                <label className="block text-sm text-slate-400 mb-1">Repite la contraseña</label>
+                <label className="block text-sm text-slate-400 mb-1">{i18n.t('settings.profile.repeatPassword')}</label>
                 <PasswordInput
                   value={confirm}
                   onChange={e => setConfirm(e.target.value)}
@@ -101,7 +106,7 @@ export default function ResetPasswordPage() {
                 disabled={loading}
                 className="w-full py-3 rounded-xl font-semibold text-white bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
-                {loading ? 'Guardando…' : 'Guardar nueva contraseña'}
+                {loading ? i18n.t('mobile.scanner.saving') : i18n.t('resetPw.save')}
               </button>
 
             </form>

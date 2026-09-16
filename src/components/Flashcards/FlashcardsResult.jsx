@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { useAppStore, api } from '../../store/appStore'
 
 export default function FlashcardsResult({ result, doc }) {
+  useTranslation() // re-render al cambiar de idioma
   const { cards = [] } = result
   const { addToast } = useAppStore()
   const [saving, setSaving] = useState(false)
@@ -15,7 +18,7 @@ export default function FlashcardsResult({ result, doc }) {
     try {
       await api('POST', '/flashcards/save', { document_id: doc.id, cards })
       setSaved(true)
-      addToast(`${cards.length} tarjetas guardadas para estudio`, 'success')
+      addToast(i18n.t('flashcards.saved', { count: cards.length }), 'success')
     } catch (e) { addToast(e.message, 'error') }
     finally { setSaving(false) }
   }
@@ -28,21 +31,21 @@ export default function FlashcardsResult({ result, doc }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-bold text-slate-100">Flashcards</h2>
-          <p className="text-sm text-slate-400">{cards.length} tarjetas generadas</p>
+          <p className="text-sm text-slate-400">{i18n.t('flashcards.generated', { count: cards.length })}</p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setMode(m => m === 'browse' ? 'study' : 'browse')}
             className="btn-secondary btn-sm"
           >
-            {mode === 'browse' ? '🧠 Modo estudio' : '📋 Ver todas'}
+            {mode === 'browse' ? `🧠 ${i18n.t('flashcards.studyMode')}` : `📋 ${i18n.t('flashcards.viewAll')}`}
           </button>
           {!saved && (
             <button onClick={saveDeck} disabled={saving} className="btn-primary btn-sm">
               {saving ? '⏳' : '💾'} Guardar deck
             </button>
           )}
-          {saved && <span className="badge-green">✓ Guardado</span>}
+          {saved && <span className="badge-green">✓ {i18n.t('settings.availability.saved')}</span>}
         </div>
       </div>
 
@@ -51,7 +54,7 @@ export default function FlashcardsResult({ result, doc }) {
         <div className="space-y-4">
           <div className="flex items-center justify-between text-sm text-slate-400">
             <span>{current + 1} / {cards.length}</span>
-            <span>Haz clic para voltear</span>
+            <span>{i18n.t('flashcards.clickFlip')}</span>
           </div>
 
           {/* Card */}
@@ -62,13 +65,13 @@ export default function FlashcardsResult({ result, doc }) {
             <div className={`flip-card-inner ${flipped ? 'flipped' : ''}`}>
               {/* Front */}
               <div className="flip-card-front card flex flex-col items-center justify-center text-center p-8 bg-slate-800">
-                <span className="text-xs text-slate-500 uppercase tracking-wider mb-3">Pregunta</span>
+                <span className="text-xs text-slate-500 uppercase tracking-wider mb-3">{i18n.t('flashcards.question')}</span>
                 <p className="text-lg font-medium text-slate-100">{card.question}</p>
-                <span className="mt-4 text-xs text-slate-500">▸ Click para ver respuesta</span>
+                <span className="mt-4 text-xs text-slate-500">▸ {i18n.t('flashcards.clickAnswer')}</span>
               </div>
               {/* Back */}
               <div className="flip-card-back card flex flex-col items-center justify-center text-center p-8 bg-primary-900/30 border-primary-700">
-                <span className="text-xs text-primary-400 uppercase tracking-wider mb-3">Respuesta</span>
+                <span className="text-xs text-primary-400 uppercase tracking-wider mb-3">{i18n.t('flashcards.answer')}</span>
                 <p className="text-base text-slate-100">{card.answer}</p>
                 {card.hint && <p className="text-sm text-slate-400 mt-3 italic">💡 {card.hint}</p>}
                 {card.explanation && <p className="text-xs text-slate-500 mt-2">📖 {card.explanation}</p>}
@@ -90,7 +93,7 @@ export default function FlashcardsResult({ result, doc }) {
               disabled={current === cards.length - 1}
               className="btn-primary flex-1"
             >
-              Siguiente →
+              {i18n.t('tutorialUi.next')} →
             </button>
           </div>
         </div>
@@ -104,11 +107,11 @@ export default function FlashcardsResult({ result, doc }) {
               className="card-hover grid grid-cols-2 gap-4"
             >
               <div>
-                <p className="text-[10px] text-slate-500 uppercase mb-1">Pregunta</p>
+                <p className="text-[10px] text-slate-500 uppercase mb-1">{i18n.t('flashcards.question')}</p>
                 <p className="text-sm text-slate-200">{c.question}</p>
               </div>
               <div>
-                <p className="text-[10px] text-slate-500 uppercase mb-1">Respuesta</p>
+                <p className="text-[10px] text-slate-500 uppercase mb-1">{i18n.t('flashcards.answer')}</p>
                 <p className="text-sm text-slate-300">{c.answer}</p>
                 {c.explanation && <p className="text-xs text-slate-500 mt-1">📖 {c.explanation}</p>}
               </div>

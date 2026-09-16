@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { api, useAppStore } from '../store/appStore'
 import { scheduleExamNotifications } from './notificationService'
 import MobileTabBar from './MobileTabBar'
+import i18n from '../i18n'
+import { useTranslation } from 'react-i18next'
 import {
   IconCalendar, IconX, IconBooks, IconLoader2, IconCircleCheck,
   IconAlertTriangle, IconFileText, IconTrash,
@@ -16,10 +18,10 @@ function daysUntil(examDate) {
 }
 
 function daysLabel(n) {
-  if (n < 0)  return 'Pasado'
-  if (n === 0) return '¡Hoy!'
-  if (n === 1) return 'Mañana'
-  return `En ${n} días`
+  if (n < 0)  return i18n.t('mobile.exams.past')
+  if (n === 0) return i18n.t('mobile.home.today')
+  if (n === 1) return i18n.t('mobile.home.tomorrow')
+  return i18n.t('mobile.home.inDays', { count: n })
 }
 
 function cardStyle(n) {
@@ -61,6 +63,7 @@ export default function MobileExamsPage() {
   const [confirmId, setConfirmId] = useState(null)
   const [deleting, setDeleting] = useState(null)
   const { addToast } = useAppStore()
+  useTranslation() // re-render al cambiar de idioma
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -70,7 +73,7 @@ export default function MobileExamsPage() {
       setExams(items)
       scheduleExamNotifications(items).catch(() => {})
     } catch {
-      addToast('Error al cargar los exámenes', 'error')
+      addToast(i18n.t('mobile.exams.loadError'), 'error')
     } finally {
       setLoading(false)
     }
@@ -98,9 +101,9 @@ export default function MobileExamsPage() {
       setColor(DEFAULT_COLOR)
       setShowForm(false)
       await load()
-      addToast('Examen añadido — recordatorios programados', 'success')
+      addToast(i18n.t('mobile.exams.added'), 'success')
     } catch {
-      addToast('Error al añadir el examen', 'error')
+      addToast(i18n.t('mobile.exams.addError'), 'error')
     } finally {
       setSaving(false)
     }
@@ -113,9 +116,9 @@ export default function MobileExamsPage() {
       const updated = exams.filter(e => e.id !== id)
       setExams(updated)
       scheduleExamNotifications(updated).catch(() => {})
-      addToast('Examen eliminado', 'success')
+      addToast(i18n.t('mobile.exams.deleted'), 'success')
     } catch {
-      addToast('Error al eliminar', 'error')
+      addToast(i18n.t('mobile.exams.deleteError'), 'error')
     } finally {
       setDeleting(null)
       setConfirmId(null)
@@ -130,9 +133,9 @@ export default function MobileExamsPage() {
       {/* Cabecera */}
       <div className="px-5 pt-14 pb-4 border-b border-slate-800 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2"><IconCalendar size={22} /> Mis exámenes</h1>
+          <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2"><IconCalendar size={22} /> {i18n.t('mobile.exams.title')}</h1>
           <p className="text-slate-400 text-sm mt-0.5">
-            {loading ? 'Cargando...' : `${exams.length} registrados`}
+            {loading ? i18n.t('common.loading') : i18n.t('mobile.exams.count', { count: exams.length })}
           </p>
         </div>
         <button
@@ -151,7 +154,7 @@ export default function MobileExamsPage() {
             required
             value={title}
             onChange={e => setTitle(e.target.value)}
-            placeholder="Nombre del examen (ej: Matemáticas tema 3)"
+            placeholder={i18n.t('mobile.exams.namePlaceholder')}
             className="w-full px-4 py-3 rounded-xl bg-slate-700 text-slate-100 placeholder-slate-500
                        border border-slate-600 focus:border-primary-500 outline-none text-sm"
           />
@@ -177,7 +180,7 @@ export default function MobileExamsPage() {
                 }}
                 className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
               >
-                <option value="" className="bg-slate-700">Sin asignatura</option>
+                <option value="" className="bg-slate-700">{i18n.t('common.noSubject')}</option>
                 {subjects.map(s => (
                   <option key={s.id} value={s.id} className="bg-slate-700">{s.name}</option>
                 ))}
@@ -195,7 +198,7 @@ export default function MobileExamsPage() {
                   }
                 }}
                 className="w-4 h-4" />
-              Personalizar color
+              {i18n.t('mobile.exams.customColor')}
             </label>
             {customColor && (
               <input type="color" value={color} onChange={e => setColor(e.target.value)}
@@ -209,8 +212,8 @@ export default function MobileExamsPage() {
                        font-semibold disabled:opacity-50 transition-colors"
           >
             {saving
-              ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> Guardando...</span>
-              : <span className="flex items-center justify-center gap-2"><IconCircleCheck size={16} /> Añadir examen</span>}
+              ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> {i18n.t('mobile.scanner.saving')}</span>
+              : <span className="flex items-center justify-center gap-2"><IconCircleCheck size={16} /> {i18n.t('mobile.exams.add')}</span>}
           </button>
         </form>
       )}
@@ -222,15 +225,15 @@ export default function MobileExamsPage() {
       ) : sorted.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
           <IconFileText size={64} className="text-slate-700" />
-          <p className="text-slate-200 font-semibold text-lg">Sin exámenes registrados</p>
+          <p className="text-slate-200 font-semibold text-lg">{i18n.t('mobile.exams.empty')}</p>
           <p className="text-slate-500 text-sm leading-relaxed">
-            Añade tus próximos exámenes y recibirás recordatorios automáticos
+            {i18n.t('mobile.exams.emptyDesc')}
           </p>
           <button
             onClick={() => setShowForm(true)}
             className="mt-1 px-6 py-3 rounded-xl bg-primary-600 active:bg-primary-700 text-white font-medium text-sm"
           >
-            + Añadir primer examen
+            + {i18n.t('mobile.exams.addFirst')}
           </button>
         </div>
       ) : (
@@ -245,7 +248,7 @@ export default function MobileExamsPage() {
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-slate-100 truncate">{exam.title}</p>
                   <p className="text-xs text-slate-400 mt-0.5">
-                    {new Date(exam.exam_date).toLocaleDateString('es-ES', {
+                    {new Date(exam.exam_date).toLocaleDateString(i18n.language, {
                       weekday: 'short', day: 'numeric', month: 'long',
                     })}
                   </p>
@@ -267,13 +270,13 @@ export default function MobileExamsPage() {
                       disabled={deleting === exam.id}
                       className="px-3 py-1.5 rounded-lg bg-red-600 active:bg-red-700 text-white text-xs font-semibold disabled:opacity-50"
                     >
-                      {deleting === exam.id ? '...' : 'Borrar'}
+                      {deleting === exam.id ? '...' : i18n.t('mobile.exams.delete')}
                     </button>
                     <button
                       onClick={() => setConfirmId(null)}
                       className="px-3 py-1.5 rounded-lg bg-slate-700 active:bg-slate-600 text-slate-300 text-xs"
                     >
-                      No
+                      {i18n.t('common.no')}
                     </button>
                   </div>
                 ) : (

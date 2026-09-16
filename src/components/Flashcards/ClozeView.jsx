@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 
 export default function ClozeView({ result }) {
+  useTranslation() // re-render al cambiar de idioma
   const { passages = [] } = result
   const [answers, setAnswers] = useState({})
   const [checked, setChecked] = useState({})
@@ -24,7 +27,7 @@ export default function ClozeView({ result }) {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-slate-100">Texto con huecos</h2>
+        <h2 className="text-lg font-bold text-slate-100">{i18n.t('results.labels.cloze')}</h2>
         {total > 0 && (
           <span className={`badge ${score === total ? 'badge-green' : score > total / 2 ? 'badge-yellow' : 'badge-red'}`}>
             {score}/{total} correctos
@@ -71,7 +74,7 @@ function renderPassage(passage, pi, answers, checked, revealed, setAnswers, chec
           <button
             onClick={() => reveal(pi, blankIdx)}
             className="text-[10px] text-slate-500 hover:text-slate-300"
-            title="Ver respuesta"
+            title={i18n.t('cloze.show')}
           >
             👁️
           </button>

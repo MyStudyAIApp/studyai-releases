@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppStore, api } from '../store/appStore'
@@ -145,7 +146,7 @@ export default function CalendarPage() {
     }
   }
 
-  const monthLabel = monthDate.toLocaleDateString('es', { month: 'long', year: 'numeric' })
+  const monthLabel = monthDate.toLocaleDateString(i18n.language, { month: 'long', year: 'numeric' })
   const weekdayLabels = [t('calendar.mon'), t('calendar.tue'), t('calendar.wed'), t('calendar.thu'), t('calendar.fri'), t('calendar.sat'), t('calendar.sun')]
 
   if (loading) return <div className="flex justify-center items-center h-full"><Spinner label={t('calendar.loading')} /></div>

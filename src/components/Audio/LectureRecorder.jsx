@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState, useRef, useEffect } from 'react'
 import { useAppStore, api, apiUpload, IS_ELECTRON } from '../../store/appStore'
 
 // Pipeline: Audio → Whisper (transcribe todo) → LLM (limpia, opcional) → LLM (resume)
 
 export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
+  useTranslation() // re-render al cambiar de idioma
   const { addToast } = useAppStore()
   const [state, setState] = useState('idle') // idle | connecting | recording | transcribing | cleaning | summarizing | done
   const [duration, setDuration] = useState(0)
@@ -196,17 +199,17 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
   const fmt = (s) => `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`
 
   const STEPS = {
-    transcribing: { icon: '🎙️', label: 'Transcribiendo con Whisper...',     sub: 'Paso 1 de 3' },
-    cleaning:     { icon: '🧹', label: 'Limpiando la grabación...',   sub: 'Paso 2 de 3 — quitando ruido y comentarios ajenos al contenido' },
-    summarizing:  { icon: '📝', label: 'Generando resumen estructurado...', sub: limpiarRuido ? 'Paso 3 de 3' : 'Paso 2 de 2' },
+    transcribing: { icon: '🎙️', label: i18n.t('lecture.rec.transcribing'), sub: i18n.t('lecture.rec.step', { n: 1, total: 3 }) },
+    cleaning:     { icon: '🧹', label: i18n.t('lecture.rec.cleaning'), sub: `${i18n.t('lecture.rec.step', { n: 2, total: 3 })} — ${i18n.t('lecture.rec.cleaningSub')}` },
+    summarizing:  { icon: '📝', label: i18n.t('lecture.rec.summarizing'), sub: limpiarRuido ? i18n.t('lecture.rec.step', { n: 3, total: 3 }) : i18n.t('lecture.rec.step', { n: 2, total: 2 }) },
   }
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-slate-100">Apuntes por voz</h3>
+        <h3 className="font-semibold text-slate-100">{i18n.t('sidebar.lecture')}</h3>
         <span className="badge-blue text-[10px]">
-          {IS_ELECTRON ? '🎙️ Whisper local' : '🎙️ Transcripción en la nube'}
+          {IS_ELECTRON ? '🎙️ Whisper local' : `🎙️ ${i18n.t('lecture.rec.cloud')}`}
         </span>
       </div>
 
@@ -217,7 +220,7 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
           <div className="text-center space-y-3">
             <div className="text-5xl">🎙️</div>
             <p className="text-sm text-slate-400">
-              Graba tus apuntes de voz para convertirlos en texto.
+              {i18n.t('lecture.rec.intro')}
             </p>
 
             <button
@@ -228,10 +231,9 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
             >
               <span className="text-lg shrink-0">🔇</span>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-slate-100">Quitar ruido e interrupciones</p>
+                <p className="text-sm font-semibold text-slate-100">{i18n.t('mobile.record.denoise')}</p>
                 <p className="text-xs text-slate-500">
-                  Filtra automáticamente ruido de fondo y comentarios que no tengan
-                  relación con el contenido de la grabación.
+                  {i18n.t('lecture.rec.denoiseDesc')}
                 </p>
               </div>
               <div className={`w-11 h-6 rounded-full shrink-0 relative transition-colors
@@ -242,7 +244,7 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
             </button>
 
             <button onClick={startRecording} disabled={state === 'connecting'} className="btn-primary disabled:opacity-50">
-              Empezar a grabar
+              {i18n.t('lecture.rec.start')}
             </button>
           </div>
         )}
@@ -251,8 +253,8 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
         {state === 'connecting' && (
           <div className="text-center space-y-3">
             <div className="text-5xl animate-pulse">⏳</div>
-            <p className="text-sm font-medium text-slate-200 animate-pulse">Activando micrófono…</p>
-            <p className="text-xs text-slate-500">Esto puede tardar un instante la primera vez</p>
+            <p className="text-sm font-medium text-slate-200 animate-pulse">{i18n.t('lecture.rec.activating')}</p>
+            <p className="text-xs text-slate-500">{i18n.t('lecture.rec.firstTime')}</p>
           </div>
         )}
 
@@ -270,9 +272,9 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
               height={48}
               className="w-full h-12 rounded-xl bg-slate-900/60"
             />
-            <p className="text-xs text-slate-500">Grabando... habla con claridad</p>
+            <p className="text-xs text-slate-500">{i18n.t('lecture.rec.recording')}</p>
             <button onClick={stopRecording} className="btn-danger px-8">
-              ⏹️ Parar y procesar
+              ⏹️ {i18n.t('lecture.rec.stop')}
             </button>
           </div>
         )}
@@ -317,7 +319,7 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
             {/* Title input */}
             <input
               className="input"
-              placeholder="Nombre de los apuntes"
+              placeholder={i18n.t('lecture.rec.namePlaceholder')}
               value={title}
               onChange={e => setTitle(e.target.value)}
             />
@@ -325,7 +327,7 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
             {/* Summary */}
             {summary && (
               <div className="bg-primary-900/30 border border-primary-700 rounded-xl p-3">
-                <p className="text-xs text-primary-400 font-semibold mb-1">Resumen automático</p>
+                <p className="text-xs text-primary-400 font-semibold mb-1">{i18n.t('lecture.rec.autoSummary')}</p>
                 <p className="text-sm text-slate-200 leading-relaxed">{summary}</p>
               </div>
             )}
@@ -334,14 +336,14 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
             <div className="bg-slate-900/60 rounded-xl p-3">
               <div className="flex items-center justify-between mb-1">
                 <p className="text-xs text-slate-500 font-medium">
-                  {limpiarRuido ? 'Transcripción limpia' : 'Transcripción'}
+                  {limpiarRuido ? i18n.t('lecture.rec.cleanTranscript') : i18n.t('sidebar.usage.transcription')}
                 </p>
                 {limpiarRuido && (
                   <button
                     onClick={() => setShowRaw(s => !s)}
                     className="text-[10px] text-slate-500 hover:text-slate-300"
                   >
-                    {showRaw ? 'Ver limpia' : 'Ver original'}
+                    {showRaw ? i18n.t('lecture.rec.viewClean') : i18n.t('lecture.rec.viewRaw')}
                   </button>
                 )}
               </div>
@@ -355,10 +357,10 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
             {/* Actions */}
             <div className="flex gap-2">
               <button onClick={reset} className="btn-secondary flex-1 btn-sm">
-                Descartar
+                {i18n.t('mobile.record.discard')}
               </button>
               <button onClick={saveAsDocument} className="btn-primary flex-1 btn-sm">
-                💾 Guardar como documento
+                💾 {i18n.t('lecture.rec.saveDoc')}
               </button>
             </div>
           </div>
@@ -368,11 +370,11 @@ export default function LectureRecorder({ subjectId, onTranscriptionSaved }) {
       {state === 'idle' && (
         <div className="text-xs text-slate-500 space-y-1">
           {IS_ELECTRON ? (
-            <p>🎙️ Transcripción con Whisper — procesa el audio en tu ordenador, sin subir nada.</p>
+            <p>🎙️ {i18n.t('lecture.rec.infoLocal')}</p>
           ) : (
-            <p>🎙️ Transcripción con Whisper en la nube — requiere conexión a internet.</p>
+            <p>🎙️ {i18n.t('lecture.rec.infoCloud')}</p>
           )}
-          <p>✨ Limpieza y resumen automáticos — requiere conexión a internet.</p>
+          <p>✨ {i18n.t('lecture.rec.infoClean')}</p>
         </div>
       )}
     </div>

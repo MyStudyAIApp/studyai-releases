@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState, useRef, useEffect } from 'react'
 import { useAppStore } from '../../store/appStore'
 import { hablar, parar, elegirVoz, hayVozEnElDispositivo } from '../../lib/deviceTts'
@@ -17,6 +19,7 @@ import { hablar, parar, elegirVoz, hayVozEnElDispositivo } from '../../lib/devic
  *   lang    — idioma del contenido (por defecto español)
  */
 export default function TextToSpeech({ text, chunks, label, lang = 'es-ES', autoPlay = false }) {
+  useTranslation() // re-render al cambiar de idioma
   const { addToast, ttsVoicesPerLang, ttsRate } = useAppStore()
 
   const [playing, setPlaying]         = useState(false)
@@ -90,9 +93,9 @@ export default function TextToSpeech({ text, chunks, label, lang = 'es-ES', auto
   const hayContenido = !!getTexto()
   const isMulti = totalChunks > 1
   const icon = playing ? '⏹' : '🔊'
-  const tip  = !disponible ? 'Tu dispositivo no tiene voz instalada'
-             : playing ? (isMulti ? `Detener (parte ${chunkIdx + 1}/${totalChunks})` : 'Detener lectura')
-             : 'Leer en voz alta'
+  const tip  = !disponible ? i18n.t('tts.noVoice')
+             : playing ? (isMulti ? i18n.t('tts.stopPart', { n: chunkIdx + 1, total: totalChunks }) : i18n.t('tts.stop'))
+             : i18n.t('tts.read')
 
   return (
     <button

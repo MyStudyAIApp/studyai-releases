@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAppStore, api } from '../store/appStore'
@@ -87,8 +88,8 @@ function PendingDashboard({ onStartReview }) {
       key: 'studyplan',
       icon: IconCalendarStats,
       color: 'text-indigo-400 bg-indigo-500/10',
-      title: `Plan de estudio: ${activePlan.title}`,
-      desc: `Te queda un ${100 - pct}% por terminar (${activePlan.done_topics}/${activePlan.total_topics} temas)`,
+      title: `${i18n.t('library.plans')}: ${activePlan.title}`,
+      desc: i18n.t('study.planLeft', { pct: 100 - pct, done: activePlan.done_topics, total: activePlan.total_topics }),
       onClick: async () => {
         try {
           const r = await api('GET', `/documents/${activePlan.doc_id}/results`)

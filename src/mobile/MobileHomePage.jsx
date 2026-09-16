@@ -10,6 +10,7 @@ import {
   IconHeadphones, IconNotebook,
 } from '@tabler/icons-react'
 import { verFuncion } from '../lib/betaFlags'
+import { useTranslation } from 'react-i18next'
 
 function daysUntil(examDate) {
   const today = new Date()
@@ -22,6 +23,7 @@ function daysUntil(examDate) {
 export default function MobileHomePage() {
   const { user, loading: authLoading } = useAuth()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { setPlanTier, backendReady } = useAppStore()
   const [urgentExams, setUrgentExams] = useState([])
   const [docCount, setDocCount]       = useState(null)
@@ -65,7 +67,7 @@ export default function MobileHomePage() {
         <div className="mb-5 space-y-2">
           {urgentExams.map(exam => {
             const n = daysUntil(exam.exam_date)
-            const label = n === 0 ? '¡Hoy!' : n === 1 ? 'Mañana' : `En ${n} días`
+            const label = n === 0 ? t('mobile.home.today') : n === 1 ? t('mobile.home.tomorrow') : t('mobile.home.inDays', { count: n })
             const style = n === 0 ? 'bg-red-900/40 border border-red-700/60'
                         : n === 1 ? 'bg-amber-900/30 border border-amber-700/40'
                         : 'bg-yellow-900/20 border border-yellow-800/30'
@@ -95,13 +97,13 @@ export default function MobileHomePage() {
         <div className="mb-6 bg-slate-800/60 rounded-2xl px-4 py-3 flex items-center gap-3">
           <IconBooks size={26} className="text-primary-400" />
           <p className="text-slate-300 text-sm flex-1">
-            <span className="font-bold text-slate-100 text-lg">{docCount}</span> documentos guardados
+            <span className="font-bold text-slate-100 text-lg">{docCount}</span> {t('mobile.home.savedDocs', { count: docCount })}
           </p>
           <button
             onClick={() => navigate('/library')}
             className="text-xs text-primary-400 active:text-primary-300 shrink-0"
           >
-            Ver todos ›
+            {t('mobile.home.seeAll')} ›
           </button>
         </div>
       )}
@@ -114,8 +116,8 @@ export default function MobileHomePage() {
                      flex flex-col items-center gap-2 transition-colors shadow-lg"
         >
           <IconCamera size={44} className="text-white" />
-          <span className="text-xl font-bold text-white">Escanear apuntes</span>
-          <span className="text-primary-200 text-sm">Se guardan sueltos en tu biblioteca</span>
+          <span className="text-xl font-bold text-white">{t('mobile.home.scanTitle')}</span>
+          <span className="text-primary-200 text-sm">{t('mobile.home.scanDesc')}</span>
         </button>
 
         {verFuncion('cuaderno', user) && (
@@ -125,8 +127,8 @@ export default function MobileHomePage() {
                        flex flex-col items-center gap-2 transition-colors shadow-lg"
           >
             <IconNotebook size={44} className="text-white" />
-            <span className="text-xl font-bold text-white">Mi cuaderno</span>
-            <span className="text-teal-200 text-sm">Suma los apuntes de hoy a los de esa asignatura</span>
+            <span className="text-xl font-bold text-white">{t('sidebar.notebook')}</span>
+            <span className="text-teal-200 text-sm">{t('mobile.home.notebookDesc')}</span>
           </button>
         )}
 
@@ -136,8 +138,8 @@ export default function MobileHomePage() {
                      flex flex-col items-center gap-2 transition-colors shadow-lg"
         >
           <IconMicrophone2 size={44} className="text-white" />
-          <span className="text-xl font-bold text-white">Grabar apuntes</span>
-          <span className="text-slate-400 text-sm">Dicta tus apuntes en voz</span>
+          <span className="text-xl font-bold text-white">{t('mobile.home.recordTitle')}</span>
+          <span className="text-slate-400 text-sm">{t('mobile.home.recordDesc')}</span>
         </button>
 
         <button
@@ -146,8 +148,8 @@ export default function MobileHomePage() {
                      flex flex-col items-center gap-2 transition-colors shadow-lg"
         >
           <IconCalculator size={44} className="text-white" />
-          <span className="text-xl font-bold text-white">Resolver ejercicio</span>
-          <span className="text-slate-400 text-sm">Escanea un ejercicio y te lo resolvemos</span>
+          <span className="text-xl font-bold text-white">{t('sidebar.solveExercise')}</span>
+          <span className="text-slate-400 text-sm">{t('mobile.home.solveDesc')}</span>
         </button>
 
         <button
@@ -157,8 +159,8 @@ export default function MobileHomePage() {
         >
           <IconHeadphones size={26} className="shrink-0 text-slate-300" />
           <div className="text-left flex-1 min-w-0">
-            <p className="font-semibold text-white">Mis podcasts</p>
-            <p className="text-slate-400 text-xs">Audios enviados desde el ordenador</p>
+            <p className="font-semibold text-white">{t('mobile.home.podcastsTitle')}</p>
+            <p className="text-slate-400 text-xs">{t('mobile.home.podcastsDesc')}</p>
           </div>
           <span className="text-slate-500 shrink-0">›</span>
         </button>

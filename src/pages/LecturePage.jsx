@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppStore, api } from '../store/appStore'
@@ -125,7 +126,7 @@ export default function LecturePage() {
                       <span className="badge-green text-[10px]">{t('lecture.summary')}</span>
                     )}
                     <span className="text-xs text-slate-500">
-                      {new Date(doc.created_at).toLocaleDateString('es-ES', {
+                      {new Date(doc.created_at).toLocaleDateString(i18n.language, {
                         weekday: 'short', day: 'numeric', month: 'short'
                       })}
                     </span>

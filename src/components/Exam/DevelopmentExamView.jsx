@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { useAppStore, api } from '../../store/appStore'
 import ReactMarkdown from 'react-markdown'
@@ -10,6 +12,7 @@ import { ensureMathDelimiters } from '../../utils/mathText'
 const MD_OPTS = { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }
 
 export default function DevelopmentExamView({ result, doc }) {
+  useTranslation() // re-render al cambiar de idioma
   const { questions = [] } = result
   const { addToast } = useAppStore()
   const [answers, setAnswers] = useState({})
@@ -35,7 +38,7 @@ export default function DevelopmentExamView({ result, doc }) {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <h2 className="text-lg font-bold text-slate-100">Preguntas de desarrollo</h2>
+      <h2 className="text-lg font-bold text-slate-100">{i18n.t('devExam.title')}</h2>
 
       {questions.map((q, i) => {
         const eval_ = evaluations[i]
@@ -52,13 +55,13 @@ export default function DevelopmentExamView({ result, doc }) {
               </div>
             </div>
 
-            {q.points && <span className="badge-blue text-xs">{q.points} puntos</span>}
+            {q.points && <span className="badge-blue text-xs">{i18n.t('devExam.points', { count: q.points })}</span>}
 
             {/* User answer */}
             <textarea
               rows={5}
               className="input resize-y text-sm"
-              placeholder="Escribe tu respuesta aquí..."
+              placeholder={i18n.t('exam.timed.writeAnswer')}
               value={answers[i] || ''}
               onChange={e => setAnswers(a => ({ ...a, [i]: e.target.value }))}
             />
@@ -70,20 +73,20 @@ export default function DevelopmentExamView({ result, doc }) {
                 disabled={evaluating[i]}
                 className="btn-primary btn-sm"
               >
-                {evaluating[i] ? '⏳ Evaluando...' : '🤖 Evaluar respuesta'}
+                {evaluating[i] ? `⏳ ${i18n.t('problems.evaluating')}` : `🤖 ${i18n.t('problems.evaluate')}`}
               </button>
               <button
                 onClick={() => setShowModel(s => ({ ...s, [i]: !s[i] }))}
                 className="btn-secondary btn-sm"
               >
-                {showModel[i] ? 'Ocultar modelo' : '📋 Ver respuesta modelo'}
+                {showModel[i] ? i18n.t('devExam.hideModel') : `📋 ${i18n.t('devExam.showModel')}`}
               </button>
             </div>
 
             {/* Model answer */}
             {showModel[i] && q.model_answer && (
               <div className="bg-slate-900/60 rounded-lg p-3 border border-slate-600">
-                <p className="text-xs text-slate-400 mb-2 font-semibold uppercase tracking-wider">Respuesta modelo</p>
+                <p className="text-xs text-slate-400 mb-2 font-semibold uppercase tracking-wider">{i18n.t('exam.timed.modelAnswer')}</p>
                 <div className="prose-studyai text-sm">
                   <ReactMarkdown {...MD_OPTS}>{ensureMathDelimiters(q.model_answer)}</ReactMarkdown>
                 </div>
@@ -97,13 +100,13 @@ export default function DevelopmentExamView({ result, doc }) {
                 eval_.score >= 5 ? 'bg-yellow-900/20 border-yellow-700' :
                                    'bg-red-900/20 border-red-700'}`}>
                 <div className="flex items-center justify-between mb-2">
-                  <p className="font-semibold text-sm">Evaluación</p>
+                  <p className="font-semibold text-sm">{i18n.t('problems.evaluation')}</p>
                   <span className="text-2xl font-black text-slate-100">{eval_.score}/10</span>
                 </div>
                 <p className="text-sm text-slate-300">{eval_.feedback}</p>
                 {eval_.missing_points?.length > 0 && (
                   <div className="mt-2">
-                    <p className="text-xs text-slate-400 font-medium">Falta mencionar:</p>
+                    <p className="text-xs text-slate-400 font-medium">{i18n.t('problems.missing')}:</p>
                     <ul className="text-xs text-slate-400 mt-1 space-y-0.5">
                       {eval_.missing_points.map((p, j) => <li key={j}>• {p}</li>)}
                     </ul>

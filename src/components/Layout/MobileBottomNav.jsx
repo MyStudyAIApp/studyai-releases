@@ -11,25 +11,26 @@ import {
 
 // Barra inferior para MyStudy App (web cargada en móvil) — el Sidebar de
 // escritorio (columna fija de iconos) no cabe bien en pantallas estrechas.
+// label = clave de sidebar.* en i18n.
 // Solo las 4 secciones más usadas van fijas abajo; el resto vive en "Más".
 const PRIMARY = [
-  { to: '/home',    Icon: IconHome,  label: 'Inicio' },
-  { to: '/library', Icon: IconBooks, label: 'Biblioteca' },
-  { to: '/study',   Icon: IconBrain, label: 'Pendiente' },
-  { to: '/exam',    Icon: IconFileText, label: 'Examen' },
+  { to: '/home',    Icon: IconHome,  label: 'home' },
+  { to: '/library', Icon: IconBooks, label: 'library' },
+  { to: '/study',   Icon: IconBrain, label: 'study' },
+  { to: '/exam',    Icon: IconFileText, label: 'exam' },
 ]
 
 const MORE_ITEMS = [
   // 'beta' = solo se pinta si lib/betaFlags deja ver esa funcion a este usuario
-  { to: '/cuaderno',  Icon: IconNotebook,    label: 'Mi cuaderno', beta: 'cuaderno' },
-  { to: '/tutor',     emoji: '🦉', label: 'Tutor' },
-  { to: '/languages', Icon: IconWorld,       label: 'Idiomas' },
-  { to: '/lecture',   Icon: IconMicrophone2, label: 'Apuntes por voz' },
-  { to: '/solve',     Icon: IconCalculator,  label: 'Resolver ejercicio' },
-  { to: '/compare',   Icon: IconScale,       label: 'Comparar' },
-  { to: '/stats',     Icon: IconChartBar,    label: 'Progreso' },
-  { to: '/calendar',  Icon: IconCalendar,    label: 'Calendario' },
-  { to: '/settings',  Icon: IconSettings,    label: 'Ajustes' },
+  { to: '/cuaderno',  Icon: IconNotebook,    label: 'notebook', beta: 'cuaderno' },
+  { to: '/tutor',     emoji: '🦉', label: 'tutor' },
+  { to: '/languages', Icon: IconWorld,       label: 'languages' },
+  { to: '/lecture',   Icon: IconMicrophone2, label: 'lecture' },
+  { to: '/solve',     Icon: IconCalculator,  label: 'solveExercise' },
+  { to: '/compare',   Icon: IconScale,       label: 'compare' },
+  { to: '/stats',     Icon: IconChartBar,    label: 'stats' },
+  { to: '/calendar',  Icon: IconCalendar,    label: 'calendar' },
+  { to: '/settings',  Icon: IconSettings,    label: 'settings' },
 ]
 
 export default function MobileBottomNav() {
@@ -52,7 +53,7 @@ export default function MobileBottomNav() {
             }
           >
             <Icon size={20} />
-            {label}
+            {t(`sidebar.${label}`)}
           </NavLink>
         ))}
         <button
@@ -60,7 +61,7 @@ export default function MobileBottomNav() {
           className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-medium text-slate-500"
         >
           <IconMenu2 size={20} />
-          Más
+          {t('sidebar.more')}
         </button>
       </nav>
 
@@ -69,7 +70,7 @@ export default function MobileBottomNav() {
           <div className="absolute inset-0 bg-black/60" onClick={() => setShowMore(false)} />
           <div className="relative bg-slate-900 rounded-t-3xl overflow-hidden max-h-[75vh] flex flex-col">
             <div className="flex items-center justify-between px-5 py-3 border-b border-slate-800 shrink-0">
-              <span className="font-semibold text-slate-100">Más secciones</span>
+              <span className="font-semibold text-slate-100">{t('sidebar.moreSections')}</span>
               <button onClick={() => setShowMore(false)} className="text-slate-400 leading-none"><IconX size={20} /></button>
             </div>
             <div className="overflow-y-auto flex-1 p-3 grid grid-cols-3 gap-2">
@@ -82,7 +83,7 @@ export default function MobileBottomNav() {
                   <span className="text-2xl leading-none">
                     {emoji || <Icon size={22} />}
                   </span>
-                  <span className="text-[11px] text-center leading-tight">{label}</span>
+                  <span className="text-[11px] text-center leading-tight">{t(`sidebar.${label}`)}</span>
                 </button>
               ))}
               <button
@@ -90,7 +91,7 @@ export default function MobileBottomNav() {
                 className="flex flex-col items-center justify-center gap-1.5 py-4 rounded-xl bg-slate-800 active:bg-red-900/40 text-red-400"
               >
                 <IconLogout size={22} />
-                <span className="text-[11px]">Cerrar sesión</span>
+                <span className="text-[11px]">{t('sidebar.signOut')}</span>
               </button>
             </div>
           </div>

@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useEffect, useState } from 'react'
 import { useAppStore, IS_MOBILE } from '../../store/appStore'
-import { cargarVoces, hablar, parar, abrirInstalacionDeVoces, motivoSinVoces, RUTA_AJUSTES_VOZ } from '../../lib/deviceTts'
+import { cargarVoces, hablar, parar, abrirInstalacionDeVoces, motivoSinVoces, rutaAjustesVoz } from '../../lib/deviceTts'
 
 /**
  * Elige la voz con la que el DISPOSITIVO lee en voz alta, por idioma.
@@ -81,6 +83,7 @@ const MUESTRA = {
 }
 
 export default function DeviceVoicePicker() {
+  useTranslation() // re-render al cambiar de idioma
   const { ttsVoicesPerLang, setTtsVoiceForLang, ttsRate, addToast } = useAppStore()
   const [voces, setVoces] = useState(null)   // null = todavía cargando
   const [probando, setProbando] = useState(null)
@@ -97,7 +100,7 @@ export default function DeviceVoicePicker() {
   async function instalar() {
     const abrio = await abrirInstalacionDeVoces()
     if (!abrio) {
-      addToast(`Tu móvil no deja abrir esa pantalla desde aquí. Ve a ${RUTA_AJUSTES_VOZ}`, 'info', 9000)
+      addToast(i18n.t('tts.cantOpen', { path: rutaAjustesVoz() }), 'info', 9000)
     }
   }
 
@@ -111,24 +114,23 @@ export default function DeviceVoicePicker() {
   }
 
   if (voces === null) {
-    return <p className="text-sm text-slate-400">Buscando las voces de tu dispositivo…</p>
+    return <p className="text-sm text-slate-400">{i18n.t('voices.searching')}</p>
   }
 
   if (!voces.length) {
     return (
       <div className="space-y-2">
         <p className="text-sm text-amber-300">
-          Tu dispositivo no tiene ninguna voz instalada, así que la lectura en voz alta
-          no funcionará.
+          {i18n.t('voices.none')}
         </p>
         {/* El motivo tecnico ayuda a distinguir "no hay voces" de "el motor no
             respondio", que se arreglan de formas muy distintas. */}
         {motivoSinVoces && (
-          <p className="text-xs text-slate-500">Detalle: {motivoSinVoces}</p>
+          <p className="text-xs text-slate-500">{i18n.t('voices.detail')}: {motivoSinVoces}</p>
         )}
         {IS_MOBILE && (
           <button onClick={instalar} className="btn-secondary btn-sm">
-            Instalar voces
+            {i18n.t('voices.install')}
           </button>
         )}
       </div>
@@ -161,23 +163,23 @@ export default function DeviceVoicePicker() {
         >
           {IDIOMAS.map(i => (
             <option key={i.code} value={i.code}>
-              {i.flag} {i.label}{conVoces.has(i.code) ? '' : ' — sin voces'}
+              {i.flag} {i.label}{conVoces.has(i.code) ? '' : ` — ${i18n.t('voices.noVoices')}`}
             </option>
           ))}
         </select>
         <span className="text-xs text-slate-500">
-          Voces instaladas en <strong>este</strong> dispositivo
+          {i18n.t('voices.installedOn')} <strong>{i18n.t('voices.this')}</strong> {i18n.t('voices.device')}
         </span>
       </div>
 
       {!disponibles.length ? (
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-xs text-amber-300">
-            Tu dispositivo no tiene ninguna voz para este idioma.
+            {i18n.t('voices.noneForLang')}
           </span>
           {IS_MOBILE && (
             <button onClick={instalar} className="text-xs text-primary-400 underline">
-              Instalar voces
+              {i18n.t('voices.install')}
             </button>
           )}
         </div>
@@ -199,7 +201,7 @@ export default function DeviceVoicePicker() {
           </select>
           <button
             onClick={() => elegida && probar(elegida, idioma)}
-            title="Escuchar esta voz"
+            title={i18n.t('voices.listen')}
             className="px-3 py-2 rounded-lg border border-slate-700 bg-slate-800/40 text-sm hover:border-slate-600 shrink-0"
           >
             {probando ? '⏳' : '🔊'}
@@ -210,14 +212,14 @@ export default function DeviceVoicePicker() {
       <div className="flex items-center justify-between gap-3 flex-wrap">
         {!!disponibles.length && (
           <p className="text-xs text-slate-500">
-            {disponibles.length} {disponibles.length === 1 ? 'voz disponible' : 'voces disponibles'} para este idioma
+            {i18n.t('voices.available', { count: disponibles.length })}
           </p>
         )}
         {/* Siempre visible en el móvil, no solo cuando falta un idioma: quien
             ya los tiene todos no podía llegar nunca a esta pantalla. */}
         {IS_MOBILE && (
           <button onClick={instalar} className="text-xs text-primary-400 underline">
-            Instalar más voces
+            {i18n.t('voices.installMore')}
           </button>
         )}
       </div>

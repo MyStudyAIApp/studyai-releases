@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { api, useAppStore } from '../../store/appStore'
 import Modal from '../UI/Modal'
@@ -15,6 +17,7 @@ const DAY_ACTIONS = [
 const PASS_THRESHOLD = 80
 
 export default function StudyPlanView({ result, doc, onPrepDay }) {
+  useTranslation() // re-render al cambiar de idioma
   const { days = [], summary, exam_date, total_topics, day_state } = result
   const { addToast } = useAppStore()
   const [expandedDay, setExpandedDay] = useState(null)
@@ -35,7 +38,7 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
       const res = await api('POST', `/documents/${doc.id}/studyplan-day-quiz`, { day_index: dayIdx, final })
       setQuizResult(res)
     } catch (e) {
-      addToast(`No se pudo generar la prueba: ${e.message}`, 'error')
+      addToast(`${i18n.t('studyPlan.quizError')}: ${e.message}`, 'error')
       setQuizFor(null)
     } finally {
       setQuizLoading(false)
@@ -50,7 +53,7 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
         day_index: quizFor.dayIdx, score_pct: pct, passed,
       })
       setDayState(prev => ({ ...prev, [quizFor.dayIdx]: res.day_state }))
-      addToast(passed ? `¡Día ${quizFor.dayIdx + 1} aprobado! (${pct}%)` : `${pct}% — necesitas ${PASS_THRESHOLD}% para aprobar`, passed ? 'success' : 'warning')
+      addToast(passed ? i18n.t('studyPlan.dayPassed', { n: quizFor.dayIdx + 1, pct }) : i18n.t('studyPlan.needPct', { pct, min: PASS_THRESHOLD }), passed ? 'success' : 'warning')
     } catch {
       addToast('No se pudo guardar el resultado de la prueba', 'error')
     }
@@ -66,10 +69,10 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
 
       {/* Header */}
       <div className="card bg-primary-900/30 border-primary-700">
-        <h2 className="text-lg font-bold text-slate-100 mb-1">Plan de estudio</h2>
+        <h2 className="text-lg font-bold text-slate-100 mb-1">{i18n.t('library.plans')}</h2>
         {exam_date && (
           <p className="text-sm text-primary-300">
-            📅 Examen: {new Date(exam_date).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}
+            📅 {i18n.t('app.examLabel')}: {new Date(exam_date).toLocaleDateString(i18n.language, { weekday: 'long', day: 'numeric', month: 'long' })}
           </p>
         )}
         {summary && <p className="text-sm text-slate-300 mt-1">{summary}</p>}
@@ -110,12 +113,12 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
                   </span>
                   <div>
                     <p className="font-semibold text-sm text-slate-100 flex items-center gap-1.5">
-                      {isFinal ? 'Examen final' : day.date
-                        ? new Date(day.date).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' })
-                        : `Día ${i + 1}`}
-                      {isToday && !isFinal && <span className="text-[10px] bg-primary-500/30 text-primary-300 px-1.5 py-0.5 rounded-full font-medium">HOY</span>}
+                      {isFinal ? i18n.t('studyPlan.finalExam') : day.date
+                        ? new Date(day.date).toLocaleDateString(i18n.language, { weekday: 'long', day: 'numeric', month: 'short' })
+                        : i18n.t('studyPlan.day', { n: i + 1 })}
+                      {isToday && !isFinal && <span className="text-[10px] bg-primary-500/30 text-primary-300 px-1.5 py-0.5 rounded-full font-medium">{i18n.t('library.today').toUpperCase()}</span>}
                     </p>
-                    {day.is_review && <span className="text-[10px] text-yellow-400">🔄 Repaso general</span>}
+                    {day.is_review && <span className="text-[10px] text-yellow-400">🔄 {i18n.t('studyPlan.review')}</span>}
                   </div>
                 </div>
 
@@ -129,7 +132,7 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
                           ? 'bg-primary-600/30 border-primary-500 text-primary-300'
                           : 'bg-slate-700/50 border-slate-600 text-slate-400 hover:border-primary-500 hover:text-primary-300'
                       }`}
-                      title="Preparar este día"
+                      title={i18n.t('studyPlan.prepDay')}
                     >
                       {expanded ? '▲ Cerrar' : '⚡ Preparar'}
                     </button>
@@ -153,7 +156,7 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
               {/* Aviso blando si el día anterior no está aprobado — no bloquea */}
               {prevBlocked && !passed && (
                 <p className="text-xs text-amber-400 mt-2 ml-9 flex items-center gap-1">
-                  ⚠️ No has terminado la prueba del día anterior
+                  ⚠️ {i18n.t('studyPlan.prevNotDone')}
                 </p>
               )}
 
@@ -161,7 +164,7 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
               <div className="mt-3 ml-9">
                 {passed ? (
                   <p className="text-xs text-emerald-400">
-                    ✅ {isFinal ? 'Examen final aprobado' : 'Prueba aprobada'} — mejor nota: {dayState[i]?.best_score_pct}%
+                    ✅ {isFinal ? i18n.t('studyPlan.finalPassed') : i18n.t('studyPlan.quizPassed')} — {i18n.t('studyPlan.best')}: {dayState[i]?.best_score_pct}%
                   </p>
                 ) : (
                   <button
@@ -169,8 +172,8 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
                     className="btn-secondary btn-sm"
                   >
                     {attempted
-                      ? `🔁 Reintentar (última: ${dayState[i]?.best_score_pct}%)`
-                      : isFinal ? '🎓 Empezar examen final' : '▶️ Empezar prueba del día'}
+                      ? `🔁 ${i18n.t('studyPlan.retry', { pct: dayState[i]?.best_score_pct })}`
+                      : isFinal ? `🎓 ${i18n.t('studyPlan.startFinal')}` : `▶️ ${i18n.t('studyPlan.startQuiz')}`}
                   </button>
                 )}
               </div>
@@ -179,7 +182,7 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
               {expanded && onPrepDay && (
                 <div className="mt-3 ml-9 pt-3 border-t border-slate-700/50">
                   <p className="text-xs text-slate-400 mb-2 font-medium uppercase tracking-wider">
-                    Generar para los temas de hoy:
+                    {i18n.t('studyPlan.generateToday')}:
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {DAY_ACTIONS.map(a => (
@@ -194,7 +197,7 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
                                    hover:bg-primary-700/40 hover:border-primary-500 hover:text-primary-200
                                    transition-all"
                       >
-                        <span>{a.icon}</span> {a.label}
+                        <span>{a.icon}</span> {i18n.t(`studyPlan.actions.${a.id}`, { defaultValue: a.label })}
                       </button>
                     ))}
                   </div>
@@ -206,11 +209,11 @@ export default function StudyPlanView({ result, doc, onPrepDay }) {
       </div>
 
       {/* Modal de la prueba diaria / examen final */}
-      <Modal open={!!quizFor} onClose={closeQuiz} title={quizFor?.final ? 'Examen final' : `Prueba del día ${quizFor ? quizFor.dayIdx + 1 : ''}`} size="lg">
+      <Modal open={!!quizFor} onClose={closeQuiz} title={quizFor?.final ? i18n.t('studyPlan.finalExam') : i18n.t('studyPlan.dayQuiz', { n: quizFor ? quizFor.dayIdx + 1 : '' })} size="lg">
         {quizLoading && (
           <div className="text-center py-16 space-y-3">
             <div className="text-4xl animate-pulse">✨</div>
-            <p className="text-slate-400 text-sm">Generando la prueba…</p>
+            <p className="text-slate-400 text-sm">{i18n.t('studyPlan.generatingQuiz')}</p>
           </div>
         )}
         {quizResult && (

@@ -12,6 +12,8 @@ function formatTime(s) {
   return `${m}:${String(sec).padStart(2, '0')}`
 }
 
+import { useTranslation } from 'react-i18next'
+
 export default function MobileRecordPage() {
   const [recording, setRecording] = useState(false)
   const [seconds, setSeconds]     = useState(0)
@@ -27,6 +29,7 @@ export default function MobileRecordPage() {
   const chunksRef = useRef([])
   const timerRef  = useRef(null)
   const { addToast } = useAppStore()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   // Cargar asignaturas solo una vez, no bloquea la grabación si falla
@@ -56,7 +59,7 @@ export default function MobileRecordPage() {
       setRecording(true)
       timerRef.current = setInterval(() => setSeconds(s => s + 1), 1000)
     } catch {
-      addToast('No se pudo acceder al micrófono', 'error')
+      addToast(t('mobile.record.micError'), 'error')
     }
   }
 
@@ -75,15 +78,15 @@ export default function MobileRecordPage() {
       const blob = new Blob(chunksRef.current, { type: 'audio/webm' })
       const form = new FormData()
       form.append('audio', blob, 'apuntes.webm')
-      form.append('title', title.trim() || 'Apuntes de voz')
+      form.append('title', title.trim() || t('mobile.record.defaultTitle'))
       form.append('clean', limpiarRuido ? 'true' : 'false')
       if (topicId) form.append('topic_id', topicId)
       else if (subjectId) form.append('subject_id', subjectId)
       const res = await apiUpload('/audio/transcribe-mobile', form)
-      addToast('¡Apuntes transcritos y guardados!', 'success')
+      addToast(t('mobile.record.saved'), 'success')
       navigate(res?.id ? `/document/${res.id}` : '/')
     } catch (e) {
-      if (!e.quotaExceeded) addToast('Error al procesar el audio', 'error')
+      if (!e.quotaExceeded) addToast(t('mobile.record.processError'), 'error')
     } finally {
       setLoading(false)
     }
@@ -103,7 +106,7 @@ export default function MobileRecordPage() {
       {/* Cabecera */}
       <div className="flex items-center gap-3 px-4 pt-12 pb-5">
         <button onClick={() => navigate('/')} className="text-slate-400 p-1"><IconArrowLeft size={22} /></button>
-        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconMicrophone2 size={20} /> Grabar apuntes</h1>
+        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconMicrophone2 size={20} /> {t('mobile.home.recordTitle')}</h1>
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
@@ -142,7 +145,7 @@ export default function MobileRecordPage() {
               type="text"
               value={title}
               onChange={e => setTitle(e.target.value)}
-              placeholder="Nombre de los apuntes (opcional)"
+              placeholder={t('mobile.record.namePlaceholder')}
               className="w-full px-4 py-4 rounded-xl bg-slate-800 text-slate-100 placeholder-slate-500
                          border border-slate-700 focus:border-primary-500 outline-none text-base"
             />
@@ -156,8 +159,8 @@ export default function MobileRecordPage() {
             >
               <IconVolumeOff size={20} className="shrink-0 text-slate-400" />
               <div className="flex-1 text-left">
-                <p className="text-sm font-semibold text-slate-100">Quitar ruido e interrupciones</p>
-                <p className="text-xs text-slate-500">Para grabaciones largas en ambientes ruidosos</p>
+                <p className="text-sm font-semibold text-slate-100">{t('mobile.record.denoise')}</p>
+                <p className="text-xs text-slate-500">{t('mobile.record.denoiseDesc')}</p>
               </div>
               <div className={`w-11 h-6 rounded-full shrink-0 relative transition-colors
                 ${limpiarRuido ? 'bg-primary-500' : 'bg-slate-600'}`}>
@@ -175,7 +178,7 @@ export default function MobileRecordPage() {
                   disabled={loading}
                   className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
                 >
-                  <option value="" className="bg-slate-800">Sin asignatura</option>
+                  <option value="" className="bg-slate-800">{t('common.noSubject')}</option>
                   {subjects.map(s => (
                     <option key={s.id} value={s.id} className="bg-slate-800">{s.name}</option>
                   ))}
@@ -192,7 +195,7 @@ export default function MobileRecordPage() {
                   disabled={loading}
                   className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
                 >
-                  <option value="" className="bg-slate-800">Sin tema (suelto)</option>
+                  <option value="" className="bg-slate-800">{t('home.uploadModal.topicLoose')}</option>
                   {topics.map(topic => (
                     <option key={topic.id} value={topic.id} className="bg-slate-800">{topic.name}</option>
                   ))}
@@ -207,8 +210,8 @@ export default function MobileRecordPage() {
                          active:bg-primary-700 disabled:opacity-50 transition-colors"
             >
               {loading
-                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={18} className="animate-spin" /> {limpiarRuido ? 'Transcribiendo y limpiando...' : 'Transcribiendo...'}</span>
-                : <span className="flex items-center justify-center gap-2"><IconCircleCheck size={18} /> Guardar y transcribir</span>}
+                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={18} className="animate-spin" /> {limpiarRuido ? t('mobile.record.transcribingClean') : t('mobile.record.transcribing')}</span>
+                : <span className="flex items-center justify-center gap-2"><IconCircleCheck size={18} /> {t('mobile.record.saveTranscribe')}</span>}
             </button>
             <button
               onClick={descartar}
@@ -216,14 +219,14 @@ export default function MobileRecordPage() {
               className="w-full py-4 rounded-2xl bg-slate-700 text-slate-400 font-medium
                          active:bg-slate-600 disabled:opacity-40 transition-colors flex items-center justify-center gap-2"
             >
-              <IconTrash size={16} /> Descartar
+              <IconTrash size={16} /> {t('mobile.record.discard')}
             </button>
           </div>
         )}
 
         {!recording && !done && (
           <p className="text-slate-500 text-sm text-center max-w-xs">
-            Pulsa para empezar. Habla despacio y con claridad.
+            {t('mobile.record.tapToStart')}
           </p>
         )}
       </div>

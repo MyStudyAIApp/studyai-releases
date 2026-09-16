@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api, useAppStore } from '../store/appStore'
@@ -5,6 +6,8 @@ import MobileTabBar from './MobileTabBar'
 import { IconCamera, IconPhoto, IconFileText, IconBooks, IconFolder, IconFolderOpen, IconTrash, IconHeadphones } from '@tabler/icons-react'
 
 const TYPE_ICON = { escaneado: IconCamera, foto: IconPhoto, pdf: IconFileText }
+
+import { useTranslation } from 'react-i18next'
 
 export default function MobileLibraryPage() {
   const [docs, setDocs]         = useState([])
@@ -16,6 +19,7 @@ export default function MobileLibraryPage() {
   const [topics, setTopics]     = useState([])
   const [activeTopic, setActiveTopic] = useState(null)
   const { addToast, podcastVoice } = useAppStore()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const load = useCallback(async () => {
@@ -28,7 +32,7 @@ export default function MobileLibraryPage() {
       setDocs(docsRes.items || [])
       setSubjects(subjectsRes.items || [])
     } catch {
-      addToast('Error al cargar la biblioteca', 'error')
+      addToast(t('mobile.library.loadError'), 'error')
     } finally {
       setLoading(false)
     }
@@ -56,9 +60,9 @@ export default function MobileLibraryPage() {
     try {
       await api('DELETE', `/documents/${id}`)
       setDocs(prev => prev.filter(d => d.id !== id))
-      addToast('Documento eliminado', 'success')
+      addToast(t('mobile.library.deleted'), 'success')
     } catch {
-      addToast('Error al eliminar el documento', 'error')
+      addToast(t('mobile.library.deleteError'), 'error')
     } finally {
       setDeleting(null)
       setConfirmId(null)
@@ -77,9 +81,9 @@ export default function MobileLibraryPage() {
     setGeneratingPodcastId(doc.id)
     try {
       await api('POST', `/documents/${doc.id}/podcast/send-to-mobile?voice=${encodeURIComponent(podcastVoice)}`)
-      addToast('Podcast generado — ve a "Mis podcasts" para descargarlo', 'success')
+      addToast(t('mobile.library.podcastDone'), 'success')
     } catch {
-      addToast('No se pudo generar el podcast', 'error')
+      addToast(t('mobile.library.podcastError'), 'error')
     } finally {
       setGeneratingPodcastId(null)
     }
@@ -89,9 +93,9 @@ export default function MobileLibraryPage() {
     <div className="min-h-screen bg-slate-900 flex flex-col pb-20">
       {/* Cabecera */}
       <div className="px-5 pt-14 pb-4 border-b border-slate-800">
-        <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2"><IconBooks size={22} /> Mis documentos</h1>
+        <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2"><IconBooks size={22} /> {t('mobile.library.title')}</h1>
         <p className="text-slate-400 text-sm mt-0.5">
-          {loading ? 'Cargando...' : `${filteredDocs.length} archivos guardados`}
+          {loading ? t('common.loading') : t('mobile.library.count', { count: filteredDocs.length })}
         </p>
       </div>
 
@@ -103,7 +107,7 @@ export default function MobileLibraryPage() {
             className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors
               ${!activeSubject ? 'bg-primary-600 text-white' : 'bg-slate-800 text-slate-400'}`}
           >
-            <IconBooks size={13} className="inline -mt-0.5" /> Todos
+            <IconBooks size={13} className="inline -mt-0.5" /> {t('mobile.library.all')}
           </button>
           {subjects.map(s => (
             <button
@@ -127,7 +131,7 @@ export default function MobileLibraryPage() {
             className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-colors
               ${!activeTopic ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-400'}`}
           >
-            Todos
+            {t('mobile.library.all')}
           </button>
           {topics.map(topic => (
             <button
@@ -149,11 +153,11 @@ export default function MobileLibraryPage() {
       ) : filteredDocs.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
           <IconFolderOpen size={64} className="text-slate-700" />
-          <p className="text-slate-200 font-semibold text-lg">Sin documentos</p>
+          <p className="text-slate-200 font-semibold text-lg">{t('mobile.library.empty')}</p>
           <p className="text-slate-500 text-sm leading-relaxed">
             {docs.length === 0
-              ? 'Escanea apuntes o graba una nota de voz desde la pantalla de inicio'
-              : 'No hay documentos con este filtro'}
+              ? t('mobile.library.emptyDesc')
+              : t('mobile.library.emptyFilter')}
           </p>
         </div>
       ) : (
@@ -170,12 +174,12 @@ export default function MobileLibraryPage() {
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-slate-100 truncate">{doc.title}</p>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  {doc.subject_name || 'Sin asignatura'}{doc.topic_name && <> · <IconFolder size={11} className="inline -mt-0.5" /> {doc.topic_name}</>} · {doc.pages} págs
-                  {doc.has_summary   && <span className="ml-1 text-emerald-500">· ✓ Resumen</span>}
-                  {doc.has_flashcards && <span className="ml-1 text-violet-400">· Tarjetas</span>}
+                  {doc.subject_name || t('common.noSubject')}{doc.topic_name && <> · <IconFolder size={11} className="inline -mt-0.5" /> {doc.topic_name}</>} · {doc.pages} {t('common.pag')}
+                  {doc.has_summary   && <span className="ml-1 text-emerald-500">· ✓ {t('mobile.library.summary')}</span>}
+                  {doc.has_flashcards && <span className="ml-1 text-violet-400">· {t('mobile.library.cards')}</span>}
                 </p>
                 <p className="text-xs text-slate-600 mt-0.5">
-                  {new Date(doc.created_at).toLocaleDateString('es-ES', {
+                  {new Date(doc.created_at).toLocaleDateString(i18n.language, {
                     day: 'numeric', month: 'short', year: 'numeric',
                   })}
                 </p>
@@ -188,7 +192,7 @@ export default function MobileLibraryPage() {
                     disabled={deleting === doc.id}
                     className="px-3 py-1.5 rounded-lg bg-red-600 active:bg-red-700 text-white text-xs font-semibold disabled:opacity-50"
                   >
-                    {deleting === doc.id ? '...' : 'Borrar'}
+                    {deleting === doc.id ? '...' : t('mobile.exams.delete')}
                   </button>
                   <button
                     onClick={() => setConfirmId(null)}

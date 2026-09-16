@@ -1,3 +1,4 @@
+import i18n from '../../i18n'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -228,7 +229,7 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction 
 
       {/* Weekly study hours */}
       <div>
-        <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2">Horas disponibles / semana</p>
+        <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2">{i18n.t('library.jointPlan.hoursWeek')}</p>
         <WeeklyHoursWidget compact hours={weeklyHours} onChange={handleWeeklyHoursChange} />
       </div>
 

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { useAppStore, api, IS_WEB, IS_MOBILE, IS_ELECTRON, detectIsFullMobileApp } from './store/appStore'
@@ -68,7 +69,7 @@ function ProtectedRoute({ children }) {
   const location = useLocation()
   if (loading) return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-      <div className="text-slate-400 animate-pulse text-lg">Cargando...</div>
+      <div className="text-slate-400 animate-pulse text-lg">{i18n.t('common.loading')}</div>
     </div>
   )
   // Guarda a dónde iba (ej. /admin) para volver ahí tras el login, en vez de
@@ -83,7 +84,7 @@ function RootRoute() {
   const { user, loading } = useAuth()
   if (loading) return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-      <div className="text-slate-400 animate-pulse text-lg">Cargando...</div>
+      <div className="text-slate-400 animate-pulse text-lg">{i18n.t('common.loading')}</div>
     </div>
   )
   if (user) return <Navigate to="/home" replace />
@@ -171,16 +172,16 @@ function AppInner() {
             // Tarjetas pendientes de repaso
             if (notifs.due_cards > 0) {
               addToast(
-                `🧠 Tienes ${notifs.due_cards} tarjeta${notifs.due_cards > 1 ? 's' : ''} pendiente${notifs.due_cards > 1 ? 's' : ''} de repaso hoy`,
+                '🧠 ' + i18n.t('app.dueCards', { count: notifs.due_cards }),
                 'info', 6000
               )
             }
             // Exámenes próximos
             for (const exam of notifs.upcoming_exams) {
-              const when = exam.days_left === 0 ? '¡hoy!'
-                         : exam.days_left === 1 ? 'mañana'
-                         : `en ${exam.days_left} días`
-              const msg = `📅 Examen: ${exam.title} — ${when}`
+              const when = exam.days_left === 0 ? i18n.t('app.examToday')
+                         : exam.days_left === 1 ? i18n.t('app.examTomorrow')
+                         : i18n.t('app.examInDays', { count: exam.days_left })
+              const msg = `📅 ${i18n.t('app.examLabel')}: ${exam.title} — ${when}`
               addToast(msg, exam.days_left <= 1 ? 'error' : 'warning', 8000)
               // La notificación nativa del sistema operativo ya la manda el
               // cron del backend (/admin/check-exam-notifications) vía Web
@@ -190,7 +191,7 @@ function AppInner() {
           } catch { /* notificaciones opcionales, no crítico */ }
         }, 2000)
       } catch {
-        setBackendError('No se puede conectar con el servicio')
+        setBackendError(i18n.t('app.backendUnreachable'))
         setTimeout(check, 3000)
       }
     }
@@ -272,7 +273,7 @@ function AppInner() {
     if (isFullMobileApp === null) {
       return (
         <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-          <div className="text-slate-400 animate-pulse text-lg">Cargando...</div>
+          <div className="text-slate-400 animate-pulse text-lg">{i18n.t('common.loading')}</div>
         </div>
       )
     }
@@ -343,6 +344,7 @@ function AppInner() {
 // App solo crea el AuthProvider y envuelve AppInner.
 // Así AppInner puede usar useAuth() correctamente.
 export default function App() {
+  useTranslation() // re-render al cambiar de idioma
   return (
     <AuthProvider>
       <div className="dark">

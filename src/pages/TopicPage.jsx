@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAppStore, api, apiUpload, apiStream } from '../store/appStore'
@@ -145,7 +146,7 @@ export default function TopicPage() {
       >
         {dragOver && (
           <div className="absolute inset-2 z-20 rounded-2xl border-2 border-dashed border-primary-500 bg-primary-950/40 flex items-center justify-center pointer-events-none">
-            <p className="text-primary-300 font-semibold text-sm text-center px-4">Suelta el PDF o la foto para añadirlo al tema</p>
+            <p className="text-primary-300 font-semibold text-sm text-center px-4">{i18n.t('topic.drop')}</p>
           </div>
         )}
         <div className="px-4 py-3 border-b border-slate-800 flex items-center gap-2">

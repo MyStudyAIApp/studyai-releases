@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { api } from '../../store/appStore'
 import { useAppStore } from '../../store/appStore'
@@ -10,6 +12,7 @@ const TYPES = [
 ]
 
 export default function FeedbackModal({ open, onClose, platform = 'web' }) {
+  useTranslation() // re-render al cambiar de idioma
   const { addToast } = useAppStore()
   const [type,       setType]       = useState('suggestion')
   const [message,    setMessage]    = useState('')
@@ -39,7 +42,7 @@ export default function FeedbackModal({ open, onClose, platform = 'web' }) {
   }
 
   return (
-    <Modal open={open} onClose={onClose} title="Ayúdanos a mejorar" size="sm">
+    <Modal open={open} onClose={onClose} title={i18n.t('mobile.settings.helpImprove')} size="sm">
       <div className="space-y-4">
 
         {/* Tipo */}
@@ -54,7 +57,7 @@ export default function FeedbackModal({ open, onClose, platform = 'web' }) {
                   : 'border-slate-700 text-slate-400 hover:bg-slate-800'}`}
             >
               <span className="text-xl">{t.emoji}</span>
-              {t.label}
+              {i18n.t(`feedback.types.${t.value}`, { defaultValue: t.label })}
             </button>
           ))}
         </div>
@@ -62,7 +65,7 @@ export default function FeedbackModal({ open, onClose, platform = 'web' }) {
         {/* Mensaje */}
         <textarea
           className="input w-full h-32 resize-none"
-          placeholder="Cuéntanos qué pasó, qué mejorarías o qué piensas..."
+          placeholder={i18n.t('feedback.placeholder')}
           value={message}
           onChange={e => setMessage(e.target.value)}
           autoFocus
@@ -70,7 +73,7 @@ export default function FeedbackModal({ open, onClose, platform = 'web' }) {
 
         {/* Email opcional */}
         <div>
-          <label className="text-xs text-slate-500 block mb-1">Tu email <span className="text-slate-600">(opcional, si quieres que te respondamos)</span></label>
+          <label className="text-xs text-slate-500 block mb-1">{i18n.t('feedback.email')} <span className="text-slate-600">({i18n.t('feedback.emailHint')})</span></label>
           <input
             type="email"
             className="input w-full"
@@ -82,7 +85,7 @@ export default function FeedbackModal({ open, onClose, platform = 'web' }) {
 
         <div className="flex gap-2 pt-1">
           <button onClick={onClose} className="btn-secondary flex-1" disabled={sending}>
-            Cancelar
+            {i18n.t('common.cancel')}
           </button>
           <button
             onClick={handleSend}

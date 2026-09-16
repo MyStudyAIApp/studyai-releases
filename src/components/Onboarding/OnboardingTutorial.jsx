@@ -5,6 +5,7 @@ import {
   IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings, IconNotebook,
 } from '@tabler/icons-react'
 import IconBadge from '../UI/IconBadge'
+import { useTranslation } from 'react-i18next'
 
 // Mismo icono/color que en la barra lateral (Sidebar.jsx) y en el selector de
 // tutoriales de Ajustes (SettingsPage.jsx) — si cambian los iconos de la app,
@@ -380,6 +381,7 @@ function calcCardStyle(rect, hint, winW, winH) {
 // ── Contenido de la card ──────────────────────────────────────────────────────
 
 function CardContent({ stepIdx, total, current, isFirst, isLast, finishLabel, onPrev, onNext, onFinish, onSkip, onDragStart }) {
+  const { t } = useTranslation()
   const sectionIcon = SECTION_ICONS[current.section]
   return (
     <div className="space-y-4">
@@ -387,15 +389,15 @@ function CardContent({ stepIdx, total, current, isFirst, isLast, finishLabel, on
       <div
         className="flex items-center gap-3 cursor-grab active:cursor-grabbing select-none"
         onMouseDown={onDragStart}
-        title="Arrastra para mover"
+        title={t('tutorialUi.drag')}
       >
         <IconBadge icon={sectionIcon?.Icon} emoji={sectionIcon?.emoji} color={sectionIcon?.color} size="sm" />
-        <h2 className="font-bold text-slate-100 text-base leading-tight flex-1">{current.title}</h2>
+        <h2 className="font-bold text-slate-100 text-base leading-tight flex-1">{t(`tutorial.${current.id}.title`, { defaultValue: current.title })}</h2>
         <span className="text-slate-600 text-sm shrink-0">⠿</span>
       </div>
 
       {/* Cuerpo */}
-      <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line">{current.body}</p>
+      <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line">{t(`tutorial.${current.id}.body`, { defaultValue: current.body })}</p>
 
       {/* Dots */}
       <div className="flex gap-1.5 flex-wrap">
@@ -412,21 +414,21 @@ function CardContent({ stepIdx, total, current, isFirst, isLast, finishLabel, on
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1">
           {!isFirst && (
-            <button onClick={onPrev} className="btn-secondary text-xs px-2.5 py-1.5">← Ant.</button>
+            <button onClick={onPrev} className="btn-secondary text-xs px-2.5 py-1.5">← {t('tutorialUi.prev')}</button>
           )}
           {!isLast && (
-            <button onClick={onSkip} className="text-[11px] text-slate-600 hover:text-slate-400 px-1">Omitir</button>
+            <button onClick={onSkip} className="text-[11px] text-slate-600 hover:text-slate-400 px-1">{t('tutorialUi.skip')}</button>
           )}
         </div>
         {isLast ? (
           <button onClick={onFinish}
             className="px-3 py-2 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-bold transition-colors">
-            {finishLabel}
+            {t('tutorialUi.close')} ✓
           </button>
         ) : (
           <button onClick={onNext}
             className="px-3 py-2 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-bold transition-colors">
-            Siguiente →
+            {t('tutorialUi.next')} →
           </button>
         )}
       </div>

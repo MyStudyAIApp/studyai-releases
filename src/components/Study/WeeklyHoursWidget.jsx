@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { IconChevronUp, IconChevronDown } from '@tabler/icons-react'
 
 const DAYS = [
@@ -44,6 +46,7 @@ export function weeklyHoursToPromptText(hours) {
  * compact=false → versión más grande para Ajustes
  */
 export default function WeeklyHoursWidget({ hours, onChange, compact = false }) {
+  useTranslation() // re-render al cambiar de idioma
   function adjust(key, delta) {
     const next = Math.min(12, Math.max(0, (hours[key] ?? 0) + delta))
     onChange({ ...hours, [key]: next })
@@ -62,7 +65,7 @@ export default function WeeklyHoursWidget({ hours, onChange, compact = false }) 
               <div key={d.key} className="flex-1 flex flex-col items-center gap-0.5">
                 <span className={`text-[9px] font-medium uppercase tracking-wide
                   ${isRest ? 'text-slate-600' : 'text-slate-400'}`}>
-                  {d.label}
+                  {i18n.t(`weekly.short.${d.key}`, { defaultValue: d.label })}
                 </span>
                 <button
                   type="button"
@@ -105,7 +108,7 @@ export default function WeeklyHoursWidget({ hours, onChange, compact = false }) 
             >
               <span className={`text-[10px] font-semibold uppercase tracking-wide
                 ${isRest ? 'text-slate-600' : 'text-slate-300'}`}>
-                {d.label}
+                {i18n.t(`weekly.short.${d.key}`, { defaultValue: d.label })}
               </span>
               <button
                 type="button"
@@ -126,15 +129,15 @@ export default function WeeklyHoursWidget({ hours, onChange, compact = false }) 
                 className="text-slate-500 hover:text-red-400 transition-colors text-xs leading-none px-2 py-1 disabled:opacity-25"
               >▼</button>
               {isRest && (
-                <span className="text-[8px] text-slate-700 font-medium">libre</span>
+                <span className="text-[8px] text-slate-700 font-medium">{i18n.t('weekly.free')}</span>
               )}
             </div>
           )
         })}
       </div>
       <p className="text-xs text-slate-500 mt-3 text-center">
-        <span className="text-slate-300 font-semibold">{total}h</span> disponibles esta semana ·
-        Pon 0 en los días que no puedes estudiar
+        <span className="text-slate-300 font-semibold">{total}h</span> {i18n.t('weekly.available')} ·
+        {i18n.t('weekly.zeroHint')}
       </p>
     </div>
   )

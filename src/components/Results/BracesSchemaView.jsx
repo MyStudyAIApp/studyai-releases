@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import React, { useRef } from 'react'
 import { usePanScroll, makeWheelZoom } from '../../hooks/usePanScroll'
 
@@ -117,7 +119,7 @@ function NodeBox({ title, level, color, subtreeRef, whiteBg }) {
         <span 
           className="braces-subtree-badge ml-2 px-1.5 py-0.5 text-[10px] font-bold bg-indigo-500/20 text-indigo-300 rounded border border-indigo-500/30 align-middle"
         >
-          Secc. {subtreeRef}
+          {i18n.t('schema.section')} {subtreeRef}
         </span>
       )}
     </div>
@@ -154,6 +156,7 @@ function Branch({ node, color, level = 0, whiteBg }) {
 }
 
 export default function BracesSchemaView({ result, doc, whiteBg, zoom, onZoomChange }) {
+  useTranslation() // re-render al cambiar de idioma
   const { tema, groups = [] } = result || {}
   const cardRef = useRef(null)
   const { onMouseDown, panCursorStyle } = usePanScroll(cardRef)
@@ -162,7 +165,7 @@ export default function BracesSchemaView({ result, doc, whiteBg, zoom, onZoomCha
   if (!tema && groups.length === 0) {
     return (
       <div className="card">
-        <p className="text-slate-500 text-sm">No se pudo generar el esquema de llaves.</p>
+        <p className="text-slate-500 text-sm">{i18n.t('schema.bracesError')}</p>
       </div>
     )
   }
@@ -203,7 +206,7 @@ export default function BracesSchemaView({ result, doc, whiteBg, zoom, onZoomCha
           className="py-2"
         >
           <div className="flex items-center gap-4">
-            <NodeBox title={tema || 'Tema'} level={0} color="#6366f1" whiteBg={whiteBg} />
+            <NodeBox title={tema || i18n.t('schema.topic')} level={0} color="#6366f1" whiteBg={whiteBg} />
 
             {groups.length > 0 && (
               <div className="relative flex items-center">

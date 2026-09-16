@@ -54,7 +54,7 @@ export default function Sidebar() {
     { to: '/stats',     Icon: IconChartBar,    color: 'green',  label: t('sidebar.stats') },
     { to: '/calendar',  Icon: IconCalendar,    color: 'amber',  label: t('sidebar.calendar') },
     { to: '/settings',  Icon: IconSettings,    color: 'slate',  label: t('sidebar.settings') },
-    ...(!IS_WEB ? [{ to: '/sync', Icon: IconCloud, color: 'blue', label: 'Sincronizar' }] : []),
+    ...(!IS_WEB ? [{ to: '/sync', Icon: IconCloud, color: 'blue', label: t('sidebar.sync') }] : []),
   ]
 
   return (
@@ -107,13 +107,13 @@ export default function Sidebar() {
           el ciclo va de aniversario a aniversario, ver ai/quotas.py) */}
       {isFree && usage && (
         <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Plan Free · este ciclo</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">{t('sidebar.usage.freeCycle')}</p>
           <div className="space-y-1.5">
             {[
-              { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
-              { label: 'Podcasts', used: usage.podcasts_used, max: usage.podcasts_max },
-              { label: 'Transcripción (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
-              { label: 'Páginas escaneadas', used: usage.scan_pages_used, max: usage.scan_pages_max },
+              { label: t('sidebar.usage.generations'), used: usage.generations_used, max: usage.generations_max },
+              { label: t('sidebar.usage.podcasts'), used: usage.podcasts_used, max: usage.podcasts_max },
+              { label: t('sidebar.usage.transcriptionMin'), used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+              { label: t('sidebar.usage.scannedPages'), used: usage.scan_pages_used, max: usage.scan_pages_max },
             ].map(({ label, used, max }) => (
               <div key={label}>
                 <div className="flex items-center justify-between text-[11px] mb-0.5">
@@ -134,12 +134,12 @@ export default function Sidebar() {
           calculado por el backend. */}
       {planTier === 'pro' && usage?.voice_budget && (
         <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">Uso de voz este ciclo</p>
+          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">{t('sidebar.usage.voiceCycle')}</p>
           <div className="space-y-1.5">
             {[
-              { label: '🎙️ Transcripción', b: usage.voice_budget.transcription },
-              { label: '📄 Escaneo', b: usage.voice_budget.scan },
-              { label: '🎧 Podcasts', b: usage.voice_budget.podcast },
+              { label: '🎙️ ' + t('sidebar.usage.transcription'), b: usage.voice_budget.transcription },
+              { label: '📄 ' + t('sidebar.usage.scan'), b: usage.voice_budget.scan },
+              { label: '🎧 ' + t('sidebar.usage.podcasts'), b: usage.voice_budget.podcast },
             ].map(({ label, b }) => {
               const pct = b?.spent_pct ?? 0
               return (
@@ -150,7 +150,7 @@ export default function Sidebar() {
                   </div>
                   <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1" />
                   {b?.bono_left > 0 && (
-                    <p className="text-[10px] text-primary-400 mt-0.5">+{b.bono_left} {b.bono_unit} de bono</p>
+                    <p className="text-[10px] text-primary-400 mt-0.5">{t('sidebar.usage.bonusLeft', { n: b.bono_left, unit: b.bono_unit })}</p>
                   )}
                 </div>
               )
@@ -162,13 +162,13 @@ export default function Sidebar() {
               haberse mostrado nunca no es defendible. */}
           {usage.bono_expires_at && (
             <p className="text-[11px] text-amber-400 mt-2">
-              Tu saldo de bonos caduca el {new Date(usage.bono_expires_at).toLocaleDateString()}. Vuelve a Pro para conservarlo.
+              {t('sidebar.usage.bonusExpires', { date: new Date(usage.bono_expires_at).toLocaleDateString() })}
             </p>
           )}
           {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.scan?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
             <p className="text-[11px] text-amber-400 mt-2">
-              Te estás quedando sin cupo de voz este ciclo.{' '}
-              <a href="mailto:soporte@mystudyai.eu" className="underline hover:text-amber-300">Escríbenos</a> para ampliarlo.
+              {t('sidebar.usage.voiceLow')}{' '}
+              <a href="mailto:soporte@mystudyai.eu" className="underline hover:text-amber-300">{t('sidebar.usage.writeUs')}</a> {t('sidebar.usage.toExtend')}
             </p>
           )}
         </div>

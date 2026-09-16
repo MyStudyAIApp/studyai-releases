@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../store/appStore'
 
 export default function SemanticSearch() {
+  useTranslation() // re-render al cambiar de idioma
   const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
   const [loading, setLoading] = useState(false)
@@ -24,7 +27,7 @@ export default function SemanticSearch() {
       <form onSubmit={search} className="flex gap-2">
         <input
           className="input flex-1"
-          placeholder="Buscar en todos los documentos..."
+          placeholder={i18n.t('search.placeholder')}
           value={query}
           onChange={e => setQuery(e.target.value)}
         />
@@ -49,7 +52,7 @@ export default function SemanticSearch() {
       )}
 
       {results.length === 0 && query && !loading && (
-        <p className="text-sm text-slate-500 text-center py-4">No se encontraron resultados</p>
+        <p className="text-sm text-slate-500 text-center py-4">{i18n.t('search.none')}</p>
       )}
     </div>
   )

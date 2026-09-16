@@ -1,16 +1,18 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { IconHome, IconBooks, IconCalendar, IconSettings } from '@tabler/icons-react'
+import { useTranslation } from 'react-i18next'
 
 const TABS = [
-  { path: '/',         Icon: IconHome,     label: 'Inicio'    },
-  { path: '/library',  Icon: IconBooks,    label: 'Biblioteca' },
-  { path: '/exams',    Icon: IconCalendar, label: 'Exámenes'  },
-  { path: '/settings', Icon: IconSettings, label: 'Ajustes'   },
+  { path: '/',         Icon: IconHome,     label: 'sidebar.home'     },
+  { path: '/library',  Icon: IconBooks,    label: 'sidebar.library'  },
+  { path: '/exams',    Icon: IconCalendar, label: 'mobile.examsTab'     },
+  { path: '/settings', Icon: IconSettings, label: 'sidebar.settings' },
 ]
 
 export default function MobileTabBar() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const { t } = useTranslation()
 
   return (
     <nav
@@ -29,7 +31,7 @@ export default function MobileTabBar() {
             <tab.Icon size={22} stroke={1.8} />
             <span className={`text-[10px] font-medium tracking-tight
               ${active ? 'text-primary-400' : 'text-slate-500'}`}>
-              {tab.label}
+              {t(tab.label)}
             </span>
             {active && (
               <span className="absolute bottom-0 w-8 h-0.5 bg-primary-500 rounded-full"

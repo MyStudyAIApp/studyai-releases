@@ -29,7 +29,26 @@
     "aiLocal": "Local processing (no cloud)",
     "aiReady": "All set",
     "today": "Today",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "more": "More",
+    "moreSections": "More sections",
+    "sync": "Sync",
+    "usage": {
+      "freeCycle": "Free plan · this cycle",
+      "generations": "Generations",
+      "podcasts": "Podcasts",
+      "transcriptionMin": "Transcription (min)",
+      "scannedPages": "Scanned pages",
+      "voiceCycle": "Voice usage this cycle",
+      "transcription": "Transcription",
+      "scan": "Scanning",
+      "bonusLeft": "+{{n}} {{unit}} of bonus",
+      "bonusExpires": "Your bonus balance expires on {{date}}. Go back to Pro to keep it.",
+      "voiceLow": "You're running out of voice quota this cycle.",
+      "writeUs": "Write to us",
+      "toExtend": "to extend it.",
+      "freeCycleLong": "Free plan usage · this cycle"
+    }
   },
   "backend": {
     "starting": "Starting services... The first time this may take up to 1 minute.",
@@ -96,7 +115,8 @@
       "cancel": "Cancel",
       "extractText": "✨ Extract text",
       "processingAi": "⏳ Processing...",
-      "extracted": "characters extracted"
+      "extracted": "characters extracted",
+      "imageError": "Error processing image"
     },
     "uploadModal": {
       "subjectLabel": "Subject (optional)",
@@ -189,7 +209,64 @@
       "title": "Add to topic",
       "createNew": "+ Create new topic",
       "cancel": "Cancel"
-    }
+    },
+    "select": "Select",
+    "onPhoneAndCloud": "On this phone and in the cloud — tap to remove from phone",
+    "onlyCloud": "Only in the cloud — tap to save to phone",
+    "downloadOriginal": "Download the original file before it's deleted",
+    "uploading": "Uploading…",
+    "generatePodcast": "Generate podcast",
+    "combined": {
+      "flashcardsDone": "Combined flashcards generated",
+      "examDone": "Combined exam generated",
+      "summary": "Combined summary",
+      "flashcards": "Combined flashcards",
+      "exam": "Combined exam",
+      "summaryPlaceholder": "Combined summary ({{count}} documents)"
+    },
+    "jointPlan": {
+      "defaultTitle": "Joint plan ({{count}} subjects)",
+      "examDate": "Exam date",
+      "title": "Plan title",
+      "reminderInfo": "An exam reminder will be created with this date",
+      "hoursWeek": "Hours available / week",
+      "generate": "Generate plan"
+    },
+    "importError": "Error importing {{name}}",
+    "confirmDeleteLocal": "Delete this document? It will still be available in the cloud (only deleted from this computer).",
+    "confirmDelete": "Delete this document?",
+    "alreadySynced": "Already synced",
+    "uploadedCloud": "Document uploaded to cloud",
+    "deleteSubject": "Delete subject",
+    "summaries": "Summaries",
+    "plans": "Study plans",
+    "plansShort": "Plans",
+    "connecting": "Connecting to server...",
+    "dropPdf": "Drop PDF to import it",
+    "retention1": "The original file (PDF/photo) you upload is automatically deleted after",
+    "retentionDays": "10 days",
+    "retention2": "(we'll notify you by email 3 days before) — your generated summaries, flashcards, and exams",
+    "retentionKept": "are kept forever",
+    "retention3": "If you want to keep the original file, download it to your computer or phone before those days pass.",
+    "dontShow": "Don't show again",
+    "savedSummaries": "Saved summaries",
+    "loadingSummaries": "Loading summaries...",
+    "noSummaries": "No saved summaries",
+    "noSummariesDesc": "Generate a summary in any document and tap \"Save\"",
+    "extended": "Extended",
+    "loadingPlans": "Loading plans...",
+    "noPlans": "No study plans saved",
+    "noPlansDesc": "Select multiple documents and tap \"Combined Study Plan\" to create one",
+    "deletePlan": "Delete plan",
+    "dragResize": "Drag to resize",
+    "generating": "Generating...",
+    "strategy": "Strategy",
+    "multiPassLong": "multi-pass (long documents)",
+    "titleLabel": "Title",
+    "generateSummary": "Generate summary",
+    "color": "Color",
+    "topicsLower": "topics",
+    "selectedCount": "{{count}} documents selected"
   },
   "study": {
     "loadingCards": "Loading pending cards...",
@@ -226,7 +303,8 @@
       "weeklyTitle": "Weekly goal",
       "weeklyDesc": "You need {{hours}} more to hit this week's goal",
       "backToDashboard": "← Back to pending"
-    }
+    },
+    "planLeft": "You have {{pct}}% left to finish ({{done}}/{{total}} topics)"
   },
   "tutor": {
     "initialMsg": "Hello! I'm {{name}}, an AI assistant. What would you like me to explain today? You can type or use the microphone 🎙️",
@@ -297,7 +375,9 @@
     "savedResults": "Saved results",
     "combinedFrom": "Combined document from {{count}} sources.",
     "combinedHint": "Use the panel actions to generate content.",
-    "generatedOk": "{{action}} generated ✓"
+    "generatedOk": "{{action}} generated ✓",
+    "offline": "Offline — viewing the saved copy on your phone. Cannot generate new content.",
+    "generate": "Generate content"
   },
   "topicPage": {
     "loading": "Loading topic...",
@@ -397,7 +477,37 @@
     "title": "Exam",
     "selectDoc": "Select a document to generate an exam",
     "noSubject": "No subject",
-    "pages": "pages"
+    "pages": "pages",
+    "timed": {
+      "gradeError": "Could not grade this answer.",
+      "title": "Timed Mock Exam",
+      "questions_one": "{{count}} question",
+      "questions_other": "{{count}} questions",
+      "typeTest": "{{count}} multiple choice",
+      "typeTf": "{{count}} true/false",
+      "typeDev": "{{count}} essay",
+      "typeProblem_one": "{{count}} problem",
+      "typeProblem_other": "{{count}} problems",
+      "minutes": "{{count}} minutes",
+      "noPause": "Once you start, the timer cannot be paused.",
+      "start": "Start Exam",
+      "grading": "Grading…",
+      "gradingDesc": "Evaluating your essay and problem answers",
+      "combined": "combined score",
+      "excellent": "Excellent work!",
+      "passed": "Passed, room for improvement",
+      "review": "You need to review this topic more",
+      "reviewTitle": "Review",
+      "yourAnswer": "Your answer",
+      "modelAnswer": "Model answer",
+      "yourSolution": "Your solution",
+      "solution": "Solution",
+      "answered": "{{count}} answered",
+      "submit": "Submit",
+      "writeAnswer": "Write your answer...",
+      "writeSolution": "Write your step-by-step solution...",
+      "submitExam": "Submit exam"
+    }
   },
   "stats": {
     "title": "My progress",
@@ -412,7 +522,8 @@
     "subjectTime": "Time per subject",
     "loadingStats": "Loading statistics...",
     "cards": "Cards",
-    "score": "Score"
+    "score": "Score",
+    "grade": "Grade"
   },
   "calendar": {
     "today": "Today",
@@ -468,7 +579,31 @@
     "aiStep2": "✂️ Removes comments and conversations unrelated to the content",
     "aiStep3": "✅ Keeps explanations, definitions, formulas and examples",
     "aiStep4": "📝 Generates a structured summary of academic content",
-    "summary": "Summary"
+    "summary": "Summary",
+    "rec": {
+      "transcribing": "Transcribing...",
+      "step": "Step {{n}} of {{total}}",
+      "cleaning": "Cleaning the recording...",
+      "cleaningSub": "removing noise and irrelevant comments",
+      "summarizing": "Generating structured summary...",
+      "cloud": "Cloud transcription",
+      "intro": "Record your voice notes to convert them into text.",
+      "denoiseDesc": "Automatically filters background noise and comments unrelated to the recording's content.",
+      "start": "Start recording",
+      "activating": "Activating microphone…",
+      "firstTime": "This may take a moment the first time",
+      "recording": "Recording... speak clearly",
+      "stop": "Stop and process",
+      "namePlaceholder": "Notes name",
+      "autoSummary": "Automatic summary",
+      "cleanTranscript": "Clean transcript",
+      "viewClean": "View clean",
+      "viewRaw": "View raw",
+      "saveDoc": "Save as document",
+      "infoLocal": "Transcription with Whisper — processes audio on your computer, no uploads.",
+      "infoCloud": "Cloud transcription — requires internet connection.",
+      "infoClean": "Automatic cleaning and summary — requires internet connection."
+    }
   },
   "settings": {
     "title": "Settings",
@@ -548,7 +683,10 @@
       "tutorRequiresCloud": "⛔ Virtual tutor — the tutor chat uses Gemini",
       "whiteboardRequiresCloud": "⛔ Interactive whiteboard — drawings and diagrams are generated by the tutor",
       "ocrRequiresCloud": "⛔ OCR for images in PDFs — requires Gemini Vision",
-      "addGeminiNote": "Add a Gemini API key (free, 1,500 requests/day) to unlock these features."
+      "addGeminiNote": "Add a Gemini API key (free, 1,500 requests/day) to unlock these features.",
+      "generation": "Generation service",
+      "vision": "Vision service",
+      "ocr": "OCR service"
     },
     "localAi": {
       "title": "Local processing",
@@ -766,6 +904,71 @@
       "exercises": "Exercises you solve are kept for 10 days.",
       "generated": "Your summaries, flashcards and exams are kept forever.",
       "download": "To keep an original file or an exercise, download it before the deadline."
+    },
+    "rates": {
+      "slow": "🐢 Slow",
+      "normal": "▶ Normal",
+      "fast": "⚡ Fast (default)",
+      "veryFast": "🚀 Very fast",
+      "ultraFast": "💨 Ultra fast"
+    },
+    "availability": {
+      "title": "Study availability",
+      "subtitle": "How many hours you can dedicate each day of the week",
+      "saved": "Saved",
+      "save": "Save availability",
+      "info": "The study plan will use these hours to realistically distribute topics. You can change them before generating each specific plan."
+    },
+    "billing": {
+      "noPurchases": "You don't have any purchases yet",
+      "title": "Plan & Billing",
+      "trial": "Free Trial",
+      "region": "Tax Region",
+      "regionUnset": "undefined (will be asked upon purchase)",
+      "regionRest": "Rest of the World (VAT)",
+      "proPitch": "Go Pro — €15/month, unlimited generations.",
+      "bonuses": "Extra Bonuses (one-time payment)",
+      "balance": "Available Balance",
+      "hoursTranscription": "{{n}} h of transcription",
+      "bonusRule": "Bonuses don't expire as long as your account is Pro. If you stop being Pro, you have 30 days to spend your remaining balance.",
+      "expires": "Your balance expires on {{date}}.",
+      "portal": "Manage Subscription / Invoices"
+    },
+    "withdrawal": {
+      "sendError": "Could not send request",
+      "title": "Right of Withdrawal",
+      "info": "If you have just purchased a paid plan or a bonus, you have the right to withdraw from the contract within 14 days, without needing to provide a reason. More details in the",
+      "terms": "Terms and Conditions",
+      "exercise": "Exercise my right of withdrawal",
+      "step1": "You can edit the text or leave it as is. Upon continuing, you will be asked for a final confirmation.",
+      "continue": "Continue",
+      "confirmQ": "Do you confirm that you wish to withdraw from your contract/purchase?",
+      "confirmInfo": "This action will be recorded with the current date and time, and you will receive an acknowledgment of receipt by email. You will not be charged anything for exercising this right.",
+      "sending": "Sending…",
+      "yes": "Yes, withdraw",
+      "done": "Request recorded",
+      "receipt": "we have sent an acknowledgment of receipt to {{email}}.",
+      "defaultText": "I hereby communicate my intention to withdraw from my contract/purchase with MyStudy AI (account {{email}})."
+    },
+    "notifsError": "Could not change notifications",
+    "profile": {
+      "title": "Profile",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "changePassword": "Change Password",
+      "newPassword": "New Password",
+      "repeatPassword": "Repeat Password",
+      "dailyGoal": "Daily Study Goal (minutes)",
+      "dailyGoalInfo": "For informational purposes only — it doesn't block anything, it's for you to see your own daily progress."
+    },
+    "voice": {
+      "readAloud": "Voice for Read Aloud",
+      "podcast": "Podcast Voice",
+      "podcastInfo": "Podcasts are generated as a file you can download and listen to offline, so their voice doesn't depend on the device: it sounds the same on all of them.",
+      "speed": "Voice Speed",
+      "speedDocs": "When reading documents",
+      "female": "Female",
+      "male": "Male"
     }
   },
   "languages": {
@@ -959,7 +1162,18 @@
     "missingTurn": "Make at least one turn before ending.",
     "turns": "turn",
     "turnsPlural": "turns",
-    "practiceDesc": "Practise languages with written exercises or oral conversation."
+    "practiceDesc": "Practise languages with written exercises or oral conversation.",
+    "noVoicePhone": "Your device doesn't have a voice for {{lang}}. You can install it from your phone's settings.",
+    "noVoiceSystem": "Your device doesn't have a voice for {{lang}}. Install it from your system settings to listen to this lesson.",
+    "transcriptionFailed": "Transcription failed",
+    "noVoiceDetected": "No voice detected in the recorded audio (multiple empty attempts). Windows is likely using an incorrect microphone as default (e.g., a virtual VR headset device recording silence). Go to Settings → System → Sound → Input and select your actual microphone, then try again.",
+    "vocabAdded": "\"{{name}}\" added as {{lang}} vocabulary",
+    "textLoadError": "error loading text",
+    "noVoicesAtAll": "Your device doesn't have any voices installed, so spoken conversations won't work. Install at least one voice to get started.",
+    "missingVoices": "Your device doesn't have voices for these languages, so it can't read them aloud:",
+    "installVoices": "Install voices on my device",
+    "addVoicesHint": "You can add them from your operating system's voice settings.",
+    "latinLabel": "Latin · Italian voice"
   },
   "landing": {
     "nav": {
@@ -1154,5 +1368,827 @@
     "update": "Update",
     "restart": "Restart",
     "later": "Not now"
+  },
+  "app": {
+    "dueCards_one": "You have {{count}} card to review today",
+    "dueCards_other": "You have {{count}} cards to review today",
+    "examToday": "today!",
+    "examTomorrow": "tomorrow",
+    "examInDays": "in {{count}} days",
+    "examLabel": "Exam",
+    "backendUnreachable": "Can't connect to the service"
+  },
+  "billing": {
+    "playSlow": "Google Play is taking a while to respond. If you confirmed the payment, wait a few minutes: it will be added automatically. Don't buy again without checking first.",
+    "noConfirmation": "No purchase confirmation was received",
+    "purchaseFailed": "The purchase couldn't be completed",
+    "bonusDone": "Purchase complete — the bonus will be added in a few seconds.",
+    "checkoutFailed": "Couldn't start the payment",
+    "goPro": "Go Pro",
+    "proPitchTrial": "More generations, more podcasts and no trial limits.",
+    "proPitchFree": "More generations, more podcasts and no Free plan limits.",
+    "processing": "Processing...",
+    "subscribe": "Subscribe",
+    "month": "month",
+    "extendVoice": "Extend voice quota",
+    "bonusTranscription": "10 extra hours of transcription",
+    "bonusPodcast": "10 extra podcasts",
+    "buy": "Buy",
+    "redirecting": "Redirecting..."
+  },
+  "mobile": {
+    "home": {
+      "today": "Today!",
+      "tomorrow": "Tomorrow",
+      "inDays": "In {{count}} days",
+      "savedDocs_one": "saved document",
+      "savedDocs_other": "saved documents",
+      "seeAll": "See all",
+      "scanTitle": "Scan notes",
+      "scanDesc": "Saved as separate files in your library",
+      "notebookDesc": "Adds today's notes to that subject's notebook",
+      "recordTitle": "Record notes",
+      "recordDesc": "Dictate your notes out loud",
+      "solveDesc": "Scan an exercise and we'll solve it",
+      "podcastsTitle": "My podcasts",
+      "podcastsDesc": "Audio sent from your computer"
+    },
+    "scanner": {
+      "recovered": "Recovered a scan that wasn't saved",
+      "openFailed": "Couldn't open the scanner",
+      "pickSubject": "Choose the subject to add these notes to",
+      "defaultName": "Scan",
+      "addedNotebook": "Notes added to your notebook!",
+      "savedLibrary": "Notes saved to your library!",
+      "uploadFailed": "Upload failed — your pages are still here, tap Save to try again",
+      "confirmExit": "Leave without saving? You'll lose the scan.",
+      "preparing": "Preparing the smart scanner…",
+      "firstTimeOnly": "This only happens the first time",
+      "scannedDoc": "Scanned document",
+      "willUploadPdf": "It will be uploaded as a PDF with extracted text",
+      "saving": "Saving...",
+      "addToNotebook": "Add to my notebook",
+      "saveToLibrary": "Save to library",
+      "scanAgain": "Scan again",
+      "placeSheet": "Place the sheet in good light and tap the button",
+      "sensitive": "Don't scan sensitive personal data (ID numbers, other people's names, etc.)",
+      "scanDocument": "Scan document",
+      "edgesInfo": "The scanner detects the edges of the sheet automatically and crops just the document.",
+      "downloadFailed": "Couldn't download the scanner"
+    },
+    "examsTab": "Exams",
+    "exams": {
+      "past": "Past",
+      "loadError": "Error loading exams",
+      "added": "Exam added — reminders scheduled",
+      "addError": "Error adding the exam",
+      "deleted": "Exam deleted",
+      "deleteError": "Error deleting",
+      "title": "My exams",
+      "namePlaceholder": "Exam name (e.g. Maths unit 3)",
+      "customColor": "Custom colour",
+      "add": "Add exam",
+      "empty": "No exams yet",
+      "emptyDesc": "Add your upcoming exams and you'll get automatic reminders",
+      "addFirst": "Add your first exam",
+      "delete": "Delete",
+      "channel": "Exam reminders",
+      "notifToday": "it's today!",
+      "notifTomorrow": "it's tomorrow",
+      "notifInDays": "it's in {{count}} days",
+      "notifTitle": "Exam reminder",
+      "count_one": "{{count}} added",
+      "count_other": "{{count}} added"
+    },
+    "record": {
+      "micError": "Couldn't access the microphone",
+      "defaultTitle": "Voice notes",
+      "saved": "Notes transcribed and saved!",
+      "processError": "Error processing the audio",
+      "namePlaceholder": "Notes name (optional)",
+      "denoise": "Remove noise and interruptions",
+      "denoiseDesc": "For long recordings in noisy places",
+      "transcribingClean": "Transcribing and cleaning up...",
+      "transcribing": "Transcribing...",
+      "saveTranscribe": "Save and transcribe",
+      "discard": "Discard",
+      "tapToStart": "Tap to start. Speak slowly and clearly."
+    },
+    "library": {
+      "loadError": "Error loading the library",
+      "deleted": "Document deleted",
+      "deleteError": "Error deleting the document",
+      "podcastDone": "Podcast generated — go to \"My podcasts\" to download it",
+      "podcastError": "Couldn't generate the podcast",
+      "title": "My documents",
+      "count_one": "{{count}} saved file",
+      "count_other": "{{count}} saved files",
+      "all": "All",
+      "empty": "No documents",
+      "emptyDesc": "Scan notes or record a voice note from the home screen",
+      "emptyFilter": "No documents match this filter",
+      "summary": "Summary",
+      "cards": "Cards"
+    },
+    "doc": {
+      "openError": "Couldn't open the original document",
+      "copied": "Text copied",
+      "copyError": "Couldn't copy",
+      "loadError": "Couldn't load the document",
+      "opening": "Opening...",
+      "viewOriginal": "View original document",
+      "extractedText": "Extracted text",
+      "noText": "No text was extracted from this document.",
+      "document": "Document",
+      "back": "Back",
+      "listen": "Listen",
+      "copy": "Copy"
+    },
+    "podcasts": {
+      "audioError": "Couldn't download the audio",
+      "downloadError": "Couldn't download",
+      "waiting": "Waiting in your account",
+      "download": "Download",
+      "empty": "You haven't downloaded any podcasts yet. Generate one from a document on your computer or the web, and choose \"Send to my phone\".",
+      "downloaded": "Downloaded"
+    },
+    "settings": {
+      "examNotifs": "Exam notifications",
+      "enable": "Turn on reminders",
+      "enableDesc": "Automatic alerts on your phone",
+      "advance": "Remind me in advance",
+      "advanceDesc": "You can choose several",
+      "days_one": "{{count}} day",
+      "days_other": "{{count}} days",
+      "hour": "Reminder time",
+      "hours": {
+        "early": "Early",
+        "morning": "Morning",
+        "noon": "Midday",
+        "afternoon": "Afternoon",
+        "evening": "Evening"
+      },
+      "saved": "Settings saved!",
+      "save": "Save settings",
+      "autoSchedule": "Reminders are scheduled automatically when you add or delete exams",
+      "subscription": "Subscription",
+      "retention": "How long your files are kept",
+      "ret1": "The original files you upload (PDF or photo) are deleted automatically after 10 days.",
+      "ret2": "The exercises you solve are kept for 10 days.",
+      "ret3": "Your summaries, flashcards and exams are kept forever.",
+      "ret4": "If you want to keep an original or an exercise, download it before the deadline.",
+      "helpImprove": "Help us improve",
+      "feedback": "Send feedback",
+      "feedbackDesc": "Bugs, suggestions or anything else",
+      "about": "About",
+      "aboutDesc": "This app is part of MyStudy AI — your study assistant. Get the full version on the web."
+    },
+    "solver": {
+      "deleted": "Exercise deleted",
+      "deleteError": "Couldn't delete",
+      "solveError": "Couldn't solve the exercise",
+      "writeStatement": "Write the problem statement",
+      "intro": "Scan an exercise and we'll solve it step by step",
+      "scan": "Scan exercise",
+      "retention": "They're saved automatically and deleted automatically after {{days}} days (we email you 3 days before). Download the ones you want to keep with the ⬇️ button.",
+      "empty": "You haven't solved any exercises yet",
+      "savedPhone": "Saved on your phone",
+      "downloadPhone": "Download to phone",
+      "alt": "Exercise to solve",
+      "solving": "Solving...",
+      "solve": "Solve",
+      "changePhoto": "Change photo",
+      "readOk": "Did I read your exercise correctly?",
+      "readOkDesc": "If a number or sign doesn't match, tap here to fix it",
+      "fixStatement": "Fix the statement and I'll solve it again",
+      "solveWithThis": "Solve with this",
+      "hide": "Hide solution",
+      "show": "See step-by-step solution",
+      "result": "Result",
+      "another": "Solve another"
+    }
+  },
+  "push": {
+    "unsupported": "This browser doesn't support push notifications",
+    "blocked": "Notifications are blocked for this site. On your phone: open Chrome → Settings → Storage → Clear cache (NOT \"Clear data\") and try again. On a computer: check the site permissions in your browser.",
+    "denied": "Notification permission denied"
+  },
+  "saved": {
+    "file": "The file",
+    "exercise": "The exercise",
+    "podcast": "The podcast",
+    "public": "{{what}} is in your phone's Documents folder",
+    "private": "{{what}} has been saved inside MyStudy AI (it will be lost if you uninstall the app)"
+  },
+  "retention": {
+    "desktop": "Desktop",
+    "mobile": "your phone",
+    "web": "the web",
+    "today": "deletes today",
+    "inDays_one": "deletes in {{count}} day",
+    "inDays_other": "deletes in {{count}} days",
+    "downloadedOn": "already downloaded on {{where}}"
+  },
+  "tts": {
+    "androidPath": "Android Settings → System → Languages → Text-to-speech output",
+    "cantOpen": "Your phone doesn't allow opening that screen from here. Go to {{path}}",
+    "noResponse": "{{what}} didn't respond",
+    "voiceList": "the voice list",
+    "langList": "the language list",
+    "cantPlay": "This device can't play voice",
+    "playFailed": "Failed to play voice",
+    "noVoice": "Your device has no voice installed",
+    "stopPart": "Stop (part {{n}}/{{total}})",
+    "stop": "Stop reading",
+    "read": "Read aloud"
+  },
+  "tutorialUi": {
+    "drag": "Drag to move",
+    "prev": "Back",
+    "skip": "Skip",
+    "next": "Next",
+    "close": "Close"
+  },
+  "tutorial": {
+    "home-1": {
+      "title": "Home — your dashboard",
+      "body": "Upload a new document, check your upcoming exams, and quickly access the rest of the app — this is the first screen you see when you log in."
+    },
+    "home-2": {
+      "title": "Upload your first document",
+      "body": "Drag a PDF or a photo of your notes into the box above (or use the buttons), without needing to go to the Library first. If you upload 2 or more PDFs at once, it offers to generate a combined summary of all of them."
+    },
+    "home-3": {
+      "title": "Upcoming exams",
+      "body": "Add an exam date directly from here (with optional subject and color) and you’ll see it listed with a countdown — it’s the same reminder that appears in the Calendar."
+    },
+    "home-4": {
+      "title": "Documents, Subjects, Flashcards, and Streak",
+      "body": "The 4 cards at the top are quick shortcuts: Documents and Subjects take you to the Library, Flashcards today to Pending, and Streak to Progress."
+    },
+    "home-5": {
+      "title": "Subject mastery",
+      "body": "As soon as you start reviewing flashcards, a progress bar by subject appears here, calculated from your actual correct answers — so you can see at a glance what you’ve mastered."
+    },
+    "library-1": {
+      "title": "Library — your notes and PDFs",
+      "body": "Upload your notes (PDF, photo, or text) and organize them by Subject and Topic. When you open a document, you can generate summaries, outlines, flashcards, exams, podcasts, and more."
+    },
+    "library-subjects": {
+      "title": "Subjects and Topics",
+      "body": "Create a subject and group documents by Topic within it. You can drag a document onto a subject or topic to reassign it at any time."
+    },
+    "library-upload": {
+      "title": "Import PDFs",
+      "body": "Upload one or multiple PDFs with this button, or drag them directly onto the document list."
+    },
+    "library-tabs": {
+      "title": "Documents, Summaries, and Study Plans",
+      "body": "Besides the document list, there are two more tabs in the side menu: \"Saved summaries\" (those you’ve saved with 💾) and \"Study plans\" (with their progress)."
+    },
+    "library-multiselect": {
+      "title": "Multi-select",
+      "body": "Check multiple documents with the boxes, and a bar appears at the bottom with 4 options: combined summary, combined flashcards, combined exam, and joint study plan — useful before an exam that covers multiple topics."
+    },
+    "library-plan": {
+      "title": "Joint study plan",
+      "body": "Set an exam date and your available weekly study hours (Settings → Study availability), and the AI schedules the topics day by day. If you set a date, it also creates a reminder in your Calendar automatically."
+    },
+    "library-podcast": {
+      "title": "Notes podcast",
+      "body": "In any document or saved summary, there’s a headphones icon — generate a narrated podcast you can download or send to \"My podcasts\" on your phone to listen offline. Available on desktop, web, and also in MyStudy Scan."
+    },
+    "library-dudas": {
+      "title": "Amber words and underlining",
+      "body": "In a scanned document, the text respects what you underlined by hand, and words that weren’t read with certainty appear in amber: tap them to correct or confirm. It works the same as MyStudy App’s notebook, so you don’t have to learn it twice."
+    },
+    "library-sync": {
+      "title": "Cloud sync (desktop)",
+      "body": "In the desktop app, each document shows an icon: amber if it’s only on this computer (tap to upload), green if it’s also in the cloud."
+    },
+    "cuaderno-1": {
+      "title": "MyStudy App Notebook — your notes, neat and tidy",
+      "body": "Take a photo of your notebook page, and it’s added to the notes for that subject under today’s date. Day by day, a full notebook builds up instead of scattered photos."
+    },
+    "cuaderno-2": {
+      "title": "Choose subject and add the page",
+      "body": "You always choose the subject (the topic is optional), so nothing ends up in the wrong folder. Tap \"Add notebook page\" — on mobile, the camera opens directly. The photo isn’t saved: only the text remains."
+    },
+    "cuaderno-3": {
+      "title": "The amber words",
+      "body": "Handwriting isn’t always read with certainty. Unclear words appear in amber: tap to confirm or correct them. What you underlined in your notebook stays underlined, and formulas and roots appear as they should, not in code."
+    },
+    "cuaderno-4": {
+      "title": "Edit with the pen",
+      "body": "The pen icon, next to the date, opens the note for editing. You have bold, italics, underline, strikethrough, headings, and lists — and you see the formatting applied as you type, not with odd symbols. The eye (top right) shows how it looks with formulas rendered."
+    },
+    "cuaderno-5": {
+      "title": "Print, Word, and study",
+      "body": "With the notebook open, you have the printer (which also saves as PDF) and the download for Word, keeping your formatting. And \"Study\" opens it like any other document: summary, flashcards, exam, and podcast based on your own notes."
+    },
+    "cuaderno-6": {
+      "title": "On mobile",
+      "body": "In MyStudy App, you have this same screen, including the pen tool. In MyStudy Scan, the \"MyStudy App Notebook\" button on the home screen opens the camera directly to add today’s page — scan it in class and review it later anywhere."
+    },
+    "study-1": {
+      "title": "Pending — everything left to do",
+      "body": "A single dashboard with cards: flashcards to review today, subjects with no exams done yet, notes you haven’t worked on, how much is left for your weekly goal, and the % remaining of any active study plan."
+    },
+    "study-2": {
+      "title": "Review with flashcards (SM-2)",
+      "body": "Tap the flashcards card to see only the ones due today based on the spaced repetition schedule — not your entire deck. If you get it right, it’ll take longer to reappear; if you miss it, it’ll come back soon."
+    },
+    "study-3": {
+      "title": "Study mode",
+      "body": "Tap the card (or Space) to flip it and see the answer, then mark if you got it right with the buttons \"Again / Hard / Good / Easy\" (or keys 1-4) — this way, the system adjusts when to ask you again."
+    },
+    "study-4": {
+      "title": "Explanation, not just the answer",
+      "body": "The back of each flashcard can include a hint and a brief explanation of why, not just the correct answer, so you understand the concept instead of just memorizing it."
+    },
+    "exam-1": {
+      "title": "Exam — choose a document",
+      "body": "This screen is just the starting point: pick the document you want to be tested on, and you’ll enter it to generate the exam. (For an exam combining multiple documents at once, do it from the Library with multi-select.)"
+    },
+    "exam-2": {
+      "title": "Available exam types",
+      "body": "Inside the document, under the \"Assessment\" group, you can choose: quiz, written response, solved problems, adaptive (focuses on your real weak spots), or a timed mock exam."
+    },
+    "exam-3": {
+      "title": "Automatic grading",
+      "body": "When you finish, it grades itself and gives you your score instantly, with the correct answer explained for every question you missed."
+    },
+    "exam-4": {
+      "title": "History",
+      "body": "All your completed exams are saved, and you can check your grade progress in Progress."
+    },
+    "tutor-1": {
+      "title": "Tutor — learn by chatting",
+      "body": "Type or talk to the Tutor about any question. At the top, you can pick a document from your Library as context or leave it on \"free topic.\""
+    },
+    "tutor-mic": {
+      "title": "Voice mode",
+      "body": "Tap the microphone for a voice conversation — the Tutor listens, responds out loud, and you can interrupt by speaking anytime (it detects your voice even while it’s talking)."
+    },
+    "tutor-socratic": {
+      "title": "Guided mode (Socratic)",
+      "body": "Turn it on so the Tutor asks you questions to help you find the answer yourself instead of giving it to you directly — like a private teacher. If you get stuck, you can ask for the answer."
+    },
+    "tutor-board": {
+      "title": "Whiteboard",
+      "body": "The Tutor can draw diagrams, formulas, and outlines on a side whiteboard (expandable to full screen). You can also draw on it with the pen."
+    },
+    "tutor-history": {
+      "title": "Session history",
+      "body": "Every conversation saves automatically as you talk — tap the clock (at the top) to resume a previous session or the pen to start a new one."
+    },
+    "languages-1": {
+      "title": "Languages — practice every day",
+      "body": "Choose from 12 languages, your level (A1 to C2, the official European scale), and a conversation topic (travel, work, food, tech...)."
+    },
+    "languages-mode": {
+      "title": "Written, speaking, or listening practice",
+      "body": "Written mode: text exercises (fill in the blanks, translate, conjugate...). Speaking mode: talk to a native tutor by voice. Listening mode: listen to generated audios and answer questions."
+    },
+    "languages-vocab": {
+      "title": "Your own vocabulary",
+      "body": "Upload your own vocabulary lists (from class or a book), and they’ll be used to create personalized exercises and exams with that material."
+    },
+    "languages-exam": {
+      "title": "Full language exam",
+      "body": "Besides practicing, you can generate a full exam with automatic grading and a final score."
+    },
+    "lecture-1": {
+      "title": "Voice notes — record while studying",
+      "body": "Pick a subject (optional) and record your notes by speaking. They’re transcribed automatically, and a summary with key points is generated when you finish."
+    },
+    "lecture-recorder": {
+      "title": "Recording panel",
+      "body": "Turn on \"Remove noise and interruptions\" if you’re recording in a noisy or long session — it automatically filters out unrelated content. When you stop, the notes save to your Library."
+    },
+    "lecture-recent": {
+      "title": "Recent notes",
+      "body": "The right panel lists your latest voice notes — tap one to open it directly in the Library."
+    },
+    "solve-1": {
+      "title": "Solve a photographed exercise",
+      "body": "Take a photo or upload an image of an exercise (math, physics, chemistry...) and get a step-by-step solution instantly — no need to save it as a document first."
+    },
+    "solve-2": {
+      "title": "Save it if it helps",
+      "body": "If you want to review it later, save the solution to your Library when you're done — and see it listed under \"Recent\" on this same screen."
+    },
+    "compare-1": {
+      "title": "Compare two documents",
+      "body": "Choose document A and B, and the mode: only differences, only similarities, or both — useful for comparing your notes with the textbook, or two exams from different years."
+    },
+    "stats-1": {
+      "title": "Progress — your study stats",
+      "body": "Cards showing flashcards reviewed, exams completed, average grade, and your streak of consecutive study days."
+    },
+    "stats-2": {
+      "title": "Activity and grade trends",
+      "body": "One graph shows your recent study activity, and another tracks how your exam grades have changed over time."
+    },
+    "stats-3": {
+      "title": "Weak areas and time per subject",
+      "body": "One section highlights the specific topics you struggle with most (so you know where to focus), and another shows how much time you’ve spent on each subject."
+    },
+    "calendar-1": {
+      "title": "Calendar — never miss an exam",
+      "body": "Monthly view with navigation between months and a \"Today\" button. Tap \"+ Add event\" or any day to create an exam reminder, with its own subject and color."
+    },
+    "calendar-2": {
+      "title": "Reminders before exams",
+      "body": "Get a notification (on your phone or browser) a few days before, so it doesn’t sneak up on you."
+    },
+    "calendar-3": {
+      "title": "Study plans appear too",
+      "body": "If you generate a study plan from the Library with an exam date, the reminder is added here automatically — no need to create it twice."
+    },
+    "settings-1": {
+      "title": "Appearance and languages",
+      "body": "Change the visual theme, voice and reading speed for text-to-speech, the interface language (Español/English/Deutsch/Français), and the language the AI uses for summaries/flashcards/exams — these are two separate settings."
+    },
+    "settings-2": {
+      "title": "Study availability",
+      "body": "Set how many hours you can study each day of the week — the study plan (Library) uses this to distribute topics realistically. You can adjust these before generating each plan."
+    },
+    "settings-3": {
+      "title": "Exam reminders",
+      "body": "Turn exam notifications on or off, and choose how many days in advance you want to be reminded."
+    },
+    "settings-plan": {
+      "title": "Plan and billing",
+      "body": "Here you’ll see your plan (Free, Trial, or Pro) and your monthly usage: generations, podcasts, transcription minutes, and scanned pages are tracked separately. You can upgrade to Pro, buy extra credits if you run out, or manage your subscription and invoices."
+    },
+    "settings-retencion": {
+      "title": "What’s saved and what’s auto-deleted",
+      "body": "Original files you upload (PDF or photo) and solved exercises are deleted after 10 days — download them if you want to keep them. Your summaries, flashcards, and exams are saved forever. With \"Course Archive,\" you can save or restore a full backup of an entire course."
+    },
+    "settings-4": {
+      "title": "Your account and data",
+      "body": "Change your name or password, manage backups (on desktop, including Whisper settings for local transcription), or delete your account if needed."
+    }
+  },
+  "notebook": {
+    "created": "Notebook \"{{name}}\" created with today's notes",
+    "added": "Notes added to \"{{name}}\"",
+    "saveError": "Couldn't save notes",
+    "saveChangesError": "Couldn't save changes",
+    "saved": "Note saved",
+    "intro": "Take a photo of your notebook page and it's added to your notes for that subject. The photo isn't saved, only the text.",
+    "pickSubject": "Choose subject…",
+    "newSubject": "New subject",
+    "noTopic": "No specific topic",
+    "newTopic": "New topic",
+    "reading": "Reading your notes…",
+    "addPage": "Add notebook page",
+    "wait": "It might take a few seconds, don't close the page",
+    "empty": "You don't have any notes yet. Scan your first page.",
+    "print": "Print or save as PDF",
+    "word": "Download for Word",
+    "study": "Study",
+    "edit": "Edit these notes",
+    "amberHint": "Tap amber words: they weren't read with certainty.",
+    "amberTitle": "Not read with certainty — tap to correct or confirm",
+    "fmt": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strike": "Strikethrough",
+      "h1": "Large heading",
+      "h2": "Medium heading",
+      "list": "List"
+    },
+    "backToEdit": "Back to editing",
+    "preview": "See how it looks with formulas",
+    "editorHint1": "Type, delete, or change anything you want. When you scan a new page, it will be added",
+    "editorBelow": "below",
+    "editorHint2": ", without touching this.",
+    "doubt": {
+      "title": "This word wasn't read with certainty",
+      "desc": "Correct it if it's wrong, or confirm it if it's right.",
+      "correct": "Correct",
+      "fix": "Edit",
+      "notNow": "Not now"
+    },
+    "fixError": "Couldn't save correction",
+    "last": "last"
+  },
+  "solver": {
+    "intro": "Upload a photo, a PDF, or take a picture of an exercise and we'll solve it step-by-step.",
+    "drop": "Drag a photo or PDF, or click to choose",
+    "dropHint": "Photo, gallery, or PDF — on mobile you can also choose the camera",
+    "firstPage": "The first page will be solved",
+    "how": "How it works:",
+    "how1": "Reads the problem directly from the photo or PDF",
+    "how2": "Solves step-by-step, without skipping any",
+    "how3": "Works best with math, physics, and chemistry",
+    "working": "Reading and solving the exercise...",
+    "readTitle": "This is what I read from your photo",
+    "readDesc": "If any number or sign doesn't match your exercise, correct it — the result depends on it.",
+    "fix": "Correct problem statement",
+    "retention": "Exercises you solve here are saved automatically and kept for {{days}} days — after that period they are automatically deleted (we'll notify you by email 3 days before). If you want to keep any forever, download it with the ⬇️ button before it expires.",
+    "emptyDesc": "Upload a photo to start"
+  },
+  "results": {
+    "labels": {
+      "summary": "Summary",
+      "extended_summary": "Extended summary",
+      "schema": "Schema",
+      "schema_braces": "Brace schema",
+      "mindmap": "Mind map",
+      "glossary": "Glossary",
+      "formulas": "Formula sheet",
+      "timeline": "Timeline",
+      "flashcards": "Flashcards",
+      "cloze": "Fill-in-the-blanks",
+      "test": "Test",
+      "development": "Development",
+      "problems": "Solved problems",
+      "problems_new": "New problems",
+      "adaptive": "Adaptive test",
+      "timed": "Mock test",
+      "studyplan": "Study plan",
+      "connections": "Connections"
+    },
+    "generatingX": "Generating {{what}}...",
+    "pick": "Choose an action",
+    "pickDesc": "Select what you want to generate in the left panel",
+    "namePlaceholder": "Summary name",
+    "exitFull": "Exit full screen (Esc)",
+    "enterFull": "View in full screen",
+    "exit": "Exit",
+    "fullscreen": "Full screen",
+    "zoomOut": "Zoom out",
+    "zoomIn": "Zoom in",
+    "whiteBgTitle": "Set white background to take a screenshot and paste it into Word",
+    "whiteBg": "White background",
+    "active": "active"
+  },
+  "studyPlan": {
+    "actions": {
+      "flashcards": "Flashcards",
+      "test": "Test",
+      "cloze": "Blanks",
+      "development": "Development",
+      "summary": "Summary",
+      "problems": "Problems"
+    },
+    "quizError": "Could not generate the quiz",
+    "dayPassed": "Day {{n}} passed! ({{pct}}%)",
+    "needPct": "{{pct}}% — you need {{min}}% to pass",
+    "finalExam": "Final exam",
+    "day": "Day {{n}}",
+    "review": "General review",
+    "prepDay": "Prepare this day",
+    "prevNotDone": "You haven't finished the previous day's quiz",
+    "finalPassed": "Final exam passed",
+    "quizPassed": "Quiz passed",
+    "best": "best score",
+    "retry": "Retry (last: {{pct}}%)",
+    "startFinal": "Start final exam",
+    "startQuiz": "Start daily quiz",
+    "generateToday": "Generate for today's topics",
+    "dayQuiz": "Day {{n}} quiz",
+    "generatingQuiz": "Generating quiz…"
+  },
+  "resetPw": {
+    "subtitle": "Choose a strong password for your account",
+    "done": "Password updated!",
+    "redirecting": "Redirecting to the app…",
+    "save": "Save new password",
+    "errMatch": "Passwords do not match.",
+    "errUpdate": "Could not update password. Please try again."
+  },
+  "tutorPage": {
+    "sessionTitle": "Tutoring session",
+    "autoVoice": "Automatic voice conversation"
+  },
+  "problems": {
+    "practiceNew": "Practice with new problems",
+    "hard": "Hard",
+    "medium": "Medium",
+    "easy": "Easy",
+    "evaluating": "Evaluating...",
+    "evaluate": "Evaluate answer",
+    "viewSolution": "View solution",
+    "evaluation": "Evaluation",
+    "missing": "Missing to mention"
+  },
+  "feedback": {
+    "types": {
+      "bug": "I found a bug",
+      "suggestion": "I have a suggestion",
+      "opinion": "I want to give my opinion"
+    },
+    "placeholder": "Tell us what happened, what you'd improve, or what you think...",
+    "email": "Your email",
+    "emailHint": "optional, if you want us to reply"
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "desc1": "The app has encountered an unexpected error.",
+    "desc2": "The MyStudy AI team has already been automatically notified.",
+    "retry": "Retry",
+    "reload": "Reload app",
+    "hideDetails": "Hide technical details",
+    "showDetails": "Show technical details (support)"
+  },
+  "games": {
+    "memoryWon": "Completed in {{n}} tries!",
+    "memory": "Memory: find the pairs",
+    "youWon": "You won!",
+    "machineWon": "The machine won, next round...",
+    "draw": "Draw, next round...",
+    "ttt": "Tic-tac-toe — you are X",
+    "simonWon": "Steel memory!",
+    "simonWrong": "You failed, let's start again...",
+    "simonShowing": "Memorize the sequence...",
+    "simon": "Simon — repeat the color sequence"
+  },
+  "quota": {
+    "cat": {
+      "generation": "generations (summaries, flashcards, quizzes...)",
+      "podcasts": "podcasts",
+      "voice_minutes": "transcription minutes (voice notes, languages)",
+      "scan_pages": "scanned pages (notebook, notes photos, solve exercise)",
+      "cost_cap": "account security limit"
+    },
+    "thisFeature": "this feature",
+    "capTitle": "Security limit reached",
+    "title": "Quota exhausted",
+    "affects": "This affects",
+    "renews": "The quota renews at the start of your next monthly cycle.",
+    "ok": "Got it",
+    "stayFree": "Stay on Free",
+    "contact": "Contact support"
+  },
+  "whiteboard": {
+    "disclaimer": "Illustrative diagram — verify with your textbook",
+    "disclaimerIec": "Diagram with IEC symbols — verify with your textbook",
+    "tools": {
+      "pen": "Pen (freehand)",
+      "arrow": "Arrow",
+      "rect": "Rectangle",
+      "circle": "Ellipse",
+      "eraser": "Eraser"
+    },
+    "printTitle": "MyStudy AI Whiteboard",
+    "paste": "paste image",
+    "saveTitle": "Save drawing as image",
+    "printBoard": "Print whiteboard",
+    "print": "Print",
+    "clear": "Clear",
+    "empty": "The tutor will write outlines and steps here"
+  },
+  "voices": {
+    "searching": "Searching for your device's voices…",
+    "none": "Your device doesn't have any voices installed, so read-aloud won't work.",
+    "detail": "Detail",
+    "install": "Install voices",
+    "noVoices": "no voices",
+    "installedOn": "Voices installed on",
+    "this": "this",
+    "device": "device",
+    "noneForLang": "Your device doesn't have any voices for this language.",
+    "listen": "Listen to this voice",
+    "available_one": "{{count}} voice available for this language",
+    "available_other": "{{count}} voices available for this language",
+    "installMore": "Install more voices"
+  },
+  "summary": {
+    "important": "Important",
+    "formulas": "Key formulas and rules",
+    "keyPoints": "Key points",
+    "connections": "Connections between topics",
+    "vocab": "Key vocabulary",
+    "term": "Term",
+    "definition": "Definition",
+    "extended1": "This summary includes additional information beyond the original document. Paragraphs marked with",
+    "extended2": "contain external context added to help you better understand the topic.",
+    "terms": "{{count}} terms",
+    "generatedBy": "Generated by MyStudy AI"
+  },
+  "net": {
+    "offline": "Offline from server ({{host}})",
+    "timeout": "The server took too long to respond. Please try again in a moment."
+  },
+  "flashcards": {
+    "saved": "{{count}} flashcards saved for study",
+    "generated": "{{count}} flashcards generated",
+    "studyMode": "Study mode",
+    "viewAll": "View all",
+    "clickFlip": "Click to flip",
+    "question": "Question",
+    "clickAnswer": "Click to see answer",
+    "answer": "Answer"
+  },
+  "adaptive": {
+    "done": "Adaptive quiz completed!",
+    "accumulated": "{{pct}}% accuracy accumulated",
+    "allRight": "You got all questions right in the last round.",
+    "round": "Round {{n}}",
+    "grade": "Grade",
+    "regenerating": "Generating new questions...",
+    "repeatWrong": "Repeat {{count}} wrong answers with new questions",
+    "finish": "Finish quiz"
+  },
+  "pdf": {
+    "loading": "Loading PDF…",
+    "error": "Couldn't load PDF"
+  },
+  "export": {
+    "done": "Exported as {{ext}}",
+    "error": "Exporting error",
+    "printDesc": "Opens the system print dialog",
+    "exporting": "Exporting...",
+    "word": "Export to Word (.docx)",
+    "wordDesc": "Editable document with formatting",
+    "pdf": "Export to PDF",
+    "pdfDesc": "PDF ready to print or share",
+    "tip": "Printing also saves as PDF from the system dialog."
+  },
+  "weekly": {
+    "short": {
+      "mon": "M",
+      "tue": "Tu",
+      "wed": "W",
+      "thu": "Th",
+      "fri": "F",
+      "sat": "Sa",
+      "sun": "Su"
+    },
+    "free": "free",
+    "available": "available this week",
+    "zeroHint": "Enter 0 for days you can't study"
+  },
+  "podcast": {
+    "intro1": "We convert",
+    "intro2": "into a short audio to listen to without looking at the screen.",
+    "downloadHere": "Download here",
+    "savedHere": "It's saved directly on this device",
+    "saveMine": "Save to My podcasts",
+    "openFrom": "Open it from MyStudy Scan → My podcasts",
+    "tip": "It takes a few seconds to prepare — it converts the content into a spoken script before generating the audio."
+  },
+  "formulas": {
+    "count": "{{count}} formulas",
+    "none": "No formulas found in this document"
+  },
+  "devExam": {
+    "title": "Development questions",
+    "points": "{{count}} points",
+    "hideModel": "Hide model",
+    "showModel": "Show model answer"
+  },
+  "topic": {
+    "drop": "Drop the PDF or photo to add it to the topic"
+  },
+  "canarias": {
+    "title": "Before paying...",
+    "question": "Where do you reside? We need this to apply the correct tax.",
+    "rest": "Rest of Spain / abroad"
+  },
+  "schema": {
+    "section": "Sec.",
+    "bracesError": "Could not generate braces schema.",
+    "topic": "Topic",
+    "error": "Could not generate schema.",
+    "numbered": "Numbered development schema"
+  },
+  "glossary": {
+    "search": "Search term...",
+    "example": "Example"
+  },
+  "welcome": {
+    "title": "Welcome to MyStudy AI!",
+    "body1": "Turn your notes into summaries, quizzes, flashcards, and much more.",
+    "body2": "If you have a question about a specific section, in Settings → 📖 Detailed tutorials you'll find a guided tour focused only on that screen."
+  },
+  "emailWarn": {
+    "title": "Email notifications 3 days before a PDF or exercise is deleted",
+    "label": "Notify me by email before deleting something"
+  },
+  "announcement": {
+    "more": "Learn more"
+  },
+  "password": {
+    "hide": "Hide",
+    "show": "Show"
+  },
+  "search": {
+    "placeholder": "Search all documents...",
+    "none": "No results found"
+  },
+  "cloze": {
+    "show": "Show answer"
+  },
+  "mindmap": {
+    "error": "Could not generate mind map."
+  },
+  "connections": {
+    "title": "Connections with other topics"
   }
 }

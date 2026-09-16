@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState } from 'react'
 import { DocumentScanner } from '@capacitor-mlkit/document-scanner'
 
@@ -28,7 +29,7 @@ export function useDocumentScan() {
           } else if (e.state === 5 /* FAILED */) {
             setInstalling(false)
             listener.remove()
-            reject(new Error('No se pudo descargar el escáner'))
+            reject(new Error(i18n.t('mobile.scanner.downloadFailed')))
           }
         }
       ).then(l => {

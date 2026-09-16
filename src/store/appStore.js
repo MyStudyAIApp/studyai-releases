@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { supabase, WEB_API } from '../lib/supabase'
@@ -224,7 +225,7 @@ export async function api(method, path, body = null, signal = null) {
   const localHeader = await getLocalAuthHeader()
   const opts = {
     method,
-    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, ...authHeader, ...localHeader },
+    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
     signal,
   }
   if (body) opts.body = JSON.stringify(body)
@@ -233,7 +234,7 @@ export async function api(method, path, body = null, signal = null) {
   try {
     res = await fetch(url, opts)
   } catch (netErr) {
-    throw new Error(`Sin conexión con el servidor (${new URL(url).hostname}) — ${netErr.message}`)
+    throw new Error(`${i18n.t('net.offline', { host: new URL(url).hostname })} — ${netErr.message}`)
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }))
@@ -261,15 +262,15 @@ export async function apiUpload(path, formData, signal = null) {
     // No poner Content-Type aquí — el navegador lo añade solo con el boundary del FormData
     res = await fetch(url, {
       method: 'POST',
-      headers: { 'X-Client-Platform': CLIENT_PLATFORM, ...authHeader, ...localHeader },
+      headers: { 'X-Client-Platform': CLIENT_PLATFORM, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
       body: formData,
       signal: ctrl.signal,
     })
   } catch (netErr) {
     if (netErr?.name === 'AbortError' && !signal?.aborted) {
-      throw new Error('El servidor ha tardado demasiado en responder. Vuelve a intentarlo en un momento.')
+      throw new Error(i18n.t('net.timeout'))
     }
-    throw new Error(`Sin conexión con el servidor (${new URL(url).hostname}) — ${netErr.message}`)
+    throw new Error(`${i18n.t('net.offline', { host: new URL(url).hostname })} — ${netErr.message}`)
   } finally {
     clearTimeout(porTiempo)
   }
@@ -286,7 +287,7 @@ export async function apiStream(path, body, onChunk, signal = null) {
   const localHeader = await getLocalAuthHeader()
   const res = await fetch(`${API_BASE}${path}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, ...authHeader, ...localHeader },
+    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
     body: JSON.stringify(body),
     signal,
   })

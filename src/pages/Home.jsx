@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAppStore, api, apiUpload, IS_MOBILE, IS_WEB } from '../store/appStore'
@@ -61,8 +62,7 @@ export default function Home() {
       new Promise((_, rechazar) =>
         setTimeout(
           () => rechazar(new Error(
-            'Google Play está tardando en responder. Si llegaste a confirmar el pago, ' +
-            'espera unos minutos: se añadirá solo. No vuelvas a comprar sin comprobarlo antes.',
+            t('billing.playSlow'),
           )),
           ESPERA_MAX_PAGO_MS,
         ),
@@ -75,11 +75,11 @@ export default function Home() {
     setPurchaseError(null)
     try {
       const result = await conTiempoLimite(Billing.purchase({ accountId: user.id }))
-      if (!result.active) throw new Error('No se recibió confirmación de la compra')
+      if (!result.active) throw new Error(t('billing.noConfirmation'))
       await api('POST', '/billing/verify-purchase')
       setPlanTier('pro')
     } catch (e) {
-      setPurchaseError(e?.message || 'No se pudo completar la compra')
+      setPurchaseError(e?.message || t('billing.purchaseFailed'))
     } finally {
       setPurchasing(false)
     }
@@ -90,9 +90,9 @@ export default function Home() {
     setBonoMessage(null)
     try {
       await conTiempoLimite(Billing.purchaseBono({ category, accountId: user.id }))
-      setBonoMessage({ type: 'ok', text: 'Compra completada — el bono se añadirá en unos segundos.' })
+      setBonoMessage({ type: 'ok', text: t('billing.bonusDone') })
     } catch (e) {
-      setBonoMessage({ type: 'error', text: e?.message || 'No se pudo completar la compra' })
+      setBonoMessage({ type: 'error', text: e?.message || t('billing.purchaseFailed') })
     } finally {
       setBuyingBono(null)
     }
@@ -113,7 +113,7 @@ export default function Home() {
       const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
       window.location.href = res.url
     } catch (e) {
-      addToast(e.message || 'No se pudo iniciar el pago', 'error')
+      addToast(e.message || t('billing.checkoutFailed'), 'error')
       setBillingBusy(null)
     }
   }
@@ -247,7 +247,7 @@ export default function Home() {
         const doc = await apiUpload('/documents/upload', fd)
         docIds.push(doc.id)
         lastDocId = doc.id
-        addToast(`"${doc.title}" importado`, 'success')
+        addToast(`"${doc.title}" ${t('common.imported')}`, 'success')
       } catch (e) {
         addToast(`Error: ${e.message}`, 'error')
       }
@@ -279,7 +279,7 @@ export default function Home() {
         title: combineTitle.trim() || undefined,
       })
       setCombineModal(false)
-      addToast(`Resumen combinado generado (${combineInfo?.strategy === 'multi_pass' ? 'multi-paso' : 'paso único'})`, 'success')
+      addToast(`${t('home.combineModal.combined')} (${combineInfo?.strategy === 'multi_pass' ? t('home.combineModal.multiPass') : t('home.combineModal.singlePass')})`, 'success')
       navigate(`/document/${res.doc_id}`, { state: { autoResult: res.result, autoAction: 'summary' } })
     } catch (e) {
       addToast(`Error: ${e.message}`, 'error')
@@ -304,7 +304,7 @@ export default function Home() {
         const chars = doc.char_count || 0
         addToast(`"${doc.title}" — ${chars} ${t('home.photoModal.extracted')}`, 'success')
       } catch (e) {
-        addToast(`Error procesando imagen: ${e.message}`, 'error')
+        addToast(`${t('home.photoModal.imageError')}: ${e.message}`, 'error')
       }
     }
     setUploading(false)
@@ -393,7 +393,7 @@ export default function Home() {
                     <p className="text-xs text-slate-400">
                       {r.subject_name && `${r.subject_name} · `}
                       {r.days_left === 0 ? t('home.today') : r.days_left === 1 ? t('home.tomorrow') : t('home.inDays', { count: r.days_left })}
-                      {' · '}{new Date(r.exam_date).toLocaleDateString('es', { day:'numeric', month:'short' })}
+                      {' · '}{new Date(r.exam_date).toLocaleDateString(i18n.language, { day:'numeric', month:'short' })}
                     </p>
                   </div>
                   <button onClick={async () => {
@@ -561,13 +561,13 @@ export default function Home() {
       {/* Uso del plan (solo app móvil completa) */}
       {IS_MOBILE && usage && planTier === 'free' && (
         <section className="mb-8">
-          <h3 className="section-title">Uso del plan Free · este ciclo</h3>
+          <h3 className="section-title">{t('sidebar.usage.freeCycleLong')}</h3>
           <div className="card space-y-3">
             {[
-              { label: 'Generaciones', used: usage.generations_used, max: usage.generations_max },
-              { label: 'Podcasts', used: usage.podcasts_used, max: usage.podcasts_max },
-              { label: 'Transcripción (min)', used: usage.voice_minutes_used, max: usage.voice_minutes_max },
-              { label: 'Páginas escaneadas', used: usage.scan_pages_used, max: usage.scan_pages_max },
+              { label: t('sidebar.usage.generations'), used: usage.generations_used, max: usage.generations_max },
+              { label: t('sidebar.usage.podcasts'), used: usage.podcasts_used, max: usage.podcasts_max },
+              { label: t('sidebar.usage.transcriptionMin'), used: usage.voice_minutes_used, max: usage.voice_minutes_max },
+              { label: t('sidebar.usage.scannedPages'), used: usage.scan_pages_used, max: usage.scan_pages_max },
             ].map(({ label, used, max }) => (
               <div key={label}>
                 <div className="flex items-center justify-between text-xs mb-1">
@@ -583,12 +583,12 @@ export default function Home() {
 
       {IS_MOBILE && usage?.voice_budget && planTier === 'pro' && (
         <section className="mb-8">
-          <h3 className="section-title">Uso de voz este ciclo</h3>
+          <h3 className="section-title">{t('sidebar.usage.voiceCycle')}</h3>
           <div className="card space-y-3">
             {[
-              { label: '🎙️ Transcripción', b: usage.voice_budget.transcription },
-              { label: '📄 Escaneo', b: usage.voice_budget.scan },
-              { label: '🎧 Podcasts', b: usage.voice_budget.podcast },
+              { label: '🎙️ ' + t('sidebar.usage.transcription'), b: usage.voice_budget.transcription },
+              { label: '📄 ' + t('sidebar.usage.scan'), b: usage.voice_budget.scan },
+              { label: '🎧 ' + t('sidebar.usage.podcasts'), b: usage.voice_budget.podcast },
             ].map(({ label, b }) => {
               const pct = b?.spent_pct ?? 0
               return (
@@ -599,20 +599,20 @@ export default function Home() {
                 </div>
                 <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1.5" />
                 {b?.bono_left > 0 && (
-                  <p className="text-[11px] text-primary-400 mt-1">+{b.bono_left} {b.bono_unit} de bono</p>
+                  <p className="text-[11px] text-primary-400 mt-1">{t('sidebar.usage.bonusLeft', { n: b.bono_left, unit: b.bono_unit })}</p>
                 )}
               </div>
               )
             })}
             {usage.bono_expires_at && (
               <p className="text-xs text-amber-400">
-                Tu saldo de bonos caduca el {new Date(usage.bono_expires_at).toLocaleDateString()}. Vuelve a Pro para conservarlo.
+                {t('sidebar.usage.bonusExpires', { date: new Date(usage.bono_expires_at).toLocaleDateString() })}
               </p>
             )}
             {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.scan?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
               <p className="text-xs text-amber-400">
-                Te estás quedando sin cupo de voz este ciclo.{' '}
-                <a href="mailto:soporte@mystudyai.eu" className="underline">Escríbenos</a> para ampliarlo.
+                {t('sidebar.usage.voiceLow')}{' '}
+                <a href="mailto:soporte@mystudyai.eu" className="underline">{t('sidebar.usage.writeUs')}</a> {t('sidebar.usage.toExtend')}
               </p>
             )}
           </div>
@@ -625,10 +625,10 @@ export default function Home() {
           <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
             <div className="flex items-center gap-2 mb-1">
               <IconCrown size={18} className="text-amber-400" />
-              <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
+              <p className="text-sm font-semibold text-amber-300">{t('billing.goPro')}</p>
             </div>
             <p className="text-xs text-slate-400 mb-4">
-              Más generaciones, más podcasts y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+              {planTier === 'trial' ? t('billing.proPitchTrial') : t('billing.proPitchFree')}
             </p>
             <button
               onClick={handleGoPro}
@@ -636,8 +636,8 @@ export default function Home() {
               className="w-full py-3 rounded-xl font-semibold text-sm bg-amber-500 hover:bg-amber-600 text-slate-900 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {purchasing
-                ? <><IconLoader2 size={16} className="animate-spin" /> Procesando...</>
-                : `Suscribirme${productPrice ? ` — ${productPrice}` : ''}`}
+                ? <><IconLoader2 size={16} className="animate-spin" /> {t('billing.processing')}</>
+                : `${t('billing.subscribe')}${productPrice ? ` — ${productPrice}` : ''}`}
             </button>
             {purchaseError && <p className="text-xs text-red-400 mt-2 text-center">{purchaseError}</p>}
           </div>
@@ -646,11 +646,11 @@ export default function Home() {
 
       {IS_MOBILE && planTier === 'pro' && (
         <section className="mb-8">
-          <h3 className="section-title">Ampliar cupo de voz</h3>
+          <h3 className="section-title">{t('billing.extendVoice')}</h3>
           <div className="card divide-y divide-slate-800">
             {[
-              { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra' },
-              { category: 'podcast',       emoji: '🎧', label: '10 podcasts extra' },
+              { category: 'transcription', emoji: '🎙️', label: t('billing.bonusTranscription') },
+              { category: 'podcast',       emoji: '🎧', label: t('billing.bonusPodcast') },
             ].map(({ category, emoji, label }) => (
               <div key={category} className="py-3 flex items-center justify-between gap-4">
                 <p className="text-sm font-semibold text-slate-200">{emoji} {label}</p>
@@ -661,7 +661,7 @@ export default function Home() {
                 >
                   {buyingBono === category
                     ? <IconLoader2 size={14} className="animate-spin" />
-                    : bonoPrices[category === 'transcription' ? 'bono_transcripcion_10h' : 'bono_podcast_10']?.formattedPrice || 'Comprar'}
+                    : bonoPrices[category === 'transcription' ? 'bono_transcripcion_10h' : 'bono_podcast_10']?.formattedPrice || t('billing.buy')}
                 </button>
               </div>
             ))}
@@ -680,10 +680,10 @@ export default function Home() {
           <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
             <div className="flex items-center gap-2 mb-1">
               <IconCrown size={18} className="text-amber-400" />
-              <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
+              <p className="text-sm font-semibold text-amber-300">{t('billing.goPro')}</p>
             </div>
             <p className="text-xs text-slate-400 mb-4">
-              Más generaciones, más podcasts y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+              {planTier === 'trial' ? t('billing.proPitchTrial') : t('billing.proPitchFree')}
             </p>
             <button
               onClick={() => handleStripeCheckout('pro')}
@@ -691,8 +691,8 @@ export default function Home() {
               className="w-full py-3 rounded-xl font-semibold text-sm bg-amber-500 hover:bg-amber-600 text-slate-900 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {billingBusy === 'pro'
-                ? <><IconLoader2 size={16} className="animate-spin" /> Redirigiendo...</>
-                : 'Suscribirme — 15€/mes'}
+                ? <><IconLoader2 size={16} className="animate-spin" /> {t('billing.redirecting')}</>
+                : `${t('billing.subscribe')} — 15€/${t('billing.month')}`}
             </button>
           </div>
         </section>
@@ -700,11 +700,11 @@ export default function Home() {
 
       {IS_WEB && planTier === 'pro' && (
         <section className="mb-8">
-          <h3 className="section-title">Ampliar cupo de voz</h3>
+          <h3 className="section-title">{t('billing.extendVoice')}</h3>
           <div className="card divide-y divide-slate-800">
             {[
-              { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra', price: '3€' },
-              { category: 'podcast',       emoji: '🎧', label: '10 podcasts extra',           price: '7€' },
+              { category: 'transcription', emoji: '🎙️', label: t('billing.bonusTranscription'), price: '3€' },
+              { category: 'podcast',       emoji: '🎧', label: t('billing.bonusPodcast'),           price: '7€' },
             ].map(({ category, emoji, label, price }) => (
               <div key={category} className="py-3 flex items-center justify-between gap-4">
                 <p className="text-sm font-semibold text-slate-200">{emoji} {label}</p>
@@ -735,7 +735,7 @@ export default function Home() {
       <Modal
         open={combineModal}
         onClose={() => { if (!combining) { setCombineModal(false); navigate(`/document/${uploadedDocIds[uploadedDocIds.length - 1]}`) } }}
-        title={`🗂️ ${uploadedDocIds.length} PDFs subidos`}
+        title={`🗂️ ${uploadedDocIds.length} ${t('home.combineModal.title')}`}
         size="sm"
       >
         <div className="space-y-4">
@@ -747,12 +747,12 @@ export default function Home() {
           {combineInfo && (
             <div className={`rounded-lg p-3 text-xs space-y-1 ${combineInfo.is_large ? 'bg-amber-900/30 border border-amber-700/50' : 'bg-slate-800/60'}`}>
               {combineInfo.is_large && (
-                <p className="text-amber-400 font-medium">⚠️ Texto grande — puede tardar un poco más</p>
+                <p className="text-amber-400 font-medium">{t('home.combineModal.bigText')}</p>
               )}
               <p className="text-slate-400">
                 {combineInfo.strategy === 'multi_pass'
-                  ? `📋 Estrategia: resume cada PDF por separado (${combineInfo.estimated_calls - 1} llamadas) y luego los sintetiza`
-                  : '✨ Estrategia: resumen directo de todos en una sola llamada'}
+                  ? t('home.combineModal.strategyMulti', { calls: combineInfo.estimated_calls - 1 })
+                  : t('home.combineModal.strategySingle')}
               </p>
               <div className="mt-1 space-y-0.5">
                 {combineInfo.docs?.map(d => (
@@ -850,7 +850,7 @@ export default function Home() {
                 onKeyDown={e => e.key === 'Enter' && createSubjectInline()} autoFocus />
               <input type="color" value={newSubjectColor} onChange={e => setNewSubjectColor(e.target.value)}
                 className="w-9 h-9 rounded cursor-pointer bg-transparent border-0 flex-shrink-0" title="Color" />
-              <button onClick={createSubjectInline} className="btn-primary btn-sm">Crear</button>
+              <button onClick={createSubjectInline} className="btn-primary btn-sm">{t('common.create')}</button>
               <button onClick={() => { setCreatingSubject(false); setNewSubjectName(''); setNewSubjectColor('#3b82f6') }} className="btn-secondary btn-sm">✕</button>
             </div>
           )}
@@ -867,7 +867,7 @@ export default function Home() {
       <Modal
         open={!!pendingFiles}
         onClose={() => setPendingFiles(null)}
-        title={`Subir ${pendingFiles?.length === 1 ? `"${pendingFiles[0].name}"` : `${pendingFiles?.length} PDFs`}`}
+        title={`${t('home.uploadModal.upload')} ${pendingFiles?.length === 1 ? `"${pendingFiles[0].name}"` : `${pendingFiles?.length} PDFs`}`}
         size="sm"
       >
         <div className="space-y-4">
@@ -920,7 +920,7 @@ export default function Home() {
               />
               <input type="color" value={newSubjectColor} onChange={e => setNewSubjectColor(e.target.value)}
                 className="w-9 h-9 rounded cursor-pointer bg-transparent border-0 flex-shrink-0" title="Color" />
-              <button onClick={createSubjectInline} className="btn-primary btn-sm">Crear</button>
+              <button onClick={createSubjectInline} className="btn-primary btn-sm">{t('common.create')}</button>
               <button onClick={() => { setCreatingSubject(false); setNewSubjectName(''); setNewSubjectColor('#3b82f6') }} className="btn-secondary btn-sm">✕</button>
             </div>
           )}
@@ -968,7 +968,7 @@ function DocCard({ doc, onClick }) {
         <p className="font-medium text-slate-100 truncate">{doc.title}</p>
         <p className="text-xs text-slate-400 mt-0.5">{doc.subject_name || t('common.noSubject')} · {doc.pages} {t('common.pag')}</p>
       </div>
-      <span className="text-xs text-slate-500 shrink-0">{new Date(doc.created_at).toLocaleDateString('es-ES')}</span>
+      <span className="text-xs text-slate-500 shrink-0">{new Date(doc.created_at).toLocaleDateString(i18n.language)}</span>
     </div>
   )
 }

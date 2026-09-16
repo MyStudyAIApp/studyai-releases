@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { IS_ELECTRON, IS_MOBILE } from '../store/appStore'
 
 // Plataforma actual, usada para el aviso de borrado automático (PDFs en
@@ -9,9 +10,9 @@ import { IS_ELECTRON, IS_MOBILE } from '../store/appStore'
 export const CURRENT_PLATFORM = IS_ELECTRON ? 'desktop' : IS_MOBILE ? 'mobile' : 'web'
 
 export function platformLabel(platform) {
-  if (platform === 'desktop') return 'Escritorio'
-  if (platform === 'mobile') return 'el móvil'
-  return 'la web'
+  if (platform === 'desktop') return i18n.t('retention.desktop')
+  if (platform === 'mobile') return i18n.t('retention.mobile')
+  return i18n.t('retention.web')
 }
 
 // Días que quedan hasta el borrado automático (10 días desde created_at,

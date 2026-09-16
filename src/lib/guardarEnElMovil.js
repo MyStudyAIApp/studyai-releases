@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { Filesystem, Directory } from '@capacitor/filesystem'
 
 /**
@@ -32,8 +33,8 @@ export async function guardarDescarga({ path, data, encoding }) {
 }
 
 /** Mensaje honesto para el toast, según dónde haya acabado el archivo. */
-export function mensajeDeGuardado({ publico }, queEs = 'El archivo') {
+export function mensajeDeGuardado({ publico }, queEs = i18n.t('saved.file')) {
   return publico
-    ? `${queEs} está en la carpeta Documentos de tu móvil`
-    : `${queEs} se ha guardado dentro de MyStudy AI (se perderá si desinstalas la app)`
+    ? i18n.t('saved.public', { what: queEs })
+    : i18n.t('saved.private', { what: queEs })
 }

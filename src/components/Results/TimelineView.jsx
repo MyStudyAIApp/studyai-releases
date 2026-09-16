@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 export default function TimelineView({ result }) {
+  useTranslation() // re-render al cambiar de idioma
   const { events = [] } = result
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h2 className="text-lg font-bold text-slate-100 mb-6">Línea del tiempo</h2>
+      <h2 className="text-lg font-bold text-slate-100 mb-6">{i18n.t('results.labels.timeline')}</h2>
       <div className="relative">
         {/* Vertical line */}
         <div className="absolute left-16 top-0 bottom-0 w-0.5 bg-slate-700" />

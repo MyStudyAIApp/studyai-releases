@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { IconLoader2, IconCheck, IconX } from '@tabler/icons-react'
 
 /** Cuadro para confirmar o corregir UNA palabra que la transcripcion dudo. */
 export default function DudaModal({ duda, guardando, onCerrar, onResolver }) {
   const [valor, setValor] = useState(duda.palabra)
+  useTranslation()
   const inputRef = useRef(null)
 
   // Foco y texto seleccionado al abrir: lo normal es querer reescribir la
@@ -17,8 +20,8 @@ export default function DudaModal({ duda, guardando, onCerrar, onResolver }) {
          onClick={onCerrar}>
       <div className="bg-slate-800 border border-slate-700 rounded-2xl p-5 w-full max-w-sm"
            onClick={ev => ev.stopPropagation()}>
-        <p className="text-sm text-slate-400 mb-1">Esta palabra no se leyó con seguridad</p>
-        <p className="text-xs text-slate-500 mb-3">Corrígela si está mal, o confírmala si es correcta.</p>
+        <p className="text-sm text-slate-400 mb-1">{i18n.t('notebook.doubt.title')}</p>
+        <p className="text-xs text-slate-500 mb-3">{i18n.t('notebook.doubt.desc')}</p>
 
         <input
           ref={inputRef}
@@ -41,7 +44,7 @@ export default function DudaModal({ duda, guardando, onCerrar, onResolver }) {
             className="flex-1 flex items-center justify-center gap-1.5 bg-slate-700 hover:bg-slate-600
                        text-slate-100 rounded-xl py-2.5 text-sm font-medium disabled:opacity-50"
           >
-            <IconCheck size={16} /> Correcto
+            <IconCheck size={16} /> {i18n.t('notebook.doubt.correct')}
           </button>
           <button
             onClick={() => onResolver(valor.trim())}
@@ -50,14 +53,14 @@ export default function DudaModal({ duda, guardando, onCerrar, onResolver }) {
                        text-white rounded-xl py-2.5 text-sm font-medium
                        disabled:opacity-40 disabled:hover:bg-primary-600"
           >
-            {guardando ? <IconLoader2 size={16} className="animate-spin" /> : <IconCheck size={16} />} Editar
+            {guardando ? <IconLoader2 size={16} className="animate-spin" /> : <IconCheck size={16} />} {i18n.t('notebook.doubt.fix')}
           </button>
         </div>
 
         <button onClick={onCerrar} disabled={guardando}
                 className="w-full mt-2 text-xs text-slate-500 hover:text-slate-300 py-1.5
                            flex items-center justify-center gap-1 disabled:opacity-50">
-          <IconX size={13} /> Ahora no
+          <IconX size={13} /> {i18n.t('notebook.doubt.notNow')}
         </button>
       </div>
     </div>

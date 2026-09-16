@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
 import DOMPurify from 'dompurify'
@@ -26,6 +28,7 @@ function safeJsonParse(str) {
 }
 
 export default function FormulasView({ result }) {
+  useTranslation() // re-render al cambiar de idioma
   let { formulas = [], content } = result
   if (formulas.length === 0 && content) {
     try {
@@ -42,8 +45,8 @@ export default function FormulasView({ result }) {
   return (
     <div className="max-w-3xl mx-auto space-y-4">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-lg font-bold text-slate-100">Hoja de fórmulas</h2>
-        <span className="badge-blue">{formulas.length} fórmulas</span>
+        <h2 className="text-lg font-bold text-slate-100">{i18n.t('results.labels.formulas')}</h2>
+        <span className="badge-blue">{i18n.t('formulas.count', { count: formulas.length })}</span>
       </div>
 
       {formulas.length > 0 ? (
@@ -80,7 +83,7 @@ export default function FormulasView({ result }) {
         </div>
       ) : (
         <div className="card text-center py-8 text-slate-400">
-          <p>No se encontraron fórmulas en este documento</p>
+          <p>{i18n.t('formulas.none')}</p>
           {content && <p className="text-sm mt-2 whitespace-pre-wrap text-slate-300">{content}</p>}
         </div>
       )}

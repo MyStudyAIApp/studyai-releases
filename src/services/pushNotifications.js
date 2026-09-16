@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { api } from '../store/appStore'
 
 function urlBase64ToUint8Array(base64String) {
@@ -12,7 +13,7 @@ export function isPushSupported() {
 }
 
 export async function subscribeToPush() {
-  if (!isPushSupported()) throw new Error('Este navegador no soporta notificaciones push')
+  if (!isPushSupported()) throw new Error(i18n.t('push.unsupported'))
 
   // Si ya estaba denegado de antes, el navegador ni siquiera muestra el
   // diálogo de permiso (requestPermission() devuelve 'denied' sin preguntar)
@@ -22,12 +23,12 @@ export async function subscribeToPush() {
   // explica el arreglo real en vez de repetir el intento a ciegas.
   if (Notification.permission === 'denied') {
     throw new Error(
-      'Las notificaciones están bloqueadas para este sitio. En el móvil: abre Chrome → Ajustes → Almacenamiento → Borrar caché (NO "Borrar datos"), y vuelve a intentarlo. En el ordenador: revisa los permisos del sitio en el navegador.'
+      i18n.t('push.blocked')
     )
   }
 
   const permission = await Notification.requestPermission()
-  if (permission !== 'granted') throw new Error('Permiso de notificaciones denegado')
+  if (permission !== 'granted') throw new Error(i18n.t('push.denied'))
 
   const registration = await navigator.serviceWorker.register('/sw.js')
   await navigator.serviceWorker.ready

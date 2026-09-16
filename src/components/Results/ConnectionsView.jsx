@@ -1,9 +1,12 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 export default function ConnectionsView({ result }) {
+  useTranslation() // re-render al cambiar de idioma
   const { connections = [], summary } = result
 
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      <h2 className="text-lg font-bold text-slate-100">Conexiones con otros temas</h2>
+      <h2 className="text-lg font-bold text-slate-100">{i18n.t('connections.title')}</h2>
       {summary && <p className="text-sm text-slate-300">{summary}</p>}
 
       <div className="space-y-3">

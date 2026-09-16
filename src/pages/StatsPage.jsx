@@ -72,7 +72,7 @@ export default function StatsPage() {
               <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: '#94a3b8' }} width={28} />
               <Tooltip
                 contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8, fontSize: 12 }}
-                formatter={(v) => [`${v}%`, 'Nota']}
+                formatter={(v) => [`${v}%`, t('stats.grade')]}
               />
               <Bar dataKey="score" radius={[4, 4, 0, 0]} maxBarSize={60}>
                 {stats.exam_scores.map((e, i) => (

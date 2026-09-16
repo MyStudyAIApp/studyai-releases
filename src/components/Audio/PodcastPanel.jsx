@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { useAppStore, getAuthHeader, getLocalAuthHeader, IS_MOBILE } from '../../store/appStore'
 import { WEB_API } from '../../lib/supabase'
@@ -10,6 +12,7 @@ import { WEB_API } from '../../lib/supabase'
 // hace lo mismo directamente), así que aquí solo hay dos casos: en el propio
 // escritorio/web se puede además descargar directamente al ordenador.
 export default function PodcastPanel({ doc, onClose }) {
+  useTranslation() // re-render al cambiar de idioma
   const { apiBase, addToast, podcastVoice } = useAppStore()
   const [downloading, setDownloading] = useState(false)
   const [sending, setSending] = useState(false)
@@ -37,7 +40,7 @@ export default function PodcastPanel({ doc, onClose }) {
       addToast('Podcast descargado', 'success')
       onClose?.()
     } catch (e) {
-      addToast(`No se pudo generar el podcast: ${e.message}`, 'error')
+      addToast(`${i18n.t('mobile.library.podcastError')}: ${e.message}`, 'error')
     } finally {
       setDownloading(false)
     }
@@ -59,7 +62,7 @@ export default function PodcastPanel({ doc, onClose }) {
       addToast('Listo — ábrelo en "Mis podcasts" desde MyStudy Scan', 'success', 6000)
       onClose?.()
     } catch (e) {
-      addToast(`No se pudo generar el podcast: ${e.message}`, 'error')
+      addToast(`${i18n.t('mobile.library.podcastError')}: ${e.message}`, 'error')
     } finally {
       setSending(false)
     }
@@ -68,7 +71,7 @@ export default function PodcastPanel({ doc, onClose }) {
   return (
     <div className="space-y-3">
       <p className="text-sm text-slate-400">
-        Convertimos <span className="text-slate-200 font-medium">"{doc.title}"</span> en un audio de unos minutos para escuchar sin mirar la pantalla.
+        {i18n.t('podcast.intro1')} <span className="text-slate-200 font-medium">"{doc.title}"</span> {i18n.t('podcast.intro2')}
       </p>
 
       <div className="space-y-2">
@@ -80,8 +83,8 @@ export default function PodcastPanel({ doc, onClose }) {
           >
             <span className="text-xl">⬇️</span>
             <div className="text-left">
-              <p className="font-medium text-sm">{downloading ? 'Generando...' : 'Descargar aquí'}</p>
-              <p className="text-xs text-slate-400">Se guarda directamente en este dispositivo</p>
+              <p className="font-medium text-sm">{downloading ? i18n.t('library.generating') : i18n.t('podcast.downloadHere')}</p>
+              <p className="text-xs text-slate-400">{i18n.t('podcast.savedHere')}</p>
             </div>
             {downloading && <span className="ml-auto animate-spin">⟳</span>}
           </button>
@@ -94,15 +97,15 @@ export default function PodcastPanel({ doc, onClose }) {
         >
           <span className="text-xl">🎧</span>
           <div className="text-left">
-            <p className="font-medium text-sm">{sending ? 'Generando...' : 'Guardar en Mis podcasts'}</p>
-            <p className="text-xs text-slate-400">Ábrelo desde MyStudy Scan → Mis podcasts</p>
+            <p className="font-medium text-sm">{sending ? i18n.t('library.generating') : i18n.t('podcast.saveMine')}</p>
+            <p className="text-xs text-slate-400">{i18n.t('podcast.openFrom')}</p>
           </div>
           {sending && <span className="ml-auto animate-spin">⟳</span>}
         </button>
       </div>
 
       <p className="text-xs text-slate-500 pt-1">
-        💡 Tarda unos segundos en prepararse — convierte el contenido en un guion hablado antes de generar el audio.
+        💡 {i18n.t('podcast.tip')}
       </p>
     </div>
   )

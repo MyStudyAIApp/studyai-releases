@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState, useEffect } from 'react'
 import { api } from '../../store/appStore'
 
@@ -7,6 +9,7 @@ import { api } from '../../store/appStore'
 // /me/set-email-warnings), así que se ve y se comporta igual en los dos
 // sitios: tocarlo en uno afecta también al otro.
 export default function EmailWarningsToggle({ className = '' }) {
+  useTranslation() // re-render al cambiar de idioma
   const [enabled, setEnabled] = useState(true)
   const [busy, setBusy] = useState(false)
 
@@ -32,12 +35,12 @@ export default function EmailWarningsToggle({ className = '' }) {
       onClick={toggle}
       disabled={busy}
       className={`flex items-center gap-2 text-[11px] text-slate-400 hover:text-slate-300 transition-colors disabled:opacity-50 ${className}`}
-      title="Avisos por email 3 días antes de que se borre un PDF o un ejercicio"
+      title={i18n.t('emailWarn.title')}
     >
       <span className={`relative inline-flex h-4 w-7 shrink-0 items-center rounded-full transition-colors ${enabled ? 'bg-primary-600' : 'bg-slate-600'}`}>
         <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${enabled ? 'translate-x-3.5' : 'translate-x-0.5'}`} />
       </span>
-      Avisarme por email antes de borrar algo
+      {i18n.t('emailWarn.label')}
     </button>
   )
 }

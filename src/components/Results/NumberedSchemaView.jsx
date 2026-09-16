@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 // Esquema de desarrollo numerado: 1. Idea principal, 1.1 Idea secundaria,
 // 1.1.1 Idea terciaria... el número de cada nivel se colorea distinto para
 // que se distinga de un vistazo la profundidad.
@@ -34,6 +36,7 @@ function Item({ node, path, level, whiteBg }) {
 }
 
 export default function NumberedSchemaView({ result, whiteBg, zoom, onZoomChange }) {
+  useTranslation() // re-render al cambiar de idioma
   const { tema, groups = [] } = result || {}
   const cardRef = useRef(null)
   const { onMouseDown, panCursorStyle } = usePanScroll(cardRef)
@@ -42,7 +45,7 @@ export default function NumberedSchemaView({ result, whiteBg, zoom, onZoomChange
   if (!tema && groups.length === 0) {
     return (
       <div className="card">
-        <p className="text-slate-500 text-sm">No se pudo generar el esquema.</p>
+        <p className="text-slate-500 text-sm">{i18n.t('schema.error')}</p>
       </div>
     )
   }
@@ -50,7 +53,7 @@ export default function NumberedSchemaView({ result, whiteBg, zoom, onZoomChange
   return (
     <div className="max-w-3xl mx-auto space-y-4">
       <div className={`inline-block border-2 rounded-lg px-4 py-1.5 ${whiteBg ? 'border-slate-300' : 'border-slate-600'}`}>
-        <p className={`font-bold text-sm ${whiteBg ? 'text-slate-900' : 'text-slate-100'}`}>Esquema de desarrollo numerado</p>
+        <p className={`font-bold text-sm ${whiteBg ? 'text-slate-900' : 'text-slate-100'}`}>{i18n.t('schema.numbered')}</p>
       </div>
       {tema && <h2 className={`text-2xl italic font-serif ${whiteBg ? 'text-slate-900' : 'text-slate-100'}`}>{tema}</h2>}
       {/* Con overflow en los dos ejes + arrastrar con el ratón (usePanScroll),

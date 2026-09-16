@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState, useEffect } from 'react'
 import { useAppStore, api } from '../../store/appStore'
 
@@ -5,6 +7,7 @@ const OBJECTIVE_TYPES = ['test', 'true_false']
 const OPEN_TYPES = ['development', 'problem']
 
 export default function TestExamView({ result, doc, onFinished }) {
+  useTranslation() // re-render al cambiar de idioma
   const { questions = [], time_limit_minutes, is_timed } = result
   const { addToast } = useAppStore()
   const [answers, setAnswers] = useState({})
@@ -60,7 +63,7 @@ export default function TestExamView({ result, doc, onFinished }) {
         const res = await api('POST', '/exams/grade-open', { items: openItems })
         openIdxs.forEach((qIdx, i) => { scores[qIdx] = res.results?.[i] || { score_pct: 0, feedback: '' } })
       } catch {
-        openIdxs.forEach(qIdx => { scores[qIdx] = { score_pct: 0, feedback: 'No se pudo corregir esta respuesta.' } })
+        openIdxs.forEach(qIdx => { scores[qIdx] = { score_pct: 0, feedback: i18n.t('exam.timed.gradeError') } })
       } finally {
         setGrading(false)
       }
@@ -111,18 +114,18 @@ export default function TestExamView({ result, doc, onFinished }) {
     return (
       <div className="max-w-xl mx-auto text-center py-16 space-y-6">
         <div className="text-6xl">⏱️</div>
-        <h2 className="text-2xl font-bold">Simulacro cronometrado</h2>
+        <h2 className="text-2xl font-bold">{i18n.t('exam.timed.title')}</h2>
         <div className="card text-left space-y-2">
-          <p className="text-slate-300 text-sm">📝 {questions.length} preguntas</p>
-          {types.test > 0 && <p className="text-slate-400 text-xs pl-4">☑️ {types.test} tipo test</p>}
-          {types.true_false > 0 && <p className="text-slate-400 text-xs pl-4">✅ {types.true_false} verdadero/falso</p>}
-          {types.development > 0 && <p className="text-slate-400 text-xs pl-4">📄 {types.development} de desarrollo</p>}
-          {types.problem > 0 && <p className="text-slate-400 text-xs pl-4">🔢 {types.problem} problema</p>}
-          <p className="text-slate-300 text-sm">⏱️ {timeMins} minutos</p>
-          <p className="text-slate-400 text-xs mt-2">Una vez que empieces, el tiempo no se puede pausar.</p>
+          <p className="text-slate-300 text-sm">📝 {i18n.t('exam.timed.questions', { count: questions.length })}</p>
+          {types.test > 0 && <p className="text-slate-400 text-xs pl-4">☑️ {i18n.t('exam.timed.typeTest', { count: types.test })}</p>}
+          {types.true_false > 0 && <p className="text-slate-400 text-xs pl-4">✅ {i18n.t('exam.timed.typeTf', { count: types.true_false })}</p>}
+          {types.development > 0 && <p className="text-slate-400 text-xs pl-4">📄 {i18n.t('exam.timed.typeDev', { count: types.development })}</p>}
+          {types.problem > 0 && <p className="text-slate-400 text-xs pl-4">🔢 {i18n.t('exam.timed.typeProblem', { count: types.problem })}</p>}
+          <p className="text-slate-300 text-sm">⏱️ {i18n.t('exam.timed.minutes', { count: timeMins })}</p>
+          <p className="text-slate-400 text-xs mt-2">{i18n.t('exam.timed.noPause')}</p>
         </div>
         <button onClick={() => setStarted(true)} className="btn-primary text-lg px-8 py-3">
-          Empezar examen →
+          {i18n.t('exam.timed.start')} →
         </button>
       </div>
     )
@@ -133,8 +136,8 @@ export default function TestExamView({ result, doc, onFinished }) {
     return (
       <div className="max-w-xl mx-auto text-center py-16 space-y-4">
         <div className="text-5xl animate-pulse">🧠</div>
-        <p className="text-slate-300 font-medium">Corrigiendo con IA…</p>
-        <p className="text-slate-500 text-sm">Evaluando tus respuestas de desarrollo y problemas</p>
+        <p className="text-slate-300 font-medium">{i18n.t('exam.timed.grading')}</p>
+        <p className="text-slate-500 text-sm">{i18n.t('exam.timed.gradingDesc')}</p>
       </div>
     )
   }
@@ -148,15 +151,15 @@ export default function TestExamView({ result, doc, onFinished }) {
           finalPct >= 50 ? 'border-yellow-500 bg-yellow-900/20' :
                      'border-red-500 bg-red-900/20'}`}>
           <p className="text-6xl font-black mb-2">{(finalPct / 10).toFixed(1)}</p>
-          <p className="text-xl font-semibold">{questions.length} preguntas · nota combinada ({finalPct}%)</p>
+          <p className="text-xl font-semibold">{i18n.t('exam.timed.questions', { count: questions.length })} · {i18n.t('exam.timed.combined')} ({finalPct}%)</p>
           <p className="text-slate-400 mt-2">
-            {finalPct >= 70 ? '🎉 ¡Excelente trabajo!' :
-             finalPct >= 50 ? '📚 Aprobado, hay margen de mejora' :
-                        '💪 Necesitas repasar más este tema'}
+            {finalPct >= 70 ? `🎉 ${i18n.t('exam.timed.excellent')}` :
+              finalPct >= 50 ? `📚 ${i18n.t('exam.timed.passed')}` :
+              `💪 ${i18n.t('exam.timed.review')}`}
           </p>
         </div>
 
-        <h3 className="font-semibold text-slate-200">Revisión</h3>
+        <h3 className="font-semibold text-slate-200">{i18n.t('exam.timed.reviewTitle')}</h3>
         <div className="space-y-4">
           {questions.map((q, i) => {
             const type = q.type || 'test'
@@ -207,16 +210,16 @@ export default function TestExamView({ result, doc, onFinished }) {
 
                 {type === 'development' && (
                   <div className="ml-2 space-y-1">
-                    {userAns && <p className="text-xs text-slate-300 bg-slate-800 p-2 rounded">Tu respuesta: {userAns}</p>}
-                    <p className="text-xs text-emerald-300 bg-emerald-900/20 p-2 rounded">✅ Respuesta modelo: {q.answer}</p>
+                    {userAns && <p className="text-xs text-slate-300 bg-slate-800 p-2 rounded">{i18n.t('exam.timed.yourAnswer')}: {userAns}</p>}
+                    <p className="text-xs text-emerald-300 bg-emerald-900/20 p-2 rounded">✅ {i18n.t('exam.timed.modelAnswer')}: {q.answer}</p>
                     {openScore?.feedback && <p className="text-xs text-slate-400 italic">💬 {openScore.feedback}</p>}
                   </div>
                 )}
 
                 {type === 'problem' && (
                   <div className="ml-2 space-y-1">
-                    {userAns && <p className="text-xs text-slate-300 bg-slate-800 p-2 rounded">Tu solución: {userAns}</p>}
-                    <p className="text-xs text-purple-300 bg-purple-900/20 p-2 rounded">✅ Solución: {q.solution}</p>
+                    {userAns && <p className="text-xs text-slate-300 bg-slate-800 p-2 rounded">{i18n.t('exam.timed.yourSolution')}: {userAns}</p>}
+                    <p className="text-xs text-purple-300 bg-purple-900/20 p-2 rounded">✅ {i18n.t('exam.timed.solution')}: {q.solution}</p>
                     {openScore?.feedback && <p className="text-xs text-slate-400 italic">💬 {openScore.feedback}</p>}
                   </div>
                 )}
@@ -233,8 +236,8 @@ export default function TestExamView({ result, doc, onFinished }) {
     <div className="max-w-2xl mx-auto space-y-4">
       <div className="flex items-center justify-between sticky top-0 bg-slate-900/95 backdrop-blur py-2 z-10">
         <div>
-          <p className="font-semibold text-slate-100">{questions.length} preguntas</p>
-          <p className="text-xs text-slate-400">{Object.keys(answers).length} respondidas</p>
+          <p className="font-semibold text-slate-100">{i18n.t('exam.timed.questions', { count: questions.length })}</p>
+          <p className="text-xs text-slate-400">{i18n.t('exam.timed.answered', { count: Object.keys(answers).length })}</p>
         </div>
         {timeLeft !== null && (
           <span className={`font-mono text-lg font-bold ${timeLeft < 120 ? 'text-red-400 animate-pulse' : 'text-slate-200'}`}>
@@ -246,7 +249,7 @@ export default function TestExamView({ result, doc, onFinished }) {
           disabled={Object.keys(answers).length === 0}
           className="btn-primary"
         >
-          Entregar
+          {i18n.t('exam.timed.submit')}
         </button>
       </div>
 
@@ -285,7 +288,7 @@ export default function TestExamView({ result, doc, onFinished }) {
             {(type === 'development' || type === 'problem') && (
               <textarea
                 className="input w-full text-sm min-h-[80px] resize-y"
-                placeholder={type === 'development' ? 'Escribe tu respuesta...' : 'Escribe tu solución paso a paso...'}
+                placeholder={type === 'development' ? i18n.t('exam.timed.writeAnswer') : i18n.t('exam.timed.writeSolution')}
                 value={answers[i] || ''}
                 onChange={e => handleAnswer(i, e.target.value)}
               />
@@ -295,7 +298,7 @@ export default function TestExamView({ result, doc, onFinished }) {
       })}
 
       <button onClick={handleSubmit} className="btn-primary w-full py-3 mt-4">
-        Entregar examen
+        {i18n.t('exam.timed.submitExam')}
       </button>
     </div>
   )

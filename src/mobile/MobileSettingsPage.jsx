@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import {
@@ -15,15 +16,16 @@ import { IconSettings, IconLoader2, IconCircleCheck, IconDeviceFloppy, IconMessa
 
 const DAY_OPTIONS = [1, 2, 3, 5, 7, 14]
 const HOUR_OPTIONS = [
-  { value: 7,  label: '7:00 — Primera hora' },
-  { value: 9,  label: '9:00 — Mañana' },
-  { value: 12, label: '12:00 — Mediodía' },
-  { value: 17, label: '17:00 — Tarde' },
-  { value: 20, label: '20:00 — Noche' },
+  { value: 7,  label: 'early' },
+  { value: 9,  label: 'morning' },
+  { value: 12, label: 'noon' },
+  { value: 17, label: 'afternoon' },
+  { value: 20, label: 'evening' },
 ]
 
 export default function MobileSettingsPage() {
   const { user, signOut } = useAuth()
+  const { t } = useTranslation()
   const [settings,     setSettings]     = useState(null)
   const [saving,       setSaving]       = useState(false)
   const [saved,        setSaved]        = useState(false)
@@ -64,9 +66,9 @@ export default function MobileSettingsPage() {
       // El backend concede el bono via el webhook de RevenueCat (asíncrono,
       // normalmente segundos) -- no hay nada que verificar de forma síncrona
       // aquí, la compra ya quedó confirmada por Google/RevenueCat.
-      setBonoMessage({ type: 'ok', text: 'Compra completada — el bono se añadirá en unos segundos.' })
+      setBonoMessage({ type: 'ok', text: t('billing.bonusDone') })
     } catch (e) {
-      setBonoMessage({ type: 'error', text: e?.message || 'No se pudo completar la compra' })
+      setBonoMessage({ type: 'error', text: e?.message || t('billing.purchaseFailed') })
     } finally {
       setBuyingBono(null)
     }
@@ -81,11 +83,11 @@ export default function MobileSettingsPage() {
       // "active" aquí es solo para la UI optimista, la fuente de verdad real
       // es lo que responda /billing/verify-purchase preguntando a RevenueCat.
       const result = await Billing.purchase({ accountId: user.id })
-      if (!result.active) throw new Error('No se recibió confirmación de la compra')
+      if (!result.active) throw new Error(t('billing.noConfirmation'))
       await api('POST', '/billing/verify-purchase')
       setPlanTier('pro')
     } catch (e) {
-      setPurchaseError(e?.message || 'No se pudo completar la compra')
+      setPurchaseError(e?.message || t('billing.purchaseFailed'))
     } finally {
       setPurchasing(false)
     }
@@ -123,7 +125,7 @@ export default function MobileSettingsPage() {
     <div className="min-h-screen bg-slate-900 flex flex-col pb-20">
       {/* Cabecera */}
       <div className="px-5 pt-14 pb-4 border-b border-slate-800">
-        <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2"><IconSettings size={22} /> Ajustes</h1>
+        <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2"><IconSettings size={22} /> {t('sidebar.settings')}</h1>
         <p className="text-slate-400 text-sm mt-0.5 truncate">{user?.email}</p>
       </div>
 
@@ -132,7 +134,7 @@ export default function MobileSettingsPage() {
         {/* ── Notificaciones ── */}
         <section>
           <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
-            Notificaciones de exámenes
+            {t('mobile.settings.examNotifs')}
           </p>
 
           {settings ? (
@@ -141,8 +143,8 @@ export default function MobileSettingsPage() {
               {/* Toggle activar/desactivar */}
               <div className="px-4 py-4 flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm font-semibold text-slate-200">Activar recordatorios</p>
-                  <p className="text-xs text-slate-500 mt-0.5">Avisos automáticos en tu móvil</p>
+                  <p className="text-sm font-semibold text-slate-200">{t('mobile.settings.enable')}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{t('mobile.settings.enableDesc')}</p>
                 </div>
                 <button
                   onClick={() => { setSettings(s => ({ ...s, enabled: !s.enabled })); setSaved(false) }}
@@ -160,8 +162,8 @@ export default function MobileSettingsPage() {
                 <>
                   {/* Antelación */}
                   <div className="px-4 py-4">
-                    <p className="text-sm font-semibold text-slate-200 mb-0.5">Avisar con antelación</p>
-                    <p className="text-xs text-slate-500 mb-3">Puedes seleccionar varios plazos</p>
+                    <p className="text-sm font-semibold text-slate-200 mb-0.5">{t('mobile.settings.advance')}</p>
+                    <p className="text-xs text-slate-500 mb-3">{t('mobile.settings.advanceDesc')}</p>
                     <div className="flex flex-wrap gap-2">
                       {DAY_OPTIONS.map(d => {
                         const active = settings.daysBeforeList.includes(d)
@@ -174,7 +176,7 @@ export default function MobileSettingsPage() {
                                 ? 'bg-primary-600 text-white'
                                 : 'bg-slate-700 text-slate-400 active:bg-slate-600'}`}
                           >
-                            {d === 1 ? '1 día' : `${d} días`}
+                            {t('mobile.settings.days', { count: d })}
                           </button>
                         )
                       })}
@@ -183,7 +185,7 @@ export default function MobileSettingsPage() {
 
                   {/* Hora del aviso */}
                   <div className="px-4 py-4">
-                    <p className="text-sm font-semibold text-slate-200 mb-3">Hora del aviso</p>
+                    <p className="text-sm font-semibold text-slate-200 mb-3">{t('mobile.settings.hour')}</p>
                     <div className="space-y-2">
                       {HOUR_OPTIONS.map(h => {
                         const active = settings.notifHour === h.value
@@ -199,7 +201,7 @@ export default function MobileSettingsPage() {
                             <span className={`w-4 h-4 rounded-full border-2 shrink-0 transition-colors
                               ${active ? 'bg-primary-500 border-primary-500' : 'border-slate-500'}`}
                             />
-                            {h.label}
+                            {`${h.value}:00 — ${t(`mobile.settings.hours.${h.label}`)}`}
                           </button>
                         )
                       })}
@@ -222,15 +224,15 @@ export default function MobileSettingsPage() {
                 : 'bg-primary-600 active:bg-primary-700 text-white'}`}
           >
             {saving
-              ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> Guardando...</span>
+              ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> {t('mobile.scanner.saving')}</span>
               : saved
-              ? <span className="flex items-center justify-center gap-2"><IconCircleCheck size={16} /> ¡Ajustes guardados!</span>
-              : <span className="flex items-center justify-center gap-2"><IconDeviceFloppy size={16} /> Guardar ajustes</span>}
+              ? <span className="flex items-center justify-center gap-2"><IconCircleCheck size={16} /> {t('mobile.settings.saved')}</span>
+              : <span className="flex items-center justify-center gap-2"><IconDeviceFloppy size={16} /> {t('mobile.settings.save')}</span>}
           </button>
 
           {settings?.enabled && (
             <p className="text-center text-xs text-slate-600 mt-2 px-2">
-              Los recordatorios se programan automáticamente al añadir o eliminar exámenes
+              {t('mobile.settings.autoSchedule')}
             </p>
           )}
         </section>
@@ -239,15 +241,15 @@ export default function MobileSettingsPage() {
         {isFullApp && planTier && planTier !== 'pro' && (
           <section>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
-              Suscripción
+              {t('mobile.settings.subscription')}
             </p>
             <div className="bg-gradient-to-br from-amber-500/10 to-yellow-600/10 border border-amber-500/30 rounded-2xl p-4">
               <div className="flex items-center gap-2 mb-1">
                 <IconCrown size={18} className="text-amber-400" />
-                <p className="text-sm font-semibold text-amber-300">Hazte Pro</p>
+                <p className="text-sm font-semibold text-amber-300">{t('billing.goPro')}</p>
               </div>
               <p className="text-xs text-slate-400 mb-4">
-                Más generaciones, más podcasts y sin límites de {planTier === 'trial' ? 'la prueba' : 'plan Free'}.
+                {planTier === 'trial' ? t('billing.proPitchTrial') : t('billing.proPitchFree')}
               </p>
               <button
                 onClick={handleGoPro}
@@ -255,8 +257,8 @@ export default function MobileSettingsPage() {
                 className="w-full py-3 rounded-xl font-semibold text-sm bg-amber-500 active:bg-amber-600 text-slate-900 disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {purchasing
-                  ? <><IconLoader2 size={16} className="animate-spin" /> Procesando...</>
-                  : `Suscribirme${productPrice ? ` — ${productPrice}` : ''}`}
+                  ? <><IconLoader2 size={16} className="animate-spin" /> {t('billing.processing')}</>
+                  : `${t('billing.subscribe')}${productPrice ? ` — ${productPrice}` : ''}`}
               </button>
               {purchaseError && (
                 <p className="text-xs text-red-400 mt-2 text-center">{purchaseError}</p>
@@ -269,12 +271,12 @@ export default function MobileSettingsPage() {
         {isFullApp && planTier === 'pro' && (
           <section>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
-              Ampliar cupo de voz
+              {t('billing.extendVoice')}
             </p>
             <div className="bg-slate-800 rounded-2xl overflow-hidden divide-y divide-slate-700/60">
               {[
-                { category: 'transcription', emoji: '🎙️', label: '10h de transcripción extra' },
-                { category: 'podcast',       emoji: '🎧', label: '10 podcasts extra' },
+                { category: 'transcription', emoji: '🎙️', label: t('billing.bonusTranscription') },
+                { category: 'podcast',       emoji: '🎧', label: t('billing.bonusPodcast') },
               ].map(({ category, emoji, label }) => (
                 <div key={category} className="px-4 py-4 flex items-center justify-between gap-4">
                   <div>
@@ -287,7 +289,7 @@ export default function MobileSettingsPage() {
                   >
                     {buyingBono === category
                       ? <IconLoader2 size={14} className="animate-spin" />
-                      : bonoPrices[category === 'transcription' ? 'bono_transcripcion_10h' : 'bono_podcast_10']?.formattedPrice || 'Comprar'}
+                      : bonoPrices[category === 'transcription' ? 'bono_transcripcion_10h' : 'bono_podcast_10']?.formattedPrice || t('billing.buy')}
                   </button>
                 </div>
               ))}
@@ -306,14 +308,14 @@ export default function MobileSettingsPage() {
             información y el control quedan siempre a mano. */}
         <section>
           <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
-            Conservación de tus archivos
+            {t('mobile.settings.retention')}
           </p>
           <div className="bg-slate-800 rounded-2xl px-4 py-4 space-y-3">
             <ul className="space-y-2 text-xs text-slate-400 leading-relaxed">
-              <li>• Los archivos originales que subes (PDF o foto) se borran automáticamente a los 10 días.</li>
-              <li>• Los ejercicios que resuelves se conservan 10 días.</li>
-              <li>• Tus resúmenes, fichas y exámenes se conservan siempre.</li>
-              <li>• Si quieres quedarte con un original o un ejercicio, descárgalo antes de que pase el plazo.</li>
+              <li>• {t('mobile.settings.ret1')}</li>
+              <li>• {t('mobile.settings.ret2')}</li>
+              <li>• {t('mobile.settings.ret3')}</li>
+              <li>• {t('mobile.settings.ret4')}</li>
             </ul>
             <div className="pt-3 border-t border-slate-700/40">
               <EmailWarningsToggle />
@@ -324,7 +326,7 @@ export default function MobileSettingsPage() {
         {/* ── Feedback ── */}
         <section>
           <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
-            Ayúdanos a mejorar
+            {t('mobile.settings.helpImprove')}
           </p>
           <div className="bg-slate-800 rounded-2xl overflow-hidden">
             <button
@@ -333,8 +335,8 @@ export default function MobileSettingsPage() {
             >
               <IconMessageCircle size={20} className="text-slate-400" />
               <div className="text-left">
-                <p className="font-medium text-sm">Enviar feedback</p>
-                <p className="text-xs text-slate-500">Errores, sugerencias o lo que quieras</p>
+                <p className="font-medium text-sm">{t('mobile.settings.feedback')}</p>
+                <p className="text-xs text-slate-500">{t('mobile.settings.feedbackDesc')}</p>
               </div>
             </button>
           </div>
@@ -344,13 +346,12 @@ export default function MobileSettingsPage() {
         {/* ── Acerca de ── */}
         <section>
           <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-1">
-            Acerca de
+            {t('mobile.settings.about')}
           </p>
           <div className="bg-slate-800 rounded-2xl px-4 py-4 space-y-1">
             <p className="text-sm font-semibold text-slate-200">MyStudy AI</p>
             <p className="text-xs text-slate-400">
-              Esta app es parte de MyStudy AI — tu asistente de estudio.
-              Accede a la versión completa en la web.
+              {t('mobile.settings.aboutDesc')}
             </p>
             <a
               href="https://mystudyai.eu"
@@ -371,7 +372,7 @@ export default function MobileSettingsPage() {
               className="w-full px-4 py-4 flex items-center gap-3 text-red-400 active:bg-slate-700 transition-colors"
             >
               <IconLogout size={20} />
-              <span className="font-medium text-sm">Cerrar sesión</span>
+              <span className="font-medium text-sm">{t('sidebar.signOut')}</span>
             </button>
           </div>
         </section>

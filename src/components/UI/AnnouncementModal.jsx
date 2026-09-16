@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState, useEffect } from 'react'
 import Modal from './Modal'
 import { useAuth } from '../../contexts/AuthContext'
@@ -8,6 +10,7 @@ import { api, useAppStore } from '../../store/appStore'
 // Funciona igual en web, escritorio y MyStudy App (comparten este árbol de
 // componentes); MyStudy Scan lo monta aparte en su propio router.
 export default function AnnouncementModal() {
+  useTranslation() // re-render al cambiar de idioma
   const { user, loading: authLoading } = useAuth()
   const { backendReady } = useAppStore()
   const [announcement, setAnnouncement] = useState(null)
@@ -29,10 +32,10 @@ export default function AnnouncementModal() {
         <p className="text-sm text-slate-300 whitespace-pre-line">{announcement?.message}</p>
         {announcement?.link_url && (
           <a href={announcement.link_url} target="_blank" rel="noopener noreferrer" className="text-primary-400 text-sm hover:underline">
-            Saber más →
+            {i18n.t('announcement.more')} →
           </a>
         )}
-        <button onClick={handleClose} className="btn-primary w-full">Entendido</button>
+        <button onClick={handleClose} className="btn-primary w-full">{i18n.t('quota.ok')}</button>
       </div>
     </Modal>
   )

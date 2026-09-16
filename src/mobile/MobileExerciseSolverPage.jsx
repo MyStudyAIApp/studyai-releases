@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 import { useState, useEffect } from 'react'
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
 import { guardarDescarga, mensajeDeGuardado } from '../lib/guardarEnElMovil'
@@ -46,6 +48,7 @@ export default function MobileExerciseSolverPage() {
   const { scan: docScan, installing, installProgress } = useDocumentScan()
   const { addToast } = useAppStore()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   // ── Ejercicios de los últimos 10 días (se autoguardan, no viven en la Biblioteca) ──
   const [recent, setRecent] = useState([])
@@ -79,9 +82,9 @@ export default function MobileExerciseSolverPage() {
     try {
       await api('DELETE', `/documents/${docId}`)
       setRecent(prev => prev.filter(d => d.id !== docId))
-      addToast('Ejercicio eliminado', 'success')
+      addToast(t('mobile.solver.deleted'), 'success')
     } catch (e) {
-      addToast('No se pudo eliminar: ' + e.message, 'error')
+      addToast(t('mobile.solver.deleteError') + ': ' + e.message, 'error')
     }
   }
 
@@ -96,7 +99,7 @@ export default function MobileExerciseSolverPage() {
       const entry = { id: doc.id, title: doc.title, path, directory: guardado.directory, downloadedAt: Date.now() }
       await Preferences.set({ key: DOWNLOAD_INDEX_KEY, value: JSON.stringify([entry, ...list.filter(d => d.id !== doc.id)]) })
       setDownloadedIds(prev => new Set(prev).add(doc.id))
-      addToast(mensajeDeGuardado(guardado, 'El ejercicio'), 'success', 6000)
+      addToast(mensajeDeGuardado(guardado, i18n.t('saved.exercise')), 'success', 6000)
       // Igual que en Biblioteca/escritorio: marcarlo como descargado oculta
       // el aviso "se borra en X días" (aquí, y en otras plataformas se
       // mantiene indicando que la copia está en el móvil) -- el borrado real
@@ -105,7 +108,7 @@ export default function MobileExerciseSolverPage() {
       setRecent(prev => prev.map(d => d.id === doc.id ? { ...d, downloaded_at: nowIso, downloaded_platform: CURRENT_PLATFORM } : d))
       api('POST', `/documents/${doc.id}/mark-downloaded`).catch(() => { /* no crítico */ })
     } catch (e) {
-      addToast('No se pudo descargar: ' + e.message, 'error')
+      addToast(t('mobile.podcasts.downloadError') + ': ' + e.message, 'error')
     } finally {
       setBusyDownloadId(null)
     }
@@ -130,7 +133,7 @@ export default function MobileExerciseSolverPage() {
       setResult(null)
     } catch (err) {
       if (!err.message?.toLowerCase().includes('cancel')) {
-        addToast('No se pudo abrir el escáner', 'error')
+        addToast(t('mobile.scanner.openFailed'), 'error')
       }
     }
   }
@@ -152,7 +155,7 @@ export default function MobileExerciseSolverPage() {
       setResult(data2)
       loadRecent()  // se autoguarda en el servidor; refrescar la lista de aquí
     } catch (e) {
-      if (!e.quotaExceeded) addToast('No se pudo resolver el ejercicio: ' + e.message, 'error')
+      if (!e.quotaExceeded) addToast(t('mobile.solver.solveError') + ': ' + e.message, 'error')
     } finally {
       setSolving(false)
     }
@@ -160,7 +163,7 @@ export default function MobileExerciseSolverPage() {
 
   const resolverConTexto = async () => {
     const statement = (editingStatement || '').trim()
-    if (!statement) { addToast('Escribe el enunciado', 'warning'); return }
+    if (!statement) { addToast(t('mobile.solver.writeStatement'), 'warning'); return }
     setResolvingText(true)
     try {
       const data = await api('POST', '/exercises/solve-text', { statement, difficulty: 'normal' })
@@ -168,7 +171,7 @@ export default function MobileExerciseSolverPage() {
       setEditingStatement(null)
       loadRecent()
     } catch (e) {
-      if (!e.quotaExceeded) addToast('No se pudo resolver: ' + e.message, 'error')
+      if (!e.quotaExceeded) addToast(t('mobile.solver.solveError') + ': ' + e.message, 'error')
     } finally {
       setResolvingText(false)
     }
@@ -185,7 +188,7 @@ export default function MobileExerciseSolverPage() {
     <div className="min-h-screen bg-slate-900 flex flex-col">
       <div className="flex items-center gap-3 px-4 pt-12 pb-5">
         <button onClick={() => navigate('/')} className="text-slate-400 p-1"><IconArrowLeft size={22} /></button>
-        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconCalculator size={20} /> Resolver ejercicio</h1>
+        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconCalculator size={20} /> {t('sidebar.solveExercise')}</h1>
       </div>
 
       <div className="flex-1 flex flex-col px-5 gap-5 pb-8">
@@ -194,9 +197,9 @@ export default function MobileExerciseSolverPage() {
           <div className="flex-1 flex flex-col items-center justify-center gap-5">
             <IconPackage size={36} className="text-slate-500 animate-bounce" />
             <p className="text-slate-300 font-semibold text-center">
-              Preparando el escáner inteligente…
+              {t('mobile.scanner.preparing')}
             </p>
-            <p className="text-slate-500 text-sm text-center">Solo ocurre la primera vez</p>
+            <p className="text-slate-500 text-sm text-center">{t('mobile.scanner.firstTimeOnly')}</p>
             <div className="w-full bg-slate-700 rounded-full h-3">
               <div
                 className="bg-primary-500 h-3 rounded-full transition-all duration-300"
@@ -213,7 +216,7 @@ export default function MobileExerciseSolverPage() {
                             flex flex-col items-center justify-center gap-2 py-8 text-slate-500">
               <IconCalculator size={40} />
               <span className="text-sm text-center px-4">
-                Escanea un ejercicio y te lo resolvemos paso a paso
+                {t('mobile.solver.intro')}
               </span>
             </div>
             <button
@@ -221,7 +224,7 @@ export default function MobileExerciseSolverPage() {
               className="w-full py-5 rounded-2xl bg-primary-600 text-white font-bold text-lg
                          active:bg-primary-700 transition-colors flex items-center justify-center gap-3 shadow-lg"
             >
-              <IconCamera size={24} /> Escanear ejercicio
+              <IconCamera size={24} /> {t('mobile.solver.scan')}
             </button>
 
             {/* Ejercicios de los últimos 10 días */}
@@ -235,8 +238,7 @@ export default function MobileExerciseSolverPage() {
                   <div className="flex items-start gap-2">
                     <span className="text-base leading-none mt-0.5">⏳</span>
                     <p className="flex-1 text-[11px] text-amber-200/90 leading-relaxed">
-                      Se guardan solos y se borran solos a los {RETENTION_DAYS} días
-                      (avisamos por email 3 días antes). Descarga los que quieras conservar con el botón ⬇️.
+                      {t('mobile.solver.retention', { days: RETENTION_DAYS })}
                     </p>
                     <button onClick={dismissRetentionNotice} className="shrink-0 text-amber-300/70 active:text-amber-200">
                       <IconX size={16} />
@@ -249,7 +251,7 @@ export default function MobileExerciseSolverPage() {
               {loadingRecent ? (
                 <div className="flex justify-center py-8"><IconLoader2 size={24} className="animate-spin text-slate-500" /></div>
               ) : recent.length === 0 ? (
-                <p className="text-slate-500 text-sm text-center py-8">Aún no has resuelto ningún ejercicio</p>
+                <p className="text-slate-500 text-sm text-center py-8">{t('mobile.solver.empty')}</p>
               ) : (
                 <div className="space-y-2 pb-4">
                   {recent.map(doc => {
@@ -285,7 +287,7 @@ export default function MobileExerciseSolverPage() {
                                 {busyDownloadId === doc.id
                                   ? <IconLoader2 size={14} className="animate-spin" />
                                   : downloaded ? <IconCircleCheck size={14} /> : <IconDownload size={14} />}
-                                {downloaded ? 'Guardado en el móvil' : 'Descargar al móvil'}
+                                {downloaded ? t('mobile.solver.savedPhone') : t('mobile.solver.downloadPhone')}
                               </button>
                               <button
                                 onClick={() => borrarGuardado(doc.id)}
@@ -308,7 +310,7 @@ export default function MobileExerciseSolverPage() {
             <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-lg bg-slate-800">
               <img
                 src={`data:image/jpeg;base64,${previewB64}`}
-                alt="Ejercicio a resolver"
+                alt={t('mobile.solver.alt')}
                 className="w-full object-contain max-h-[50vh]"
               />
             </div>
@@ -319,8 +321,8 @@ export default function MobileExerciseSolverPage() {
                          active:bg-primary-700 disabled:opacity-50 transition-colors"
             >
               {solving
-                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> Resolviendo...</span>
-                : <span className="flex items-center justify-center gap-2"><IconSparkles size={16} /> Resolver</span>}
+                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> {t('mobile.solver.solving')}</span>
+                : <span className="flex items-center justify-center gap-2"><IconSparkles size={16} /> {t('mobile.solver.solve')}</span>}
             </button>
             <button
               onClick={otro}
@@ -328,7 +330,7 @@ export default function MobileExerciseSolverPage() {
               className="w-full py-4 rounded-2xl bg-slate-700 text-slate-300 font-medium
                          active:bg-slate-600 disabled:opacity-40 transition-colors flex items-center justify-center gap-2"
             >
-              <IconRefresh size={16} /> Cambiar foto
+              <IconRefresh size={16} /> {t('mobile.solver.changePhoto')}
             </button>
           </>
         )}
@@ -353,16 +355,16 @@ export default function MobileExerciseSolverPage() {
                 className="w-full rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-left"
               >
                 <span className="block text-xs font-medium text-amber-300/90">
-                  ✏️ ¿He leído bien tu ejercicio?
+                  ✏️ {t('mobile.solver.readOk')}
                 </span>
                 <span className="block text-[11px] text-slate-400 mt-0.5">
-                  Si algún número o signo no coincide, tócame para corregirlo
+                  {t('mobile.solver.readOkDesc')}
                 </span>
               </button>
             ) : (
               <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 space-y-3">
                 <p className="text-xs font-medium text-amber-300/90">
-                  Corrige el enunciado y lo resuelvo de nuevo
+                  {t('mobile.solver.fixStatement')}
                 </p>
                 <textarea
                   value={editingStatement}
@@ -378,7 +380,7 @@ export default function MobileExerciseSolverPage() {
                     className="flex-1 py-3 rounded-xl bg-slate-700 text-slate-300 font-medium
                                active:bg-slate-600 disabled:opacity-40 text-sm"
                   >
-                    Cancelar
+                    {t('common.cancel')}
                   </button>
                   <button
                     onClick={resolverConTexto}
@@ -386,7 +388,7 @@ export default function MobileExerciseSolverPage() {
                     className="flex-1 py-3 rounded-xl bg-primary-600 text-white font-bold
                                active:bg-primary-700 disabled:opacity-50 text-sm"
                   >
-                    {resolvingText ? 'Resolviendo...' : 'Resolver con esto'}
+                    {resolvingText ? t('mobile.solver.solving') : t('mobile.solver.solveWithThis')}
                   </button>
                 </div>
               </div>
@@ -397,7 +399,7 @@ export default function MobileExerciseSolverPage() {
               className="w-full flex items-center justify-between px-4 py-3 bg-slate-800 rounded-2xl border border-slate-700"
             >
               <span className="font-semibold text-slate-200 text-sm flex items-center gap-1.5">
-                {expandedStep ? <><IconChevronUp size={15} /> Ocultar solución</> : <><IconChevronDown size={15} /> Ver solución paso a paso</>}
+                {expandedStep ? <><IconChevronUp size={15} /> {t('mobile.solver.hide')}</> : <><IconChevronDown size={15} /> {t('mobile.solver.show')}</>}
               </span>
             </button>
 
@@ -417,7 +419,7 @@ export default function MobileExerciseSolverPage() {
 
                 {result.answer && (
                   <div className="bg-emerald-900/30 border border-emerald-700 rounded-2xl px-4 py-3">
-                    <p className="text-xs text-emerald-400 font-semibold uppercase mb-1">Resultado</p>
+                    <p className="text-xs text-emerald-400 font-semibold uppercase mb-1">{t('mobile.solver.result')}</p>
                     <div className="prose-studyai text-sm font-semibold text-slate-100">
                       <ReactMarkdown {...MD_OPTS}>{result.answer}</ReactMarkdown>
                     </div>
@@ -432,7 +434,7 @@ export default function MobileExerciseSolverPage() {
               className="w-full py-4 rounded-2xl bg-slate-700 text-slate-300 font-medium
                          active:bg-slate-600 transition-colors flex items-center justify-center gap-2"
             >
-              <IconRefresh size={16} /> Resolver otro
+              <IconRefresh size={16} /> {t('mobile.solver.another')}
             </button>
           </div>
         )}

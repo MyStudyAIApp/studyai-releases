@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import remarkMath from 'remark-math'
@@ -313,8 +314,8 @@ export default function DocumentPage() {
 
   function handlePrepDay(day, action) {
     const dateStr = day.date
-      ? new Date(day.date).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
-      : `Día ${action}`
+      ? new Date(day.date).toLocaleDateString(i18n.language, { weekday: 'long', day: 'numeric', month: 'long' })
+      : i18n.t('studyPlan.day', { n: action })
     const topicsList = (day.topics || []).join(', ')
     const context = `IMPORTANTE: Genera contenido SOLO sobre estos temas específicos del día "${dateStr}":\n${topicsList}\n\nNo te salgas de estos temas concretos.`
     generate(action, { context_override: context })
@@ -386,7 +387,7 @@ export default function DocumentPage() {
               className="w-full text-left px-2 py-1.5 rounded text-xs text-slate-300 hover:bg-slate-700 transition-colors flex items-center justify-between gap-2"
             >
               <span className="truncate">{item.data?.name || t(`document.actions.${item.type}`) || item.type}</span>
-              <span className="text-slate-500 shrink-0">{new Date(item.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}</span>
+              <span className="text-slate-500 shrink-0">{new Date(item.created_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short' })}</span>
             </button>
           ))}
         </div>
@@ -428,7 +429,7 @@ export default function DocumentPage() {
             </div>
             {isOfflineCache && (
               <div className="px-4 py-2 bg-amber-900/30 border-b border-amber-800/50 text-amber-300 text-xs flex items-center gap-1.5 shrink-0">
-                <IconWifiOff size={13} /> Sin conexión — viendo la copia guardada en el móvil. No se puede generar contenido nuevo.
+                <IconWifiOff size={13} /> {i18n.t('document.offline')}
               </div>
             )}
             {savedResultsBar}
@@ -443,7 +444,7 @@ export default function DocumentPage() {
                 onClick={() => setShowActionSheet(true)}
                 className="absolute bottom-5 right-4 bg-primary-600 hover:bg-primary-500 active:bg-primary-700 text-white font-semibold px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2 z-10"
               >
-                <IconSparkles size={18} /> Generar contenido
+                <IconSparkles size={18} /> {i18n.t('document.generate')}
               </button>
             )}
           </>
@@ -452,10 +453,10 @@ export default function DocumentPage() {
             <div className="px-4 py-3 border-b border-slate-800 flex items-center gap-2 shrink-0">
               <button onClick={() => setMobilePanel('pdf')} className="btn-ghost btn-icon btn-sm"><IconArrowLeft size={16} /></button>
               <h2 className="font-semibold text-slate-100 text-sm flex-1 truncate">
-                {activeAction ? (t(`actionPanel.items.${activeAction}`) || activeAction) : 'Resultado'}
+                {activeAction ? (t(`actionPanel.items.${activeAction}`) || activeAction) : i18n.t('mobile.solver.result')}
               </h2>
               <button onClick={() => navigate('/library')} className="text-xs text-slate-500 hover:text-slate-300 shrink-0">
-                Biblioteca
+                {i18n.t('sidebar.library')}
               </button>
             </div>
             <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
@@ -479,7 +480,7 @@ export default function DocumentPage() {
             <div className="absolute inset-0 bg-black/60" onClick={() => setShowActionSheet(false)} />
             <div className="relative bg-slate-900 rounded-t-3xl overflow-hidden max-h-[85vh] flex flex-col">
               <div className="flex items-center justify-between px-5 py-3 border-b border-slate-800 shrink-0">
-                <span className="font-semibold text-slate-100">Generar contenido</span>
+                <span className="font-semibold text-slate-100">{i18n.t('document.generate')}</span>
                 <button onClick={() => setShowActionSheet(false)} className="text-slate-400 leading-none"><IconX size={20} /></button>
               </div>
               <div className="overflow-y-auto flex-1">
@@ -528,7 +529,7 @@ export default function DocumentPage() {
       {/* Separador arrastrable: documento ↔ generar */}
       <div
         onMouseDown={startResize('doc')}
-        title="Arrastra para redimensionar"
+        title={i18n.t('library.dragResize')}
         className="w-1 shrink-0 cursor-col-resize bg-slate-800 hover:bg-primary-500/60 active:bg-primary-500 transition-colors"
       />
 
@@ -547,7 +548,7 @@ export default function DocumentPage() {
       {/* Separador arrastrable: generar ↔ resultado */}
       <div
         onMouseDown={startResize('actions')}
-        title="Arrastra para redimensionar"
+        title={i18n.t('library.dragResize')}
         className="w-1 shrink-0 cursor-col-resize bg-slate-800 hover:bg-primary-500/60 active:bg-primary-500 transition-colors"
       />
 

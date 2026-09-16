@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState, useEffect, useMemo } from 'react'
 
 // ─── Juego 1: Memoria de parejas ───────────────────────────────────────────
@@ -42,7 +44,7 @@ function MemoryGame({ onWin }) {
   return (
     <div className="flex flex-col items-center gap-3">
       <p className="text-xs text-slate-500">
-        {won ? `¡Completado en ${moves} intentos! 🎉` : 'Memoria: encuentra las parejas'}
+        {won ? `${i18n.t('games.memoryWon', { n: moves })} 🎉` : i18n.t('games.memory')}
       </p>
       <div className="grid grid-cols-4 gap-2">
         {deck.map((card, i) => {
@@ -124,7 +126,7 @@ function TicTacToe({ onWin }) {
   return (
     <div className="flex flex-col items-center gap-3">
       <p className="text-xs text-slate-500">
-        {winner === 'X' ? '¡Has ganado! 🎉' : winner === 'O' ? 'Ha ganado la máquina, va otra...' : winner === 'draw' ? 'Empate, va otra...' : '3 en raya — eres las X'}
+        {winner === 'X' ? `${i18n.t('games.youWon')} 🎉` : winner === 'O' ? i18n.t('games.machineWon') : winner === 'draw' ? i18n.t('games.draw') : i18n.t('games.ttt')}
       </p>
       <div className="grid grid-cols-3 gap-1.5">
         {board.map((v, i) => (
@@ -205,11 +207,11 @@ function SimonGame({ onWin }) {
     }
   }
 
-  const label = won ? '¡Memoria de acero! 🎉'
-    : phase === 'wrong' ? 'Fallaste, empezamos de nuevo...'
-    : phase === 'showing' ? 'Memoriza la secuencia...'
+  const label = won ? `${i18n.t('games.simonWon')} 🎉`
+    : phase === 'wrong' ? i18n.t('games.simonWrong')
+    : phase === 'showing' ? i18n.t('games.simonShowing')
     : phase === 'input' ? `Tu turno — ronda ${sequence.length}/${SIMON_TARGET_ROUNDS}`
-    : 'Simón — repite la secuencia de colores'
+    : i18n.t('games.simon')
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -240,6 +242,7 @@ function pickGame(excludeIdx) {
 // necesita datos ni conexión, es puro estado local. Al ganar una partida,
 // cambia a otro juego aleatorio distinto del actual.
 export default function WaitingGame() {
+  useTranslation() // re-render al cambiar de idioma
   const [gameIdx, setGameIdx] = useState(() => pickGame(-1))
   const [round, setRound] = useState(0)
   const Game = GAMES[gameIdx]

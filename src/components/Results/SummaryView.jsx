@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
@@ -43,7 +45,7 @@ const mdComponents = {
   blockquote: ({ children }) => (
     <div className="my-3 border-l-4 border-amber-400 bg-amber-900/20 rounded-r-lg px-4 py-3">
       <div className="text-amber-300 text-xs font-semibold uppercase tracking-wider mb-1 flex items-center gap-1">
-        <span>⚠️</span> Importante
+        <span>⚠️</span> {i18n.t('summary.important')}
       </div>
       <div className="text-amber-100 text-sm">{children}</div>
     </div>
@@ -257,7 +259,7 @@ export function buildPrintHtml(result, docTitle = '') {
 
   const calloutsHtml = callouts?.length
     ? `<div class="section callout-box">
-        <h2>⚡ Fórmulas y reglas clave</h2>
+        <h2>⚡ ${i18n.t('summary.formulas')}</h2>
         ${callouts.map((c, i) => `<div class="callout-item"><span class="callout-num">${String(i+1).padStart(2,'0')}</span><code>${inlineMd(c)}</code></div>`).join('')}
        </div>`
     : ''
@@ -277,23 +279,23 @@ export function buildPrintHtml(result, docTitle = '') {
 
   const kpHtml = key_points?.length
     ? `<div class="section kp-box">
-        <h2>⭐ Puntos clave</h2>
+        <h2>⭐ ${i18n.t('summary.keyPoints')}</h2>
         <ul>${key_points.map(p => `<li>${inlineMd(p)}</li>`).join('')}</ul>
        </div>`
     : ''
 
   const connHtml = connections?.length
     ? `<div class="section conn-box">
-        <h2>🔗 Conexiones entre temas</h2>
+        <h2>🔗 ${i18n.t('summary.connections')}</h2>
         <ul>${connections.map(c => `<li>↔ ${inlineMd(c)}</li>`).join('')}</ul>
        </div>`
     : ''
 
   const vocHtml = vocabulary?.length
     ? `<div class="section">
-        <h2>📚 Vocabulario clave</h2>
+        <h2>📚 ${i18n.t('summary.vocab')}</h2>
         <table>
-          <thead><tr><th>Término</th><th>Definición</th></tr></thead>
+          <thead><tr><th>${i18n.t('summary.term')}</th><th>${i18n.t('summary.definition')}</th></tr></thead>
           <tbody>${vocabulary.map(v =>
             `<tr><td><strong>${escapeHtml(v.term)}</strong></td><td>${escapeHtml(v.definition)}</td></tr>`
           ).join('')}</tbody>
@@ -307,7 +309,7 @@ export function buildPrintHtml(result, docTitle = '') {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>${escapeHtml(docTitle || 'Resumen')}</title>
+  <title>${escapeHtml(docTitle || i18n.t('mobile.library.summary'))}</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: Georgia, 'Times New Roman', serif; font-size: 11pt; line-height: 1.7;
@@ -350,8 +352,8 @@ export function buildPrintHtml(result, docTitle = '') {
 </head>
 <body>
   <div class="header">
-    <h1>${docTitle || 'Resumen'}</h1>
-    <div class="meta">Generado por MyStudy AI · ${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+    <h1>${docTitle || i18n.t('mobile.library.summary')}</h1>
+    <div class="meta">${i18n.t('summary.generatedBy')} · ${new Date().toLocaleDateString(i18n.language, { day: 'numeric', month: 'long', year: 'numeric' })}</div>
   </div>
   ${contentHtml}
   ${calloutsHtml}
@@ -365,6 +367,7 @@ export function buildPrintHtml(result, docTitle = '') {
 
 // ── Component ──────────────────────────────────────────────────────────────
 export default function SummaryView({ result }) {
+  useTranslation() // re-render al cambiar de idioma
   const { content, key_points, vocabulary, connections, callouts, tables } = result
   const isExtended = result.type === 'extended_summary'
 
@@ -376,11 +379,9 @@ export default function SummaryView({ result }) {
         <div className="flex items-start gap-3 bg-blue-900/30 border border-blue-500/40 rounded-xl px-4 py-3">
           <span className="text-xl shrink-0">🔍</span>
           <div>
-            <p className="text-blue-300 font-semibold text-sm">Resumen ampliado</p>
+            <p className="text-blue-300 font-semibold text-sm">{i18n.t('results.labels.extended_summary')}</p>
             <p className="text-blue-200/80 text-xs mt-0.5 leading-relaxed">
-              Este resumen incluye información adicional más allá del documento original.
-              Los párrafos marcados con <span className="font-bold text-amber-300">📚</span> contienen
-              contexto externo añadido para ayudarte a entender mejor el tema.
+              {i18n.t('summary.extended1')} <span className="font-bold text-amber-300">📚</span> {i18n.t('summary.extended2')}
             </p>
           </div>
         </div>
@@ -401,7 +402,7 @@ export default function SummaryView({ result }) {
       {callouts?.length > 0 && (
         <div className="space-y-2">
           <h3 className="font-bold text-amber-400 text-xs uppercase tracking-wider flex items-center gap-2">
-            <span>⚡</span> Fórmulas y reglas clave
+            <span>⚡</span> {i18n.t('summary.formulas')}
           </h3>
           {callouts.map((c, i) => (
             <div key={i} className="flex items-start gap-3 border-l-4 border-amber-400 bg-amber-900/20 rounded-r-lg px-4 py-2.5">
@@ -454,7 +455,7 @@ export default function SummaryView({ result }) {
       {key_points?.length > 0 && (
         <div className="rounded-xl border border-primary-700/50 bg-primary-900/20 p-5">
           <h3 className="font-bold text-primary-300 mb-3 flex items-center gap-2 text-sm uppercase tracking-wider">
-            <span className="text-lg">⭐</span> Puntos clave
+            <span className="text-lg">⭐</span> {i18n.t('summary.keyPoints')}
           </h3>
           <div className="grid grid-cols-1 gap-2">
             {key_points.map((p, i) => (
@@ -471,7 +472,7 @@ export default function SummaryView({ result }) {
       {connections?.length > 0 && (
         <div className="rounded-xl border border-emerald-700/50 bg-emerald-900/20 p-5">
           <h3 className="font-bold text-emerald-300 mb-3 flex items-center gap-2 text-sm uppercase tracking-wider">
-            <span className="text-lg">🔗</span> Conexiones entre temas
+            <span className="text-lg">🔗</span> {i18n.t('summary.connections')}
           </h3>
           <div className="space-y-2">
             {connections.map((c, i) => (
@@ -489,8 +490,8 @@ export default function SummaryView({ result }) {
         <div className="rounded-xl border border-slate-700 bg-slate-800/40 overflow-hidden">
           <div className="px-5 py-3 border-b border-slate-700 bg-slate-800/60 flex items-center gap-2">
             <span className="text-lg">📚</span>
-            <h3 className="font-bold text-slate-200 text-sm uppercase tracking-wider">Vocabulario clave</h3>
-            <span className="ml-auto text-xs text-slate-500">{vocabulary.length} términos</span>
+            <h3 className="font-bold text-slate-200 text-sm uppercase tracking-wider">{i18n.t('summary.vocab')}</h3>
+            <span className="ml-auto text-xs text-slate-500">{i18n.t('summary.terms', { count: vocabulary.length })}</span>
           </div>
           <div className="divide-y divide-slate-700/50">
             {vocabulary.map((v, i) => (

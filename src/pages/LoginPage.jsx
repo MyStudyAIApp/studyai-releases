@@ -620,7 +620,7 @@ export default function LoginPage() {
 
         <div className="flex items-center justify-center gap-4 text-[11px] text-slate-600 mt-3">
           <Link to="/terminos" className="hover:text-slate-400">{t('auth.terms')}</Link>
-          <Link to="/privacidad" className="hover:text-slate-400">Privacidad</Link>
+          <Link to="/privacidad" className="hover:text-slate-400">{t('landing.footer.privacy')}</Link>
           <Link to="/cookies" className="hover:text-slate-400">Cookies</Link>
         </div>
 

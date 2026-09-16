@@ -1,3 +1,4 @@
+import i18n from '../../i18n'
 import { useState, forwardRef } from 'react'
 import { IconEye, IconEyeOff } from '@tabler/icons-react'
 
@@ -24,7 +25,7 @@ const PasswordInput = forwardRef(function PasswordInput(
         onClick={() => setVisible(v => !v)}
         tabIndex={-1}
         className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
-        title={visible ? 'Ocultar' : 'Mostrar'}
+        title={visible ? i18n.t('password.hide') : i18n.t('password.show')}
       >
         {visible ? <IconEyeOff size={17} /> : <IconEye size={17} />}
       </button>

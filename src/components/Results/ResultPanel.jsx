@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useRef, useState, useEffect } from 'react'
 import { useAppStore, api } from '../../store/appStore'
 import ExportPanel from '../Export/ExportPanel'
@@ -20,6 +22,8 @@ import StudyPlanView from '../Study/StudyPlanView'
 import ConnectionsView from './ConnectionsView'
 import WaitingGame from './WaitingGame'
 
+// Etiqueta traducida de cada accion; si falta la clave, la de abajo en espanol
+const label = (a) => i18n.t(`results.labels.${a}`, { defaultValue: LABELS[a] })
 const LABELS = {
   summary:          'Resumen',
   extended_summary: 'Resumen ampliado',
@@ -93,6 +97,7 @@ function normalizeResult(result) {
 }
 
 export default function ResultPanel({ result, streamedText, generating, genProgress, doc, activeAction, onSaved, onPrepDay }) {
+  useTranslation() // re-render al cambiar de idioma
   const { addToast } = useAppStore()
   const printRef = useRef()
   const [showExport, setShowExport] = useState(false)
@@ -123,7 +128,7 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
     const r = normalizedResult
     if (!r) return
 
-    const title = doc?.title || LABELS[activeAction] || 'Resultado'
+    const title = doc?.title || label(activeAction) || i18n.t('mobile.solver.result')
 
     let html = ''
 
@@ -177,8 +182,8 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
   function startSave() {
     if (!result) return
     if (['summary', 'extended_summary'].includes(activeAction)) {
-      const date = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
-      setNameInput(`${doc?.title || 'Resumen'} — ${date}`)
+      const date = new Date().toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })
+      setNameInput(`${doc?.title || i18n.t('mobile.library.summary')} — ${date}`)
       setSavingName(true)
     } else {
       handleSave()
@@ -240,7 +245,7 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
         <div className="flex flex-col items-center justify-center flex-1 gap-4">
           <Spinner size="lg" />
           <p className="text-sm text-slate-400 animate-pulse max-w-xs text-center">
-            Generando {(LABELS[activeAction] || activeAction || '').toLowerCase()}...
+            {i18n.t('results.generatingX', { what: (label(activeAction) || activeAction || '').toLowerCase() })}
           </p>
           {showGame && <WaitingGame />}
         </div>
@@ -250,8 +255,8 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
       {isEmpty && !isLoading && (
         <div className="flex flex-col items-center justify-center flex-1 text-center p-8 text-slate-500">
           <span className="text-5xl mb-4">✨</span>
-          <p className="text-lg font-medium text-slate-400">Elige una acción</p>
-          <p className="text-sm mt-1">Selecciona qué quieres generar en el panel izquierdo</p>
+          <p className="text-lg font-medium text-slate-400">{i18n.t('results.pick')}</p>
+          <p className="text-sm mt-1">{i18n.t('results.pickDesc')}</p>
         </div>
       )}
 
@@ -261,9 +266,9 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
           {/* Toolbar */}
           <div className="flex items-center gap-2 px-4 py-2.5 border-b border-slate-800 shrink-0">
             <span className="text-sm font-medium text-slate-200 flex-1">
-              {LABELS[activeAction] || activeAction}
+              {label(activeAction) || activeAction}
             </span>
-            {generating && <span className="text-xs text-primary-400 animate-pulse">Generando...</span>}
+            {generating && <span className="text-xs text-primary-400 animate-pulse">{i18n.t('library.generating')}</span>}
             <div className="flex gap-2 items-center">
               {result && (
                 <>
@@ -279,29 +284,29 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
                           if (e.key === 'Escape') setSavingName(false)
                         }}
                         className="input input-sm text-xs w-52"
-                        placeholder="Nombre del resumen"
+                        placeholder={i18n.t('results.namePlaceholder')}
                       />
                       <button onClick={() => handleSave(nameInput)} className="btn-primary btn-sm text-xs">✓</button>
                       <button onClick={() => setSavingName(false)} className="btn-ghost btn-sm text-xs text-slate-400">✕</button>
                     </div>
                   ) : (
-                    <button onClick={startSave} className="btn-secondary btn-sm">💾 Guardar</button>
+                    <button onClick={startSave} className="btn-secondary btn-sm">💾 {i18n.t('common.save')}</button>
                   )}
                   {isSchemaSection ? (
                     <>
                       <button
                         onClick={() => setIsFullscreen(v => !v)}
                         className={`btn-secondary btn-sm no-print ${isFullscreen ? 'border-primary-500 text-primary-300' : ''}`}
-                        title={isFullscreen ? 'Salir de pantalla completa (Esc)' : 'Ver en pantalla completa'}
+                        title={isFullscreen ? i18n.t('results.exitFull') : i18n.t('results.enterFull')}
                       >
-                        {isFullscreen ? '🗗 Salir' : '⛶ Pantalla completa'}
+                        {isFullscreen ? `🗗 ${i18n.t('results.exit')}` : `⛶ ${i18n.t('results.fullscreen')}`}
                       </button>
                       {showZoomControl && (
                         <div className="flex items-center gap-1 border border-slate-700 rounded-md px-1">
                           <button
                             onClick={() => setZoom(z => Math.max(40, z - 10))}
                             className="btn-ghost btn-sm px-2 text-slate-300"
-                            title="Alejar"
+                            title={i18n.t('results.zoomOut')}
                           >
                             −
                           </button>
@@ -309,7 +314,7 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
                           <button
                             onClick={() => setZoom(z => Math.min(150, z + 10))}
                             className="btn-ghost btn-sm px-2 text-slate-300"
-                            title="Acercar"
+                            title={i18n.t('results.zoomIn')}
                           >
                             +
                           </button>
@@ -318,14 +323,14 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
                       <button
                         onClick={() => setWhiteBg(v => !v)}
                         className={`btn-secondary btn-sm no-print ${whiteBg ? 'border-primary-500 text-primary-300' : ''}`}
-                        title="Pone fondo blanco para hacer una captura y pegarla en Word"
+                        title={i18n.t('results.whiteBgTitle')}
                       >
-                        {whiteBg ? '⬜ Fondo blanco (activo)' : '⬜ Fondo blanco'}
+                        {whiteBg ? `⬜ ${i18n.t('results.whiteBg')} (${i18n.t('results.active')})` : `⬜ ${i18n.t('results.whiteBg')}`}
                       </button>
                     </>
                   ) : (
                     <>
-                      <button onClick={handlePrint} className="btn-secondary btn-sm no-print">🖨️ Imprimir</button>
+                      <button onClick={handlePrint} className="btn-secondary btn-sm no-print">🖨️ {i18n.t('whiteboard.print')}</button>
                       <button
                         onClick={() => setShowExport(v => !v)}
                         className={`btn-secondary btn-sm no-print ${showExport ? 'border-primary-500 text-primary-300' : ''}`}

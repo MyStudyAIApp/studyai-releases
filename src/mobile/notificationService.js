@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { Preferences } from '@capacitor/preferences'
 
 const SETTINGS_KEY = 'studyai-mobile-notif-settings'
@@ -45,7 +46,7 @@ export async function scheduleExamNotifications(exams) {
     if (LocalNotifications.createChannel) {
       await LocalNotifications.createChannel({
         id: 'exam-reminders',
-        name: 'Recordatorios de exámenes',
+        name: i18n.t('mobile.exams.channel'),
         importance: 4,
         sound: 'default',
         vibration: true,
@@ -65,12 +66,12 @@ export async function scheduleExamNotifications(exams) {
         notifDate.setDate(notifDate.getDate() - daysBefore)
         notifDate.setHours(settings.notifHour, 0, 0, 0)
         if (notifDate > now) {
-          const label = daysBefore === 0 ? '¡es hoy!'
-                      : daysBefore === 1 ? 'es mañana'
-                      : `es en ${daysBefore} días`
+          const label = daysBefore === 0 ? i18n.t('mobile.exams.notifToday')
+                      : daysBefore === 1 ? i18n.t('mobile.exams.notifTomorrow')
+                      : i18n.t('mobile.exams.notifInDays', { count: daysBefore })
           notifications.push({
             id: idCounter++,
-            title: '📅 Recordatorio de examen',
+            title: '📅 ' + i18n.t('mobile.exams.notifTitle'),
             body: `${exam.title} — ${label}`,
             schedule: { at: notifDate, allowWhileIdle: true },
             channelId: 'exam-reminders',

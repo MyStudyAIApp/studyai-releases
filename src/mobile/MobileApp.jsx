@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { App as CapacitorApp } from '@capacitor/app'
@@ -21,7 +22,7 @@ function Protected({ children }) {
   const { user, loading } = useAuth()
   if (loading) return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-      <div className="text-slate-400 text-lg animate-pulse">Cargando...</div>
+      <div className="text-slate-400 text-lg animate-pulse">{i18n.t('common.loading')}</div>
     </div>
   )
   if (!user) return <Navigate to="/login" replace />
@@ -51,6 +52,8 @@ export default function MobileApp() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100">
+      {/* En tablet no estirar pantallas pensadas para movil: columna centrada */}
+      <div className="max-w-2xl mx-auto">
       <Routes>
         <Route path="/login"    element={<MobileLoginPage />} />
         <Route path="/"         element={<Protected><MobileHomePage /></Protected>} />
@@ -64,6 +67,7 @@ export default function MobileApp() {
         <Route path="/podcasts" element={<Protected><MobilePodcastsPage /></Protected>} />
         <Route path="*"         element={<Navigate to="/" replace />} />
       </Routes>
+      </div>
       <QuotaExceededModal />
       <AnnouncementModal />
     </div>

@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 /**
  * Lectura en voz alta con el motor del PROPIO dispositivo.
  *
@@ -77,7 +78,7 @@ export let motivoSinVoces = null
 function conLimite(promesa, ms, etiqueta) {
   return Promise.race([
     promesa,
-    new Promise((_, rechazar) => setTimeout(() => rechazar(new Error(`${etiqueta} no respondió`)), ms)),
+    new Promise((_, rechazar) => setTimeout(() => rechazar(new Error(i18n.t('tts.noResponse', { what: etiqueta }))), ms)),
   ])
 }
 
@@ -90,7 +91,7 @@ export async function cargarVoces(timeoutMs = 3000) {
     // 1) Lo ideal: la lista de voces con nombre. El plugin las identifica por
     //    su posición, así que se guarda el índice para pasárselo a speak().
     try {
-      const { voices } = await conLimite(tts.getSupportedVoices(), timeoutMs, 'la lista de voces')
+      const { voices } = await conLimite(tts.getSupportedVoices(), timeoutMs, i18n.t('tts.voiceList'))
       if (voices?.length) {
         // Igual que arriba: el motor de Android repite voces por variante.
         const vistas = new Set()
@@ -114,7 +115,7 @@ export async function cargarVoces(timeoutMs = 3000) {
     // 2) Respaldo: solo los idiomas. Basta para hablar (speak acepta 'lang'
     //    sin elegir voz concreta) y para saber qué idiomas ofrecer.
     try {
-      const { languages } = await conLimite(tts.getSupportedLanguages(), timeoutMs, 'la lista de idiomas')
+      const { languages } = await conLimite(tts.getSupportedLanguages(), timeoutMs, i18n.t('tts.langList'))
       // Google TTS devuelve una entrada por variante regional, con muchos
       // repetidos: sin agrupar salian cientos de "frances Canada" identicos.
       const vistos = new Set()
@@ -312,7 +313,7 @@ export async function hablar(texto, { lang = 'es-ES', voz = null, rate = 1, onPr
     return
   }
 
-  if (!hayWebSpeech()) throw new Error('Este dispositivo no puede reproducir voz')
+  if (!hayWebSpeech()) throw new Error(i18n.t('tts.cantPlay'))
 
   return new Promise((resolve, reject) => {
     window.speechSynthesis.cancel()
@@ -331,7 +332,7 @@ export async function hablar(texto, { lang = 'es-ES', voz = null, rate = 1, onPr
       u.onerror = e => {
         // 'interrupted'/'canceled' salen al pulsar Parar: no son fallos.
         if (e?.error === 'interrupted' || e?.error === 'canceled') { resolve(); return }
-        reject(new Error('No se pudo reproducir la voz'))
+        reject(new Error(i18n.t('tts.playFailed')))
       }
       window.speechSynthesis.speak(u)
     }
@@ -371,5 +372,4 @@ export async function abrirInstalacionDeVoces() {
 }
 
 /** Cómo llegar a mano, para cuando no se puede abrir la pantalla. */
-export const RUTA_AJUSTES_VOZ =
-  'Ajustes de Android → Sistema → Idiomas → Salida de texto a voz'
+export const rutaAjustesVoz = () => i18n.t('tts.androidPath')

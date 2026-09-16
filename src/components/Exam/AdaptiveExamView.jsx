@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { useAppStore, api, apiStream } from '../../store/appStore'
 
@@ -5,6 +7,7 @@ import { useAppStore, api, apiStream } from '../../store/appStore'
 // NUEVAS centradas en esos mismos puntos débiles (no se repite la misma
 // pregunta) y se repite hasta acertarlas todas. Solo tipo test (A/B/C/D).
 export default function AdaptiveExamView({ result, doc }) {
+  useTranslation() // re-render al cambiar de idioma
   const { addToast } = useAppStore()
   const [round, setRound] = useState(1)
   const [questions, setQuestions] = useState(result.questions || [])
@@ -74,12 +77,12 @@ export default function AdaptiveExamView({ result, doc }) {
     return (
       <div className="max-w-xl mx-auto text-center py-16 space-y-6">
         <div className="text-6xl">🎯</div>
-        <h2 className="text-2xl font-bold">¡Examen adaptativo completado!</h2>
+        <h2 className="text-2xl font-bold">{i18n.t('adaptive.done')}</h2>
         <div className="card text-left space-y-2">
           <p className="text-slate-300 text-sm">✅ {totals.correct} respuestas correctas de {totals.total} totales (en {round} {round === 1 ? 'ronda' : 'rondas'})</p>
-          <p className="text-slate-400 text-xs">{pct}% de aciertos acumulado</p>
+          <p className="text-slate-400 text-xs">{i18n.t('adaptive.accumulated', { pct })}</p>
         </div>
-        <p className="text-slate-400 text-sm">Has acertado todas las preguntas de la última ronda. 🎉</p>
+        <p className="text-slate-400 text-sm">{i18n.t('adaptive.allRight')} 🎉</p>
       </div>
     )
   }
@@ -88,8 +91,8 @@ export default function AdaptiveExamView({ result, doc }) {
     <div className="max-w-2xl mx-auto space-y-4">
       <div className="flex items-center justify-between sticky top-0 bg-slate-900/95 backdrop-blur py-2 z-10">
         <div>
-          <p className="font-semibold text-slate-100">Ronda {round} · {questions.length} preguntas</p>
-          <p className="text-xs text-slate-400">{Object.keys(answers).length} respondidas</p>
+          <p className="font-semibold text-slate-100">{i18n.t('adaptive.round', { n: round })} · {i18n.t('exam.timed.questions', { count: questions.length })}</p>
+          <p className="text-xs text-slate-400">{i18n.t('exam.timed.answered', { count: Object.keys(answers).length })}</p>
         </div>
         {!submitted && (
           <button
@@ -97,7 +100,7 @@ export default function AdaptiveExamView({ result, doc }) {
             disabled={Object.keys(answers).length === 0}
             className="btn-primary"
           >
-            Corregir
+            {i18n.t('adaptive.grade')}
           </button>
         )}
       </div>
@@ -140,18 +143,18 @@ export default function AdaptiveExamView({ result, doc }) {
 
       {!submitted && (
         <button onClick={handleSubmit} className="btn-primary w-full py-3 mt-4">
-          Corregir
+          {i18n.t('adaptive.grade')}
         </button>
       )}
 
       {submitted && (
         wrongQuestions.length > 0 ? (
           <button onClick={repeatWrong} disabled={regenerating} className="btn-primary w-full py-3 mt-4">
-            {regenerating ? '⏳ Generando preguntas nuevas...' : `🔁 Repetir ${wrongQuestions.length} falladas con preguntas nuevas`}
+            {regenerating ? `⏳ ${i18n.t('adaptive.regenerating')}` : `🔁 ${i18n.t('adaptive.repeatWrong', { count: wrongQuestions.length })}`}
           </button>
         ) : (
           <button onClick={finishExam} className="btn-primary w-full py-3 mt-4">
-            ✅ Terminar prueba
+            ✅ {i18n.t('adaptive.finish')}
           </button>
         )
       )}

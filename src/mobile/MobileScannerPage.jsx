@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { verFuncion } from '../lib/betaFlags'
 import { api, apiUpload, useAppStore } from '../store/appStore'
 import { useDocumentScan } from './useDocumentScan'
+import { useTranslation } from 'react-i18next'
 import {
   IconArrowLeft, IconCamera, IconPackage, IconCircleCheck, IconPencil, IconBooks,
   IconFolder, IconLoader2, IconRefresh, IconFileText, IconAlertTriangle,
@@ -44,8 +45,7 @@ async function withRetry(fn, attempts = 2, delayMs = 1500) {
 export default function MobileScannerPage() {
   const [previewB64, setPreviewB64] = useState(null)  // JPEG en base64 para mostrar
   const [pdfUri, setPdfUri]         = useState(null)  // PDF file:// URI para subir (ya persistido)
-  // Elegido por el alumno ANTES de abrir la cámara -- decide qué IA de OCR se
-  // usa al subir (texto impreso: más barata; apuntes a mano: más cauta, sin probar)
+  // Ya no se elige: todo pasa por el mismo OCR ('handwritten'), sea impreso o a mano
   const [contentType, setContentType] = useState(
     new URLSearchParams(window.location.hash.split('?')[1] || '').get('modo') === 'cuaderno'
       ? 'handwritten' : null,
@@ -67,6 +67,7 @@ export default function MobileScannerPage() {
   const [modoCuaderno, setModoCuaderno] = useState(params.get('modo') === 'cuaderno')
   const verCuaderno                 = verFuncion('cuaderno', user)
   const navigate                    = useNavigate()
+  const { t, i18n }                 = useTranslation()
 
   // Cargar asignaturas solo una vez, no bloquea el escaneo si falla
   useEffect(() => {
@@ -113,7 +114,7 @@ export default function MobileScannerPage() {
           const { uri } = await Filesystem.getUri({ path: PENDING_PDF_PATH, directory: Directory.Data })
           setPdfUri(uri)
         }
-        addToast('Recuperado un escaneo que no se llegó a guardar', 'info', 5000)
+        addToast(t('mobile.scanner.recovered'), 'info', 5000)
       } catch {
         // Metadata huérfana sin archivos detrás — limpiar por si acaso
         await limpiarPendiente().catch(() => {})
@@ -134,7 +135,7 @@ export default function MobileScannerPage() {
       if (result) await handleScanResult(result)
     } catch (err) {
       if (!err.message?.includes('cancel') && !err.message?.includes('Cancel')) {
-        addToast('No se pudo abrir el escáner', 'error')
+        addToast(t('mobile.scanner.openFailed'), 'error')
       }
     }
   }
@@ -184,13 +185,13 @@ export default function MobileScannerPage() {
     // apuntes. Sin ella el backend responderia 400 y el alumno perderia el
     // escaneo sin entender por que.
     if (modoCuaderno && !subjectId && !topicId) {
-      return addToast('Elige la asignatura para sumar estos apuntes', 'info', 4000)
+      return addToast(t('mobile.scanner.pickSubject'), 'info', 4000)
     }
     setLoading(true)
     const now = new Date()
-    const fecha = now.toLocaleDateString('es-ES')
-    const hora  = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
-    const nombre = docName.trim() || `Escaneo ${fecha} ${hora}`
+    const fecha = now.toLocaleDateString(i18n.language)
+    const hora  = now.toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' })
+    const nombre = docName.trim() || `${t('mobile.scanner.defaultName')} ${fecha} ${hora}`
 
     // Guardar el nombre elegido en la metadata persistida — si la subida
     // falla, el próximo intento recupera también el nombre que escribió.
@@ -233,8 +234,8 @@ export default function MobileScannerPage() {
 
       await limpiarPendiente()
       addToast(modoCuaderno
-        ? '¡Apuntes sumados a tu cuaderno!'
-        : '¡Apuntes guardados en tu biblioteca!', 'success')
+        ? t('mobile.scanner.addedNotebook')
+        : t('mobile.scanner.savedLibrary'), 'success')
       // Si la foto salio mal se guarda igual (mejor un apunte a medias que
       // ninguno), pero se avisa: antes el alumno no se enteraba hasta leer un
       // resumen sin sentido.
@@ -244,7 +245,7 @@ export default function MobileScannerPage() {
       navigate('/')
     } catch (e) {
       console.error('SCANNER_UPLOAD_ERROR', e?.message ?? String(e), e?.status, e?.name)
-      addToast('No se pudo subir — tus páginas siguen aquí, pulsa Guardar para reintentar', 'error', 6000)
+      addToast(t('mobile.scanner.uploadFailed'), 'error', 6000)
     } finally {
       setLoading(false)
     }
@@ -261,7 +262,7 @@ export default function MobileScannerPage() {
   }
 
   const salir = async () => {
-    if (previewB64 && !window.confirm('¿Salir sin guardar? Vas a perder el escaneo.')) return
+    if (previewB64 && !window.confirm(t('mobile.scanner.confirmExit'))) return
     // Si ha confirmado, se borra de verdad. Antes solo se navegaba fuera y el
     // escaneo seguia guardado en Directory.Data, asi que reaparecia cada vez
     // que volvia a entrar. La recuperacion es para cuando la app se cierra
@@ -275,7 +276,7 @@ export default function MobileScannerPage() {
       {/* Cabecera */}
       <div className="flex items-center gap-3 px-4 pt-12 pb-5">
         <button onClick={salir} className="text-slate-400 p-1"><IconArrowLeft size={22} /></button>
-        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconCamera size={20} /> Escanear apuntes</h1>
+        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconCamera size={20} /> {t('mobile.home.scanTitle')}</h1>
       </div>
 
       <div className="flex-1 flex flex-col px-5 gap-5">
@@ -285,9 +286,9 @@ export default function MobileScannerPage() {
           <div className="flex-1 flex flex-col items-center justify-center gap-5">
             <IconPackage size={36} className="text-slate-500 animate-bounce" />
             <p className="text-slate-300 font-semibold text-center">
-              Preparando el escáner inteligente…
+              {t('mobile.scanner.preparing')}
             </p>
-            <p className="text-slate-500 text-sm text-center">Solo ocurre la primera vez</p>
+            <p className="text-slate-500 text-sm text-center">{t('mobile.scanner.firstTimeOnly')}</p>
             <div className="w-full bg-slate-700 rounded-full h-3">
               <div
                 className="bg-primary-500 h-3 rounded-full transition-all duration-300"
@@ -304,12 +305,12 @@ export default function MobileScannerPage() {
             <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-lg bg-slate-800">
               <img
                 src={`data:image/jpeg;base64,${previewB64}`}
-                alt="Documento escaneado"
+                alt={t('mobile.scanner.scannedDoc')}
                 className="w-full object-contain max-h-[50vh]"
               />
             </div>
             {pdfUri && (
-              <p className="text-center text-xs text-emerald-500">✓ Se subirá como PDF con texto extraído</p>
+              <p className="text-center text-xs text-emerald-500">✓ {t('mobile.scanner.willUploadPdf')}</p>
             )}
 
             <div className="bg-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3 border border-slate-700">
@@ -318,7 +319,7 @@ export default function MobileScannerPage() {
                 type="text"
                 value={docName}
                 onChange={e => setDocName(e.target.value)}
-                placeholder={(() => { const n = new Date(); return `Escaneo ${n.toLocaleDateString('es-ES')} ${n.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}` })()}
+                placeholder={(() => { const n = new Date(); return `${t('mobile.scanner.defaultName')} ${n.toLocaleDateString(i18n.language)} ${n.toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' })}` })()}
                 disabled={loading}
                 className="flex-1 bg-transparent text-slate-100 placeholder-slate-500 outline-none text-sm"
               />
@@ -333,7 +334,7 @@ export default function MobileScannerPage() {
                   disabled={loading}
                   className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
                 >
-                  <option value="" className="bg-slate-800">Sin asignatura</option>
+                  <option value="" className="bg-slate-800">{t('common.noSubject')}</option>
                   {subjects.map(s => (
                     <option key={s.id} value={s.id} className="bg-slate-800">{s.name}</option>
                   ))}
@@ -350,7 +351,7 @@ export default function MobileScannerPage() {
                   disabled={loading}
                   className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
                 >
-                  <option value="" className="bg-slate-800">Sin tema (suelto)</option>
+                  <option value="" className="bg-slate-800">{t('home.uploadModal.topicLoose')}</option>
                   {topics.map(topic => (
                     <option key={topic.id} value={topic.id} className="bg-slate-800">{topic.name}</option>
                   ))}
@@ -365,9 +366,9 @@ export default function MobileScannerPage() {
                          active:bg-primary-700 disabled:opacity-50 transition-colors"
             >
               {loading
-                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={18} className="animate-spin" /> Guardando...</span>
+                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={18} className="animate-spin" /> {t('mobile.scanner.saving')}</span>
                 : <span className="flex items-center justify-center gap-2">
-                    <IconCircleCheck size={18} /> {modoCuaderno ? 'Sumar a mi cuaderno' : 'Guardar en biblioteca'}
+                    <IconCircleCheck size={18} /> {modoCuaderno ? t('mobile.scanner.addToNotebook') : t('mobile.scanner.saveToLibrary')}
                   </span>}
             </button>
             <button
@@ -376,7 +377,7 @@ export default function MobileScannerPage() {
               className="w-full py-4 rounded-2xl bg-slate-700 text-slate-300 font-medium
                          active:bg-slate-600 disabled:opacity-40 transition-colors flex items-center justify-center gap-2"
             >
-              <IconRefresh size={16} /> Escanear otra vez
+              <IconRefresh size={16} /> {t('mobile.scanner.scanAgain')}
             </button>
           </>
         )}
@@ -389,13 +390,13 @@ export default function MobileScannerPage() {
                               flex flex-col items-center justify-center gap-3 text-slate-500">
                 <IconFileText size={44} />
                 <span className="text-sm text-center px-4">
-                  Coloca el folio bien iluminado y pulsa el botón
+                  {t('mobile.scanner.placeSheet')}
                 </span>
               </div>
             </div>
 
             <p className="flex items-center justify-center gap-1.5 text-xs text-amber-500/80 text-center px-4">
-              <IconAlertTriangle size={14} className="shrink-0" /> No escanees datos personales sensibles (DNI, nombres de terceros, etc.)
+              <IconAlertTriangle size={14} className="shrink-0" /> {t('mobile.scanner.sensitive')}
             </p>
 
             <button
@@ -403,14 +404,14 @@ export default function MobileScannerPage() {
               className="w-full py-6 rounded-2xl bg-primary-600 text-white font-bold text-xl
                          active:bg-primary-700 transition-colors flex items-center justify-center gap-3 shadow-lg"
             >
-              <IconCamera size={28} /> Escanear documento
+              <IconCamera size={28} /> {t('mobile.scanner.scanDocument')}
             </button>
           </>
         )}
       </div>
 
       <p className="text-center text-xs text-slate-600 py-5 px-6">
-        El escáner detecta los bordes del folio automáticamente y recorta solo el documento.
+        {t('mobile.scanner.edgesInfo')}
       </p>
     </div>
   )

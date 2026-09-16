@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { useAppStore, getAuthHeader, getLocalAuthHeader } from '../../store/appStore'
@@ -14,6 +16,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString()
 
 export default function PDFViewer({ document: doc, localBase64 = null }) {
+  useTranslation() // re-render al cambiar de idioma
   const { apiBase } = useAppStore()
   const [visiblePage, setVisiblePage] = useState(1)
   const [numPages, setNumPages]       = useState(null)
@@ -117,14 +120,14 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
 
   if (loading) return (
     <div className="flex-1 flex items-center justify-center">
-      <span className="text-slate-500 text-xs animate-pulse">Cargando PDF…</span>
+      <span className="text-slate-500 text-xs animate-pulse">{i18n.t('pdf.loading')}</span>
     </div>
   )
 
   if (error) return (
     <div className="flex-1 flex flex-col items-center justify-center p-6 gap-3 text-center">
       <span className="text-4xl">📄</span>
-      <p className="text-slate-400 text-sm">No se pudo cargar el PDF</p>
+      <p className="text-slate-400 text-sm">{i18n.t('pdf.error')}</p>
     </div>
   )
 
@@ -161,7 +164,7 @@ export default function PDFViewer({ document: doc, localBase64 = null }) {
             onLoadSuccess={onDocumentLoadSuccess}
             loading={
               <div className="flex items-center justify-center h-full">
-                <span className="text-slate-500 text-xs animate-pulse">Procesando…</span>
+                <span className="text-slate-500 text-xs animate-pulse">{i18n.t('billing.processing')}</span>
               </div>
             }
           >

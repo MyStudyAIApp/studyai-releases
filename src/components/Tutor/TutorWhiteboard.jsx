@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useRef, useState, useEffect } from 'react'
 import DOMPurify from 'dompurify'
 import mermaid, { fixSvgColors } from '../../utils/mermaidConfig'
@@ -66,7 +68,7 @@ function MermaidBoard({ content }) {
           diagrama lo genera la IA, y mermaid devuelve SVG sin filtrar. */}
       {svg && <div className="flex-1" dangerouslySetInnerHTML={{ __html: sanitizeSVG(svg) }} />}
       <p className="text-[10px] text-slate-600 text-center shrink-0">
-        Diagrama ilustrativo — verifica con tu libro de texto
+        {i18n.t('whiteboard.disclaimer')}
       </p>
     </div>
   )
@@ -365,7 +367,7 @@ function CircuitBoard({ content }) {
           {spec.tipo === 'paralelo' ? <ParaleloCircuit spec={spec}/> : <SerieCircuit spec={spec}/>}
         </div>
         <p className="text-[10px] text-slate-600 text-center shrink-0">
-          Diagrama con símbolos IEC — verifica con tu libro de texto
+          {i18n.t('whiteboard.disclaimerIec')}
         </p>
       </div>
     )
@@ -383,6 +385,7 @@ const TOOLS = [
 ]
 
 export default function TutorWhiteboard({ tutorContent }) {
+  useTranslation() // re-render al cambiar de idioma
   const canvasRef  = useRef(null)
   const drawing    = useRef(false)
   const lastPos    = useRef(null)
@@ -571,7 +574,7 @@ export default function TutorWhiteboard({ tutorContent }) {
     }
 
     const w = window.open('', '_blank')
-    w.document.write(`<!DOCTYPE html><html><head><title>Pizarra MyStudy AI</title>
+    w.document.write(`<!DOCTYPE html><html><head><title>${i18n.t('whiteboard.printTitle')}</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: white; }
@@ -609,7 +612,7 @@ export default function TutorWhiteboard({ tutorContent }) {
         {/* Shape tools */}
         <div className="flex gap-0.5">
           {TOOLS.map(tl => (
-            <button key={tl.id} onClick={() => setTool(tl.id)} title={tl.title}
+            <button key={tl.id} onClick={() => setTool(tl.id)} title={i18n.t(`whiteboard.tools.${tl.id}`, { defaultValue: tl.title })}
               className={`w-7 h-7 rounded flex items-center justify-center text-sm transition-colors
                 ${tool === tl.id ? 'bg-violet-600 ring-1 ring-white' : 'text-slate-400 hover:bg-slate-700'}`}
             >{tl.icon}</button>
@@ -639,11 +642,11 @@ export default function TutorWhiteboard({ tutorContent }) {
           />
         ))}
 
-        <span className="text-[10px] text-slate-600 ml-2 hidden lg:inline">Ctrl+V = pegar imagen</span>
+        <span className="text-[10px] text-slate-600 ml-2 hidden lg:inline">Ctrl+V = {i18n.t('whiteboard.paste')}</span>
         <div className="ml-auto flex gap-1">
-          <button onClick={saveBoard} className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-emerald-400 transition-colors" title="Guardar dibujo como imagen">💾 Guardar</button>
-          <button onClick={printBoard} className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-violet-400 transition-colors" title="Imprimir pizarra">🖨️ Imprimir</button>
-          <button onClick={clear} className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-red-400 transition-colors">🗑 Limpiar</button>
+          <button onClick={saveBoard} className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-emerald-400 transition-colors" title={i18n.t('whiteboard.saveTitle')}>💾 {i18n.t('common.save')}</button>
+          <button onClick={printBoard} className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-violet-400 transition-colors" title={i18n.t('whiteboard.printBoard')}>🖨️ {i18n.t('whiteboard.print')}</button>
+          <button onClick={clear} className="px-2 py-0.5 rounded text-xs text-slate-400 hover:text-red-400 transition-colors">🗑 {i18n.t('whiteboard.clear')}</button>
         </div>
       </div>
 
@@ -659,7 +662,7 @@ export default function TutorWhiteboard({ tutorContent }) {
                   <div className="flex-1 overflow-hidden"
                        dangerouslySetInnerHTML={{ __html: sanitizeSVG(tutorContent) }} />
                   <p className="text-[10px] text-slate-600 text-center shrink-0">
-                    Diagrama ilustrativo — verifica con tu libro de texto
+                    {i18n.t('whiteboard.disclaimer')}
                   </p>
                 </div>
               : isCircuit(tutorContent)
@@ -669,7 +672,7 @@ export default function TutorWhiteboard({ tutorContent }) {
                   </div>
         ) : (
           <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-            <p className="text-slate-700 text-sm">El tutor escribirá aquí esquemas y pasos</p>
+            <p className="text-slate-700 text-sm">{i18n.t('whiteboard.empty')}</p>
           </div>
         )}
 

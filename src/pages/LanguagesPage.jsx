@@ -277,6 +277,8 @@ export default function LanguagesPage() {
 
   // Translated arrays (computed inside component so t() works)
   const LEVEL_DESCS = { A1: t('languages.levels.A1'), A2: t('languages.levels.A2'), B1: t('languages.levels.B1'), B2: t('languages.levels.B2'), C1: t('languages.levels.C1'), C2: t('languages.levels.C2') }
+  // El latin no tiene voz propia: la etiqueta explica que se lee con voz italiana
+  const langLabel = l => l?.id === 'latin' ? t('languages.latinLabel') : l?.label
   const TOPIC_LABELS = { daily_life: t('languages.topics.daily_life'), travel: t('languages.topics.travel'), work: t('languages.topics.work'), food: t('languages.topics.food'), technology: t('languages.topics.technology'), culture: t('languages.topics.culture'), nature: t('languages.topics.nature'), free: t('languages.topics.free'), vocab: t('languages.topics.vocab') }
   const SPEED_LABELS = { slow: t('languages.speeds.slow'), normal: t('languages.speeds.normal'), fast: t('languages.speeds.fast'), vfast: t('languages.speeds.vfast'), lightning: t('languages.speeds.lightning') }
   const TYPE_LABELS_T = { fill_blank: t('languages.types.fill_blank'), translate_word: t('languages.types.translate_word'), multiple_choice: t('languages.types.multiple_choice'), conjugate: t('languages.types.conjugate'), translate_sentence: t('languages.types.translate_sentence'), translate_text: t('languages.types.translate_text'), correct_error: t('languages.types.correct_error'), transform: t('languages.types.transform'), write_sentence: t('languages.types.write_sentence'), write_paragraph: t('languages.types.write_paragraph'), comprehension: t('languages.types.comprehension'), paraphrase: t('languages.types.paraphrase') }
@@ -601,10 +603,10 @@ export default function LanguagesPage() {
   function avisarVozQueFalta(lang) {
     const nombre = new Intl.DisplayNames(['es'], { type: 'language' }).of(lang.split('-')[0]) || lang
     if (IS_MOBILE) {
-      addToast(`Tu dispositivo no tiene voz en ${nombre}. Puedes instalarla desde los ajustes de tu móvil.`, 'warning', 8000)
+      addToast(t('languages.noVoicePhone', { lang: nombre }), 'warning', 8000)
       abrirInstalacionDeVoces()
     } else {
-      addToast(`Tu dispositivo no tiene voz en ${nombre}. Instálala desde los ajustes de tu sistema para escuchar esta lección.`, 'warning', 8000)
+      addToast(t('languages.noVoiceSystem', { lang: nombre }), 'warning', 8000)
     }
   }
 
@@ -695,7 +697,7 @@ export default function LanguagesPage() {
           activeRef.current = false  // corta el ciclo de auto-grabación — no tiene sentido reintentar
           return
         }
-        addToast(`Transcripción fallida: ${data.detail || 'Error de Whisper'}`, 'error')
+        addToast(`${t('languages.transcriptionFailed')}: ${data.detail || 'Whisper'}`, 'error')
         if (activeRef.current) setTimeout(() => startRecording(), 2000)
         return
       }
@@ -716,10 +718,7 @@ export default function LanguagesPage() {
           releaseVoiceStream()
           emptyTranscriptRef.current = 0
           addToast(
-            '🎤 No se detecta voz en el audio grabado (varios intentos vacíos). ' +
-            'Es probable que Windows esté usando un micrófono incorrecto como predeterminado ' +
-            '(p.ej. un dispositivo virtual de auriculares VR que graba silencio). ' +
-            'Ve a Configuración → Sistema → Sonido → Entrada y selecciona tu micrófono real, luego inténtalo de nuevo.',
+            '🎤 ' + t('languages.noVoiceDetected'),
             'warning',
             12000
           )
@@ -922,7 +921,7 @@ export default function LanguagesPage() {
       })
       if (!res.ok) throw new Error()
       await loadVocabPdfs()
-      addToast(`"${file.name}" añadido como vocabulario de ${langInfo?.label}`, 'success')
+      addToast(t('languages.vocabAdded', { name: file.name, lang: langLabel(langInfo) }), 'success')
     } catch {
       addToast('Error al subir el archivo de vocabulario', 'error')
     } finally {
@@ -949,9 +948,9 @@ export default function LanguagesPage() {
     setVocabPreviews(p => ({ ...p, [filename]: 'loading' }))
     try {
       const data = await api('GET', `/languages/vocabulary/${language}/${encodeURIComponent(filename)}/preview`)
-      setVocabPreviews(p => ({ ...p, [filename]: data.text || '(sin texto extraído)' }))
+      setVocabPreviews(p => ({ ...p, [filename]: data.text || `(${t('languages.noTextExtracted')})` }))
     } catch {
-      setVocabPreviews(p => ({ ...p, [filename]: '(error al cargar el texto)' }))
+      setVocabPreviews(p => ({ ...p, [filename]: `(${t('languages.textLoadError')})` }))
     }
   }
 
@@ -1249,8 +1248,7 @@ export default function LanguagesPage() {
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('languages.langTitle')}</p>
         {idiomasDelAparato && !LANGUAGES.some(l => puedeHablarse(l.id)) && (
           <p className="text-sm text-amber-300">
-            Tu dispositivo no tiene ninguna voz instalada, así que las conversaciones
-            habladas no funcionarán. Instala al menos una voz para empezar.
+            {t('languages.noVoicesAtAll')}
           </p>
         )}
 
@@ -1263,7 +1261,7 @@ export default function LanguagesPage() {
                   : 'border-slate-700 bg-slate-800/40 hover:border-slate-600'
               }`}>
               <span className="text-xl shrink-0">{lang.flag}</span>
-              <span className="text-xs text-slate-300 font-medium truncate">{lang.label}</span>
+              <span className="text-xs text-slate-300 font-medium truncate">{langLabel(lang)}</span>
             </button>
           ))}
         </div>
@@ -1274,24 +1272,24 @@ export default function LanguagesPage() {
         {idiomasDelAparato && LANGUAGES.some(l => !puedeHablarse(l.id)) && (
           <div className="pt-2 border-t border-slate-700/60 space-y-2">
             <p className="text-xs text-slate-500">
-              Tu dispositivo no tiene voz para estos idiomas, así que no puede leerlos en alto:
+              {t('languages.missingVoices')}
             </p>
             <div className="flex flex-wrap gap-1.5">
               {LANGUAGES.filter(l => !puedeHablarse(l.id)).map(lang => (
                 <span key={lang.id}
                   className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-500 text-xs">
                   <span className="opacity-50">{lang.flag}</span>
-                  <span>{lang.label}</span>
+                  <span>{langLabel(lang)}</span>
                 </span>
               ))}
             </div>
             {IS_MOBILE ? (
               <button onClick={abrirInstalacionDeVoces} className="text-xs text-primary-400 underline">
-                Instalar voces en mi dispositivo
+                {t('languages.installVoices')}
               </button>
             ) : (
               <p className="text-xs text-slate-500">
-                Puedes añadirlas desde los ajustes de voz de tu sistema operativo.
+                {t('languages.addVoicesHint')}
               </p>
             )}
           </div>
@@ -1381,7 +1379,7 @@ export default function LanguagesPage() {
           <div className="flex items-center gap-2">
             <span className="text-xl">{langInfo?.flag}</span>
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${levelCls.ring} ${levelCls.text}`}>{level}</span>
-            <span className="text-xs text-slate-500">{topicInfo?.icon} {topicInfo?.label}</span>
+            <span className="text-xs text-slate-500">{topicInfo?.icon} {TOPIC_LABELS[topicInfo?.id]}</span>
           </div>
           <span className="text-sm text-slate-400"><span className="font-semibold text-slate-200">{currentIdx + 1}</span>/{exercises.length}</span>
         </div>
@@ -1429,9 +1427,9 @@ export default function LanguagesPage() {
       <div className="p-6 max-w-2xl mx-auto space-y-5">
         <div className="card text-center space-y-4 py-6">
           <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
-            <span>{langInfo?.flag}</span><span>{langInfo?.label}</span>
+            <span>{langInfo?.flag}</span><span>{langLabel(langInfo)}</span>
             <span>·</span><span className={`font-bold ${levelCls.text}`}>{level}</span>
-            <span>·</span><span>{topicInfo?.icon} {topicInfo?.label}</span>
+            <span>·</span><span>{topicInfo?.icon} {TOPIC_LABELS[topicInfo?.id]}</span>
           </div>
           <div>
             <span className={`text-7xl font-black tabular-nums ${grade.color}`}>{Number(evaluation.overall_score).toFixed(1)}</span>
@@ -1483,7 +1481,7 @@ export default function LanguagesPage() {
           <div className="flex items-center gap-2 min-w-0">
             <span className="text-xl shrink-0">{langInfo?.flag}</span>
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full border shrink-0 ${levelCls.ring} ${levelCls.text}`}>{level}</span>
-            <span className="text-xs text-slate-500 truncate">{topicInfo?.icon} {topicInfo?.label}</span>
+            <span className="text-xs text-slate-500 truncate">{topicInfo?.icon} {TOPIC_LABELS[topicInfo?.id]}</span>
             {convTurnCount > 0 && <span className="text-[10px] text-slate-600 shrink-0">· {convTurnCount} {convTurnCount !== 1 ? t('languages.turnsPlural') : t('languages.turns')}</span>}
           </div>
           <button onClick={endConversation} disabled={processing && convMessages.filter(m => m.role === 'user').length === 0}
@@ -1575,7 +1573,7 @@ export default function LanguagesPage() {
             <input
               type="text"
               className="input flex-1 text-sm"
-              placeholder={t('languages.writeInLang', { lang: langInfo?.label || '' })}
+              placeholder={t('languages.writeInLang', { lang: langLabel(langInfo) || '' })}
               value={convTextInput}
               onChange={e => setConvTextInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendTextTurn() } }}
@@ -1608,9 +1606,9 @@ export default function LanguagesPage() {
       <div className="p-6 max-w-2xl mx-auto space-y-5">
         <div className="card text-center space-y-3 py-6">
           <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
-            <span>{langInfo?.flag}</span><span>{langInfo?.label}</span>
+            <span>{langInfo?.flag}</span><span>{langLabel(langInfo)}</span>
             <span>·</span><span className={`font-bold ${levelCls.text}`}>{level}</span>
-            <span>·</span><span>{topicInfo?.icon} {topicInfo?.label}</span>
+            <span>·</span><span>{topicInfo?.icon} {TOPIC_LABELS[topicInfo?.id]}</span>
             <span>·</span><span>🎙️ {convTurnCount} {convTurnCount !== 1 ? t('languages.turnsPlural') : t('languages.turns')}</span>
           </div>
           <div>
@@ -1700,7 +1698,7 @@ export default function LanguagesPage() {
           <div className="flex items-center gap-2">
             <span className="text-xl">{langInfo?.flag}</span>
             <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${levelCls.ring} ${levelCls.text}`}>{level}</span>
-            <span className="text-xs text-slate-500">{topicInfo?.icon} {topicInfo?.label}</span>
+            <span className="text-xs text-slate-500">{topicInfo?.icon} {TOPIC_LABELS[topicInfo?.id]}</span>
           </div>
           <button onClick={() => { stopListenAudio(); setScreen('config') }}
             className="text-xs text-slate-500 hover:text-slate-300 px-2 py-1 rounded-lg hover:bg-slate-800 transition-colors">
@@ -1774,7 +1772,7 @@ export default function LanguagesPage() {
           <div className="rounded-xl border border-amber-800/30 bg-amber-900/10 p-3 flex gap-2 items-center">
             <span className="text-lg">💡</span>
             <p className="text-xs text-amber-300">
-              {t('languages.pressPlayHint', { lang: langInfo?.label })}
+              {t('languages.pressPlayHint', { lang: langLabel(langInfo) })}
             </p>
           </div>
         )}
@@ -1783,7 +1781,7 @@ export default function LanguagesPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('languages.comprehensionQs')}</p>
-            <p className="text-[10px] text-slate-600">{t('languages.answerIn', { lang: langInfo?.label })}</p>
+            <p className="text-[10px] text-slate-600">{t('languages.answerIn', { lang: langLabel(langInfo) })}</p>
           </div>
 
           {listenExercise.preguntas.map((q, i) => (
@@ -1815,7 +1813,7 @@ export default function LanguagesPage() {
                   </div>
                   <textarea
                     className="input w-full text-sm resize-none"
-                    placeholder={hasPlayed ? t('languages.vfJustif', { lang: langInfo?.label }) : t('languages.listenFirstPlaceholder')}
+                    placeholder={hasPlayed ? t('languages.vfJustif', { lang: langLabel(langInfo) }) : t('languages.listenFirstPlaceholder')}
                     rows={2}
                     disabled={!hasPlayed || !vfSelections[i]?.vf}
                     value={vfSelections[i]?.justif || ''}
@@ -1826,7 +1824,7 @@ export default function LanguagesPage() {
                 /* Respuesta de desarrollo */
                 <textarea
                   className="input w-full text-sm resize-none"
-                  placeholder={hasPlayed ? t('languages.answerInLang', { lang: langInfo?.label }) : t('languages.listenFirstPlaceholder')}
+                  placeholder={hasPlayed ? t('languages.answerInLang', { lang: langLabel(langInfo) }) : t('languages.listenFirstPlaceholder')}
                   rows={2}
                   value={listenAnswers[i] || ''}
                   onChange={e => {
@@ -1861,7 +1859,7 @@ export default function LanguagesPage() {
     return (
       <div className="p-6 max-w-2xl mx-auto space-y-5">
         <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
-          <span>{langInfo?.flag}</span><span>{langInfo?.label}</span>
+          <span>{langInfo?.flag}</span><span>{langLabel(langInfo)}</span>
           <span>·</span><span className={`font-bold ${levelCls.text}`}>{level}</span>
           <span>·</span><span>🎧 {t('languages.listenHeader')}</span>
         </div>
@@ -1871,7 +1869,7 @@ export default function LanguagesPage() {
             <span className="text-3xl">🎓</span>
             <div>
               <p className="font-semibold text-slate-100">{t('languages.exerciseEval')}</p>
-              <p className="text-xs text-slate-500">{langInfo?.label} · {t('languages.levelLabel')} {level} · {topicInfo?.icon} {topicInfo?.label}</p>
+              <p className="text-xs text-slate-500">{langLabel(langInfo)} · {t('languages.levelLabel')} {level} · {topicInfo?.icon} {TOPIC_LABELS[topicInfo?.id]}</p>
             </div>
           </div>
           <div className="text-sm text-slate-200 leading-relaxed whitespace-pre-wrap bg-slate-800/60 rounded-xl p-4 border border-slate-700">

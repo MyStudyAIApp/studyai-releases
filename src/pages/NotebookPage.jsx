@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReactMarkdown, { defaultUrlTransform } from 'react-markdown'
@@ -30,6 +32,7 @@ import {
  * asignatura mal adivinada le desordena el curso entero.
  */
 export default function NotebookPage() {
+  useTranslation() // re-render al cambiar de idioma
   const [cuadernos, setCuadernos]   = useState([])
   const [subjects, setSubjects]     = useState([])
   const [topics, setTopics]         = useState([])
@@ -114,8 +117,8 @@ export default function NotebookPage() {
       const r = await apiUpload('/notebooks/append', form)
       addToast(
         r.created
-          ? `Cuaderno "${r.title.replace('[Cuaderno] ', '')}" creado con los apuntes de hoy`
-          : `Apuntes añadidos a "${r.title.replace('[Cuaderno] ', '')}"`,
+          ? i18n.t('notebook.created', { name: r.title.replace('[Cuaderno] ', '') })
+          : i18n.t('notebook.added', { name: r.title.replace('[Cuaderno] ', '') }),
         'success',
       )
       setEntradas(prev => ({ ...prev, [r.notebook_id]: null }))   // forzar recarga
@@ -123,7 +126,7 @@ export default function NotebookPage() {
     } catch (err) {
       // 403 con quota_exceeded lo traduce el interceptor de appStore; aqui solo
       // hace falta que el alumno sepa que sus apuntes NO se guardaron.
-      addToast(err?.message || 'No se pudieron guardar los apuntes', 'error', 6000)
+      addToast(err?.message || i18n.t('notebook.saveError'), 'error', 6000)
     } finally {
       setSubiendo(false)
     }
@@ -166,7 +169,7 @@ export default function NotebookPage() {
       }))
       return true
     } catch (err) {
-      addToast(err?.message || 'No se pudieron guardar los cambios', 'error', 5000)
+      addToast(err?.message || i18n.t('notebook.saveChangesError'), 'error', 5000)
       if (String(err?.message || '').includes('cambiado')) await recargarEntradas(cuaderno)
       return false
     } finally {
@@ -195,11 +198,11 @@ export default function NotebookPage() {
     const ok = await guardarTexto(editando.cuaderno, editando.fecha, texto.trim(), original)
     if (ok) {
       setEditando(null)
-      addToast('Apunte guardado', 'success')
+      addToast(i18n.t('notebook.saved'), 'success')
     }
   }
 
-  const fecha = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('es-ES', {
+  const fecha = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString(i18n.language, {
     day: 'numeric', month: 'long', year: 'numeric',
   })
 
@@ -254,7 +257,7 @@ export default function NotebookPage() {
 
   // Agrupar por asignatura para que se lea como su horario, no como una lista
   const porAsignatura = cuadernos.reduce((acc, c) => {
-    const clave = c.subject_name || 'Sin asignatura'
+    const clave = c.subject_name || i18n.t('common.noSubject')
     ;(acc[clave] = acc[clave] || []).push(c)
     return acc
   }, {})
@@ -262,11 +265,10 @@ export default function NotebookPage() {
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-2 mb-1">
-        <IconNotebook size={24} className="text-primary-400" /> Mi cuaderno
+        <IconNotebook size={24} className="text-primary-400" /> {i18n.t('sidebar.notebook')}
       </h1>
       <p className="text-slate-400 text-sm mb-6">
-        Fotografía la página de tu libreta y se suma a tus apuntes de esa asignatura.
-        La foto no se guarda, solo el texto.
+        {i18n.t('notebook.intro')}
       </p>
 
       {/* Añadir apuntes */}
@@ -286,14 +288,14 @@ export default function NotebookPage() {
               disabled={subiendo}
               className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
             >
-              <option value="" className="bg-slate-900">Elige asignatura…</option>
+              <option value="" className="bg-slate-900">{i18n.t('notebook.pickSubject')}</option>
               {subjects.map(s => (
                 <option key={s.id} value={s.id} className="bg-slate-900">{s.name}</option>
               ))}
             </select>
             <button
               onClick={crearAsignatura}
-              title="Nueva asignatura"
+              title={i18n.t('notebook.newSubject')}
               className="text-slate-500 hover:text-primary-400 shrink-0"
             >
               <IconPlus size={16} />
@@ -308,14 +310,14 @@ export default function NotebookPage() {
               disabled={subiendo || !subjectId}
               className="flex-1 bg-transparent text-slate-100 outline-none text-sm disabled:opacity-40"
             >
-              <option value="" className="bg-slate-900">Sin tema concreto</option>
+              <option value="" className="bg-slate-900">{i18n.t('notebook.noTopic')}</option>
               {topics.map(t => (
                 <option key={t.id} value={t.id} className="bg-slate-900">{t.name}</option>
               ))}
             </select>
             <button
               onClick={crearTema}
-              title="Nuevo tema"
+              title={i18n.t('notebook.newTopic')}
               className="text-slate-500 hover:text-primary-400 shrink-0 disabled:opacity-30"
               disabled={!subjectId}
             >
@@ -342,12 +344,12 @@ export default function NotebookPage() {
                      rounded-xl py-3 transition-colors"
         >
           {subiendo
-            ? <><IconLoader2 size={18} className="animate-spin" /> Leyendo tus apuntes…</>
-            : <><IconCamera size={18} /> Añadir página de la libreta</>}
+            ? <><IconLoader2 size={18} className="animate-spin" /> {i18n.t('notebook.reading')}</>
+            : <><IconCamera size={18} /> {i18n.t('notebook.addPage')}</>}
         </button>
         {subiendo && (
           <p className="text-center text-xs text-slate-500 mt-2">
-            Puede tardar unos segundos, no cierres la página
+            {i18n.t('notebook.wait')}
           </p>
         )}
       </div>
@@ -360,7 +362,7 @@ export default function NotebookPage() {
       ) : cuadernos.length === 0 ? (
         <div className="text-center py-12 text-slate-500">
           <IconNotebook size={40} className="mx-auto mb-3 opacity-30" />
-          <p className="text-sm">Todavía no tienes apuntes. Escanea tu primera página.</p>
+          <p className="text-sm">{i18n.t('notebook.empty')}</p>
         </div>
       ) : (
         Object.entries(porAsignatura).map(([asignatura, lista]) => (
@@ -384,22 +386,22 @@ export default function NotebookPage() {
                     <p className="text-slate-100 text-sm font-medium truncate">{c.title}</p>
                     <p className="text-slate-500 text-xs flex items-center gap-1.5 mt-0.5">
                       <IconCalendar size={12} />
-                      {c.entries} {c.entries === 1 ? 'día' : 'días'}
-                      {c.last_date && <> · último: {fecha(c.last_date)}</>}
+                      {i18n.t('mobile.settings.days', { count: c.entries })}
+                      {c.last_date && <> · {i18n.t('notebook.last')}: {fecha(c.last_date)}</>}
                     </p>
                   </button>
                   {abierto === c.id && entradas[c.id]?.length > 0 && (
                     <>
                       <button
                         onClick={() => imprimir(c)}
-                        title="Imprimir o guardar en PDF"
+                        title={i18n.t('notebook.print')}
                         className="no-print shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
                       >
                         <IconPrinter size={16} />
                       </button>
                       <button
                         onClick={() => descargarWord(c)}
-                        title="Descargar para Word"
+                        title={i18n.t('notebook.word')}
                         className="no-print shrink-0 p-1.5 text-slate-500 hover:text-primary-400 transition-colors"
                       >
                         <IconFileTypeDoc size={16} />
@@ -410,7 +412,7 @@ export default function NotebookPage() {
                     onClick={() => navigate(`/document/${c.id}`)}
                     className="no-print shrink-0 text-xs text-primary-400 hover:text-primary-300 px-2 py-1"
                   >
-                    Estudiar
+                    {i18n.t('notebook.study')}
                   </button>
                 </div>
 
@@ -425,7 +427,7 @@ export default function NotebookPage() {
                           {!(editando?.cuaderno === c.id && editando?.fecha === e.date) && (
                             <button
                               onClick={() => setEditando({ cuaderno: c.id, fecha: e.date })}
-                              title="Editar estos apuntes"
+                              title={i18n.t('notebook.edit')}
                               className="no-print text-slate-500 hover:text-primary-400 p-0.5 transition-colors"
                             >
                               <IconPencil size={14} />
@@ -445,7 +447,7 @@ export default function NotebookPage() {
                         {contarDudas(e.text) > 0 && (
                           <p className="no-print text-xs text-amber-400/90 mb-2 flex items-center gap-1.5">
                             <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                            Toca las palabras en ámbar: no se leyeron con seguridad.
+                            {i18n.t('notebook.amberHint')}
                           </p>
                         )}
 
@@ -475,7 +477,7 @@ export default function NotebookPage() {
                                   <button
                                     type="button"
                                     onClick={() => setDuda({ cuaderno: c.id, fecha: e.date, indice, palabra })}
-                                    title="No se leyó con seguridad — toca para corregir o confirmar"
+                                    title={i18n.t('notebook.amberTitle')}
                                     className="no-print underline decoration-dotted decoration-amber-400 underline-offset-2 text-amber-300 hover:text-amber-200 hover:bg-amber-400/10 rounded px-0.5 transition-colors"
                                   >
                                     {palabra}
@@ -551,13 +553,13 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
   }
 
   const botones = [
-    { Icono: IconBold,          titulo: 'Negrita',        accion: () => mandar('bold') },
-    { Icono: IconItalic,        titulo: 'Cursiva',        accion: () => mandar('italic') },
-    { Icono: IconUnderline,     titulo: 'Subrayado',      accion: () => mandar('underline') },
-    { Icono: IconStrikethrough, titulo: 'Tachado',        accion: () => mandar('strikeThrough') },
-    { Icono: IconH1,            titulo: 'Título grande',  accion: () => mandar('formatBlock', 'h2') },
-    { Icono: IconH2,            titulo: 'Título mediano', accion: () => mandar('formatBlock', 'h3') },
-    { Icono: IconList,          titulo: 'Lista',          accion: () => mandar('insertUnorderedList') },
+    { Icono: IconBold,          titulo: i18n.t('notebook.fmt.bold'),        accion: () => mandar('bold') },
+    { Icono: IconItalic,        titulo: i18n.t('notebook.fmt.italic'),        accion: () => mandar('italic') },
+    { Icono: IconUnderline,     titulo: i18n.t('notebook.fmt.underline'),      accion: () => mandar('underline') },
+    { Icono: IconStrikethrough, titulo: i18n.t('notebook.fmt.strike'),        accion: () => mandar('strikeThrough') },
+    { Icono: IconH1,            titulo: i18n.t('notebook.fmt.h1'),  accion: () => mandar('formatBlock', 'h2') },
+    { Icono: IconH2,            titulo: i18n.t('notebook.fmt.h2'), accion: () => mandar('formatBlock', 'h3') },
+    { Icono: IconList,          titulo: i18n.t('notebook.fmt.list'),          accion: () => mandar('insertUnorderedList') },
   ]
 
   // Pegar SIEMPRE como texto plano. Sin esto, pegar de una web mete su HTML
@@ -592,7 +594,7 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
         <button
           type="button"
           onClick={() => { setValor(leer()); setPrevia(p => !p) }}
-          title={previa ? 'Volver a editar' : 'Ver cómo queda con las fórmulas'}
+          title={previa ? i18n.t('notebook.backToEdit') : i18n.t('notebook.preview')}
           className="ml-auto p-1.5 rounded-lg text-slate-400 hover:text-primary-300 hover:bg-slate-700
                      transition-colors"
         >
@@ -633,8 +635,7 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
       />
 
       <p className="text-xs text-slate-500 mt-2">
-        Escribe, borra o cambia lo que quieras. Cuando escanees una página nueva
-        se añadirá <strong className="text-slate-400">debajo</strong>, sin tocar esto.
+        {i18n.t('notebook.editorHint1')} <strong className="text-slate-400">{i18n.t('notebook.editorBelow')}</strong>{i18n.t('notebook.editorHint2')}
       </p>
 
       <div className="flex gap-2 mt-3">
@@ -646,7 +647,7 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
                      disabled:opacity-40 disabled:hover:bg-primary-600"
         >
           {guardando ? <IconLoader2 size={16} className="animate-spin" /> : <IconDeviceFloppy size={16} />}
-          Guardar
+          {i18n.t('common.save')}
         </button>
         <button
           onClick={onCancelar}
@@ -654,7 +655,7 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
           className="flex items-center justify-center gap-1.5 bg-slate-700 hover:bg-slate-600
                      text-slate-100 rounded-xl px-4 py-2 text-sm font-medium disabled:opacity-50"
         >
-          <IconX size={16} /> Cancelar
+          <IconX size={16} /> {i18n.t('common.cancel')}
         </button>
       </div>
     </div>

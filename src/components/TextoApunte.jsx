@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 import { useState } from 'react'
 import ReactMarkdown, { defaultUrlTransform } from 'react-markdown'
 import remarkMath from 'remark-math'
@@ -28,6 +30,7 @@ import DudaModal from './DudaModal'
  * reescribiria el documento del alumno con los espacios cambiados.
  */
 export default function TextoApunte({ docId, texto, onTextoCambiado, className = '' }) {
+  useTranslation()
   const [duda, setDuda] = useState(null)
   const [guardando, setGuardando] = useState(false)
   const { addToast } = useAppStore()
@@ -48,7 +51,7 @@ export default function TextoApunte({ docId, texto, onTextoCambiado, className =
       // ha confirmado, y recargar aqui haria parpadear el documento entero.
       onTextoCambiado(resolverDuda(texto, duda.indice, palabraNueva))
     } catch (err) {
-      addToast(err?.message || 'No se pudo guardar la corrección', 'error', 5000)
+      addToast(err?.message || i18n.t('notebook.fixError'), 'error', 5000)
     } finally {
       setGuardando(false)
       setDuda(null)
@@ -60,7 +63,7 @@ export default function TextoApunte({ docId, texto, onTextoCambiado, className =
       {editable && dudas > 0 && (
         <p className="no-print text-xs text-amber-400/90 mb-2 flex items-center gap-1.5">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-          Toca las palabras en ámbar: no se leyeron con seguridad.
+          {i18n.t('notebook.amberHint')}
         </p>
       )}
 
@@ -82,7 +85,7 @@ export default function TextoApunte({ docId, texto, onTextoCambiado, className =
                 <button
                   type="button"
                   onClick={() => setDuda({ indice, palabra })}
-                  title="No se leyó con seguridad — toca para corregir o confirmar"
+                  title={i18n.t('notebook.amberTitle')}
                   className="no-print underline decoration-dotted decoration-amber-400
                              underline-offset-2 text-amber-300 hover:text-amber-200
                              hover:bg-amber-400/10 rounded px-0.5 transition-colors"

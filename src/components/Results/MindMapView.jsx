@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useMemo } from 'react'
 import ReactFlow, { Background, Controls, Handle, Position } from 'reactflow'
 import 'reactflow/dist/style.css'
@@ -42,6 +44,7 @@ const nodeTypes = { schemaNode: SchemaNode }
 const edgeTypes = { floating: MindMapFloatingEdge }
 
 export default function MindMapView({ result, whiteBg }) {
+  useTranslation() // re-render al cambiar de idioma
   const { tema, groups = [] } = result || {}
 
   const { nodes, edges } = useMemo(() => {
@@ -61,7 +64,7 @@ export default function MindMapView({ result, whiteBg }) {
   if (!tema && groups.length === 0) {
     return (
       <div className="card">
-        <p className="text-slate-500 text-sm">No se pudo generar el mapa conceptual.</p>
+        <p className="text-slate-500 text-sm">{i18n.t('mindmap.error')}</p>
       </div>
     )
   }

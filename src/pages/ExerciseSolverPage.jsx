@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 import { useState, useRef, useEffect } from 'react'
 import { useAppStore, api, apiUpload } from '../store/appStore'
 import ProblemsView from '../components/Exam/ProblemsView'
@@ -26,6 +28,7 @@ function descargarTexto(title, text) {
 }
 
 export default function ExerciseSolverPage() {
+  useTranslation() // re-render al cambiar de idioma
   const { addToast } = useAppStore()
   const fileInputRef = useRef(null)
 
@@ -157,10 +160,10 @@ export default function ExerciseSolverPage() {
       <div data-tour="solve-panel" className="w-full md:w-[480px] shrink-0 border-b md:border-b-0 md:border-r border-slate-800 md:overflow-y-auto p-5 space-y-5">
         <div>
           <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-            🧮 Resolver ejercicio
+            🧮 {i18n.t('sidebar.solveExercise')}
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            Sube una foto, un PDF, o haz una foto de un ejercicio y te lo resolvemos paso a paso.
+            {i18n.t('solver.intro')}
           </p>
         </div>
 
@@ -181,8 +184,8 @@ export default function ExerciseSolverPage() {
                        text-center transition-all duration-200 cursor-pointer"
           >
             <div className="text-5xl mb-3">📸</div>
-            <p className="text-slate-300 font-medium mb-1">Arrastra una foto o PDF, o haz clic para elegir</p>
-            <p className="text-slate-500 text-xs">Foto, galería o PDF — en el móvil te deja elegir la cámara también</p>
+            <p className="text-slate-300 font-medium mb-1">{i18n.t('solver.drop')}</p>
+            <p className="text-slate-500 text-xs">{i18n.t('solver.dropHint')}</p>
           </div>
         )}
 
@@ -193,15 +196,15 @@ export default function ExerciseSolverPage() {
                 <div className="flex flex-col items-center justify-center gap-2 py-10 bg-slate-800/50">
                   <span className="text-5xl">📄</span>
                   <p className="text-slate-300 text-sm px-4 text-center break-all">{file.name}</p>
-                  <p className="text-slate-500 text-xs">Se resolverá la primera página</p>
+                  <p className="text-slate-500 text-xs">{i18n.t('solver.firstPage')}</p>
                 </div>
               ) : (
-                <img src={previewUrl} alt="Ejercicio a resolver" className="w-full object-contain max-h-72" />
+                <img src={previewUrl} alt={i18n.t('mobile.solver.alt')} className="w-full object-contain max-h-72" />
               )}
             </div>
             <div className="flex gap-2">
               <button onClick={otro} disabled={solving} className="btn-secondary flex-1 btn-sm">
-                Cambiar foto
+                {i18n.t('mobile.solver.changePhoto')}
               </button>
               <button onClick={resolver} disabled={solving} className="btn-primary flex-1 btn-sm">
                 {solving ? '⏳ Resolviendo...' : '✨ Resolver'}
@@ -213,16 +216,16 @@ export default function ExerciseSolverPage() {
         {result && (
           <div className="space-y-3">
             <button onClick={otro} className="btn-secondary w-full btn-sm">
-              Resolver otro
+              {i18n.t('mobile.solver.another')}
             </button>
           </div>
         )}
 
         <div className="card bg-slate-900/40 border-slate-700/50 space-y-2 text-xs text-slate-500">
-          <p className="font-medium text-slate-400">Cómo funciona:</p>
-          <p>📖 Lee el enunciado directamente de la foto o el PDF</p>
-          <p>✅ Resuelve paso a paso, sin saltarse ninguno</p>
-          <p>📐 Funciona mejor con matemáticas, física y química</p>
+          <p className="font-medium text-slate-400">{i18n.t('solver.how')}</p>
+          <p>📖 {i18n.t('solver.how1')}</p>
+          <p>✅ {i18n.t('solver.how2')}</p>
+          <p>📐 {i18n.t('solver.how3')}</p>
         </div>
       </div>
 
@@ -231,7 +234,7 @@ export default function ExerciseSolverPage() {
         {solving && (
           <div className="flex flex-col items-center justify-center py-20 gap-3 text-center text-slate-500">
             <Spinner />
-            <p className="font-medium text-slate-400">Leyendo y resolviendo el ejercicio...</p>
+            <p className="font-medium text-slate-400">{i18n.t('solver.working')}</p>
           </div>
         )}
 
@@ -244,23 +247,22 @@ export default function ExerciseSolverPage() {
               {editingStatement === null ? (
                 <>
                   <p className="text-xs text-amber-300/90 font-medium">
-                    📖 Esto es lo que he leído de tu foto
+                    📖 {i18n.t('solver.readTitle')}
                   </p>
                   <p className="text-[11px] text-slate-400">
-                    Si algún número o signo no coincide con tu ejercicio, corrígelo — el
-                    resultado depende de ello.
+                    {i18n.t('solver.readDesc')}
                   </p>
                   <button
                     onClick={() => setEditingStatement(result.statement || '')}
                     className="btn-secondary btn-sm"
                   >
-                    ✏️ Corregir enunciado
+                    ✏️ {i18n.t('solver.fix')}
                   </button>
                 </>
               ) : (
                 <>
                   <p className="text-xs text-amber-300/90 font-medium">
-                    ✏️ Corrige el enunciado y lo resuelvo de nuevo
+                    ✏️ {i18n.t('mobile.solver.fixStatement')}
                   </p>
                   <textarea
                     value={editingStatement}
@@ -275,14 +277,14 @@ export default function ExerciseSolverPage() {
                       disabled={resolvingText}
                       className="btn-secondary flex-1 btn-sm"
                     >
-                      Cancelar
+                      {i18n.t('common.cancel')}
                     </button>
                     <button
                       onClick={resolverConTexto}
                       disabled={resolvingText}
                       className="btn-primary flex-1 btn-sm"
                     >
-                      {resolvingText ? '⏳ Resolviendo...' : '✨ Resolver con esto'}
+                      {resolvingText ? `⏳ ${i18n.t('mobile.solver.solving')}` : `✨ ${i18n.t('mobile.solver.solveWithThis')}`}
                     </button>
                   </div>
                 </>
@@ -305,15 +307,12 @@ export default function ExerciseSolverPage() {
                 <div className="flex items-start gap-3">
                   <span className="text-lg leading-none mt-0.5">⏳</span>
                   <p className="flex-1 text-xs text-amber-200/90 leading-relaxed">
-                    Los ejercicios que resuelves aquí se guardan solos y se conservan
-                    durante <b>{RETENTION_DAYS} días</b> — pasado ese plazo se borran automáticamente
-                    (te avisamos por email 3 días antes).
-                    Si quieres quedarte con alguno para siempre, descárgalo con el botón ⬇️ antes de que caduque.
+                    {i18n.t('solver.retention', { days: RETENTION_DAYS })}
                   </p>
                   <button
                     onClick={dismissRetentionNotice}
                     className="shrink-0 text-amber-300/70 hover:text-amber-200 transition-colors"
-                    title="No volver a mostrar"
+                    title={i18n.t('library.dontShow')}
                   ><IconX size={16} /></button>
                 </div>
                 <EmailWarningsToggle className="ml-7" />
@@ -325,8 +324,8 @@ export default function ExerciseSolverPage() {
             ) : recent.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-20 text-center text-slate-500">
                 <span className="text-5xl mb-4">🧮</span>
-                <p className="font-medium text-slate-400">Aún no has resuelto ningún ejercicio</p>
-                <p className="text-sm mt-1">Sube una foto para empezar</p>
+                <p className="font-medium text-slate-400">{i18n.t('mobile.solver.empty')}</p>
+                <p className="text-sm mt-1">{i18n.t('solver.emptyDesc')}</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -343,7 +342,7 @@ export default function ExerciseSolverPage() {
                           <p className="font-medium text-slate-100 truncate">{doc.title}</p>
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="text-xs text-slate-500">
-                              {new Date(doc.created_at).toLocaleDateString('es-ES', {
+                              {new Date(doc.created_at).toLocaleDateString(i18n.language, {
                                 weekday: 'short', day: 'numeric', month: 'short'
                               })}
                             </span>
@@ -352,12 +351,12 @@ export default function ExerciseSolverPage() {
                         </div>
                         <button
                           onClick={e => downloadExercise(doc, e)}
-                          title="Descargar"
+                          title={i18n.t('mobile.podcasts.download')}
                           className="shrink-0 p-1.5 rounded-lg text-slate-600 hover:text-primary-400 hover:bg-primary-500/10 transition-colors"
                         ><IconDownload size={16} /></button>
                         <button
                           onClick={e => borrar(doc.id, e)}
-                          title="Eliminar"
+                          title={i18n.t('common.delete')}
                           className="shrink-0 p-1.5 rounded-lg text-slate-600 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                         ><IconTrash size={16} /></button>
                         <span className="shrink-0 text-slate-600 group-hover:text-slate-300 transition-colors mt-1">

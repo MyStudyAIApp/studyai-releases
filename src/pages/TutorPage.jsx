@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useAppStore, api, getAuthHeader, getLocalAuthHeader, handleUnauthorized } from '../store/appStore'
 import TutorAvatar from '../components/Tutor/TutorAvatar'
@@ -159,7 +160,7 @@ export default function TutorPage() {
         const firstUserMsg = messages.find(m => m.role === 'user')
         const title = firstUserMsg
           ? firstUserMsg.content.slice(0, 60) + (firstUserMsg.content.length > 60 ? '…' : '')
-          : 'Sesión de tutoría'
+          : i18n.t('tutorPage.sessionTitle')
         const body = { title, document_id: selectedDocId, messages }
         if (sessionId) {
           await api('PUT', `/tutor/sessions/${sessionId}`, body)
@@ -528,7 +529,7 @@ export default function TutorPage() {
           voiceActiveRef.current = false  // corta el ciclo de auto-grabación — no tiene sentido reintentar
           return
         }
-        addToast(`Transcripción fallida: ${data.detail || 'Error de Whisper'}`, 'error')
+        addToast(`${i18n.t('languages.transcriptionFailed')}: ${data.detail || 'Whisper'}`, 'error')
         if (voiceActiveRef.current) startRecording()
         return
       }
@@ -552,10 +553,7 @@ export default function TutorPage() {
           setTutorState('idle')
           emptyTranscriptRef.current = 0
           addToast(
-            '🎤 No se detecta voz en el audio grabado (varios intentos vacíos). ' +
-            'Es probable que Windows esté usando un micrófono incorrecto como predeterminado ' +
-            '(p.ej. un dispositivo virtual de auriculares VR que graba silencio). ' +
-            'Ve a Configuración → Sistema → Sonido → Entrada y selecciona tu micrófono real, luego inténtalo de nuevo.',
+            '🎤 ' + i18n.t('languages.noVoiceDetected'),
             'warning',
             12000
           )
@@ -834,7 +832,7 @@ export default function TutorPage() {
                 className={`text-[10px] px-2 py-0.5 rounded-full transition-colors ${
                   voiceMode ? 'bg-violet-600 text-white' : 'text-slate-500 hover:text-slate-300'
                 }`}
-                title="Conversación de voz automática"
+                title={i18n.t('tutorPage.autoVoice')}
               >
                 {voiceMode ? t('tutor.voiceModeOn') : t('tutor.voiceMode')}
               </button>

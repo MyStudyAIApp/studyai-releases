@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect } from 'react'
 import { Capacitor } from '@capacitor/core'
 import { Filesystem, Directory } from '@capacitor/filesystem'
@@ -18,12 +19,15 @@ async function writeLocalIndex(list) {
   await Preferences.set({ key: LOCAL_INDEX_KEY, value: JSON.stringify(list) })
 }
 
+import { useTranslation } from 'react-i18next'
+
 export default function MobilePodcastsPage() {
   const [pending, setPending] = useState([])
   const [downloaded, setDownloaded] = useState([])
   const [loading, setLoading] = useState(true)
   const [busyId, setBusyId] = useState(null)
   const { addToast } = useAppStore()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   useEffect(() => { load() }, [])
@@ -47,7 +51,7 @@ export default function MobilePodcastsPage() {
     try {
       // El audio ya viene con una URL firmada de Supabase — no hace falta pasar por el backend otra vez.
       const res = await fetch(item.url)
-      if (!res.ok) throw new Error('No se pudo descargar el audio')
+      if (!res.ok) throw new Error(i18n.t('mobile.podcasts.audioError'))
       const blob = await res.blob()
       const base64 = await new Promise((resolve, reject) => {
         const reader = new FileReader()
@@ -69,9 +73,9 @@ export default function MobilePodcastsPage() {
       // Confirmar recogida — libera el buzón temporal en Supabase.
       await api('POST', `/podcasts/${item.id}/fetched`).catch(() => {})
 
-      addToast(mensajeDeGuardado(guardado, 'El podcast'), 'success', 6000)
+      addToast(mensajeDeGuardado(guardado, i18n.t('saved.podcast')), 'success', 6000)
     } catch (e) {
-      addToast(`No se pudo descargar: ${e.message}`, 'error')
+      addToast(`${t('mobile.podcasts.downloadError')}: ${e.message}`, 'error')
     } finally {
       setBusyId(null)
     }
@@ -92,17 +96,17 @@ export default function MobilePodcastsPage() {
     <div className="min-h-screen bg-slate-900 flex flex-col">
       <div className="flex items-center gap-3 px-4 pt-12 pb-5">
         <button onClick={() => navigate('/')} className="text-slate-400 p-1"><IconArrowLeft size={22} /></button>
-        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconHeadphones size={20} /> Mis podcasts</h1>
+        <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2"><IconHeadphones size={20} /> {t('mobile.home.podcastsTitle')}</h1>
       </div>
 
       <div className="flex-1 flex flex-col px-5 gap-6 pb-8 overflow-y-auto">
         {loading && (
-          <p className="text-center text-slate-500 text-sm py-8">Cargando…</p>
+          <p className="text-center text-slate-500 text-sm py-8">{t('common.loading')}</p>
         )}
 
         {!loading && pending.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-slate-300 mb-2">Esperando en tu cuenta</h2>
+            <h2 className="text-sm font-semibold text-slate-300 mb-2">{t('mobile.podcasts.waiting')}</h2>
             <div className="space-y-2">
               {pending.map(item => (
                 <div key={item.id} className="bg-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3 border border-slate-700">
@@ -113,7 +117,7 @@ export default function MobilePodcastsPage() {
                     disabled={busyId === item.id}
                     className="btn-primary btn-sm shrink-0"
                   >
-                    {busyId === item.id ? <IconLoader2 size={16} className="animate-spin" /> : <span className="flex items-center gap-1.5"><IconDownload size={14} /> Descargar</span>}
+                    {busyId === item.id ? <IconLoader2 size={16} className="animate-spin" /> : <span className="flex items-center gap-1.5"><IconDownload size={14} /> {t('mobile.podcasts.download')}</span>}
                   </button>
                 </div>
               ))}
@@ -122,11 +126,11 @@ export default function MobilePodcastsPage() {
         )}
 
         <section>
-          <h2 className="text-sm font-semibold text-slate-300 mb-2">Descargados</h2>
+          <h2 className="text-sm font-semibold text-slate-300 mb-2">{t('mobile.podcasts.downloaded')}</h2>
           {!loading && downloaded.length === 0 && (
             <div className="rounded-2xl border-2 border-dashed border-slate-700 py-8 px-4 text-center">
               <p className="text-slate-500 text-sm">
-                Aún no tienes ningún podcast descargado. Genera uno desde un documento en el ordenador o la web, y elige "Enviar a mi móvil".
+                {t('mobile.podcasts.empty')}
               </p>
             </div>
           )}

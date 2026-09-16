@@ -1,3 +1,5 @@
+import { passwordProblem, PASSWORD_MIN } from './LoginPage'
+import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { useAppStore, api, IS_WEB, IS_ELECTRON, getAuthHeader, getLocalAuthHeader } from '../store/appStore'
 import { useTranslation } from 'react-i18next'
@@ -99,11 +101,11 @@ const TUTORIAL_SECTION_KEYS = [
 ]
 
 const TTS_RATES = [
-  { value: '-20%', label: '🐢 Lento'            },
-  { value: '+0%',  label: '▶ Normal'            },
-  { value: '+10%', label: '⚡ Rápido (defecto)'  },
-  { value: '+25%', label: '🚀 Muy rápido'       },
-  { value: '+40%', label: '💨 Ultra rápido'     },
+  { value: '-20%', label: 'slow' },
+  { value: '+0%',  label: 'normal' },
+  { value: '+10%', label: 'fast' },
+  { value: '+25%', label: 'veryFast' },
+  { value: '+40%', label: 'ultraFast' },
 ]
 
 // ── Comprobador de actualizaciones (inline en Ajustes) ───────────────────────
@@ -406,6 +408,7 @@ function CudaCard() {
 
 // ── Disponibilidad de estudio ─────────────────────────────────────────────
 function StudyAvailabilityCard() {
+  const { t } = useTranslation()
   const [hours, setHours] = useState(() => loadWeeklyHours())
   const [saved, setSaved]  = useState(false)
 
@@ -424,8 +427,8 @@ function StudyAvailabilityCard() {
   return (
     <CollapsibleCard
       icon="📅"
-      title="Disponibilidad de estudio"
-      subtitle="Cuántas horas puedes dedicar cada día de la semana"
+      title={t('settings.availability.title')}
+      subtitle={t('settings.availability.subtitle')}
       defaultOpen={false}
     >
       <div className="space-y-4">
@@ -437,11 +440,10 @@ function StudyAvailabilityCard() {
               ? 'bg-emerald-700 text-white'
               : 'bg-primary-600 hover:bg-primary-700 text-white'}`}
         >
-          {saved ? '✅ Guardado' : '💾 Guardar disponibilidad'}
+          {saved ? `✅ ${t('settings.availability.saved')}` : `💾 ${t('settings.availability.save')}`}
         </button>
         <p className="text-xs text-slate-500 leading-relaxed">
-          El plan de estudio usará estas horas para distribuir los temas de forma realista.
-          Puedes cambiarlas antes de generar cada plan concreto.
+          {t('settings.availability.info')}
         </p>
       </div>
     </CollapsibleCard>
@@ -559,12 +561,13 @@ export default function SettingsPage() {
   const [savingPassword, setSavingPassword]     = useState(false)
 
   async function handleChangePassword() {
-    if (newPassword.length < 6) {
-      addToast('La contraseña debe tener al menos 6 caracteres', 'error')
+    const problema = passwordProblem(newPassword)
+    if (problema) {
+      addToast(t(`auth.err.pw${problema[0].toUpperCase()}${problema.slice(1)}`, { min: PASSWORD_MIN }), 'error')
       return
     }
     if (newPassword !== confirmPassword) {
-      addToast('Las contraseñas no coinciden', 'error')
+      addToast(t('resetPw.errMatch'), 'error')
       return
     }
     setSavingPassword(true)
@@ -615,7 +618,7 @@ export default function SettingsPage() {
       const res = await api('POST', '/billing/create-checkout-session', { price_id: STRIPE_PRICES[kind] })
       window.location.href = res.url
     } catch (e) {
-      addToast(e.message || 'No se pudo iniciar el pago', 'error')
+      addToast(e.message || t('billing.checkoutFailed'), 'error')
       setBillingBusy(null)
     }
   }
@@ -632,7 +635,7 @@ export default function SettingsPage() {
       const res = await api('GET', '/billing/portal')
       window.location.href = res.url
     } catch (e) {
-      addToast(e.message || 'Todavía no tienes ninguna compra', 'error')
+      addToast(e.message || t('settings.billing.noPurchases'), 'error')
       setBillingBusy(null)
     }
   }
@@ -646,7 +649,7 @@ export default function SettingsPage() {
 
   function openWithdrawalModal() {
     setWithdrawalStep(1)
-    setWithdrawalText(`Comunico mi intención de desistir de mi contrato/compra con MyStudy AI (cuenta ${user?.email}).`)
+    setWithdrawalText(t('settings.withdrawal.defaultText', { email: user?.email }))
     setShowWithdrawal(true)
   }
 
@@ -657,7 +660,7 @@ export default function SettingsPage() {
       setWithdrawalDoneAt(res.timestamp)
       setWithdrawalStep(3)
     } catch (e) {
-      addToast(e.message || 'No se pudo enviar la solicitud', 'error')
+      addToast(e.message || t('settings.withdrawal.sendError'), 'error')
     } finally {
       setWithdrawalSending(false)
     }
@@ -741,7 +744,7 @@ export default function SettingsPage() {
     } catch (e) {
       // Duración más larga que el toast por defecto (4s) -- el mensaje de
       // permiso bloqueado explica varios pasos y 4s no da tiempo a leerlo.
-      addToast(e.message || 'No se pudo cambiar los avisos', 'error', 9000)
+      addToast(e.message || t('settings.notifsError'), 'error', 9000)
     } finally {
       setNotifBusy(false)
     }
@@ -881,39 +884,39 @@ export default function SettingsPage() {
       <h1 className="text-2xl font-bold text-slate-100">{t('settings.title')}</h1>
 
       {/* ── Perfil ──────────────────────────────────────────────────── */}
-      <CollapsibleCard icon="👤" title="Perfil" subtitle={user?.email} defaultOpen={false}>
+      <CollapsibleCard icon="👤" title={t('settings.profile.title')} subtitle={user?.email} defaultOpen={false}>
         <div>
-          <label className="block text-sm text-slate-400 mb-1">Nombre</label>
+          <label className="block text-sm text-slate-400 mb-1">{t('settings.profile.name')}</label>
           <div className="flex gap-2">
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="Tu nombre"
+              placeholder={t('settings.profile.namePlaceholder')}
               className="input flex-1"
             />
             <button
               onClick={handleSaveName}
               disabled={savingName || fullName.trim() === (user?.user_metadata?.full_name || '')}
               className="btn-primary disabled:opacity-40"
-            >{savingName ? 'Guardando…' : 'Guardar'}</button>
+            >{savingName ? t('mobile.scanner.saving') : t('common.save')}</button>
           </div>
         </div>
 
         <div className="pt-2 border-t border-slate-800">
-          <label className="block text-sm text-slate-400 mb-1 mt-2">Cambiar contraseña</label>
+          <label className="block text-sm text-slate-400 mb-1 mt-2">{t('settings.profile.changePassword')}</label>
           <div className="grid grid-cols-2 gap-2">
             <PasswordInput
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Nueva contraseña"
+              placeholder={t('settings.profile.newPassword')}
               autoComplete="new-password"
               className="input w-full"
             />
             <PasswordInput
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Repite la contraseña"
+              placeholder={t('settings.profile.repeatPassword')}
               autoComplete="new-password"
               className="input w-full"
             />
@@ -922,11 +925,11 @@ export default function SettingsPage() {
             onClick={handleChangePassword}
             disabled={savingPassword || !newPassword || !confirmPassword}
             className="btn-secondary btn-sm mt-2 disabled:opacity-40"
-          >{savingPassword ? 'Guardando…' : 'Cambiar contraseña'}</button>
+          >{savingPassword ? t('mobile.scanner.saving') : t('settings.profile.changePassword')}</button>
         </div>
 
         <div className="pt-2 border-t border-slate-800">
-          <label className="block text-sm text-slate-400 mb-1 mt-2">Objetivo diario de estudio (minutos)</label>
+          <label className="block text-sm text-slate-400 mb-1 mt-2">{t('settings.profile.dailyGoal')}</label>
           <input
             type="number"
             min={5}
@@ -937,64 +940,64 @@ export default function SettingsPage() {
             onBlur={(e) => setDailyGoalMinutes(Math.min(240, Math.max(5, Number(e.target.value) || 20)))}
             className="input w-28"
           />
-          <p className="text-xs text-slate-500 mt-1">Solo informativo — no bloquea nada, es para que veas tu propio progreso del día.</p>
+          <p className="text-xs text-slate-500 mt-1">{t('settings.profile.dailyGoalInfo')}</p>
         </div>
       </CollapsibleCard>
 
       {/* ── Plan y facturación (solo web, Stripe) ──────────────────────── */}
       {IS_WEB && (
-        <CollapsibleCard icon="💳" title="Plan y facturación" subtitle={planTier === 'pro' ? 'Pro' : planTier === 'trial' ? 'Prueba gratis' : 'Free'} defaultOpen={false}>
+        <CollapsibleCard icon="💳" title={t('settings.billing.title')} subtitle={planTier === 'pro' ? 'Pro' : planTier === 'trial' ? t('settings.billing.trial') : 'Free'} defaultOpen={false}>
           <p className="text-xs text-slate-500 pb-3 border-b border-slate-800 mb-3">
-            Región fiscal: {
-              billingRegion === null ? 'sin definir (se preguntará al comprar)'
+            {t('settings.billing.region')}: {
+              billingRegion === null ? t('settings.billing.regionUnset')
               : billingRegion === 'canarias' ? 'Canarias (IGIC)'
               : billingRegion === 'ceuta_melilla' ? 'Ceuta/Melilla (IPSI)'
-              : 'Resto (IVA)'
+              : t('settings.billing.regionRest')
             }
           </p>
           {planTier !== 'pro' && (
             <div className="pb-3 border-b border-slate-800">
-              <p className="text-sm text-slate-300 mb-2">Hazte Pro — 15€/mes, sin límite de generaciones.</p>
+              <p className="text-sm text-slate-300 mb-2">{t('settings.billing.proPitch')}</p>
               <button
                 onClick={() => handleCheckout('pro')}
                 disabled={!!billingBusy}
                 className="btn-primary disabled:opacity-40"
-              >{billingBusy === 'pro' ? 'Redirigiendo…' : 'Hazte Pro'}</button>
+              >{billingBusy === 'pro' ? t('billing.redirecting') : t('billing.goPro')}</button>
             </div>
           )}
 
           <div className="pt-3">
-            <p className="text-sm text-slate-400 mb-2">Bonos extra (pago único)</p>
+            <p className="text-sm text-slate-400 mb-2">{t('settings.billing.bonuses')}</p>
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => handleCheckout('transcription')}
                 disabled={!!billingBusy}
                 className="btn-secondary btn-sm disabled:opacity-40"
-              >{billingBusy === 'transcription' ? 'Redirigiendo…' : '+10h transcripción — 3€'}</button>
+              >{billingBusy === 'transcription' ? t('billing.redirecting') : `+${t('billing.bonusTranscription')} — 3€`}</button>
               <button
                 onClick={() => handleCheckout('podcast')}
                 disabled={!!billingBusy}
                 className="btn-secondary btn-sm disabled:opacity-40"
-              >{billingBusy === 'podcast' ? 'Redirigiendo…' : '+10 podcasts — 7€'}</button>
+              >{billingBusy === 'podcast' ? t('billing.redirecting') : `+${t('billing.bonusPodcast')} — 7€`}</button>
             </div>
 
             {(usage?.voice_budget?.transcription?.bono_left > 0 || usage?.voice_budget?.podcast?.bono_left > 0) && (
               <p className="text-xs text-slate-300 mt-2">
-                Saldo disponible:{' '}
+                {t('settings.billing.balance')}:{' '}
                 {[
-                  usage.voice_budget.transcription?.bono_left > 0 && `${usage.voice_budget.transcription.bono_left} h de transcripción`,
+                  usage.voice_budget.transcription?.bono_left > 0 && t('settings.billing.hoursTranscription', { n: usage.voice_budget.transcription.bono_left }),
                   usage.voice_budget.podcast?.bono_left > 0 && `${usage.voice_budget.podcast.bono_left} podcasts`,
                 ].filter(Boolean).join(' · ')}
               </p>
             )}
 
             <p className="text-xs text-slate-500 mt-2">
-              Los bonos no caducan mientras tu cuenta sea Pro. Si dejas de serlo, tienes 30 días para gastar el saldo que te quede.
+              {t('settings.billing.bonusRule')}
             </p>
 
             {usage?.bono_expires_at && (
               <p className="text-xs text-amber-400 mt-1">
-                Tu saldo caduca el {new Date(usage.bono_expires_at).toLocaleDateString()}.
+                {t('settings.billing.expires', { date: new Date(usage.bono_expires_at).toLocaleDateString() })}
               </p>
             )}
           </div>
@@ -1004,19 +1007,19 @@ export default function SettingsPage() {
               onClick={handlePortal}
               disabled={!!billingBusy}
               className="text-sm text-slate-400 hover:text-slate-200 underline disabled:opacity-40"
-            >{billingBusy === 'portal' ? 'Abriendo…' : 'Gestionar suscripción / facturas'}</button>
+            >{billingBusy === 'portal' ? t('mobile.doc.opening') : t('settings.billing.portal')}</button>
           </div>
         </CollapsibleCard>
       )}
 
       {/* ── Derecho de desistimiento (solo web) ────────────────────────── */}
       {IS_WEB && (
-        <CollapsibleCard icon="↩️" title="Derecho de desistimiento" defaultOpen={false}>
+        <CollapsibleCard icon="↩️" title={t('settings.withdrawal.title')} defaultOpen={false}>
           <p className="text-sm text-slate-400 mb-3">
-            Si acaba de contratar un plan de pago o un bono, tiene derecho a desistir del contrato en los 14 días siguientes, sin necesidad de justificación. Más detalles en los <Link to="/terminos" className="underline">Términos y Condiciones</Link>.
+            {t('settings.withdrawal.info')} <Link to="/terminos" className="underline">{t('settings.withdrawal.terms')}</Link>.
           </p>
           <button onClick={openWithdrawalModal} className="btn-secondary btn-sm">
-            Ejercer mi derecho de desistimiento
+            {t('settings.withdrawal.exercise')}
           </button>
         </CollapsibleCard>
       )}
@@ -1027,16 +1030,16 @@ export default function SettingsPage() {
           es siempre el mismo sin importar por dónde entre. */}
       <CollapsibleCard title={t('settings.systemStatus.title')} defaultOpen={true}>
         {[
-          { label: 'Servicio de generación', ok: mistralOk, optional: false },
-          { label: 'Servicio de visión',     ok: mistralOk, optional: false },
-          { label: 'Servicio OCR',           ok: mistralOk, optional: false },
+          { label: t('settings.systemStatus.generation'), ok: mistralOk, optional: false },
+          { label: t('settings.systemStatus.vision'),     ok: mistralOk, optional: false },
+          { label: t('settings.systemStatus.ocr'),           ok: mistralOk, optional: false },
         ].map(({ label, ok, optional }) => (
           <div key={label} className="flex items-center gap-3">
             <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${ok ? 'bg-emerald-400' : optional ? 'bg-slate-600' : 'bg-amber-400 animate-pulse'}`} />
             <span className="text-sm text-slate-300">
               <span className="text-slate-400">{label}</span>
               {': '}
-              {ok === null ? 'verificando...' : ok ? '✅ Activo' : optional ? 'No configurado (opcional)' : '⚠️ Sin configurar'}
+              {ok === null ? t('settings.systemStatus.checking') : ok ? t('settings.systemStatus.active') : optional ? t('settings.systemStatus.notConfigured') : t('settings.systemStatus.notSet')}
             </span>
           </div>
         ))}
@@ -1055,16 +1058,15 @@ export default function SettingsPage() {
         <div className="space-y-5">
           {/* ── Voz para LEER en voz alta: la del propio dispositivo ── */}
           <div>
-            <h4 className="text-sm font-semibold text-slate-200 mb-1">Voz para leer en voz alta</h4>
+            <h4 className="text-sm font-semibold text-slate-200 mb-1">{t('settings.voice.readAloud')}</h4>
             <DeviceVoicePicker />
           </div>
 
           {/* ── Voz de los PODCASTS: Azure, igual en todos los aparatos ── */}
           <div className="pt-4 border-t border-slate-700/60">
-            <h4 className="text-sm font-semibold text-slate-200 mb-1">Voz de los podcasts</h4>
+            <h4 className="text-sm font-semibold text-slate-200 mb-1">{t('settings.voice.podcast')}</h4>
             <p className="text-xs text-slate-400 mb-3">
-              Los podcasts se generan como un archivo que puedes descargar y escuchar sin
-              conexión, así que su voz no depende del dispositivo: suena igual en todos.
+              {t('settings.voice.podcastInfo')}
             </p>
             <div className="grid grid-cols-2 gap-2">
               {(PODCAST_VOICE_GROUPS.find(g => g.lang === 'es')?.voices || []).map(v => {
@@ -1080,7 +1082,7 @@ export default function SettingsPage() {
                     }`}
                   >
                     <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${active ? 'bg-primary-400' : 'bg-slate-600'}`} />
-                    <span className="flex-1">{v.label}</span>
+                    <span className="flex-1">{v.label.replace('Mujer', t('settings.voice.female')).replace('Hombre', t('settings.voice.male'))}</span>
                     {active && <span className="text-primary-400">✓</span>}
                   </button>
                 )
@@ -1092,12 +1094,12 @@ export default function SettingsPage() {
               Las tres juntas y en desplegable: antes eran tres filas de
               botones una debajo de otra y la tarjeta se hacía interminable. */}
           <div className="pt-4 border-t border-slate-700/60">
-            <h4 className="text-sm font-semibold text-slate-200 mb-3">Velocidad de la voz</h4>
+            <h4 className="text-sm font-semibold text-slate-200 mb-3">{t('settings.voice.speed')}</h4>
             <div className="grid gap-3 sm:grid-cols-3">
               {[
-                { label: 'Al leer documentos', value: ttsRate,      set: setTtsRate },
+                { label: t('settings.voice.speedDocs'), value: ttsRate,      set: setTtsRate },
                 { label: 'Tutor',              value: tutorTtsRate, set: setTutorTtsRate },
-                { label: 'Idiomas',            value: langsTtsRate, set: setLangsTtsRate },
+                { label: t('sidebar.languages'),            value: langsTtsRate, set: setLangsTtsRate },
               ].map(v => (
                 <label key={v.label} className="block">
                   <span className="block text-xs text-slate-400 mb-1">{v.label}</span>
@@ -1107,7 +1109,7 @@ export default function SettingsPage() {
                     className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200"
                   >
                     {TTS_RATES.map(r => (
-                      <option key={r.value} value={r.value}>{r.label}</option>
+                      <option key={r.value} value={r.value}>{t(`settings.rates.${r.label}`)}</option>
                     ))}
                   </select>
                 </label>
@@ -1152,7 +1154,7 @@ export default function SettingsPage() {
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-slate-200 truncate">{a.name}</p>
                   <p className="text-[10px] text-slate-500">
-                    {new Date(a.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
+                    {new Date(a.created_at).toLocaleDateString(i18n.language, { day: '2-digit', month: 'short', year: 'numeric' })}
                     {' · '}{a.doc_count} doc{a.doc_count !== 1 ? 's' : ''}
                     {' · '}{a.card_count} tarjeta{a.card_count !== 1 ? 's' : ''}
                   </p>
@@ -1416,7 +1418,7 @@ export default function SettingsPage() {
           <div className="mb-4 p-3 rounded-xl bg-slate-800/50 border border-slate-700/40 text-sm">
             <p className="text-slate-300 font-medium mb-1">Última copia de seguridad</p>
             {backupStatus?.lastBackup
-              ? <p className="text-slate-400 text-xs">{new Date(backupStatus.lastBackup).toLocaleString('es-ES')}</p>
+              ? <p className="text-slate-400 text-xs">{new Date(backupStatus.lastBackup).toLocaleString(i18n.language)}</p>
               : <p className="text-slate-500 text-xs">Ninguna todavía</p>
             }
           </div>
@@ -1456,7 +1458,7 @@ export default function SettingsPage() {
                 {backupStatus.history.slice(0, 5).map((h, i) => (
                   <div key={i} className="flex items-center gap-2 text-xs text-slate-500">
                     <span>{h.reason === 'pre-update' ? '🔄' : h.reason === 'manual' ? '👤' : '⏰'}</span>
-                    <span className="text-slate-400">{new Date(h.date).toLocaleString('es-ES')}</span>
+                    <span className="text-slate-400">{new Date(h.date).toLocaleString(i18n.language)}</span>
                     <span className="text-slate-600">— {h.reason === 'pre-update' ? 'pre-actualización' : h.reason === 'manual' ? 'manual' : 'automática'}</span>
                     <span className="ml-auto text-slate-600">{h.sizeMB} MB</span>
                   </div>
@@ -1470,11 +1472,11 @@ export default function SettingsPage() {
       {/* ── Ayúdanos a mejorar ───────────────────────────────────────── */}
       <div className="card p-4 flex items-center justify-between gap-4">
         <div>
-          <p className="font-medium text-slate-200">💬 Ayúdanos a mejorar</p>
-          <p className="text-xs text-slate-500 mt-0.5">Errores, sugerencias o lo que quieras contarnos</p>
+          <p className="font-medium text-slate-200">💬 {t('mobile.settings.helpImprove')}</p>
+          <p className="text-xs text-slate-500 mt-0.5">{t('mobile.settings.feedbackDesc')}</p>
         </div>
         <button onClick={() => setShowFeedback(true)} className="btn-primary btn-sm shrink-0">
-          Enviar feedback
+          {t('mobile.settings.feedback')}
         </button>
       </div>
       <FeedbackModal open={showFeedback} onClose={() => setShowFeedback(false)} platform={IS_WEB ? 'web' : 'desktop'} />
@@ -1630,10 +1632,10 @@ export default function SettingsPage() {
       )}
 
       {/* ── Modal: derecho de desistimiento ─────────────────────────────── */}
-      <Modal open={showWithdrawal} onClose={() => !withdrawalSending && setShowWithdrawal(false)} title="Derecho de desistimiento" size="sm">
+      <Modal open={showWithdrawal} onClose={() => !withdrawalSending && setShowWithdrawal(false)} title={t('settings.withdrawal.title')} size="sm">
         {withdrawalStep === 1 && (
           <div className="space-y-3">
-            <p className="text-sm text-slate-400">Puede editar el texto o dejarlo tal cual. Al continuar, se le pedirá una confirmación final.</p>
+            <p className="text-sm text-slate-400">{t('settings.withdrawal.step1')}</p>
             <textarea
               value={withdrawalText}
               onChange={(e) => setWithdrawalText(e.target.value)}
@@ -1641,20 +1643,20 @@ export default function SettingsPage() {
               className="input w-full"
             />
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setShowWithdrawal(false)} className="btn-secondary">Cancelar</button>
-              <button onClick={() => setWithdrawalStep(2)} disabled={!withdrawalText.trim()} className="btn-primary disabled:opacity-40">Continuar</button>
+              <button onClick={() => setShowWithdrawal(false)} className="btn-secondary">{t('common.cancel')}</button>
+              <button onClick={() => setWithdrawalStep(2)} disabled={!withdrawalText.trim()} className="btn-primary disabled:opacity-40">{t('settings.withdrawal.continue')}</button>
             </div>
           </div>
         )}
         {withdrawalStep === 2 && (
           <div className="space-y-3">
-            <p className="text-sm text-slate-200 font-semibold">¿Confirma que desea desistir de su contrato/compra?</p>
-            <p className="text-xs text-slate-500">Esta acción se registrará con la fecha y hora actuales, y recibirá un acuse de recibo por email. No se le cobrará nada por ejercer este derecho.</p>
+            <p className="text-sm text-slate-200 font-semibold">{t('settings.withdrawal.confirmQ')}</p>
+            <p className="text-xs text-slate-500">{t('settings.withdrawal.confirmInfo')}</p>
             <div className="bg-slate-900 rounded-lg p-3 text-xs text-slate-400 whitespace-pre-wrap">{withdrawalText}</div>
             <div className="flex gap-2 justify-end">
-              <button onClick={() => setWithdrawalStep(1)} disabled={withdrawalSending} className="btn-secondary disabled:opacity-40">Volver</button>
+              <button onClick={() => setWithdrawalStep(1)} disabled={withdrawalSending} className="btn-secondary disabled:opacity-40">{t('mobile.doc.back')}</button>
               <button onClick={handleConfirmWithdrawal} disabled={withdrawalSending} className="btn-primary disabled:opacity-40">
-                {withdrawalSending ? 'Enviando…' : 'Sí, desistir'}
+                {withdrawalSending ? t('settings.withdrawal.sending') : t('settings.withdrawal.yes')}
               </button>
             </div>
           </div>
@@ -1662,11 +1664,11 @@ export default function SettingsPage() {
         {withdrawalStep === 3 && (
           <div className="space-y-3 text-center py-2">
             <p className="text-2xl">✅</p>
-            <p className="text-sm text-slate-200 font-semibold">Solicitud registrada</p>
+            <p className="text-sm text-slate-200 font-semibold">{t('settings.withdrawal.done')}</p>
             <p className="text-xs text-slate-400">
-              {withdrawalDoneAt && new Date(withdrawalDoneAt).toLocaleString('es-ES')} — le hemos enviado un acuse de recibo a {user?.email}.
+              {withdrawalDoneAt && new Date(withdrawalDoneAt).toLocaleString(i18n.language)} — {t('settings.withdrawal.receipt', { email: user?.email })}
             </p>
-            <button onClick={() => setShowWithdrawal(false)} className="btn-secondary mt-2">Cerrar</button>
+            <button onClick={() => setShowWithdrawal(false)} className="btn-secondary mt-2">{t('common.close')}</button>
           </div>
         )}
       </Modal>

@@ -13,10 +13,13 @@ import {
 
 const TYPE_ICON = { escaneado: IconCamera, foto: IconPhoto, pdf: IconFileText }
 
+import { useTranslation } from 'react-i18next'
+
 export default function MobileDocumentPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addToast } = useAppStore()
+  const { t, i18n } = useTranslation()
 
   const [doc, setDoc]         = useState(null)
   const [loading, setLoading] = useState(true)
@@ -44,7 +47,7 @@ export default function MobileDocumentPage() {
       const { url } = await api('GET', `/documents/${id}/file-url`)
       window.open(url, '_blank')
     } catch {
-      addToast('No se pudo abrir el documento original', 'error')
+      addToast(t('mobile.doc.openError'), 'error')
     } finally {
       setOpeningFile(false)
     }
@@ -53,9 +56,9 @@ export default function MobileDocumentPage() {
   const copiarTexto = async () => {
     try {
       await navigator.clipboard.writeText(doc?.text_content || '')
-      addToast('Texto copiado', 'success')
+      addToast(t('mobile.doc.copied'), 'success')
     } catch {
-      addToast('No se pudo copiar', 'error')
+      addToast(t('mobile.doc.copyError'), 'error')
     }
   }
 
@@ -67,11 +70,11 @@ export default function MobileDocumentPage() {
         <div className="flex-1 min-w-0">
           <h1 className="text-lg font-bold text-slate-100 truncate flex items-center gap-1.5">
             {doc && (() => { const TIcon = TYPE_ICON[doc.file_type] || IconFileText; return <TIcon size={17} className="shrink-0" /> })()}
-            {doc ? doc.title : 'Documento'}
+            {doc ? doc.title : t('mobile.doc.document')}
           </h1>
           {doc && (
             <p className="text-xs text-slate-500 mt-0.5">
-              {doc.subject_name || 'Sin asignatura'}{doc.topic_name && <> · <IconFolder size={11} className="inline -mt-0.5" /> {doc.topic_name}</>} · {doc.pages} págs · {new Date(doc.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+              {doc.subject_name || t('common.noSubject')}{doc.topic_name && <> · <IconFolder size={11} className="inline -mt-0.5" /> {doc.topic_name}</>} · {doc.pages} {t('common.pag')} · {new Date(doc.created_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
             </p>
           )}
         </div>
@@ -86,12 +89,12 @@ export default function MobileDocumentPage() {
       {!loading && error && (
         <div className="flex-1 flex flex-col items-center justify-center gap-3 text-center px-8">
           <IconMoodSad size={56} className="text-slate-600" />
-          <p className="text-slate-300 font-semibold">No se pudo cargar el documento</p>
+          <p className="text-slate-300 font-semibold">{t('mobile.doc.loadError')}</p>
           <button
             onClick={() => navigate(-1)}
             className="mt-2 px-5 py-2.5 rounded-xl bg-slate-700 active:bg-slate-600 text-slate-200 text-sm font-medium"
           >
-            Volver
+            {t('mobile.doc.back')}
           </button>
         </div>
       )}
@@ -107,14 +110,14 @@ export default function MobileDocumentPage() {
                          flex items-center justify-center gap-2"
             >
               {openingFile
-                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> Abriendo...</span>
-                : <span className="flex items-center justify-center gap-2"><IconPaperclip size={16} /> Ver documento original</span>}
+                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={16} className="animate-spin" /> {t('mobile.doc.opening')}</span>
+                : <span className="flex items-center justify-center gap-2"><IconPaperclip size={16} /> {t('mobile.doc.viewOriginal')}</span>}
             </button>
           )}
 
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Texto extraído
+              {t('mobile.doc.extractedText')}
             </p>
             {!!doc.text_content && (
               <div className="flex items-center gap-3">
@@ -123,9 +126,9 @@ export default function MobileDocumentPage() {
                     hace el motor del propio movil, gratis y sin limite, y es
                     justo donde mas se usa: escuchar los apuntes de camino a
                     clase. */}
-                <TextToSpeech text={doc.text_content} label="Escuchar" />
+                <TextToSpeech text={doc.text_content} label={t('mobile.doc.listen')} />
                 <button onClick={copiarTexto} className="text-xs text-primary-400 active:text-primary-300">
-                  Copiar
+                  {t('mobile.doc.copy')}
                 </button>
               </div>
             )}
@@ -143,7 +146,7 @@ export default function MobileDocumentPage() {
           ) : (
             <div className="bg-slate-800/60 rounded-2xl p-6 border border-slate-700 text-center">
               <p className="text-slate-500 text-sm">
-                No se extrajo texto de este documento.
+                {t('mobile.doc.noText')}
               </p>
             </div>
           )}

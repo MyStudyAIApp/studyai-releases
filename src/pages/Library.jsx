@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAppStore, api, apiUpload, getAuthHeader, getLocalAuthHeader, IS_WEB, IS_MOBILE, IS_ELECTRON } from '../store/appStore'
@@ -39,9 +40,9 @@ function getDateGroup(dateStr) {
   const today = new Date(); today.setHours(0,0,0,0)
   const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1)
   const docDay = new Date(d); docDay.setHours(0,0,0,0)
-  if (docDay.getTime() === today.getTime())     return 'Hoy'
-  if (docDay.getTime() === yesterday.getTime()) return 'Ayer'
-  return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
+  if (docDay.getTime() === today.getTime())     return i18n.t('library.today')
+  if (docDay.getTime() === yesterday.getTime()) return i18n.t('library.yesterday')
+  return d.toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 function groupDocsByDate(docs) {
@@ -75,7 +76,7 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
             checked={selected}
             onChange={onSelect}
             onClick={e => e.stopPropagation()}
-            aria-label={`Seleccionar ${doc.title}`}
+            aria-label={`${t('library.select')} ${doc.title}`}
             className="w-4 h-4 rounded accent-primary-500 cursor-pointer"
           />
         </div>
@@ -85,7 +86,7 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-slate-100 truncate">{doc.title}</p>
           <div className="flex items-center gap-1.5 flex-wrap mt-1">
-            <span className="text-[10px] text-slate-500">{doc.pages} pág. · {(doc.file_size / 1024 / 1024).toFixed(1)} MB</span>
+            <span className="text-[10px] text-slate-500">{doc.pages} {t('common.pag')} · {(doc.file_size / 1024 / 1024).toFixed(1)} MB</span>
             {doc.subject_name && <span className="badge-blue text-[10px] truncate max-w-[80px]">{doc.subject_name}</span>}
             {doc.topic_name   && <span className="text-[10px] bg-slate-700/70 text-slate-300 border border-slate-600 rounded px-1 truncate max-w-[80px]"><IconFolder size={11} className="inline -mt-0.5" /> {doc.topic_name}</span>}
             {doc.original_available && <RetentionChip createdAt={doc.created_at} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />}
@@ -95,14 +96,14 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
           <button
             onClick={e => { e.stopPropagation(); onDownload(e) }}
             className={`shrink-0 p-1 transition-colors ${downloaded ? 'text-emerald-400' : 'text-amber-400 hover:text-primary-400'}`}
-            title={downloaded ? 'En este móvil y en la nube — pulsa para quitar del móvil' : 'Solo en la nube — pulsa para guardar en el móvil'}
+            title={downloaded ? t('library.onPhoneAndCloud') : t('library.onlyCloud')}
           >{downloading ? <IconLoader2 size={16} className="animate-spin" /> : downloaded ? <IconCloud size={16} /> : <IconDownload size={16} />}</button>
         )}
         {onDownloadOriginal && doc.original_available && (
           <button
             onClick={e => { e.stopPropagation(); onDownloadOriginal(doc, e) }}
             className="shrink-0 p-1 text-amber-400 hover:text-primary-400 transition-colors"
-            title="Descargar el archivo original antes de que se borre"
+            title={t('library.downloadOriginal')}
           >{downloadingOriginal ? <IconLoader2 size={16} className="animate-spin" /> : <IconDownload size={16} />}</button>
         )}
         <button
@@ -135,7 +136,7 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
           checked={selected}
           onChange={onSelect}
           onClick={e => e.stopPropagation()}
-          aria-label={`Seleccionar ${doc.title}`}
+          aria-label={`${t('library.select')} ${doc.title}`}
           className="w-4 h-4 rounded accent-primary-500 cursor-pointer"
         />
       </div>
@@ -149,7 +150,7 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
         {doc.title}
       </span>
 
-      <span className="text-xs text-slate-500 w-16 text-right shrink-0">{doc.pages} pág.</span>
+      <span className="text-xs text-slate-500 w-16 text-right shrink-0">{doc.pages} {t('common.pag')}</span>
       <span className="text-xs text-slate-500 w-16 text-right shrink-0">{(doc.file_size / 1024 / 1024).toFixed(1)} MB</span>
 
       <div className="flex items-center gap-1 w-56 shrink-0 justify-end px-2">
@@ -172,14 +173,14 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
       {doc.original_available && <RetentionChip createdAt={doc.created_at} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />}
 
       <span className="text-xs text-slate-500 w-24 text-right shrink-0 ml-2">
-        {new Date(doc.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+        {new Date(doc.created_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short' })}
       </span>
 
       {onDownloadOriginal && doc.original_available && (
         <button
           onClick={e => { e.stopPropagation(); onDownloadOriginal(doc, e) }}
           className="opacity-0 group-hover:opacity-100 btn-ghost btn-icon btn-sm text-amber-400 shrink-0 ml-1"
-          title="Descargar el archivo original antes de que se borre"
+          title={t('library.downloadOriginal')}
         >{downloadingOriginal ? <IconLoader2 size={16} className="animate-spin" /> : <IconDownload size={16} />}</button>
       )}
 
@@ -191,7 +192,7 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
           return <FastTooltip text={b.title}><span className={`${b.color} text-xs shrink-0 ml-1 opacity-60`}>{b.Icon ? <b.Icon size={13} /> : b.icon}</span></FastTooltip>
         }
         return (
-          <FastTooltip text={syncing ? 'Subiendo…' : b.title}>
+          <FastTooltip text={syncing ? t('library.uploading') : b.title}>
             <button
               onClick={e => { e.stopPropagation(); onSync?.() }}
               disabled={syncing}
@@ -204,7 +205,7 @@ function ListRow({ doc, nameColWidth, selected, onSelect, onNavigate, onDelete, 
       <button
         onClick={e => { e.stopPropagation(); onPodcast() }}
         className="opacity-0 group-hover:opacity-100 btn-ghost btn-icon btn-sm text-slate-400 hover:text-primary-400 shrink-0 ml-1"
-        title="Generar podcast"
+        title={t('library.generatePodcast')}
       ><IconHeadphones size={16} /></button>
 
       <button
@@ -282,7 +283,7 @@ export default function Library() {
           api('POST', `/documents/${doc.id}/mark-downloaded`).catch(() => { /* no crítico */ })
         }
       } catch (err) {
-        addToast(`No se pudo descargar: ${err.message}`, 'error')
+        addToast(`${t('mobile.podcasts.downloadError')}: ${err.message}`, 'error')
       } finally {
         setDownloadingId(null)
       }
@@ -337,7 +338,7 @@ export default function Library() {
         api('POST', `/documents/${doc.id}/mark-downloaded`).catch(() => { /* no crítico, se reintentará en la próxima descarga */ })
       }
     } catch (err) {
-      addToast(`No se pudo descargar: ${err.message}`, 'error')
+      addToast(`${t('mobile.podcasts.downloadError')}: ${err.message}`, 'error')
     } finally {
       setDownloadingOriginalId(null)
     }
@@ -427,7 +428,7 @@ export default function Library() {
       const res = await api('POST', `/documents/multi-generate/${action}`, {
         doc_ids: [...selectedDocs],
       })
-      addToast(action === 'flashcards' ? 'Flashcards combinadas generadas' : 'Examen combinado generado', 'success')
+      addToast(action === 'flashcards' ? t('library.combined.flashcardsDone') : t('library.combined.examDone'), 'success')
       clearSelection()
       navigate(`/document/${res.doc_id}`, {
         state: { autoResult: res.result, autoAction: action }
@@ -464,7 +465,7 @@ export default function Library() {
       if (planDate) {
         try {
           await api('POST', '/exams/reminders', {
-            title: planTitle.trim() || `Plan conjunto (${selectedDocs.size} asignaturas)`,
+            title: planTitle.trim() || t('library.jointPlan.defaultTitle', { count: selectedDocs.size }),
             exam_date: planDate,
             subject_id: planSubjectId ? (isNaN(Number(planSubjectId)) ? planSubjectId : Number(planSubjectId)) : null,
             color: planCustomColor ? planColor : null,
@@ -610,7 +611,7 @@ export default function Library() {
         addToast(`"${doc.title}" importado`, 'success')
         navigate(`/document/${doc.id}`)
       } catch (e) {
-        addToast(`Error importando ${file.name}: ${e.message}`, 'error')
+        addToast(`${t('library.importError', { name: file.name })}: ${e.message}`, 'error')
       }
     }
     setUploading(false)
@@ -637,7 +638,7 @@ export default function Library() {
       setSubjects(prev => [...prev, s])
       setNewSubjectName('')
       setShowNewSubject(false)
-      addToast(`Asignatura "${s.name}" creada`, 'success')
+      addToast(t('library.subjectCreated', { name: s.name }), 'success')
     } catch (e) { addToast(e.message, 'error') }
   }
 
@@ -676,7 +677,7 @@ export default function Library() {
       setSubjects(prev => prev.filter(s => s.id !== subjectId))
       setDocs(prev => prev.map(d => d.subject_id === subjectId ? { ...d, subject_id: null, subject_name: null } : d))
       if (activeSubject === subjectId) setActiveSubject(null)
-      addToast(`Asignatura "${subjectName}" eliminada`, 'success')
+      addToast(t('library.subjectDeleted', { name: subjectName }), 'success')
     } catch (e) { addToast(e.message, 'error') }
   }
 
@@ -709,8 +710,8 @@ export default function Library() {
     e.stopPropagation()
     const doc = docs.find(d => d.id === docId)
     const msg = IS_ELECTRON && doc?.supabase_id && cloudVerified.has(doc.supabase_id)
-      ? '¿Eliminar este documento? Seguirá disponible en la nube (solo se borra de este ordenador).'
-      : '¿Eliminar este documento?'
+      ? t('library.confirmDeleteLocal')
+      : t('library.confirmDelete')
     if (!confirm(msg)) return
     try {
       // Ya no se borra también de la nube — si estaba en ambos sitios, se queda
@@ -736,7 +737,7 @@ export default function Library() {
     try {
       const result = await syncSingleDocument(user, doc)
       if (result.ok) {
-        addToast(result.alreadySynced ? 'Ya estaba sincronizado ✓' : 'Documento subido a la nube ☁️', 'success')
+        addToast(result.alreadySynced ? `${t('library.alreadySynced')} ✓` : `${t('library.uploadedCloud')} ☁️`, 'success')
         const refreshed = await api('GET', `/documents/${doc.id}`)
         setDocs(prev => prev.map(d => d.id === doc.id ? { ...d, supabase_id: refreshed.supabase_id, sync_status: refreshed.sync_status } : d))
         if (refreshed.supabase_id) setCloudVerified(prev => new Set(prev).add(refreshed.supabase_id))
@@ -781,7 +782,7 @@ export default function Library() {
           )}
           <button onClick={e => deleteSubject(s.id, s.name, e)}
             className="hidden group-hover:flex items-center justify-center w-4 h-4 text-slate-500 hover:text-red-400 transition-colors text-xs shrink-0"
-            title="Eliminar asignatura">✕</button>
+            title={t('library.deleteSubject')}>✕</button>
         </div>
       ))}
       <div className="border-t border-slate-800 mt-2 pt-2">
@@ -790,7 +791,7 @@ export default function Library() {
           className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors
             ${activeView === 'summaries' ? 'bg-primary-600/20 text-primary-300' : 'text-slate-400 hover:bg-slate-800'}`}
         >
-          <span>📝</span> Resúmenes
+          <span>📝</span> {t('library.summaries')}
           {summaries.length > 0 && <span className="ml-auto text-xs text-slate-500">{summaries.length}</span>}
         </button>
         <button
@@ -798,7 +799,7 @@ export default function Library() {
           className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors
             ${activeView === 'plans' ? 'bg-primary-600/20 text-primary-300' : 'text-slate-400 hover:bg-slate-800'}`}
         >
-          <span>📅</span> Planes de estudio
+          <span>📅</span> {t('library.plans')}
           {plans.length > 0 && <span className="ml-auto text-xs text-slate-500">{plans.length}</span>}
         </button>
       </div>
@@ -806,7 +807,7 @@ export default function Library() {
         onClick={() => backendReady ? setShowNewSubject(true) : addToast('El servidor aún está arrancando...', 'warning')}
         className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-colors mt-2
           ${backendReady ? 'text-slate-500 hover:text-slate-300 hover:bg-slate-800' : 'text-slate-600 cursor-wait'}`}
-        title={backendReady ? '' : 'Conectando con el servidor...'}
+        title={backendReady ? '' : t('library.connecting')}
       >
         {backendReady ? t("library.newSubject") : '⏳ Conectando...'}
       </button>
@@ -839,7 +840,7 @@ export default function Library() {
         ${showSubjectsMobile ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 pointer-events-none'}
       `}>
         <div className="flex items-center justify-between px-3 pt-3 pb-2 border-b border-slate-800 shrink-0">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Asignaturas</span>
+          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('library.subjects')}</span>
           <button
             onClick={() => setShowSubjectsMobile(false)}
             className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-200 text-xl"
@@ -859,7 +860,7 @@ export default function Library() {
       >
         {pageDragOver && (
           <div className="absolute inset-2 z-20 rounded-2xl border-2 border-dashed border-primary-500 bg-primary-950/40 flex items-center justify-center pointer-events-none">
-            <p className="text-primary-300 font-semibold text-lg">Suelta el PDF para importarlo</p>
+            <p className="text-primary-300 font-semibold text-lg">{t('library.dropPdf')}</p>
           </div>
         )}
 
@@ -869,15 +870,15 @@ export default function Library() {
             <div className="flex items-start gap-3">
               <span className="text-lg leading-none mt-0.5">⏳</span>
               <p className="flex-1 text-xs text-amber-200/90 leading-relaxed">
-                El archivo original (PDF/foto) que subes se borra automáticamente a los <b>10 días</b>
-                (te avisamos por email 3 días antes) — tus resúmenes, fichas y exámenes
-                generados <b>se conservan siempre</b>.
-                Si quieres guardar el archivo original, descárgalo a tu ordenador o móvil antes de que pasen esos días.
+                {t('library.retention1')} <b>{t('library.retentionDays')}</b>
+                {t('library.retention2')}
+                <b>{t('library.retentionKept')}</b>.
+                {t('library.retention3')}
               </p>
               <button
                 onClick={dismissRetentionNotice}
                 className="shrink-0 text-amber-300/70 hover:text-amber-200 transition-colors"
-                title="No volver a mostrar"
+                title={t('library.dontShow')}
               ><IconX size={16} /></button>
             </div>
             <EmailWarningsToggle className="ml-7" />
@@ -893,17 +894,17 @@ export default function Library() {
               className="md:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 text-sm"
             >
               <IconBooks size={14} />
-              <span className="text-xs">{activeSubject ? subjects.find(s => s.id === activeSubject)?.name : 'Asignaturas'}</span>
+              <span className="text-xs">{activeSubject ? subjects.find(s => s.id === activeSubject)?.name : t('library.subjects')}</span>
             </button>
             <h1 className="text-xl font-bold text-slate-100 hidden md:block">
               {activeView === 'summaries'
-                ? 'Resúmenes guardados'
+                ? t('library.savedSummaries')
                 : activeView === 'plans'
-                ? 'Planes de estudio'
+                ? t('library.plans')
                 : activeSubject ? subjects.find(s => s.id === activeSubject)?.name : t("library.title")}
             </h1>
             <h1 className="text-xl font-bold text-slate-100 md:hidden">
-              {activeView === 'summaries' ? 'Resúmenes' : activeView === 'plans' ? 'Planes' : t("library.title")}
+              {activeView === 'summaries' ? t('library.summaries') : activeView === 'plans' ? t('library.plansShort') : t("library.title")}
             </h1>
           </div>
           <div className="flex gap-2 items-center">
@@ -963,12 +964,12 @@ export default function Library() {
         {activeView === 'summaries' && (
           <div className="pb-24">
             {loadingSummaries ? (
-              <div className="flex justify-center py-20"><Spinner label="Cargando resúmenes..." /></div>
+              <div className="flex justify-center py-20"><Spinner label={t('library.loadingSummaries')} /></div>
             ) : summaries.length === 0 ? (
               <div className="border-2 border-dashed border-slate-700 rounded-2xl p-16 text-center">
                 <div className="text-5xl mb-3">📝</div>
-                <p className="text-slate-300 font-medium mb-1">Sin resúmenes guardados</p>
-                <p className="text-slate-500 text-sm">Genera un resumen en cualquier documento y pulsa "Guardar"</p>
+                <p className="text-slate-300 font-medium mb-1">{t('library.noSummaries')}</p>
+                <p className="text-slate-500 text-sm">{t('library.noSummariesDesc')}</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -988,14 +989,14 @@ export default function Library() {
                     <button
                       onClick={e => { e.stopPropagation(); navigate(`/document/${s.document_id}`, { state: { openPodcast: true } }) }}
                       className="opacity-0 group-hover:opacity-100 btn-ghost btn-icon btn-sm text-slate-400 hover:text-primary-400 shrink-0"
-                      title="Generar podcast"
+                      title={t('library.generatePodcast')}
                     ><IconHeadphones size={16} /></button>
                     <div className="text-right shrink-0">
                       <span className={`text-[10px] rounded px-1.5 py-0.5 ${s.type === 'extended_summary' ? 'bg-emerald-900/50 text-emerald-300 border border-emerald-700' : 'bg-slate-700/70 text-slate-400 border border-slate-600'}`}>
-                        {s.type === 'extended_summary' ? 'Ampliado' : 'Resumen'}
+                        {s.type === 'extended_summary' ? t('library.extended') : t('mobile.library.summary')}
                       </span>
                       <p className="text-xs text-slate-500 mt-1">
-                        {new Date(s.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        {new Date(s.created_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
                       </p>
                     </div>
                   </div>
@@ -1009,12 +1010,12 @@ export default function Library() {
         {activeView === 'plans' && (
           <div className="pb-24">
             {loadingPlans ? (
-              <div className="flex justify-center py-20"><Spinner label="Cargando planes..." /></div>
+              <div className="flex justify-center py-20"><Spinner label={t('library.loadingPlans')} /></div>
             ) : plans.length === 0 ? (
               <div className="border-2 border-dashed border-slate-700 rounded-2xl p-16 text-center">
                 <div className="text-5xl mb-3">📅</div>
-                <p className="text-slate-300 font-medium mb-1">Sin planes de estudio guardados</p>
-                <p className="text-slate-500 text-sm">Selecciona varios documentos y pulsa "Plan de estudio conjunto" para crear uno</p>
+                <p className="text-slate-300 font-medium mb-1">{t('library.noPlans')}</p>
+                <p className="text-slate-500 text-sm">{t('library.noPlansDesc')}</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -1043,22 +1044,22 @@ export default function Library() {
                           <div className="flex-1 max-w-[160px] h-1.5 rounded-full bg-slate-700 overflow-hidden">
                             <div className="h-full bg-primary-500 rounded-full" style={{ width: `${pct}%` }} />
                           </div>
-                          <span className="text-xs text-slate-500 shrink-0">{p.done_topics}/{p.total_topics} temas</span>
+                          <span className="text-xs text-slate-500 shrink-0">{p.done_topics}/{p.total_topics} {t('library.topicsLower')}</span>
                         </div>
                       </div>
                       <div className="text-right shrink-0 flex items-center gap-3">
                         <div>
                           {p.exam_date && (
                             <p className="text-xs text-slate-400">
-                              📆 {new Date(p.exam_date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                              📆 {new Date(p.exam_date).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
                             </p>
                           )}
-                          <p className="text-xs text-slate-500 mt-1">{p.days_count} días</p>
+                          <p className="text-xs text-slate-500 mt-1">{t('mobile.settings.days', { count: p.days_count })}</p>
                         </div>
                         <button
                           onClick={e => deletePlan(p.doc_id, e)}
                           className="hidden group-hover:flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-900/20 transition-colors shrink-0"
-                          title="Eliminar plan"
+                          title={t('library.deletePlan')}
                         >
                           <IconTrash size={15} />
                         </button>
@@ -1111,7 +1112,7 @@ export default function Library() {
                       checked={sel}
                       onChange={() => toggleSelect(doc.id)}
                       onClick={e => e.stopPropagation()}
-                      aria-label={`Seleccionar ${doc.title}`}
+                      aria-label={`${t('library.select')} ${doc.title}`}
                       className="w-4 h-4 rounded accent-primary-500 cursor-pointer"
                     />
                   </div>
@@ -1128,7 +1129,7 @@ export default function Library() {
                       <button
                         onClick={e => toggleDownload(doc, e)}
                         className={`transition-opacity ${downloadedIds.has(doc.id) ? 'text-emerald-400' : 'text-amber-400 hover:text-primary-400'} ${isNarrow ? '' : 'opacity-0 group-hover:opacity-100'}`}
-                        title={downloadedIds.has(doc.id) ? 'En este móvil y en la nube — pulsa para quitar del móvil' : 'Solo en la nube — pulsa para guardar en el móvil'}
+                        title={downloadedIds.has(doc.id) ? t('library.onPhoneAndCloud') : t('library.onlyCloud')}
                       >{downloadingId === doc.id ? <IconLoader2 size={14} className="animate-spin" /> : downloadedIds.has(doc.id) ? <IconCloud size={14} /> : <IconDownload size={14} />}</button>
                     )}
                     {!IS_MOBILE && doc.original_available && (
@@ -1136,16 +1137,16 @@ export default function Library() {
                         onClick={e => downloadOriginal(doc, e)}
                         disabled={downloadingOriginalId === doc.id}
                         className={`text-amber-400 hover:text-primary-400 transition-opacity ${isNarrow ? '' : 'opacity-0 group-hover:opacity-100'}`}
-                        title="Descargar el archivo original antes de que se borre"
+                        title={t('library.downloadOriginal')}
                       >{downloadingOriginalId === doc.id ? <IconLoader2 size={14} className="animate-spin" /> : <IconDownload size={14} />}</button>
                     )}
                     <button
                       onClick={e => { e.stopPropagation(); navigate(`/document/${doc.id}`, { state: { openPodcast: true } }) }}
                       className={`text-slate-400 hover:text-primary-400 transition-opacity ${isNarrow ? '' : 'opacity-0 group-hover:opacity-100'}`}
-                      title="Generar podcast"
+                      title={t('library.generatePodcast')}
                     ><IconHeadphones size={14} /></button>
                     {(() => { const b = syncBadge(doc, cloudVerified); return b ? (
-                      <FastTooltip text={syncingDocId === doc.id ? 'Subiendo…' : b.title}>
+                      <FastTooltip text={syncingDocId === doc.id ? t('library.uploading') : b.title}>
                         <button
                           onClick={e => { e.stopPropagation(); handleSyncDoc(doc) }}
                           disabled={syncingDocId === doc.id}
@@ -1162,7 +1163,7 @@ export default function Library() {
                     <div className="min-w-0">
                       <p className="font-semibold text-slate-100 truncate pr-6">{doc.title}</p>
                       <p className="text-xs text-slate-400 mt-1">
-                        {doc.pages} páginas · {(doc.file_size / 1024 / 1024).toFixed(1)} MB
+                        {doc.pages} {t('common.pages')} · {(doc.file_size / 1024 / 1024).toFixed(1)} MB
                       </p>
                       <div className="flex flex-wrap items-center gap-1.5 mt-2">
                         {doc.file_type === 'foto'      && <span className="text-[10px] bg-cyan-900/50 text-cyan-300 border border-cyan-700 rounded px-1">{t("library.photo")}</span>}
@@ -1178,7 +1179,7 @@ export default function Library() {
                   </div>
                   <div className="flex items-center gap-2 mt-3 pl-6">
                     <p className="text-xs text-slate-500">
-                      {new Date(doc.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(doc.created_at).toLocaleDateString(i18n.language, { day: 'numeric', month: 'short', year: 'numeric' })}
                     </p>
                     {doc.original_available && <RetentionChip createdAt={doc.created_at} downloadedAt={doc.downloaded_at} downloadedPlatform={doc.downloaded_platform} />}
                   </div>
@@ -1199,7 +1200,7 @@ export default function Library() {
                 <div
                   onMouseDown={onResizeStart}
                   className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-full flex items-center justify-center cursor-col-resize group/h z-10"
-                  title="Arrastrar para redimensionar"
+                  title={t('library.dragResize')}
                 >
                   <div className="w-px h-4 bg-slate-600 group-hover/h:bg-primary-400 group-hover/h:h-5 transition-all rounded-full" />
                 </div>
@@ -1271,7 +1272,7 @@ export default function Library() {
               </span>
               {selectedDocs.size >= 2 && (
                 <button onClick={openSummaryModal} className="btn-secondary btn-sm shrink-0">
-                  📝 Resumen combinado
+                  📝 {t('library.combined.summary')}
                 </button>
               )}
               {selectedDocs.size >= 2 && (
@@ -1280,7 +1281,7 @@ export default function Library() {
                   disabled={!!generatingMultiAction}
                   className="btn-secondary btn-sm shrink-0"
                 >
-                  {generatingMultiAction === 'flashcards' ? '⏳ Generando...' : '🗂️ Flashcards combinadas'}
+                  {generatingMultiAction === 'flashcards' ? `⏳ ${t('library.generating')}` : `🗂️ ${t('library.combined.flashcards')}`}
                 </button>
               )}
               {selectedDocs.size >= 2 && (
@@ -1289,7 +1290,7 @@ export default function Library() {
                   disabled={!!generatingMultiAction}
                   className="btn-secondary btn-sm shrink-0"
                 >
-                  {generatingMultiAction === 'test' ? '⏳ Generando...' : '✅ Examen combinado'}
+                  {generatingMultiAction === 'test' ? `⏳ ${t('library.generating')}` : `✅ ${t('library.combined.exam')}`}
                 </button>
               )}
               {selectedDocs.size >= 2 && (
@@ -1306,7 +1307,7 @@ export default function Library() {
                 </button>
               )}
               <button onClick={clearSelection} className="btn-ghost btn-sm text-slate-400 hover:text-slate-200 shrink-0">
-                ✕ Cancelar
+                ✕ {t('common.cancel')}
               </button>
             </div>
           </div>
@@ -1314,11 +1315,11 @@ export default function Library() {
       </div>
 
       {/* ── Multi-summary modal ── */}
-      <Modal open={showSummaryModal} onClose={() => !generatingSummary && setShowSummaryModal(false)} title="Resumen combinado" size="sm">
+      <Modal open={showSummaryModal} onClose={() => !generatingSummary && setShowSummaryModal(false)} title={t('library.combined.summary')} size="sm">
         <div className="space-y-4">
           <div className="bg-slate-900/60 rounded-lg p-3 space-y-1">
             <p className="text-xs text-slate-500 font-medium mb-2 uppercase tracking-wider">
-              {selectedDocs.size} documentos seleccionados
+              {t('library.selectedCount', { count: selectedDocs.size })}
             </p>
             {selectedNames.map((name, i) => (
               <div key={i} className="flex items-center gap-2 text-sm text-slate-300">
@@ -1329,15 +1330,15 @@ export default function Library() {
 
           {summaryInfo && (
             <p className="text-xs text-slate-500">
-              Estrategia: {summaryInfo.strategy === 'multi_pass' ? 'multi-paso (documentos largos)' : 'paso único'}
+              {t('library.strategy')}: {summaryInfo.strategy === 'multi_pass' ? t('library.multiPassLong') : t('home.combineModal.singlePass')}
             </p>
           )}
 
           <div>
-            <label className="text-sm text-slate-400 block mb-1.5">Título <span className="text-slate-600">(opcional)</span></label>
+            <label className="text-sm text-slate-400 block mb-1.5">{t('library.titleLabel')} <span className="text-slate-600">({t('common.optional')})</span></label>
             <input
               className="input w-full"
-              placeholder={`Resumen combinado (${selectedDocs.size} documentos)`}
+              placeholder={t('library.combined.summaryPlaceholder', { count: selectedDocs.size })}
               value={summaryTitle}
               onChange={e => setSummaryTitle(e.target.value)}
             />
@@ -1345,10 +1346,10 @@ export default function Library() {
 
           <div className="flex gap-2 pt-1">
             <button onClick={() => setShowSummaryModal(false)} className="btn-secondary flex-1" disabled={generatingSummary}>
-              Cancelar
+                {t('common.cancel')}
             </button>
             <button onClick={generateMultiSummary} className="btn-primary flex-1" disabled={generatingSummary}>
-              {generatingSummary ? '⏳ Generando...' : '📝 Generar resumen'}
+              {generatingSummary ? `⏳ ${t('library.generating')}` : `📝 ${t('library.generateSummary')}`}
             </button>
           </div>
         </div>
@@ -1360,7 +1361,7 @@ export default function Library() {
           {/* Selected docs list */}
           <div className="bg-slate-900/60 rounded-lg p-3 space-y-1">
             <p className="text-xs text-slate-500 font-medium mb-2 uppercase tracking-wider">
-              {selectedDocs.size} documentos seleccionados
+              {t('library.selectedCount', { count: selectedDocs.size })}
             </p>
             {selectedNames.map((name, i) => (
               <div key={i} className="flex items-center gap-2 text-sm text-slate-300">
@@ -1371,7 +1372,7 @@ export default function Library() {
 
           {/* Exam date */}
           <div>
-            <label className="text-sm text-slate-400 block mb-1.5">Fecha del examen</label>
+            <label className="text-sm text-slate-400 block mb-1.5">{t('library.jointPlan.examDate')}</label>
             <input
               type="date"
               className="input w-full"
@@ -1383,10 +1384,10 @@ export default function Library() {
 
           {/* Optional title */}
           <div>
-            <label className="text-sm text-slate-400 block mb-1.5">Título del plan <span className="text-slate-600">(opcional)</span></label>
+            <label className="text-sm text-slate-400 block mb-1.5">{t('library.jointPlan.title')} <span className="text-slate-600">({t('common.optional')})</span></label>
             <input
               className="input w-full"
-              placeholder={`Plan conjunto (${selectedDocs.size} asignaturas)`}
+              placeholder={t('library.jointPlan.defaultTitle', { count: selectedDocs.size })}
               value={planTitle}
               onChange={e => setPlanTitle(e.target.value)}
             />
@@ -1395,7 +1396,7 @@ export default function Library() {
           {/* Aviso de examen en el calendario — mismo patrón que el formulario de Inicio */}
           {planDate && (
             <div className="bg-slate-900/60 rounded-lg p-3 space-y-2">
-              <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">📅 Se creará un aviso de examen con esta fecha</p>
+              <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">📅 {t('library.jointPlan.reminderInfo')}</p>
               <div className="flex flex-wrap items-center gap-2">
                 <select value={planSubjectId} onChange={e => {
                     setPlanSubjectId(e.target.value)
@@ -1405,7 +1406,7 @@ export default function Library() {
                     }
                   }}
                   className="input text-sm py-1.5 flex-1 min-w-32">
-                  <option value=''>Sin asignatura</option>
+                  <option value=''>{t('common.noSubject')}</option>
                   {subjects.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
                 </select>
                 <label className="flex items-center gap-1.5 text-xs text-slate-400">
@@ -1418,7 +1419,7 @@ export default function Library() {
                       }
                     }}
                     className="w-3.5 h-3.5" />
-                  Color propio
+                  {t('mobile.exams.customColor')}
                 </label>
                 {planCustomColor && (
                   <input type="color" value={planColor} onChange={e => setPlanColor(e.target.value)}
@@ -1430,7 +1431,7 @@ export default function Library() {
 
           {/* Horas disponibles por día */}
           <div>
-            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2">Horas disponibles / semana</p>
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2">{t('library.jointPlan.hoursWeek')}</p>
             <WeeklyHoursWidget
               compact
               hours={planWeeklyHours}
@@ -1444,14 +1445,14 @@ export default function Library() {
               className="btn-secondary flex-1"
               disabled={generatingPlan}
             >
-              Cancelar
+              {t('common.cancel')}
             </button>
             <button
               onClick={generateMultiPlan}
               className="btn-primary flex-1"
               disabled={generatingPlan || !planDate}
             >
-              {generatingPlan ? '⏳ Generando...' : '📅 Generar plan'}
+              {generatingPlan ? `⏳ ${t('library.generating')}` : `📅 ${t('library.jointPlan.generate')}`}
             </button>
           </div>
         </div>
@@ -1512,13 +1513,13 @@ export default function Library() {
             autoFocus
           />
           <div className="flex items-center gap-3">
-            <label className="text-sm text-slate-400">Color:</label>
+            <label className="text-sm text-slate-400">{t('library.color')}:</label>
             <input type="color" value={newSubjectColor} onChange={e => setNewSubjectColor(e.target.value)}
               className="w-10 h-10 rounded cursor-pointer bg-transparent border-0" />
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setShowNewSubject(false)} className="btn-secondary flex-1">Cancelar</button>
-            <button onClick={createSubject} className="btn-primary flex-1">Crear</button>
+            <button onClick={() => setShowNewSubject(false)} className="btn-secondary flex-1">{t('common.cancel')}</button>
+            <button onClick={createSubject} className="btn-primary flex-1">{t('common.create')}</button>
           </div>
         </div>
       </Modal>

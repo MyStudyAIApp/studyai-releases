@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next'
+import i18n from '../../i18n'
 import { useState } from 'react'
 import { useAppStore, getAuthHeader, getLocalAuthHeader } from '../../store/appStore'
 
 export default function ExportPanel({ result, doc, onClose }) {
+  useTranslation() // re-render al cambiar de idioma
   const { apiBase, addToast } = useAppStore()
   const [exporting, setExporting] = useState(null)
 
@@ -14,7 +17,7 @@ export default function ExportPanel({ result, doc, onClose }) {
       const res = await fetch(`${apiBase}/export/${format}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeader, ...localHeader },
-        body: JSON.stringify({ result, doc_title: doc?.title || 'Documento' }),
+        body: JSON.stringify({ result, doc_title: doc?.title || i18n.t('mobile.doc.document') }),
       })
       if (!res.ok) throw new Error(await res.text())
 
@@ -26,9 +29,9 @@ export default function ExportPanel({ result, doc, onClose }) {
       a.download = `${doc?.title || 'studyai'}_${result.type}.${ext}`
       a.click()
       URL.revokeObjectURL(url)
-      addToast(`Exportado como ${ext.toUpperCase()}`, 'success')
+      addToast(i18n.t('export.done', { ext: ext.toUpperCase() }), 'success')
     } catch (e) {
-      addToast(`Error exportando: ${e.message}`, 'error')
+      addToast(`${i18n.t('export.error')}: ${e.message}`, 'error')
     } finally {
       setExporting(null)
     }
@@ -52,8 +55,8 @@ export default function ExportPanel({ result, doc, onClose }) {
         >
           <span className="text-xl">🖨️</span>
           <div className="text-left">
-            <p className="font-medium text-sm">Imprimir</p>
-            <p className="text-xs text-slate-400">Abre el diálogo de impresión del sistema</p>
+            <p className="font-medium text-sm">{i18n.t('whiteboard.print')}</p>
+            <p className="text-xs text-slate-400">{i18n.t('export.printDesc')}</p>
           </div>
         </button>
 
@@ -65,9 +68,9 @@ export default function ExportPanel({ result, doc, onClose }) {
           <span className="text-xl">📝</span>
           <div className="text-left">
             <p className="font-medium text-sm">
-              {exporting === 'word' ? 'Exportando...' : 'Exportar a Word (.docx)'}
+              {exporting === 'word' ? i18n.t('export.exporting') : i18n.t('export.word')}
             </p>
-            <p className="text-xs text-slate-400">Documento editable con formato</p>
+            <p className="text-xs text-slate-400">{i18n.t('export.wordDesc')}</p>
           </div>
           {exporting === 'word' && <span className="ml-auto animate-spin">⟳</span>}
         </button>
@@ -80,16 +83,16 @@ export default function ExportPanel({ result, doc, onClose }) {
           <span className="text-xl">📄</span>
           <div className="text-left">
             <p className="font-medium text-sm">
-              {exporting === 'pdf' ? 'Exportando...' : 'Exportar a PDF'}
+              {exporting === 'pdf' ? i18n.t('export.exporting') : i18n.t('export.pdf')}
             </p>
-            <p className="text-xs text-slate-400">PDF listo para imprimir o compartir</p>
+            <p className="text-xs text-slate-400">{i18n.t('export.pdfDesc')}</p>
           </div>
           {exporting === 'pdf' && <span className="ml-auto animate-spin">⟳</span>}
         </button>
       </div>
 
       <p className="text-xs text-slate-500 pt-2">
-        💡 La impresión también guarda como PDF desde el diálogo del sistema.
+        💡 {i18n.t('export.tip')}
       </p>
     </div>
   )
