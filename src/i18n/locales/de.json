@@ -1890,7 +1890,8 @@
     "readDesc": "Wenn eine Zahl oder ein Zeichen nicht mit deiner Aufgabe übereinstimmt, korrigiere es — das Ergebnis hängt davon ab.",
     "fix": "Aufgabenstellung korrigieren",
     "retention": "Die Aufgaben, die du hier löst, werden automatisch gespeichert und für {{days}} Tage aufbewahrt — danach werden sie automatisch gelöscht (wir benachrichtigen dich 3 Tage vorher per E-Mail). Wenn du eine davon für immer behalten möchtest, lade sie mit dem ⬇️-Button herunter, bevor sie abläuft.",
-    "emptyDesc": "Lade ein Foto hoch, um zu beginnen"
+    "emptyDesc": "Lade ein Foto hoch, um zu beginnen",
+    "recent": "Deine Übungen der letzten {{days}} Tage"
   },
   "results": {
     "labels": {
@@ -2149,7 +2150,8 @@
   "canarias": {
     "title": "Bevor du bezahlst...",
     "question": "Wo wohnst du? Wir brauchen das, um die korrekte Steuer anzuwenden.",
-    "rest": "Rest von Spanien / Ausland"
+    "rest": "Rest von Spanien / Ausland",
+    "ceuta": "Ceuta oder Melilla"
   },
   "schema": {
     "section": "Abschn.",

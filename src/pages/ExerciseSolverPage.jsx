@@ -298,7 +298,7 @@ export default function ExerciseSolverPage() {
           <>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
-                Tus ejercicios de los últimos {RETENTION_DAYS} días
+                {i18n.t('solver.recent', { days: RETENTION_DAYS })}
               </h2>
             </div>
 

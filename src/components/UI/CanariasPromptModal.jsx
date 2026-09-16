@@ -28,7 +28,7 @@ export default function CanariasPromptModal({ onAnswer, onClose }) {
             onClick={() => onAnswer('ceuta_melilla')}
             className="w-full bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold py-2.5 rounded-xl transition-all"
           >
-            Ceuta o Melilla
+            {i18n.t('canarias.ceuta')}
           </button>
         </div>
         <button onClick={onClose} className="w-full text-slate-500 hover:text-slate-300 text-xs mt-4">

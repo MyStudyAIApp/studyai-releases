@@ -1890,7 +1890,8 @@
     "readDesc": "Si un nombre ou un signe ne correspond pas à ton exercice, corrige-le — le résultat en dépend.",
     "fix": "Corriger l'énoncé",
     "retention": "Les exercices que tu résous ici sont enregistrés automatiquement et conservés pendant {{days}} jours — passé ce délai, ils sont automatiquement supprimés (nous te prévenons par email 3 jours avant). Si tu veux en garder un pour toujours, télécharge-le avec le bouton ⬇️ avant qu'il n'expire.",
-    "emptyDesc": "Télécharge une photo pour commencer"
+    "emptyDesc": "Télécharge une photo pour commencer",
+    "recent": "Tes exercices des {{days}} derniers jours"
   },
   "results": {
     "labels": {
@@ -2149,7 +2150,8 @@
   "canarias": {
     "title": "Avant de payer...",
     "question": "Où habites-tu ? Nous en avons besoin pour t'appliquer la taxe correcte.",
-    "rest": "Reste de l'Espagne / étranger"
+    "rest": "Reste de l'Espagne / étranger",
+    "ceuta": "Ceuta ou Melilla"
   },
   "schema": {
     "section": "Sect.",

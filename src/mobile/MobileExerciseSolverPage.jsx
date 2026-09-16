@@ -230,7 +230,7 @@ export default function MobileExerciseSolverPage() {
             {/* Ejercicios de los últimos 10 días */}
             <div className="flex-1 overflow-y-auto -mx-5 px-5">
               <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 mt-2">
-                Tus ejercicios de los últimos {RETENTION_DAYS} días
+                {t('solver.recent', { days: RETENTION_DAYS })}
               </h2>
 
               {showRetentionNotice && (

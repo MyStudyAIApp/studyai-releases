@@ -1890,7 +1890,8 @@
     "readDesc": "Si algún número o signo no coincide con tu ejercicio, corrígelo — el resultado depende de ello.",
     "fix": "Corregir enunciado",
     "retention": "Los ejercicios que resuelves aquí se guardan solos y se conservan durante {{days}} días — pasado ese plazo se borran automáticamente (te avisamos por email 3 días antes). Si quieres quedarte con alguno para siempre, descárgalo con el botón ⬇️ antes de que caduque.",
-    "emptyDesc": "Sube una foto para empezar"
+    "emptyDesc": "Sube una foto para empezar",
+    "recent": "Tus ejercicios de los últimos {{days}} días"
   },
   "results": {
     "labels": {
@@ -2149,7 +2150,8 @@
   "canarias": {
     "title": "Antes de pagar...",
     "question": "¿Dónde resides? Lo necesitamos para aplicarte el impuesto correcto.",
-    "rest": "Resto de España / extranjero"
+    "rest": "Resto de España / extranjero",
+    "ceuta": "Ceuta o Melilla"
   },
   "schema": {
     "section": "Secc.",

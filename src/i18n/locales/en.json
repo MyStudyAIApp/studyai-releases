@@ -1890,7 +1890,8 @@
     "readDesc": "If any number or sign doesn't match your exercise, correct it — the result depends on it.",
     "fix": "Correct problem statement",
     "retention": "Exercises you solve here are saved automatically and kept for {{days}} days — after that period they are automatically deleted (we'll notify you by email 3 days before). If you want to keep any forever, download it with the ⬇️ button before it expires.",
-    "emptyDesc": "Upload a photo to start"
+    "emptyDesc": "Upload a photo to start",
+    "recent": "Your exercises from the last {{days}} days"
   },
   "results": {
     "labels": {
@@ -2149,7 +2150,8 @@
   "canarias": {
     "title": "Before paying...",
     "question": "Where do you reside? We need this to apply the correct tax.",
-    "rest": "Rest of Spain / abroad"
+    "rest": "Rest of Spain / abroad",
+    "ceuta": "Ceuta or Melilla"
   },
   "schema": {
     "section": "Sec.",
