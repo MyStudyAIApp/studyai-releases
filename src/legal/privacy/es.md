@@ -31,7 +31,7 @@ Recogemos datos sobre usted automáticamente, por ejemplo, cuando visita  mystud
 - Hosting e infrastructura de backend
 - Optimización y distribución del tráfico
 - Pagos y suscripciones
-- Publicidad (no activa actualmente — ver la sección "Publicidad")
+- Notificaciones
 
 ## Titular y Responsable del tratamiento de los Datos
 Responsable del tratamiento: Sergio Gómez Negrín
@@ -68,7 +68,7 @@ Los Datos relativos al Usuario son recogidos para permitir al Titular prestar su
 - Optimización y distribución del tráfico
 - Monitorización de la infrastructura
 - Pagos y suscripciones
-- Publicidad (no activa actualmente — ver la sección "Publicidad")
+- Notificaciones
 
 ## Información detallada del Tratamiento de los Datos Personales
 
@@ -183,6 +183,29 @@ Cloudflare Turnstile se utiliza además en el formulario de registro para distin
 ### Mistral AI
 Servicio de inteligencia artificial (Mistral AI, Francia) usado para generar resumenes, examenes, fichas de estudio y otros contenidos a partir del contenido de los documentos del usuario. Cuando el documento es un PDF escaneado o una foto y el texto no se puede leer de otro modo (por ejemplo, fórmulas manuscritas), también se envía la imagen de la página al servicio. Los documentos y textos facilitados por el usuario no se utilizan para entrenar modelos públicos de Inteligencia Artificial de Mistral AI ni de ningún otro proveedor.
 
+### Inicio de sesión con Google
+Servicio de identificación prestado por Google Ireland Limited (Irlanda) que permite al Usuario crear su cuenta y acceder a ella con su cuenta de Google, sin tener que elegir una contraseña nueva. Es una alternativa opcional al alta con correo electrónico y contraseña. Al utilizarlo, esta Aplicación recibe de Google los datos básicos del perfil necesarios para crear la cuenta, y Google conoce que el Usuario ha accedido a este Servicio. Esta Aplicación nunca recibe la contraseña de la cuenta de Google del Usuario.
+
+### Datos Personales tratados:
+- Correo electrónico
+- Nombre de la cuenta
+- Identificador de la cuenta de Google
+- Imagen de perfil, cuando el Usuario la tenga
+
+### Servicio prestado por:
+- Google Ireland Limited (Irlanda)
+
+### Notificaciones
+Esta Aplicación puede enviar avisos al dispositivo del Usuario: recordatorios de examen y avisos previos a la eliminación automática de sus archivos. Los avisos son opcionales y solo se envían si el Usuario los activa expresamente desde la propia Aplicación. Puede desactivarlos en cualquier momento desde los ajustes de la Aplicación o desde los del navegador o el sistema operativo, y al hacerlo la suscripción se elimina.
+
+### Notificaciones web (Web Push)
+Cuando el Usuario activa los avisos, su navegador genera una dirección de entrega (endpoint) y unas claves de cifrado que esta Aplicación conserva para poder hacerle llegar el mensaje. La entrega material la realiza el servicio de notificaciones del navegador que utilice el Usuario — Google (Chrome y navegadores derivados), Mozilla (Firefox) o Apple (Safari) —, que por su propia naturaleza conoce el momento de la entrega. El contenido del aviso viaja cifrado de extremo a extremo y esos servicios no pueden leerlo.
+
+### Datos Personales tratados:
+- Dirección de entrega (endpoint) generada por el navegador
+- Claves de cifrado de la suscripción
+- Identificador de usuario
+
 ### Pagos y suscripciones
 
 ### RevenueCat
@@ -219,24 +242,6 @@ Servicio de facturación electrónica (BeeL, España), utilizado para emitir la 
 - Correo electrónico
 - Importe, concepto y fecha de cada operación
 
-### Publicidad
-Meta Pixel y TikTok Pixel no están activos actualmente en esta Aplicación. Si en el futuro se activan, su ejecución quedará condicionada al consentimiento explícito y previo del Usuario a través del banner de gestión de cookies, y se desactivarán automáticamente si el Usuario indica ser menor de edad. Esta Aplicación no dirige publicidad personalizada a menores de edad.
-Este tipo de servicio permite que se utilicen los Datos de los Usuarios para fines de comunicación publicitaria. Estas comunicaciones se muestran en forma de banners y otros anuncios en esta Aplicación, posiblemente basados en los intereses de los Usuarios. Esto no significa que todos los Datos Personales sean utilizados para esta finalidad. La información y condiciones de uso se detallan más adelante. Algunos de los servicios enumerados a continuación pueden emplear Rastreadores para identificar a los Usuarios, behavioral retargeting, es decir, mostrar anuncios publicitarios personalizados en base a los intereses y al comportamiento del Usuario, o para medir el rendimiento de los anuncios. Para obtener más información, por favor verifique las políticas de privacidad de los servicios correspondientes. Los servicios de este tipo normalmente permiten a los Usuarios inhabilitar dicho seguimiento. Los Usuarios pueden averiguar cómo inhabilitar la publicidad basada en intereses de forma más general visitando la sección sobre autoexclusión del presente documento.
-
-### Meta Pixel (Facebook Ads)
-Datos Personales tratados: Rastreadores
-Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
-
-### Datos Personales tratados:
-- Rastreadores
-
-### TikTok Pixel (TikTok Ads)
-Datos Personales tratados: Rastreadores
-Píxel de seguimiento de conversiones de TikTok Ads, usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
-
-### Datos Personales tratados:
-- Rastreadores
-
 ## Información sobre la inhabilitación de la publicidad basada en intereses
 Además de las funcionalidades de inhabilitación ofrecidas por cualquiera de los servicios enumerados en el presente
 documento, los Usuarios podrán obtener más información general sobre cómo inhabilitar la
@@ -252,6 +257,9 @@ El archivo original (PDF o foto) que el usuario sube se conserva durante 10 día
 
 ### Conservación de datos – ejercicios resueltos
 En la función "Resolver ejercicio", el enunciado y la solución de cada ejercicio resuelto se guardan automáticamente durante 10 días para que el usuario pueda consultarlo. Pasado ese plazo se borra automáticamente, avisando por email al usuario 3 días antes. El usuario puede descargar el ejercicio a su dispositivo antes de que caduque, y puede desactivar el aviso por email desde la propia aplicación.
+
+### Conservación de datos – registros de uso
+Los registros de consumo de los servicios de inteligencia artificial, que sostienen las cuotas de uso y la facturación, se conservan 24 meses desde cada operación. Los registros de qué funciones de la Aplicación se utilizan se conservan 12 meses. Cumplido el plazo se eliminan automáticamente. Ambos se borran antes si el Usuario cierra su cuenta.
 
 ### Transferencias internacionales de datos
 Algunos de los proveedores enumerados en este documento (entre otros, DeepInfra, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.

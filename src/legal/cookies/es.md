@@ -26,7 +26,7 @@ No se ha designado Delegado de Protección de Datos por no concurrir ninguno de 
 ## Cómo esta Aplicación utiliza Rastreadores
 
 ### Estado actual (importante)
-A día de hoy esta Aplicación **solo utiliza Rastreadores estrictamente necesarios**: los que mantienen la sesión iniciada, los de seguridad de la red y los que guardan preferencias que el propio Usuario ha elegido (idioma, tema visual). Ninguno sirve para analítica, perfilado ni publicidad.
+A día de hoy esta Aplicación **solo utiliza Rastreadores estrictamente necesarios**: los que mantienen la sesión iniciada, los de seguridad de la red, los que guardan preferencias que el propio Usuario ha elegido (idioma, tema visual) y los que registran los errores de la Aplicación para poder corregirlos. Ninguno sirve para analítica, medición de audiencia, perfilado ni publicidad.
 Por ese motivo **no se muestra un banner de consentimiento de cookies**: la normativa no lo exige para esta clase de Rastreadores. Si algún día se activara un Rastreador que sí requiera consentimiento, se habilitará un banner previo y se actualizará este documento antes de hacerlo.
 
 ### Necesarios
@@ -74,26 +74,21 @@ La modalidad de integración de Cloudflare prevé que filtre todo el tráfico de
 - _cfuvid: indefinida
 - cf_clearance: 30 minutos
 
-### Marketing
-Esta Aplicación **no utiliza actualmente ningún Rastreador de marketing o publicidad**. Los Rastreadores que se describen a continuación están previstos por si en el futuro se activaran, en cuyo caso servirían para ofrecer anuncios personalizados o contenidos de marketing y medir su rendimiento, y solo se ejecutarían con el consentimiento previo del Usuario.
-
-### Rastreadores gestionados por terceros
-
-Meta Pixel y TikTok Pixel no están activos actualmente en esta Aplicación. Si en el futuro se activan, su ejecución quedará condicionada al consentimiento explícito y previo del Usuario a través de un banner de gestión de cookies que se habilitará a tal efecto.
-
-### Meta Pixel (Facebook Ads)
-Datos Personales tratados: Rastreadores
-Píxel de seguimiento de conversiones de Meta (Facebook/Instagram Ads), usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+### Sentry
+Empresa: Functional Software, Inc.
+Lugar de tratamiento: Unión Europea — región de datos de Fráncfort (Alemania)
+Datos Personales tratados: Datos de uso, Dirección IP
+Sentry es el servicio que registra los errores que se producen en la Aplicación para poder corregirlos y detectar fallos de seguridad. Se carga un componente en el navegador del Usuario que, únicamente cuando ocurre un error, envía los datos técnicos necesarios para reproducirlo. No se utiliza para medir audiencia, elaborar perfiles ni mostrar publicidad, y está configurado para no enviar datos personales del Usuario de forma automática.
 
 ### Datos Personales tratados:
-- Rastreadores
+- Datos de uso
+- Dirección IP
 
-### TikTok Pixel (TikTok Ads)
-Datos Personales tratados: Rastreadores
-Píxel de seguimiento de conversiones de TikTok Ads, usado para medir la eficacia de las campañas publicitarias y mostrar anuncios personalizados a quienes ya han visitado el sitio.
+### Servicio prestado por:
+- Functional Software, Inc. (EE.UU.), con tratamiento en la Unión Europea
 
-### Datos Personales tratados:
-- Rastreadores
+### Duración de los Rastreadores:
+- No instala Cookies propias
 
 ## Cómo gestionar preferencias y otorgar o revocar el consentimiento en esta Aplicación
 Esta Aplicación no utiliza hoy ningún Rastreador basado en el consentimiento, por lo que no existe —ni hace falta— un panel de preferencias de cookies. Los Rastreadores necesarios pueden bloquearse o borrarse desde la configuración del propio navegador, tal y como se explica más abajo, teniendo en cuenta que hacerlo impedirá mantener la sesión iniciada. Si en el futuro se incorporase algún Rastreador sujeto a consentimiento, se habilitarán el banner y el panel correspondientes.

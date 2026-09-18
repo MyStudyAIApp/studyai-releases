@@ -26,7 +26,7 @@ Es wurde kein Datenschutzbeauftragter benannt, da keiner der in Art. 37 DSGVO ge
 ## Wie diese Anwendung Tracker verwendet.
 
 ### Aktueller Stand (wichtig)
-Derzeit verwendet diese Anwendung **ausschließlich unbedingt erforderliche Tracker**: solche, die die Anmeldung aufrechterhalten, solche zur Netzwerksicherheit sowie solche, die vom Nutzer selbst gewählte Einstellungen speichern (Sprache, Design). Keiner dient der Analyse, der Profilbildung oder der Werbung.
+Derzeit verwendet diese Anwendung **ausschließlich unbedingt erforderliche Tracker**: solche, die die Anmeldung aufrechterhalten, solche zur Netzwerksicherheit, solche, die vom Nutzer selbst gewählte Einstellungen speichern (Sprache, Design), sowie solche, die Fehler der Anwendung protokollieren, damit sie behoben werden können. Keiner dient der Analyse, der Reichweitenmessung, der Profilbildung oder der Werbung.
 Aus diesem Grund **wird kein Cookie-Einwilligungsbanner angezeigt**: Für diese Art von Trackern ist es rechtlich nicht erforderlich. Sollte künftig ein einwilligungspflichtiger Tracker aktiviert werden, wird zuvor ein Banner eingerichtet und dieses Dokument aktualisiert.
 
 ### Funktionalität
@@ -74,28 +74,21 @@ Durch die Art und Weise, wie die Funktionen von Cloudflare integriert sind, filt
 - _cfuvid: unbestimmte
 - cf_clearance: 30 Minuten
 
-### Marketing
-Diese Anwendung **verwendet derzeit keine Marketing- oder Werbe-Tracker**. Die nachstehend beschriebenen Tracker sind für den Fall aufgeführt, dass sie künftig aktiviert werden; sie würden dann dazu dienen, personalisierte Werbung oder Marketinginhalte auszuliefern und deren Leistung zu messen, und liefen ausschließlich mit vorheriger Einwilligung des Nutzers.
-
-### Von Dritten verwaltete Tracker
-
-Meta Pixel und TikTok Pixel sind derzeit in dieser Anwendung nicht aktiv. Sollten sie künftig aktiviert werden, laufen sie ausschließlich nach vorheriger, ausdrücklicher Einwilligung des Nutzers über ein zu diesem Zweck einzurichtendes Cookie-Verwaltungsbanner.
-
-### Meta Pixel (Facebook Ads)
-Verarbeitete personenbezogene Daten: Tracker
-Conversion-Tracking-Pixel von Meta (Facebook/Instagram Ads), verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
+### Sentry
+Unternehmen: Functional Software, Inc.
+Verarbeitungsort: Europäische Union — Datenregion Frankfurt (Deutschland)
+Verarbeitete personenbezogene Daten: Nutzungsdaten, IP-Adresse
+Sentry ist der Dienst, der die in der Anwendung auftretenden Fehler protokolliert, damit sie behoben und Sicherheitsmängel erkannt werden können. Im Browser des Nutzers wird eine Komponente geladen, die ausschließlich beim Auftreten eines Fehlers die zur Reproduktion erforderlichen technischen Daten übermittelt. Sie dient weder der Reichweitenmessung noch der Profilbildung oder Werbung und ist so konfiguriert, dass sie personenbezogene Daten des Nutzers nicht automatisch übermittelt.
 
 ### Verarbeitete personenbezogene Daten:
-- Tracker
+- Nutzungsdaten
+- IP-Adresse
 
+### Dienst bereitgestellt von:
+- Functional Software, Inc. (USA), mit Verarbeitung in der Europäischen Union
 
-### TikTok Pixel (TikTok Ads)
-Verarbeitete personenbezogene Daten: Tracker
-Conversion-Tracking-Pixel von TikTok Ads, verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
-
-### Verarbeitete personenbezogene Daten:
-- Tracker
-
+### Tracker-Dauer:
+- Setzt keine eigenen Cookies
 
 ## Einstellungen verwalten und Einwilligungen erteilen oder widerrufen
 Diese Anwendung setzt derzeit keine einwilligungsbasierten Tracker ein; eine Auswahltafel für Cookie-Einstellungen besteht daher nicht und ist auch nicht erforderlich. Erforderliche Tracker lassen sich über die Einstellungen des Browsers blockieren oder löschen, wie unten beschrieben — dabei ist zu beachten, dass dann keine Anmeldung aufrechterhalten werden kann. Sollte künftig ein einwilligungspflichtiger Tracker hinzukommen, werden das entsprechende Banner und die Auswahltafel aktiviert.

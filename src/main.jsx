@@ -35,10 +35,12 @@ Sentry.init({
   dsn: 'https://093b576ae52bb87a58ddf5603a311518@o4511526266863616.ingest.de.sentry.io/4511526288752720',
   environment: import.meta.env.DEV ? 'development' : 'production',
   enabled: !import.meta.env.DEV,   // solo activo en producción
-  integrations: [
-    Sentry.browserTracingIntegration(),
-  ],
-  tracesSampleRate: 0.1,           // registra el 10% de las navegaciones (rendimiento)
+  // Solo registro de errores: sin browserTracingIntegration ni tracesSampleRate.
+  // El rastreo de rendimiento medía un 10% de las navegaciones y eso NO es un
+  // rastreador "estrictamente necesario" (art. 22.2 LSSI), asi que obligaria a
+  // pedir consentimiento con banner. Capturar errores para que la aplicacion
+  // funcione y sea segura si lo es. Si algun dia hace falta medir rendimiento,
+  // hay que montar el banner ANTES de volver a activarlo.
   sendDefaultPii: false,           // no enviar datos personales por defecto
   // beacon.min.js es el script de analítica RUM de Cloudflare, no código
   // propio — falla solo en navegadores muy antiguos (Chrome <92, sin

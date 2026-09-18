@@ -26,7 +26,7 @@ Aucun Délégué à la protection des données n'a été désigné, aucun des ca
 ## Utilisation des Traqueurs par cette Application
 
 ### État actuel (important)
-À ce jour, cette Application **n'utilise que des Traqueurs strictement nécessaires** : ceux qui maintiennent la session ouverte, ceux liés à la sécurité du réseau et ceux qui conservent les préférences choisies par l'Utilisateur lui-même (langue, thème visuel). Aucun ne sert à l'analyse, au profilage ou à la publicité.
+À ce jour, cette Application **n'utilise que des Traqueurs strictement nécessaires** : ceux qui maintiennent la session ouverte, ceux liés à la sécurité du réseau, ceux qui conservent les préférences choisies par l'Utilisateur lui-même (langue, thème visuel) et ceux qui enregistrent les erreurs de l'Application afin de pouvoir les corriger. Aucun ne sert à l'analyse, à la mesure d'audience, au profilage ou à la publicité.
 Pour cette raison, **aucune bannière de consentement aux cookies n'est affichée** : la réglementation ne l'exige pas pour ce type de Traqueurs. Si un Traqueur soumis à consentement venait à être activé, une bannière préalable serait mise en place et le présent document mis à jour au préalable.
 
 ### Nécessaires
@@ -74,28 +74,21 @@ La façon dont Cloudflare est intégré signifie qu'il filtre l'ensemble du traf
 - _cfuvid: indéfinie
 - cf_clearance: 30 minutes
 
-### Marketing
-Cette Application **n'utilise actuellement aucun Traqueur de marketing ou de publicité**. Les Traqueurs décrits ci-dessous sont mentionnés au cas où ils seraient activés à l'avenir ; ils serviraient alors à fournir des publicités personnalisées ou du contenu marketing et à mesurer leur performance, et ne fonctionneraient qu'avec le consentement préalable de l'Utilisateur.
-
-### Traqueurs gérés par des tiers
-
-Meta Pixel et TikTok Pixel ne sont pas actuellement actifs sur cette Application. S’ils sont activés à l’avenir, ils ne fonctionneront qu’après le consentement explicite et préalable de l’Utilisateur via une bannière de gestion des cookies qui sera mise en place à cet effet.
-
-### Meta Pixel (Facebook Ads)
-Données personnelles traitées : Traqueurs
-Pixel de suivi des conversions de Meta (Facebook/Instagram Ads), utilisé pour mesurer l’efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
+### Sentry
+Société : Functional Software, Inc.
+Lieu de traitement : Union européenne — région de données de Francfort (Allemagne)
+Données personnelles traitées : Données d'utilisation, adresse IP
+Sentry est le service qui enregistre les erreurs survenant dans l'Application afin de pouvoir les corriger et de détecter les failles de sécurité. Un composant est chargé dans le navigateur de l'Utilisateur et n'envoie, uniquement lorsqu'une erreur se produit, que les données techniques nécessaires pour la reproduire. Il n'est utilisé ni pour la mesure d'audience, ni pour le profilage, ni pour la publicité, et il est configuré pour ne pas transmettre automatiquement les données personnelles de l'Utilisateur.
 
 ### Données personnelles traitées :
-- Traqueurs
+- Données d'utilisation
+- Adresse IP
 
+### Service fourni par:
+- Functional Software, Inc. (États-Unis), avec traitement dans l'Union européenne
 
-### TikTok Pixel (TikTok Ads)
-Données personnelles traitées : Traqueurs
-Pixel de suivi des conversions de TikTok Ads, utilisé pour mesurer l’efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
-
-### Données personnelles traitées :
-- Traqueurs
-
+### Durée des Traqueurs:
+- N'installe aucun Cookie propre
 
 ## Comment gérer les préférences et donner ou retirer son consentement sur cette Application
 Cette Application n'utilise aujourd'hui aucun Traqueur soumis au consentement ; il n'existe donc pas de panneau de préférences relatives aux cookies, et il n'est pas nécessaire. Les Traqueurs nécessaires peuvent être bloqués ou supprimés depuis les réglages du navigateur, comme expliqué ci-dessous, étant entendu que cela empêchera de rester connecté. Si un Traqueur soumis au consentement était ajouté à l'avenir, la bannière et le panneau correspondants seraient activés.

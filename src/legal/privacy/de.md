@@ -31,7 +31,7 @@ Wir erheben automatisch Daten von Ihnen, wenn Sie z. B. mystudyai.eu besuchen.
 - Hosting und Backend-Infrastruktur
 - Optimierung und Verbreitung des Datenverkehrs
 - Zahlungen und Abonnements
-- Werbung (derzeit nicht aktiv — siehe Abschnitt „Werbung“)
+- Benachrichtigungen
 
 ## Anbieter und Verantwortlicher
 Verantwortlicher: Sergio Gómez Negrín
@@ -68,7 +68,7 @@ Personenbezogene Daten über den Nutzer werden erhoben, damit der Anbieter den D
 - Optimierung und Verbreitung des Datenverkehrs
 - Überwachung der Infrastruktur
 - Zahlungen und Abonnements
-- Werbung (derzeit nicht aktiv — siehe Abschnitt „Werbung“)
+- Benachrichtigungen
 
 ## Ausführliche Angaben über die Verarbeitung personenbezogener Daten
 
@@ -163,6 +163,29 @@ Cloudflare Turnstile wird zusätzlich im Registrierungsformular eingesetzt, um m
 ### Mistral AI
 KI-Dienst (Mistral AI, Frankreich), der zur Erstellung von Zusammenfassungen, Prüfungen, Lernkarten und anderen Inhalten aus den Inhalten der vom Nutzer hochgeladenen Dokumente verwendet wird. Handelt es sich um ein gescanntes PDF oder ein Foto und ist der Text nicht anders lesbar (z. B. handschriftliche Formeln), wird auch das Seitenbild an den Dienst übermittelt. Die vom Nutzer bereitgestellten Dokumente und Texte werden nicht zum Training öffentlicher KI-Modelle von Mistral AI oder anderen Anbietern verwendet.
 
+### Anmeldung mit Google
+Identifizierungsdienst von Google Ireland Limited (Irland), mit dem der Nutzer sein Konto über sein Google-Konto anlegen und darauf zugreifen kann, ohne ein neues Passwort wählen zu müssen. Es handelt sich um eine optionale Alternative zur Registrierung mit E-Mail-Adresse und Passwort. Bei der Nutzung erhält diese Anwendung von Google die für die Kontoerstellung erforderlichen Basis-Profildaten, und Google erfährt, dass der Nutzer auf diesen Dienst zugegriffen hat. Diese Anwendung erhält niemals das Passwort des Google-Kontos des Nutzers.
+
+### Verarbeitete personenbezogene Daten:
+- E-Mail-Adresse
+- Kontoname
+- Google-Konto-Kennung
+- Profilbild, sofern vorhanden
+
+### Dienst bereitgestellt von:
+- Google Ireland Limited (Irland)
+
+### Benachrichtigungen
+Diese Anwendung kann Hinweise an das Gerät des Nutzers senden: Prüfungserinnerungen und Vorabhinweise vor der automatischen Löschung seiner Dateien. Die Hinweise sind optional und werden nur gesendet, wenn der Nutzer sie in der Anwendung ausdrücklich aktiviert. Er kann sie jederzeit in den Einstellungen der Anwendung oder denen seines Browsers bzw. Betriebssystems deaktivieren; dabei wird das Abonnement gelöscht.
+
+### Web-Benachrichtigungen (Web Push)
+Aktiviert der Nutzer die Hinweise, erzeugt sein Browser eine Zustelladresse (Endpoint) sowie Verschlüsselungsschlüssel, die diese Anwendung speichert, um die Nachricht zustellen zu können. Die eigentliche Zustellung übernimmt der Benachrichtigungsdienst des vom Nutzer verwendeten Browsers — Google (Chrome und abgeleitete Browser), Mozilla (Firefox) oder Apple (Safari) —, der naturgemäß den Zeitpunkt der Zustellung kennt. Der Inhalt des Hinweises wird Ende-zu-Ende verschlüsselt übertragen und ist für diese Dienste nicht lesbar.
+
+### Verarbeitete personenbezogene Daten:
+- Vom Browser erzeugte Zustelladresse (Endpoint)
+- Verschlüsselungsschlüssel des Abonnements
+- Nutzerkennung
+
 ### Zahlungen und Abonnements
 
 ### RevenueCat
@@ -199,21 +222,6 @@ Dienst für elektronische Rechnungsstellung (BeeL, Spanien), verwendet zur Ausst
 - E-Mail-Adresse
 - Betrag, Gegenstand und Datum des jeweiligen Vorgangs
 
-### Werbung
-Diese Art von Dienst ermöglicht die Nutzung von Nutzerdaten für Zwecke der Werbekommunikation. Diese Kommunikation erfolgt in Form von Bannern und anderen Werbeanzeigen auf dieser Anwendung, möglicherweise basierend auf den Interessen der Nutzer. Dies bedeutet nicht, dass alle personenbezogenen Daten zu diesem Zweck verwendet werden. Einige der unten aufgeführten Dienste können Tracker verwenden, um Nutzer zu identifizieren oder Behavioral-Retargeting einzusetzen, d. h. auf die Interessen und das Verhalten des Nutzers zugeschnittene Werbung anzuzeigen. Weitere Informationen finden sich in den Datenschutzerklärungen der jeweiligen Dienste. Solche Dienste erlauben den Nutzern in der Regel, dieses Tracking abzulehnen.
-Meta Pixel und TikTok Pixel sind derzeit in dieser Anwendung nicht aktiv. Sollten sie künftig aktiviert werden, laufen sie ausschließlich nach vorheriger, ausdrücklicher Einwilligung des Nutzers über das Cookie-Verwaltungsbanner und werden automatisch deaktiviert, wenn der Nutzer angibt, minderjährig zu sein. Diese Anwendung richtet keine personalisierte Werbung an Minderjährige.
-
-### Meta Pixel (Facebook Ads)
-Verarbeitete personenbezogene Daten: Tracker
-Conversion-Tracking-Pixel von Meta (Facebook/Instagram Ads), verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
-
-### TikTok Pixel (TikTok Ads)
-Verarbeitete personenbezogene Daten: Tracker
-Conversion-Tracking-Pixel von TikTok Ads, verwendet zur Messung der Wirksamkeit von Werbekampagnen und zur Anzeige personalisierter Anzeigen für Personen, die die Website bereits besucht haben.
-
-### Internationale Datenübermittlungen
-Einige der in diesem Dokument genannten Anbieter (u. a. DeepInfra, Sentry, Cloudflare, Microsoft Azure und RevenueCat) verarbeiten Daten in den USA. Je nach Anbieter stützen sich diese Übermittlungen auf das EU-U.S. Data Privacy Framework oder auf die von der Europäischen Kommission genehmigten Standardvertragsklauseln, die ein der DSGVO gleichwertiges Schutzniveau gewährleisten. Nutzer können über die in diesem Dokument angegebenen Kontaktdaten weitere Informationen zu den für den jeweiligen Anbieter geltenden Garantien anfordern.
-
 ## Informationen zur Ablehnung von interessenbasierter Werbung
 Zusätzlich zu jeder Opt-Out-Funktion, die von den in diesem Dokument aufgelisteten Diensten zur Verfügung gestellt
 wird, können Nutzer im entsprechenden Abschnitt der Cookie-Richtlinie mehr darüber
@@ -229,6 +237,12 @@ Die vom Nutzer hochgeladene Originaldatei (PDF oder Foto) wird 10 Tage nach dem 
 
 ### Datenspeicherung – gelöste Übungen
 Bei der Funktion „Übung lösen" werden die Aufgabenstellung und die Lösung jeder gelösten Übung automatisch 10 Tage lang gespeichert, damit der Nutzer sie einsehen kann. Nach Ablauf dieser Frist werden sie automatisch gelöscht, wobei der Nutzer 3 Tage zuvor per E-Mail benachrichtigt wird. Der Nutzer kann die Übung vor Ablauf auf sein Gerät herunterladen und die E-Mail-Benachrichtigung in der Anwendung deaktivieren.
+
+### Datenspeicherung – Nutzungsprotokolle
+Die Protokolle über die Inanspruchnahme der KI-Dienste, auf denen die Nutzungskontingente und die Abrechnung beruhen, werden 24 Monate ab dem jeweiligen Vorgang aufbewahrt. Die Protokolle darüber, welche Funktionen der Anwendung genutzt werden, werden 12 Monate aufbewahrt. Nach Ablauf der Frist werden sie automatisch gelöscht. Beide werden früher gelöscht, wenn der Nutzer sein Konto schließt.
+
+### Internationale Datenübermittlungen
+Einige der in diesem Dokument aufgeführten Anbieter (unter anderem DeepInfra, Sentry, Cloudflare, Microsoft Azure und RevenueCat) verarbeiten Daten in den Vereinigten Staaten. Diese Übermittlungen stützen sich je nach Anbieter auf das EU-U.S. Data Privacy Framework oder auf die von der Europäischen Kommission genehmigten Standardvertragsklauseln und gewährleisten ein Schutzniveau, das dem von der DSGVO geforderten entspricht. Der Nutzer kann über die in diesem Dokument angegebenen Kontaktdaten weitere Informationen zu den für den jeweiligen Anbieter geltenden Garantien anfordern.
 
 ### Minderjährige
 Der Dienst richtet sich nicht an Kinder unter 16 Jahren. Die Nutzungsbedingungen setzen dieses Mindestalter für die Erstellung eines Kontos voraus oder, wenn der Nutzer es nicht erreicht, die ausdrückliche Zustimmung seiner Eltern oder gesetzlichen Vertreter, über die der Nutzer bei der Registrierung zu verfügen erklärt. Von Personen unterhalb dieses Alters werden wissentlich keine Daten erhoben. Erlangt der Anbieter Kenntnis davon, dass ein Konto unter Verstoß gegen diese Anforderung angelegt wurde, wird es samt Daten gelöscht. Eltern oder Erziehungsberechtigte, die einen solchen Fall bemerken, können dies an support@mystudyai.eu melden; die Bearbeitung erfolgt unverzüglich.

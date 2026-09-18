@@ -15,6 +15,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { consumirVueltaDeRecuperacion } from '../lib/recoveryWeb'
+import { registrarAceptacionSiProcede } from '../lib/aceptacion'
 
 // Crear el "canal de comunicación" (contexto)
 const AuthContext = createContext(null)
@@ -39,6 +40,7 @@ export function AuthProvider({ children }) {
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
+      registrarAceptacionSiProcede(session?.user?.id)
     })
 
     // Escuchar cambios de autenticación en tiempo real
@@ -47,6 +49,9 @@ export function AuthProvider({ children }) {
         setSession(session)
         setUser(session?.user ?? null)
         setLoading(false)
+        // Es aqui donde cae el alta con Google: vuelve del redirect, aparece
+        // la sesion y se convierte la marca de la casilla en fecha.
+        if (event === 'SIGNED_IN') registrarAceptacionSiProcede(session?.user?.id)
         // Supabase dispara PASSWORD_RECOVERY cuando el usuario llega
         // desde el enlace del email de restablecimiento de contraseña
         if (event === 'PASSWORD_RECOVERY') {

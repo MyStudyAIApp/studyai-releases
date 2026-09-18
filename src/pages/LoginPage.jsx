@@ -15,6 +15,7 @@ import { App as CapacitorApp } from '@capacitor/app'
 import { Browser } from '@capacitor/browser'
 import { useAuth } from '../contexts/AuthContext'
 import { getGoogleOAuthUrl, completeNativeAuthFromUrl, startNativePasswordRecovery } from '../lib/googleAuth'
+import { marcarAceptacion } from '../lib/aceptacion'
 import { useTurnstile } from '../hooks/useTurnstile'
 import Logo from '../components/UI/Logo'
 import PasswordInput from '../components/UI/PasswordInput'
@@ -156,10 +157,13 @@ export default function LoginPage() {
     // El alta con Google crea la cuenta igual que el formulario de email, asi
     // que tiene que pasar por la misma aceptacion de Condiciones y Privacidad.
     // Sin esto se podian crear cuentas sin contrato aceptado (art. 13 RGPD).
-    if (mode === 'register' && !acceptedTerms) {
+    if (!acceptedTerms) {
       setError(t('auth.err.mustAccept'))
       return
     }
+    // El alta con Google se va a otra pagina y vuelve: la marca sobrevive al
+    // viaje y es lo que hace que AuthContext deje constancia al volver.
+    marcarAceptacion()
     if (IS_WEB) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -264,6 +268,9 @@ export default function LoginPage() {
           }
         })
         if (error) throw error
+        // La cuenta ya existe; la fecha se escribe en cuanto haya sesion, que
+        // en el alta por email es despues de confirmar el correo.
+        marcarAceptacion()
         setMode('sent')  // mostrar mensaje "revisa tu email"
       }
     } catch (err) {
@@ -585,7 +592,7 @@ export default function LoginPage() {
         <button
           type="button"
           onClick={handleGoogleLogin}
-          disabled={loading || (mode === 'register' && !acceptedTerms)}
+          disabled={loading || !acceptedTerms}
           className="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 font-semibold py-3 rounded-xl transition-all shadow-lg"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -598,16 +605,27 @@ export default function LoginPage() {
         </button>
 
         {/* En modo login, Google tambien puede dar de alta a alguien que no
-            tenia cuenta -- ahi el checkbox no se muestra, asi que la aceptacion
-            se informa aqui de forma expresa antes de pulsar. */}
+            tenia cuenta. Antes aqui solo habia un parrafo informativo: no era
+            un acto afirmativo del usuario ni quedaba constancia de nada. Ahora
+            es la MISMA casilla que en el alta por email y bloquea el boton,
+            para poder acreditar la aceptacion y la declaracion de edad por las
+            dos vias (art. 7.1 y 8.2 RGPD). */}
         {mode === 'login' && (
-          <p className="text-[11px] text-slate-500 text-center mt-2">
-            {t('auth.googleNotice')}{' '}
-            <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">{t('auth.terms')}</Link>
-            {' '}{t('auth.and')}{' '}
-            <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">{t('auth.privacy')}</Link>
-            {t('auth.googleAgeConfirm')}
-          </p>
+          <label className="flex items-start gap-2 text-[11px] text-slate-400 mt-3">
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={e => setAcceptedTerms(e.target.checked)}
+              className="mt-0.5 accent-primary-500"
+            />
+            <span>
+              {t('auth.accept')}{' '}
+              <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">{t('auth.terms')}</Link>
+              {' '}{t('auth.and')}{' '}
+              <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">{t('auth.privacy')}</Link>
+              {t('auth.ageConfirm')}
+            </span>
+          </label>
         )}
 
         <button

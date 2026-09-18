@@ -31,7 +31,7 @@ Nous recueillons automatiquement des données auprès de vous, par exemple lorsq
 - Hébergement web et infrastructure de backend
 - Optimisation et répartition du trafic
 - Paiements et abonnements
-- Publicité (non active actuellement — voir la section « Publicité »)
+- Notifications
 
 ## Propriétaire et Responsable du traitement
 Responsable du traitement : Sergio Gómez Negrín
@@ -68,7 +68,7 @@ Les Données relatives à l’Utilisateur sont collectées afin de permettre au 
 - Optimisation et répartition du trafic
 - Surveillance de l’infrastructure
 - Paiements et abonnements
-- Publicité (non active actuellement — voir la section « Publicité »)
+- Notifications
 
 ## Informations détaillées sur le traitement des Données personnelles
 
@@ -163,6 +163,29 @@ Cloudflare Turnstile est également utilisé sur le formulaire d'inscription pou
 ### Mistral AI
 Service d'intelligence artificielle (Mistral AI, France) utilisé pour générer des résumés, examens, fiches de révision et autres contenus à partir du contenu des documents de l'Utilisateur. Lorsque le document est un PDF numérisé ou une photo et que le texte ne peut pas être lu autrement (par exemple des formules manuscrites), l'image de la page est également envoyée au service. Les documents et textes fournis par l'Utilisateur ne sont pas utilisés pour entraîner des modèles publics d'Intelligence Artificielle de Mistral AI ni d'aucun autre fournisseur.
 
+### Connexion avec Google
+Service d'identification fourni par Google Ireland Limited (Irlande) qui permet à l'Utilisateur de créer son compte et d'y accéder avec son compte Google, sans avoir à choisir un nouveau mot de passe. Il s'agit d'une alternative facultative à l'inscription par adresse e-mail et mot de passe. Lors de son utilisation, cette Application reçoit de Google les données de profil de base nécessaires à la création du compte, et Google sait que l'Utilisateur a accédé à ce Service. Cette Application ne reçoit jamais le mot de passe du compte Google de l'Utilisateur.
+
+### Données personnelles traitées :
+- Adresse e-mail
+- Nom du compte
+- Identifiant du compte Google
+- Photo de profil, lorsque l'Utilisateur en possède une
+
+### Service fourni par:
+- Google Ireland Limited (Irlande)
+
+### Notifications
+Cette Application peut envoyer des avis sur l'appareil de l'Utilisateur : rappels d'examen et avertissements préalables à la suppression automatique de ses fichiers. Ces avis sont facultatifs et ne sont envoyés que si l'Utilisateur les active expressément depuis l'Application. Il peut les désactiver à tout moment depuis les paramètres de l'Application ou ceux de son navigateur ou de son système d'exploitation, ce qui supprime l'abonnement.
+
+### Notifications web (Web Push)
+Lorsque l'Utilisateur active les avis, son navigateur génère une adresse de livraison (endpoint) et des clés de chiffrement que cette Application conserve afin de pouvoir lui faire parvenir le message. La livraison matérielle est assurée par le service de notifications du navigateur utilisé par l'Utilisateur — Google (Chrome et navigateurs dérivés), Mozilla (Firefox) ou Apple (Safari) —, qui par nature connaît le moment de la livraison. Le contenu de l'avis circule chiffré de bout en bout et ces services ne peuvent pas le lire.
+
+### Données personnelles traitées :
+- Adresse de livraison (endpoint) générée par le navigateur
+- Clés de chiffrement de l'abonnement
+- Identifiant d'utilisateur
+
 ### Paiements et abonnements
 
 ### RevenueCat
@@ -199,21 +222,6 @@ Service de facturation électronique (BeeL, Espagne), utilisé pour émettre la 
 - Adresse e-mail
 - Montant, objet et date de chaque opération
 
-### Publicité
-Ce type de service permet l'utilisation des Données des Utilisateurs à des fins de communication publicitaire. Ces communications sont affichées sous forme de bannières et d'autres publicités sur cette Application, éventuellement basées sur les intérêts des Utilisateurs. Cela ne signifie pas que toutes les Données personnelles sont utilisées à cette fin. Certains des services listés ci-dessous peuvent utiliser des Traceurs pour identifier les Utilisateurs ou recourir au retargeting comportemental, c'est-à-dire afficher des publicités adaptées aux intérêts et au comportement de l'Utilisateur. Pour en savoir plus, veuillez consulter les politiques de confidentialité des services concernés. Ces services permettent généralement aux Utilisateurs de refuser ce suivi.
-Meta Pixel et TikTok Pixel ne sont pas actuellement actifs sur cette Application. S'ils sont activés à l'avenir, ils ne fonctionneront qu'après le consentement explicite et préalable de l'Utilisateur via la bannière de gestion des cookies, et seront automatiquement désactivés si l'Utilisateur indique être mineur. Cette Application ne cible pas les mineurs avec de la publicité personnalisée.
-
-### Meta Pixel (Facebook Ads)
-Données personnelles traitées : Traceurs
-Pixel de suivi des conversions de Meta (Facebook/Instagram Ads), utilisé pour mesurer l'efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
-
-### TikTok Pixel (TikTok Ads)
-Données personnelles traitées : Traceurs
-Pixel de suivi des conversions de TikTok Ads, utilisé pour mesurer l'efficacité des campagnes publicitaires et afficher des publicités personnalisées aux personnes ayant déjà visité le site.
-
-### Transferts internationaux de données
-Certains prestataires mentionnés dans ce document (notamment DeepInfra, Sentry, Cloudflare, Microsoft Azure et RevenueCat) traitent des données aux États-Unis. Selon le prestataire, ces transferts s'appuient sur le Data Privacy Framework UE-États-Unis ou sur les Clauses Contractuelles Types approuvées par la Commission européenne, garantissant un niveau de protection équivalent à celui exigé par le RGPD. Les Utilisateurs peuvent demander davantage d'informations sur les garanties applicables à chaque prestataire via les coordonnées indiquées dans ce document.
-
 ## Information sur le refus de publicité ciblée par centres d’intérêt
 En complément de toute fonctionnalité de désinscription fournie par l’un quelconque des services listés dans le
 présent document, les Utilisateurs peuvent en savoir plus sur les options dont ils disposent
@@ -230,6 +238,12 @@ Le fichier original (PDF ou photo) que l'utilisateur télécharge est conservé 
 
 ### Conservation des données – exercices résolus
 Dans la fonction « Résoudre un exercice », l'énoncé et la solution de chaque exercice résolu sont automatiquement enregistrés pendant 10 jours afin que l'utilisateur puisse les consulter. Passé ce délai, ils sont automatiquement supprimés, avec un avis par e-mail envoyé à l'utilisateur 3 jours auparavant. L'utilisateur peut télécharger l'exercice sur son appareil avant son expiration et peut désactiver l'avis par e-mail depuis l'application.
+
+### Conservation des données – journaux d'utilisation
+Les journaux de consommation des services d'intelligence artificielle, qui sous-tendent les quotas d'utilisation et la facturation, sont conservés 24 mois à compter de chaque opération. Les journaux indiquant quelles fonctionnalités de l'Application sont utilisées sont conservés 12 mois. Une fois le délai écoulé, ils sont supprimés automatiquement. Les deux sont supprimés plus tôt si l'Utilisateur ferme son compte.
+
+### Transferts internationaux de données
+Certains des prestataires énumérés dans le présent document (notamment DeepInfra, Sentry, Cloudflare, Microsoft Azure et RevenueCat) traitent des données aux États-Unis. Selon le prestataire, ces transferts reposent sur le cadre de protection des données UE–États-Unis (EU-U.S. Data Privacy Framework) ou sur les Clauses Contractuelles Types approuvées par la Commission européenne, garantissant un niveau de protection équivalent à celui exigé par le RGPD. L'Utilisateur peut demander davantage d'informations sur les garanties applicables à chaque prestataire via les coordonnées indiquées dans le présent document.
 
 ### Mineurs
 Le Service ne s'adresse pas aux enfants de moins de 16 ans. Les Conditions d'utilisation exigent cet âge minimum pour créer un compte ou, si l'Utilisateur ne l'atteint pas, l'autorisation expresse de ses parents ou tuteurs légaux, dont l'Utilisateur déclare disposer lors de son inscription. Aucune donnée n'est sciemment collectée auprès de personnes en dessous de cet âge. Si le Propriétaire apprend qu'un compte a été créé en violation de cette exigence, il sera supprimé avec ses données. Les parents ou tuteurs qui constatent une telle situation peuvent la signaler à support@mystudyai.eu ; elle sera traitée sans délai.

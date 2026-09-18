@@ -26,7 +26,7 @@ No Data Protection Officer has been appointed, as none of the cases set out in A
 ## How this Application uses Trackers
 
 ### Current status (important)
-As of today this Application **only uses strictly necessary Trackers**: those that keep the User signed in, network security ones, and those storing preferences the User has chosen themselves (language, visual theme). None of them serve analytics, profiling or advertising purposes.
+As of today this Application **only uses strictly necessary Trackers**: those that keep the User signed in, network security ones, those storing preferences the User has chosen themselves (language, visual theme), and those recording the Application's errors so they can be fixed. None of them serve analytics, audience measurement, profiling or advertising purposes.
 For that reason **no cookie consent banner is displayed**: the law does not require one for this class of Trackers. Should a Tracker requiring consent ever be activated, a prior banner will be enabled and this document updated beforehand.
 
 ### Necessary
@@ -74,28 +74,21 @@ The way Cloudflare is integrated means that it filters all the traffic through t
 - _cfuvid: indefinite
 - cf_clearance: 30 minutes
 
-### Marketing
-This Application **does not currently use any marketing or advertising Trackers**. The Trackers described below are listed in case they are activated in the future, in which case they would serve to deliver personalized ads or marketing content and measure their performance, and would only run with the User's prior consent.
-
-### Trackers managed by third parties
-
-Meta Pixel and TikTok Pixel are not currently active on this Application. If activated in the future, they will only run after the User’s prior, explicit consent given through a cookie management banner that will be enabled for that purpose.
-
-### Meta Pixel (Facebook Ads)
-Personal Data processed: Trackers
-Conversion tracking pixel from Meta (Facebook/Instagram Ads), used to measure the effectiveness of advertising campaigns and show personalized ads to those who have already visited the site.
+### Sentry
+Company: Functional Software, Inc.
+Place of processing: European Union — Frankfurt data region (Germany)
+Personal Data processed: Usage Data, IP address
+Sentry is the service that records the errors occurring in the Application so that they can be fixed and security faults detected. A component is loaded in the User's browser which, only when an error occurs, sends the technical data needed to reproduce it. It is not used for audience measurement, profiling or advertising, and it is configured not to send the User's personal data automatically.
 
 ### Personal Data processed:
-- Trackers
+- Usage Data
+- IP address
 
+### Service provided by:
+- Functional Software, Inc. (USA), with processing in the European Union
 
-### TikTok Pixel (TikTok Ads)
-Personal Data processed: Trackers
-Conversion tracking pixel from TikTok Ads, used to measure the effectiveness of advertising campaigns and show personalized ads to those who have already visited the site.
-
-### Personal Data processed:
-- Trackers
-
+### Trackers duration:
+- Sets no cookies of its own
 
 ## How to manage preferences and provide or withdraw consent on this Application
 This Application currently uses no consent-based Trackers, so no cookie preferences panel exists — nor is one needed. Necessary Trackers can be blocked or deleted from the browser's own settings, as explained below, bearing in mind that doing so will prevent staying signed in. Should any consent-based Tracker be added in the future, the corresponding banner and panel will be enabled.
