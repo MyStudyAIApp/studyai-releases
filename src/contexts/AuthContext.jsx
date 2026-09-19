@@ -15,7 +15,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { consumirVueltaDeRecuperacion } from '../lib/recoveryWeb'
-import { registrarAceptacionSiProcede } from '../lib/aceptacion'
+import { registrarAceptacionSiProcede, necesitaAceptacion, guardarAceptacion } from '../lib/aceptacion'
 
 // Crear el "canal de comunicación" (contexto)
 const AuthContext = createContext(null)
@@ -27,6 +27,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading]             = useState(true)
   // true cuando el usuario llega desde el enlace "restablecer contraseña"
   const [isPasswordRecovery, setIsPasswordRecovery] = useState(false)
+  // true cuando la cuenta acaba de crearse (alta con Google) y todavía no hay
+  // constancia de que aceptara Condiciones ni declarara la edad. La app se
+  // para y le pide ambas cosas antes de dejarle entrar.
+  const [needsTerms, setNeedsTerms] = useState(false)
+
+  // Constancia de la aceptación: primero se convierte la marca de la casilla
+  // en fecha (alta por email, o por Google desde la pestaña de registro) y
+  // solo después se mira si falta — si no, se le pediría a quien ya la dio.
+  const revisarAceptacion = async (user) => {
+    await registrarAceptacionSiProcede(user?.id)
+    setNeedsTerms(await necesitaAceptacion(user))
+  }
 
   useEffect(() => {
     // WEB: el evento PASSWORD_RECOVERY se dispara al canjear el ?code=, que
@@ -40,7 +52,7 @@ export function AuthProvider({ children }) {
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
-      registrarAceptacionSiProcede(session?.user?.id)
+      revisarAceptacion(session?.user)
     })
 
     // Escuchar cambios de autenticación en tiempo real
@@ -49,9 +61,10 @@ export function AuthProvider({ children }) {
         setSession(session)
         setUser(session?.user ?? null)
         setLoading(false)
-        // Es aqui donde cae el alta con Google: vuelve del redirect, aparece
-        // la sesion y se convierte la marca de la casilla en fecha.
-        if (event === 'SIGNED_IN') registrarAceptacionSiProcede(session?.user?.id)
+        // Es aqui donde cae el alta con Google: vuelve del redirect y aparece
+        // la sesion. Si la cuenta acaba de nacer sin constancia, se le pide.
+        if (event === 'SIGNED_IN') revisarAceptacion(session?.user)
+        if (event === 'SIGNED_OUT') setNeedsTerms(false)
         // Supabase dispara PASSWORD_RECOVERY cuando el usuario llega
         // desde el enlace del email de restablecimiento de contraseña
         if (event === 'PASSWORD_RECOVERY') {
@@ -81,9 +94,18 @@ export function AuthProvider({ children }) {
   // es el propio flujo quien avisa de que toca pedir contraseña nueva.
   const beginPasswordRecovery = () => setIsPasswordRecovery(true)
 
+  // El usuario acepta en la pantalla de aviso: se guarda la constancia y se
+  // le deja pasar. Si falla el guardado NO se le deja entrar: el sentido de
+  // esa pantalla es que quede el rastro, no que la vea.
+  const acceptTerms = async () => {
+    await guardarAceptacion(user?.id)
+    setNeedsTerms(false)
+  }
+
   const value = {
     user, session, loading, signOut, getToken,
     isPasswordRecovery, clearPasswordRecovery, beginPasswordRecovery,
+    needsTerms, acceptTerms,
   }
 
   return (

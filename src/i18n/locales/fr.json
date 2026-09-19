@@ -622,10 +622,12 @@
       "warningFlashcards": "Toutes tes fiches, paquets enregistrés et progression d'étude",
       "warningAccount": "Ton compte et ton e-mail seront entièrement supprimés",
       "passwordLabel": "Saisis ton mot de passe pour confirmer",
+      "emailLabel": "Saisis ton adresse e-mail pour confirmer",
       "cancel": "Annuler",
       "deleting": "Suppression…",
       "confirmDelete": "Supprimer définitivement",
       "wrongPassword": "Mot de passe incorrect.",
+      "wrongEmail": "Cette adresse e-mail ne correspond pas à ton compte.",
       "error": "Impossible de supprimer le compte. Réessaie."
     },
     "appearance": {
@@ -1324,6 +1326,10 @@
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité",
     "ageConfirm": ", et je confirme avoir au moins 16 ans ou disposer de l'autorisation de mes parents ou tuteurs.",
+    "gateTitle": "Une dernière étape",
+    "gateBody": "Tu as créé ton compte avec {{email}}. Avant d'entrer, nous avons besoin que tu acceptes les conditions et que tu confirmes ton âge.",
+    "gateContinue": "Accepter et continuer",
+    "gateCancel": "Je n'accepte pas, se déconnecter",
     "googleNotice": "Si tu continues avec Google et que tu n'as pas encore de compte, tu acceptes les",
     "googleAgeConfirm": ", et tu confirmes avoir au moins 16 ans ou disposer de l'autorisation de tes parents ou tuteurs.",
     "resetSent": "Nous t'avons envoyé un lien pour réinitialiser ton mot de passe.",

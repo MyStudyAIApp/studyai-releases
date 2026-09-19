@@ -622,10 +622,12 @@
       "warningFlashcards": "All your flashcards, saved decks and study progress",
       "warningAccount": "Your account and email will be completely removed",
       "passwordLabel": "Type your password to confirm",
+      "emailLabel": "Type your email address to confirm",
       "cancel": "Cancel",
       "deleting": "Deleting…",
       "confirmDelete": "Delete permanently",
       "wrongPassword": "Incorrect password.",
+      "wrongEmail": "That email does not match your account.",
       "error": "Couldn't delete the account. Please try again."
     },
     "appearance": {
@@ -1324,6 +1326,10 @@
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
     "ageConfirm": ", and I confirm that I am at least 16 years old or have my parents' or guardians' authorisation.",
+    "gateTitle": "One last step",
+    "gateBody": "You have created your account with {{email}}. Before you go in, we need you to accept the terms and confirm your age.",
+    "gateContinue": "Accept and continue",
+    "gateCancel": "I do not accept, sign out",
     "googleNotice": "If you continue with Google and do not have an account yet, you accept the",
     "googleAgeConfirm": ", and you confirm that you are at least 16 years old or have your parents' or guardians' authorisation.",
     "resetSent": "We have sent you a link to reset your password.",

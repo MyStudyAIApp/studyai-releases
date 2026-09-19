@@ -622,10 +622,12 @@
       "warningFlashcards": "Alle deine Karteikarten, gespeicherten Stapel und Lernfortschritte",
       "warningAccount": "Dein Konto und deine E-Mail-Adresse werden vollständig entfernt",
       "passwordLabel": "Gib dein Passwort zur Bestätigung ein",
+      "emailLabel": "Gib zur Bestätigung deine E-Mail-Adresse ein",
       "cancel": "Abbrechen",
       "deleting": "Wird gelöscht…",
       "confirmDelete": "Dauerhaft löschen",
       "wrongPassword": "Falsches Passwort.",
+      "wrongEmail": "Diese E-Mail-Adresse stimmt nicht mit deinem Konto überein.",
       "error": "Das Konto konnte nicht gelöscht werden. Bitte versuche es erneut."
     },
     "appearance": {
@@ -1324,6 +1326,10 @@
     "terms": "Nutzungsbedingungen",
     "privacy": "Datenschutzerklärung",
     "ageConfirm": " und bestätige, dass ich mindestens 16 Jahre alt bin oder die Zustimmung meiner Eltern bzw. gesetzlichen Vertreter habe.",
+    "gateTitle": "Ein letzter Schritt",
+    "gateBody": "Du hast dein Konto mit {{email}} erstellt. Bevor es losgeht, musst du die Bedingungen akzeptieren und dein Alter bestätigen.",
+    "gateContinue": "Akzeptieren und fortfahren",
+    "gateCancel": "Ich akzeptiere nicht, abmelden",
     "googleNotice": "Wenn du mit Google fortfährst und noch kein Konto hast, akzeptierst du die",
     "googleAgeConfirm": " und bestätigst, dass du mindestens 16 Jahre alt bist oder die Zustimmung deiner Eltern bzw. gesetzlichen Vertreter hast.",
     "resetSent": "Wir haben dir einen Link zum Zurücksetzen deines Passworts geschickt.",

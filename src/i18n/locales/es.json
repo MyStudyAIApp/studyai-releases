@@ -622,10 +622,12 @@
       "warningFlashcards": "Todas tus fichas, mazos guardados y progreso de estudio",
       "warningAccount": "Tu cuenta y tu email quedarán completamente eliminados",
       "passwordLabel": "Escribe tu contraseña para confirmar",
+      "emailLabel": "Escribe tu correo para confirmar",
       "cancel": "Cancelar",
       "deleting": "Borrando…",
       "confirmDelete": "Borrar definitivamente",
       "wrongPassword": "Contraseña incorrecta.",
+      "wrongEmail": "El correo no coincide con el de tu cuenta.",
       "error": "No se pudo borrar la cuenta. Inténtalo de nuevo."
     },
     "appearance": {
@@ -1324,6 +1326,10 @@
     "terms": "Términos y Condiciones",
     "privacy": "Política de Privacidad",
     "ageConfirm": ", y confirmo que tengo al menos 16 años o cuento con la autorización de mis padres o tutores.",
+    "gateTitle": "Un último paso",
+    "gateBody": "Has creado tu cuenta con {{email}}. Antes de entrar necesitamos que aceptes las condiciones y confirmes tu edad.",
+    "gateContinue": "Aceptar y entrar",
+    "gateCancel": "No acepto, cerrar sesión",
     "googleNotice": "Si continúas con Google y aún no tienes cuenta, aceptas los",
     "googleAgeConfirm": ", y confirmas que tienes al menos 16 años o autorización de tus padres o tutores.",
     "resetSent": "Te hemos enviado un enlace para restablecer tu contraseña.",

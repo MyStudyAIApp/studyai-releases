@@ -53,3 +53,62 @@ export async function registrarAceptacionSiProcede(userId) {
     // sesión. Un fallo de red no puede costarle el acceso a nadie.
   }
 }
+
+/**
+ * Desde cuándo se exige constancia de la aceptación.
+ *
+ * Por qué una fecha fija y no "creada hace menos de X minutos": el alta con
+ * Google no avisa de si creó la cuenta o solo inició sesión, así que hay que
+ * deducirlo. La primera versión de esto miraba si la cuenta había nacido
+ * hacía menos de 10 minutos, y tenía un agujero que se vio probando: quien
+ * rechazaba la aceptación y volvía a entrar 11 minutos después pasaba
+ * derecho, sin aceptar nada y sin dejar constancia. Con una fecha fija el
+ * bloqueo no caduca: o acepta, o no entra, hoy y dentro de un año.
+ *
+ * Las cuentas anteriores a esta fecha se quedan fuera a propósito (decisión
+ * del usuario, 19/9/2026): son de antes de que existiera el mecanismo y no
+ * se les planta una pantalla legal por sorpresa.
+ */
+export const EXIGIBLE_DESDE = Date.parse('2026-09-19T00:00:00Z')
+
+export function requiereConstancia(createdAt) {
+  if (!createdAt) return false
+  const nacimiento = new Date(createdAt).getTime()
+  if (Number.isNaN(nacimiento)) return false
+  return nacimiento >= EXIGIBLE_DESDE
+}
+
+/**
+ * ¿Hay que pararle los pies a este usuario y pedirle la aceptacion?
+ *
+ * Solo a las cuentas recien creadas: a los usuarios de siempre no se les
+ * molesta, aunque no tengan constancia por ser anteriores a este mecanismo.
+ * Ante cualquier fallo devuelve false — un error de red no puede dejar a
+ * nadie fuera de su cuenta.
+ */
+export async function necesitaAceptacion(user) {
+  if (!user?.id) return false
+  if (!requiereConstancia(user.created_at)) return false
+  try {
+    const { data } = await supabase
+      .from('profiles')
+      .select('terms_accepted_at')
+      .eq('id', user.id)
+      .maybeSingle()
+    return !!data && !data.terms_accepted_at
+  } catch {
+    return false
+  }
+}
+
+/** Escribe la constancia cuando el usuario acepta en la pantalla de aviso. */
+export async function guardarAceptacion(userId) {
+  if (!userId) throw new Error('sin usuario')
+  const ahora = new Date().toISOString()
+  const { error } = await supabase
+    .from('profiles')
+    .update({ terms_accepted_at: ahora, age_declared_at: ahora })
+    .eq('id', userId)
+  if (error) throw error
+  try { localStorage.removeItem(CLAVE) } catch {}
+}

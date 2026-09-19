@@ -29,6 +29,7 @@ import LegalPlaceholderPage from './pages/LegalPlaceholderPage'
 import AdminPage from './pages/AdminPage'
 import SyncPage from './pages/SyncPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import AcceptTermsPage from './pages/AcceptTermsPage'
 import DeleteAccountInfoPage from './pages/DeleteAccountInfoPage'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import UpdateNotification from './components/UpdateNotification'
@@ -100,7 +101,7 @@ function RootRoute() {
 // Separado de App() para poder usar useAuth() (que necesita estar DENTRO de <AuthProvider>)
 function AppInner() {
   const { backendReady, setBackendReady, setBackendError, addToast, setTodayStudyMinutes, applySyncedSettings } = useAppStore()
-  const { user, isPasswordRecovery } = useAuth()  // ahora sí podemos usarlo (estamos dentro del AuthProvider)
+  const { user, isPasswordRecovery, needsTerms } = useAuth()  // ahora sí podemos usarlo (estamos dentro del AuthProvider)
 
   // ── Ajustes sincronizados entre plataformas (voz, tema, idioma, horas...) ──
   // Al iniciar sesión (una vez por sesión de app, no en cada render) se traen
@@ -263,6 +264,16 @@ function AppInner() {
   // cuenta sin tener que fijar la contraseña nueva.
   if (isPasswordRecovery) {
     return <ResetPasswordPage />
+  }
+
+  // Cuenta recién creada con Google sin constancia de aceptación: no pasa de
+  // aquí hasta que acepte (o cierre sesión). Las páginas legales quedan
+  // fuera, igual que con el candado de admin: tiene que poder leer lo que se
+  // le pide aceptar. Va antes del reparto de móvil/web porque el alta con
+  // Google existe en las tres plataformas.
+  const RUTAS_LEGALES = ['/terminos', '/privacidad', '/cookies']
+  if (needsTerms && !RUTAS_LEGALES.includes(routeLocation.pathname)) {
+    return <AcceptTermsPage />
   }
 
   // Móvil: dos apps Capacitor distintas comparten este mismo código —

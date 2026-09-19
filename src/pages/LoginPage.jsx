@@ -154,16 +154,19 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     setError(null)
-    // El alta con Google crea la cuenta igual que el formulario de email, asi
-    // que tiene que pasar por la misma aceptacion de Condiciones y Privacidad.
-    // Sin esto se podian crear cuentas sin contrato aceptado (art. 13 RGPD).
-    if (!acceptedTerms) {
-      setError(t('auth.err.mustAccept'))
-      return
+    // Desde la pestana de REGISTRO la casilla ya esta marcada aqui, asi que se
+    // deja la marca y al volver queda constancia sin molestar a nadie mas.
+    // Desde INICIAR SESION no hay casilla a proposito: el navegador no puede
+    // saber si Google va a crear la cuenta o solo a entrar, y obligar a
+    // marcarla a los que ya tienen cuenta era friccion inutil. Si resulta ser
+    // un alta, la aceptacion se pide al volver (AcceptTermsPage).
+    if (mode === 'register') {
+      if (!acceptedTerms) {
+        setError(t('auth.err.mustAccept'))
+        return
+      }
+      marcarAceptacion()
     }
-    // El alta con Google se va a otra pagina y vuelve: la marca sobrevive al
-    // viaje y es lo que hace que AuthContext deje constancia al volver.
-    marcarAceptacion()
     if (IS_WEB) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -592,7 +595,7 @@ export default function LoginPage() {
         <button
           type="button"
           onClick={handleGoogleLogin}
-          disabled={loading || !acceptedTerms}
+          disabled={loading || (mode === 'register' && !acceptedTerms)}
           className="w-full flex items-center justify-center gap-3 bg-white hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 font-semibold py-3 rounded-xl transition-all shadow-lg"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -604,29 +607,13 @@ export default function LoginPage() {
           {t('auth.googleContinue')}
         </button>
 
-        {/* En modo login, Google tambien puede dar de alta a alguien que no
-            tenia cuenta. Antes aqui solo habia un parrafo informativo: no era
-            un acto afirmativo del usuario ni quedaba constancia de nada. Ahora
-            es la MISMA casilla que en el alta por email y bloquea el boton,
-            para poder acreditar la aceptacion y la declaracion de edad por las
-            dos vias (art. 7.1 y 8.2 RGPD). */}
-        {mode === 'login' && (
-          <label className="flex items-start gap-2 text-[11px] text-slate-400 mt-3">
-            <input
-              type="checkbox"
-              checked={acceptedTerms}
-              onChange={e => setAcceptedTerms(e.target.checked)}
-              className="mt-0.5 accent-primary-500"
-            />
-            <span>
-              {t('auth.accept')}{' '}
-              <Link to="/terminos" className="text-primary-400 hover:text-primary-300 underline">{t('auth.terms')}</Link>
-              {' '}{t('auth.and')}{' '}
-              <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">{t('auth.privacy')}</Link>
-              {t('auth.ageConfirm')}
-            </span>
-          </label>
-        )}
+        {/* Aqui habia una casilla de aceptacion tambien en modo login, porque
+            Google puede dar de alta a quien no tenia cuenta. Se la comia todo
+            el mundo, incluido quien lleva meses registrado: friccion inutil y
+            confusa. Ahora se entra de un clic y la aceptacion se pide DESPUES,
+            solo si la cuenta acaba de nacer (ver src/pages/AcceptTermsPage.jsx
+            y necesitaAceptacion en src/lib/aceptacion.js). La constancia de
+            los art. 7.1 y 8.2 RGPD se sigue guardando igual. */}
 
         <button
           type="button"

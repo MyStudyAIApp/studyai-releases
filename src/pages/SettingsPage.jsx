@@ -473,7 +473,7 @@ export default function SettingsPage() {
 
   // ── Borrar cuenta (permanente) ─────────────────────────────────────────
   const [showDeleteModal, setShowDeleteModal]   = useState(false)
-  const [deletePassword, setDeletePassword]     = useState('')
+  const [deleteConfirm, setDeleteConfirm]       = useState('')
   const [deleting, setDeleting]                 = useState(false)
   const [deleteError, setDeleteError]           = useState('')
 
@@ -499,16 +499,31 @@ export default function SettingsPage() {
     }
   }
 
+  // Las cuentas creadas con "Continuar con Google" NO tienen contraseña, asi
+  // que pedirsela era pedirles algo que no existe: no podian borrar su cuenta
+  // por ninguna via (19/9/2026). A esas se les pide escribir su propio correo,
+  // que cumple la misma funcion — un acto deliberado, no un clic de mas — sin
+  // inventarse una credencial. La sesion ya esta autenticada en ambos casos.
+  const proveedores = user?.identities?.map(i => i.provider)
+    ?? user?.app_metadata?.providers
+    ?? []
+  const tienePassword = proveedores.includes('email')
+
   async function handleDeleteAccount() {
-    if (!deletePassword) return
+    if (!deleteConfirm) return
     setDeleting(true)
     setDeleteError('')
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({
-        email: user.email, password: deletePassword,
-      })
-      if (authError) {
-        setDeleteError(t('settings.dangerZone.wrongPassword'))
+      if (tienePassword) {
+        const { error: authError } = await supabase.auth.signInWithPassword({
+          email: user.email, password: deleteConfirm,
+        })
+        if (authError) {
+          setDeleteError(t('settings.dangerZone.wrongPassword'))
+          return
+        }
+      } else if (deleteConfirm.trim().toLowerCase() !== (user.email || '').toLowerCase()) {
+        setDeleteError(t('settings.dangerZone.wrongEmail'))
         return
       }
       const authHeader = await getAuthHeader()
@@ -1593,15 +1608,31 @@ export default function SettingsPage() {
             <li>{t('settings.dangerZone.warningAccount')}</li>
           </ul>
           <div>
-            <label className="block text-sm text-slate-400 mb-1">{t('settings.dangerZone.passwordLabel')}</label>
-            <PasswordInput
-              value={deletePassword}
-              onChange={e => setDeletePassword(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleDeleteAccount()}
-              placeholder="••••••••"
-              autoComplete="current-password"
-              className="input w-full"
-            />
+            <label className="block text-sm text-slate-400 mb-1">
+              {tienePassword
+                ? t('settings.dangerZone.passwordLabel')
+                : t('settings.dangerZone.emailLabel')}
+            </label>
+            {tienePassword ? (
+              <PasswordInput
+                value={deleteConfirm}
+                onChange={e => setDeleteConfirm(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleDeleteAccount()}
+                placeholder="••••••••"
+                autoComplete="current-password"
+                className="input w-full"
+              />
+            ) : (
+              <input
+                type="email"
+                value={deleteConfirm}
+                onChange={e => setDeleteConfirm(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleDeleteAccount()}
+                placeholder={user?.email || ''}
+                autoComplete="off"
+                className="input w-full"
+              />
+            )}
           </div>
           {deleteError && (
             <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">
@@ -1618,7 +1649,7 @@ export default function SettingsPage() {
             </button>
             <button
               onClick={handleDeleteAccount}
-              disabled={deleting || !deletePassword}
+              disabled={deleting || !deleteConfirm}
               className="flex-1 bg-red-600 hover:bg-red-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2 rounded-xl transition-all"
             >
               {deleting ? t('settings.dangerZone.deleting') : t('settings.dangerZone.confirmDelete')}
