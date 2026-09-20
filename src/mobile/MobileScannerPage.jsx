@@ -19,6 +19,10 @@ import {
 // puede borrar en cualquier momento, ni solo en memoria de React, que se
 // pierde si el usuario navega fuera de la pantalla o la app se cierra.
 const PENDING_META_KEY      = 'pending_scan_meta'
+// Los dos de abajo YA NO SE ESCRIBEN desde el 2026-09-20. Se conservan solo
+// para leer y borrar lo que dejara la version anterior de la app en el movil
+// de quien actualice: si se quitaran, esos archivos se quedarian ahi para
+// siempre sin que nada los reclamase.
 const PENDING_PREVIEW_PATH  = 'pending_scan_preview.jpg'
 const PENDING_PDF_PATH      = 'pending_scan.pdf'
 // Una por pagina escaneada. Antes solo se guardaba la PRIMERA (la vista previa)
@@ -26,6 +30,18 @@ const PENDING_PDF_PATH      = 'pending_scan.pdf'
 // que hay que poder recuperarlas todas.
 const PENDING_PAGE_PREFIX   = 'pending_scan_page_'
 const MAX_PAGINAS           = 25   // el mismo pageLimit que se le pide al escaner
+
+// Cuanto se guarda un escaneo que nunca llego a subirse antes de tirarlo.
+//
+// Existe porque hasta el 2026-09-20 NADA lo borraba: si la subida fallaba y el
+// alumno no volvia a la pantalla, sus apuntes se quedaban en el movil para
+// siempre. Con las fotos del Pixel a 12,5 MP eso son ~2,7 MB por pagina: una
+// libreta de 25 paginas son 70 MB ocupados en silencio, y encima son datos
+// personales suyos guardados sin plazo (minimizacion, art. 5.1.c y e RGPD).
+//
+// 7 dias: un escaneo al que no has vuelto en una semana no vas a volver, y
+// deja margen de sobra para las vacaciones de un fin de semana largo.
+const DIAS_ESCANEO_PENDIENTE = 7
 
 async function limpiarPendiente() {
   await Preferences.remove({ key: PENDING_META_KEY })
@@ -104,14 +120,20 @@ export default function MobileScannerPage() {
         if (!value) return   // el `finally` marca que ya se ha revisado
         const meta = JSON.parse(value)
 
-        const preview = await Filesystem.readFile({ path: PENDING_PREVIEW_PATH, directory: Directory.Data })
-        setPreviewB64(preview.data)
+        // Caducar lo que lleva demasiado tiempo sin subirse. Son fotos de sus
+        // apuntes ocupando espacio en su movil; guardarlas indefinidamente por
+        // si acaso no es cuidarle, es acumular.
+        const edadDias = (Date.now() - (meta.savedAt || 0)) / 86400000
+        if (edadDias > DIAS_ESCANEO_PENDIENTE) {
+          await limpiarPendiente().catch(() => {})
+          return
+        }
+
         setDocName(meta.docName || '')
         setContentType(meta.contentType || 'handwritten')
 
-        // Recuperar todas las paginas. Si una no esta (escaneo de una version
-        // anterior, que solo guardaba la primera), se sigue con las que haya:
-        // mejor recuperar media libreta que ninguna.
+        // Recuperar todas las paginas. Si falta alguna se sigue con las que
+        // haya: mejor recuperar media libreta que ninguna.
         const b64s = []
         for (let i = 0; i < (meta.paginas || 1); i++) {
           try {
@@ -119,7 +141,17 @@ export default function MobileScannerPage() {
             b64s.push(f.data)
           } catch { /* esa pagina ya no esta */ }
         }
-        setPaginasB64(b64s.length ? b64s : [preview.data])
+
+        // Respaldo para un escaneo dejado a medias por la version ANTERIOR de
+        // la app, que solo guardaba la vista previa y el PDF. Sin esto, al
+        // actualizar perderia ese escaneo sin decir nada.
+        if (!b64s.length) {
+          const previo = await Filesystem.readFile({ path: PENDING_PREVIEW_PATH, directory: Directory.Data })
+          b64s.push(previo.data)
+        }
+
+        setPaginasB64(b64s)
+        setPreviewB64(b64s[0])
         addToast(t('mobile.scanner.recovered'), 'info', 5000)
       } catch {
         // Metadata huérfana sin archivos detrás — limpiar por si acaso
@@ -164,8 +196,9 @@ export default function MobileScannerPage() {
     }
     if (!b64s.length) return
 
-    // La primera hace de vista previa, igual que antes.
-    await Filesystem.writeFile({ path: PENDING_PREVIEW_PATH, data: b64s[0], directory: Directory.Data })
+    // La vista previa es la pagina 1, que YA esta guardada. Antes se escribia
+    // ademas en pending_scan_preview.jpg: una copia byte a byte de la misma
+    // foto, ~2,7 MB de mas en el movil por cada escaneo, para nada.
 
     await Preferences.set({
       key: PENDING_META_KEY,
