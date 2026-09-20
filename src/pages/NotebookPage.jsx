@@ -7,7 +7,7 @@ import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
-import { api, apiUpload, useAppStore } from '../store/appStore'
+import { api, apiUpload, useAppStore, UPLOAD_TIMEOUT_OCR_MS } from '../store/appStore'
 import { prepararTexto, resolverDuda, contarDudas, transformarUrl } from '../lib/dudas'
 import { textoAHtml, htmlATexto } from '../lib/formato'
 import DudaModal from '../components/DudaModal'
@@ -114,7 +114,7 @@ export default function NotebookPage() {
       else form.append('subject_id', subjectId)
       form.append('content_type', 'handwritten')
 
-      const r = await apiUpload('/notebooks/append', form)
+      const r = await apiUpload('/notebooks/append', form, null, UPLOAD_TIMEOUT_OCR_MS)
       addToast(
         r.created
           ? i18n.t('notebook.created', { name: r.title.replace('[Cuaderno] ', '') })

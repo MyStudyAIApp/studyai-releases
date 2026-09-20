@@ -1431,7 +1431,6 @@
       "preparing": "Préparation du scanner intelligent…",
       "firstTimeOnly": "Cela n'arrive que la première fois",
       "scannedDoc": "Document scanné",
-      "willUploadPdf": "Sera téléversé comme PDF avec texte extrait",
       "saving": "Enregistrement...",
       "addToNotebook": "Ajouter à mon carnet",
       "saveToLibrary": "Enregistrer dans la bibliothèque",
@@ -1440,7 +1439,19 @@
       "sensitive": "Ne scanne pas de données personnelles sensibles (carte d'identité, noms de tiers, etc.)",
       "scanDocument": "Scanner un document",
       "edgesInfo": "Le scanner détecte automatiquement les bords de la feuille et ne recadre que le document.",
-      "downloadFailed": "Le scanner n'a pas pu être téléchargé"
+      "downloadFailed": "Le scanner n'a pas pu être téléchargé",
+      "progressResizing": "Préparation de la page {{actual}} sur {{total}}...",
+      "progressUploading": "Envoi de la page {{actual}} sur {{total}}...",
+      "notifyMe": "Prévenez-moi",
+      "notifyMeHint": "Vous pouvez continuer à utiliser l'application",
+      "willNotify": "Nous continuons. Nous vous préviendrons une fois terminé.",
+      "pageCount": "{{count}} pages",
+      "partial": "{{done}} pages sur {{total}} ont été enregistrées. Réessayez avec les autres.",
+      "notifChannel": "Scans terminés",
+      "notifOkTitle": "Vos notes sont prêtes",
+      "notifOkBody": "{{count}} pages ont été ajoutées à votre cahier.",
+      "notifPartialTitle": "Scan incomplet",
+      "notifPartialBody": "{{done}} pages sur {{total}} ont été enregistrées. Ouvrez l'application pour terminer."
     },
     "examsTab": "Examens",
     "exams": {

@@ -1431,7 +1431,6 @@
       "preparing": "Preparando el escáner inteligente…",
       "firstTimeOnly": "Solo ocurre la primera vez",
       "scannedDoc": "Documento escaneado",
-      "willUploadPdf": "Se subirá como PDF con texto extraído",
       "saving": "Guardando...",
       "addToNotebook": "Sumar a mi cuaderno",
       "saveToLibrary": "Guardar en biblioteca",
@@ -1440,7 +1439,19 @@
       "sensitive": "No escanees datos personales sensibles (DNI, nombres de terceros, etc.)",
       "scanDocument": "Escanear documento",
       "edgesInfo": "El escáner detecta los bordes del folio automáticamente y recorta solo el documento.",
-      "downloadFailed": "No se pudo descargar el escáner"
+      "downloadFailed": "No se pudo descargar el escáner",
+      "progressResizing": "Preparando página {{actual}} de {{total}}...",
+      "progressUploading": "Subiendo página {{actual}} de {{total}}...",
+      "notifyMe": "Avísame cuando esté",
+      "notifyMeHint": "Puedes seguir usando la app mientras tanto",
+      "willNotify": "Seguimos trabajando. Te avisamos al terminar.",
+      "pageCount": "{{count}} páginas",
+      "partial": "Se guardaron {{done}} de {{total}} páginas. Vuelve a intentarlo con las que faltan.",
+      "notifChannel": "Escaneos terminados",
+      "notifOkTitle": "Tus apuntes ya están listos",
+      "notifOkBody": "Se han añadido {{count}} páginas a tu cuaderno.",
+      "notifPartialTitle": "Escaneo a medias",
+      "notifPartialBody": "Se guardaron {{done}} de {{total}} páginas. Abre la app para terminar."
     },
     "examsTab": "Exámenes",
     "exams": {

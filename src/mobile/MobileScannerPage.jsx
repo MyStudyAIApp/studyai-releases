@@ -4,13 +4,14 @@ import { Preferences } from '@capacitor/preferences'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { verFuncion } from '../lib/betaFlags'
-import { api, apiUpload, useAppStore } from '../store/appStore'
+import { api, useAppStore } from '../store/appStore'
 import { useDocumentScan } from './useDocumentScan'
+import { subirEscaneo, suscribir, pasarASegundoPlano, olvidarTrabajo } from './scanUpload'
 import { useTranslation } from 'react-i18next'
 import {
   IconArrowLeft, IconCamera, IconPackage, IconCircleCheck, IconPencil, IconBooks,
   IconFolder, IconLoader2, IconRefresh, IconFileText, IconAlertTriangle,
-  IconWriting, IconNotebook,
+  IconWriting, IconNotebook, IconBell,
 } from '@tabler/icons-react'
 
 // Dónde se persiste el escaneo ANTES de intentar subirlo, en almacenamiento
@@ -20,31 +21,25 @@ import {
 const PENDING_META_KEY      = 'pending_scan_meta'
 const PENDING_PREVIEW_PATH  = 'pending_scan_preview.jpg'
 const PENDING_PDF_PATH      = 'pending_scan.pdf'
+// Una por pagina escaneada. Antes solo se guardaba la PRIMERA (la vista previa)
+// y el resto vivia dentro del PDF de ML Kit; ahora se suben de una en una, asi
+// que hay que poder recuperarlas todas.
+const PENDING_PAGE_PREFIX   = 'pending_scan_page_'
+const MAX_PAGINAS           = 25   // el mismo pageLimit que se le pide al escaner
 
 async function limpiarPendiente() {
   await Preferences.remove({ key: PENDING_META_KEY })
   try { await Filesystem.deleteFile({ path: PENDING_PREVIEW_PATH, directory: Directory.Data }) } catch { /* no existía */ }
   try { await Filesystem.deleteFile({ path: PENDING_PDF_PATH, directory: Directory.Data }) } catch { /* no existía */ }
-}
-
-// Reintenta antes de rendirse — muchos fallos de subida son transitorios
-// (un blip de red, una carrera con el refresco del token).
-async function withRetry(fn, attempts = 2, delayMs = 1500) {
-  let lastErr
-  for (let i = 0; i <= attempts; i++) {
-    try {
-      return await fn()
-    } catch (e) {
-      lastErr = e
-      if (i < attempts) await new Promise(r => setTimeout(r, delayMs))
-    }
+  for (let i = 0; i < MAX_PAGINAS; i++) {
+    try { await Filesystem.deleteFile({ path: `${PENDING_PAGE_PREFIX}${i}.jpg`, directory: Directory.Data }) } catch { /* no existía */ }
   }
-  throw lastErr
 }
 
 export default function MobileScannerPage() {
   const [previewB64, setPreviewB64] = useState(null)  // JPEG en base64 para mostrar
-  const [pdfUri, setPdfUri]         = useState(null)  // PDF file:// URI para subir (ya persistido)
+  const [paginasB64, setPaginasB64] = useState([])    // TODAS las paginas, en orden
+  const [progreso, setProgreso]     = useState(null)  // lo que reporta scanUpload
   // Ya no se elige: todo pasa por el mismo OCR ('handwritten'), sea impreso o a mano
   const [contentType, setContentType] = useState(
     new URLSearchParams(window.location.hash.split('?')[1] || '').get('modo') === 'cuaderno'
@@ -83,6 +78,10 @@ export default function MobileScannerPage() {
       .catch(() => setTopics([]))
   }, [subjectId])
 
+  // Para no cerrar dos veces el mismo trabajo: el efecto que lo cierra se
+  // dispara con cada aviso de scanUpload, y navegar dos veces da un parpadeo.
+  const cerrado = useRef(true)
+
   // Desde el inicio el alumno ya ha dicho lo que quiere ("Escanear apuntes" o
   // "Mi cuaderno"), asi que aqui no se le vuelve a preguntar: se abre la camara
   // directamente. Solo se espera a saber si hay un escaneo a medias, para no
@@ -110,10 +109,17 @@ export default function MobileScannerPage() {
         setDocName(meta.docName || '')
         setContentType(meta.contentType || 'handwritten')
 
-        if (meta.hasPdf) {
-          const { uri } = await Filesystem.getUri({ path: PENDING_PDF_PATH, directory: Directory.Data })
-          setPdfUri(uri)
+        // Recuperar todas las paginas. Si una no esta (escaneo de una version
+        // anterior, que solo guardaba la primera), se sigue con las que haya:
+        // mejor recuperar media libreta que ninguna.
+        const b64s = []
+        for (let i = 0; i < (meta.paginas || 1); i++) {
+          try {
+            const f = await Filesystem.readFile({ path: `${PENDING_PAGE_PREFIX}${i}.jpg`, directory: Directory.Data })
+            b64s.push(f.data)
+          } catch { /* esa pagina ya no esta */ }
         }
+        setPaginasB64(b64s.length ? b64s : [preview.data])
         addToast(t('mobile.scanner.recovered'), 'info', 5000)
       } catch {
         // Metadata huérfana sin archivos detrás — limpiar por si acaso
@@ -129,7 +135,10 @@ export default function MobileScannerPage() {
       const result = await docScan({
         pageLimit: 25,
         galleryImportAllowed: true,
-        resultFormats: 'JPEG_PDF',
+        // Solo JPEG: el PDF ya no se usa (cada pagina se sube por separado y
+        // reescalada). Pedirlo era hacerle generar y guardar un archivo mas
+        // que nadie lee.
+        resultFormats: 'JPEG',
         scannerMode: 'FULL',
       })
       if (result) await handleScanResult(result)
@@ -141,29 +150,30 @@ export default function MobileScannerPage() {
   }
 
   const handleScanResult = async (result) => {
-    // JPEG de la primera página, para la vista previa
-    const { data: previewData } = await Filesystem.readFile({ path: result.scannedImages[0] })
-
-    // Persistir de inmediato en almacenamiento propio de la app — antes de
-    // intentar subir nada. Así, si la subida falla o el usuario sale de la
-    // pantalla, el escaneo sigue recuperable en el siguiente intento.
-    await Filesystem.writeFile({ path: PENDING_PREVIEW_PATH, data: previewData, directory: Directory.Data })
-
-    let persistedPdfUri = null
-    if (result.pdf?.uri) {
-      const { data: pdfData } = await Filesystem.readFile({ path: result.pdf.uri })
-      await Filesystem.writeFile({ path: PENDING_PDF_PATH, data: pdfData, directory: Directory.Data })
-      const { uri } = await Filesystem.getUri({ path: PENDING_PDF_PATH, directory: Directory.Data })
-      persistedPdfUri = uri
+    // TODAS las paginas, no solo la primera. Antes solo se guardaba la vista
+    // previa y el resto viajaba dentro del PDF de ML Kit; ahora cada pagina se
+    // sube por separado (ver scanUpload.subirEscaneo), asi que hacen falta
+    // todas, y persistidas antes de intentar nada: si la subida falla o la app
+    // se cierra, el escaneo sigue recuperable.
+    const imagenes = result.scannedImages || []
+    const b64s = []
+    for (let i = 0; i < imagenes.length && i < MAX_PAGINAS; i++) {
+      const { data } = await Filesystem.readFile({ path: imagenes[i] })
+      await Filesystem.writeFile({ path: `${PENDING_PAGE_PREFIX}${i}.jpg`, data, directory: Directory.Data })
+      b64s.push(data)
     }
+    if (!b64s.length) return
+
+    // La primera hace de vista previa, igual que antes.
+    await Filesystem.writeFile({ path: PENDING_PREVIEW_PATH, data: b64s[0], directory: Directory.Data })
 
     await Preferences.set({
       key: PENDING_META_KEY,
-      value: JSON.stringify({ docName: '', hasPdf: !!persistedPdfUri, contentType, savedAt: Date.now() }),
+      value: JSON.stringify({ docName: '', paginas: b64s.length, contentType, savedAt: Date.now() }),
     })
 
-    setPreviewB64(previewData)
-    setPdfUri(persistedPdfUri)
+    setPaginasB64(b64s)
+    setPreviewB64(b64s[0])
   }
 
   const chooseAndScan = (type) => {
@@ -171,16 +181,41 @@ export default function MobileScannerPage() {
     scan()
   }
 
-  const fileUriToBlob = async (uri, mimeType) => {
-    const { data } = await Filesystem.readFile({ path: uri })
-    const binary = atob(data)
-    const bytes = new Uint8Array(binary.length)
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-    return new Blob([bytes], { type: mimeType })
-  }
+  // Mientras haya un trabajo vivo (o recien acabado) la pantalla lo refleja,
+  // aunque el alumno haya salido y vuelto: el estado vive en scanUpload, no
+  // aqui. Eso es lo que hace posible "Avisame".
+  useEffect(() => suscribir(setProgreso), [])
+
+  // Cuando el trabajo termina estando la pantalla abierta, se cierra aqui:
+  // avisar, limpiar lo pendiente y salir. Si estaba en segundo plano, de eso
+  // ya se encarga la notificacion.
+  useEffect(() => {
+    if (!progreso?.terminado || cerrado.current) return
+    cerrado.current = true
+    ;(async () => {
+      if (progreso.guardadas > 0) await limpiarPendiente().catch(() => {})
+      if (progreso.error) {
+        addToast(
+          progreso.guardadas > 0
+            ? t('mobile.scanner.partial', { done: progreso.guardadas, total: progreso.total })
+            : t('mobile.scanner.uploadFailed'),
+          progreso.guardadas > 0 ? 'warning' : 'error', 7000,
+        )
+      } else {
+        addToast(modoCuaderno
+          ? t('mobile.scanner.addedNotebook')
+          : t('mobile.scanner.savedLibrary'), 'success')
+        const cal = progreso.primerResultado?.calidad
+        if (cal?.pobre) addToast(cal.motivo, 'warning', 7000)
+      }
+      setLoading(false)
+      olvidarTrabajo()
+      if (progreso.guardadas > 0) navigate('/')
+    })()
+  }, [progreso?.terminado])
 
   const guardar = async () => {
-    if (!pdfUri && !previewB64) return
+    if (!paginasB64.length) return
     // En modo cuaderno la asignatura no es opcional: es donde se suman los
     // apuntes. Sin ella el backend responderia 400 y el alumno perderia el
     // escaneo sin entender por que.
@@ -188,73 +223,41 @@ export default function MobileScannerPage() {
       return addToast(t('mobile.scanner.pickSubject'), 'info', 4000)
     }
     setLoading(true)
+    cerrado.current = false
     const now = new Date()
     const fecha = now.toLocaleDateString(i18n.language)
     const hora  = now.toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' })
     const nombre = docName.trim() || `${t('mobile.scanner.defaultName')} ${fecha} ${hora}`
 
     // Guardar el nombre elegido en la metadata persistida — si la subida
-    // falla, el próximo intento recupera también el nombre que escribió.
+    // falla, el proximo intento recupera tambien el nombre que escribio.
     try {
       await Preferences.set({
         key: PENDING_META_KEY,
-        value: JSON.stringify({ docName, hasPdf: !!pdfUri, contentType, savedAt: Date.now() }),
+        value: JSON.stringify({ docName, paginas: paginasB64.length, contentType, savedAt: Date.now() }),
       })
-    } catch { /* no crítico */ }
+    } catch { /* no critico */ }
 
-    try {
-      let resp = null
-      await withRetry(async () => {
-        const form = new FormData()
-        if (topicId) form.append('topic_id', topicId)
-        else if (subjectId) form.append('subject_id', subjectId)
-        form.append('content_type', contentType || 'handwritten')
-
-        if (pdfUri) {
-          const blob = await fileUriToBlob(pdfUri, 'application/pdf')
-          form.append('file', new File([blob], `${nombre}.pdf`, { type: 'application/pdf' }))
-          resp = await apiUpload(modoCuaderno ? '/notebooks/append' : '/documents/upload', form)
-        } else if (modoCuaderno) {
-          const binary = atob(previewB64)
-          const bytes  = new Uint8Array(binary.length)
-          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-          const blob = new Blob([bytes], { type: 'image/jpeg' })
-          form.append('file', new File([blob], `${nombre}.jpg`, { type: 'image/jpeg' }))
-          resp = await apiUpload('/notebooks/append', form)
-        } else {
-          // Fallback: subir la imagen JPEG que ya tenemos en base64
-          const binary = atob(previewB64)
-          const bytes  = new Uint8Array(binary.length)
-          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-          const blob = new Blob([bytes], { type: 'image/jpeg' })
-          form.append('file', new File([blob], `${nombre}.jpg`, { type: 'image/jpeg' }))
-          resp = await apiUpload('/documents/upload-image', form)
-        }
-      })
-
-      await limpiarPendiente()
-      addToast(modoCuaderno
-        ? t('mobile.scanner.addedNotebook')
-        : t('mobile.scanner.savedLibrary'), 'success')
-      // Si la foto salio mal se guarda igual (mejor un apunte a medias que
-      // ninguno), pero se avisa: antes el alumno no se enteraba hasta leer un
-      // resumen sin sentido.
-      if (resp?.calidad?.pobre) {
-        addToast(resp.calidad.motivo, 'warning', 7000)
-      }
-      navigate('/')
-    } catch (e) {
-      console.error('SCANNER_UPLOAD_ERROR', e?.message ?? String(e), e?.status, e?.name)
-      addToast(t('mobile.scanner.uploadFailed'), 'error', 6000)
-    } finally {
-      setLoading(false)
-    }
+    // No se espera aqui a proposito: si el alumno pulsa "Avisame" y navega
+    // fuera, este componente se desmonta pero el trabajo sigue vivo en
+    // scanUpload y acaba igual.
+    subirEscaneo(paginasB64, {
+      topicId, subjectId, modoCuaderno, nombre,
+      contentType: contentType || 'handwritten',
+    })
   }
+
+  const avisarme = () => {
+    pasarASegundoPlano()
+    addToast(t('mobile.scanner.willNotify'), 'info', 5000)
+    navigate('/')
+  }
+
 
   const descartar = async () => {
     await limpiarPendiente().catch(() => {})
     setPreviewB64(null)
-    setPdfUri(null)
+    setPaginasB64([])
     setDocName('')
     setSubjectId('')
     setTopicId('')
@@ -309,9 +312,6 @@ export default function MobileScannerPage() {
                 className="w-full object-contain max-h-[50vh]"
               />
             </div>
-            {pdfUri && (
-              <p className="text-center text-xs text-emerald-500">✓ {t('mobile.scanner.willUploadPdf')}</p>
-            )}
 
             <div className="bg-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3 border border-slate-700">
               <IconPencil size={16} className="text-slate-400 shrink-0" />
@@ -359,26 +359,65 @@ export default function MobileScannerPage() {
               </div>
             )}
 
-            <button
-              onClick={guardar}
-              disabled={loading}
-              className="w-full py-5 rounded-2xl bg-primary-600 text-white font-bold text-lg
-                         active:bg-primary-700 disabled:opacity-50 transition-colors"
-            >
-              {loading
-                ? <span className="flex items-center justify-center gap-2"><IconLoader2 size={18} className="animate-spin" /> {t('mobile.scanner.saving')}</span>
-                : <span className="flex items-center justify-center gap-2">
+            {/* Por donde va. La queja de fondo del usuario que reporto esto no
+                era solo que tardase, sino que no sabia CUANTO faltaba. */}
+            {loading && progreso && !progreso.terminado && (
+              <div className="bg-slate-800 rounded-2xl px-4 py-4 border border-slate-700 space-y-3">
+                <p className="text-sm text-slate-200 font-medium flex items-center gap-2">
+                  <IconLoader2 size={16} className="animate-spin text-primary-400 shrink-0" />
+                  {t(progreso.fase === 'reescalando'
+                    ? 'mobile.scanner.progressResizing'
+                    : 'mobile.scanner.progressUploading',
+                    { actual: progreso.actual, total: progreso.total })}
+                </p>
+                <div className="w-full bg-slate-700 rounded-full h-2">
+                  <div
+                    className="bg-primary-500 h-2 rounded-full transition-all duration-300"
+                    style={{
+                      // Dos fases en una sola barra: reescalar es la primera
+                      // mitad y subir la segunda. Dos barras separadas darian
+                      // la sensacion de empezar de cero a mitad de camino.
+                      width: `${((progreso.fase === 'subiendo' ? 0.5 : 0) +
+                                 (progreso.actual / Math.max(progreso.total, 1)) * 0.5) * 100}%`,
+                    }}
+                  />
+                </div>
+                <button
+                  onClick={avisarme}
+                  className="w-full py-3 rounded-xl bg-slate-700 text-slate-200 text-sm font-medium
+                             active:bg-slate-600 transition-colors flex items-center justify-center gap-2"
+                >
+                  <IconBell size={16} /> {t('mobile.scanner.notifyMe')}
+                </button>
+                <p className="text-xs text-slate-500 text-center">{t('mobile.scanner.notifyMeHint')}</p>
+              </div>
+            )}
+
+            {!loading && (
+              <>
+                <button
+                  onClick={guardar}
+                  className="w-full py-5 rounded-2xl bg-primary-600 text-white font-bold text-lg
+                             active:bg-primary-700 transition-colors"
+                >
+                  <span className="flex items-center justify-center gap-2">
                     <IconCircleCheck size={18} /> {modoCuaderno ? t('mobile.scanner.addToNotebook') : t('mobile.scanner.saveToLibrary')}
-                  </span>}
-            </button>
-            <button
-              onClick={descartar}
-              disabled={loading}
-              className="w-full py-4 rounded-2xl bg-slate-700 text-slate-300 font-medium
-                         active:bg-slate-600 disabled:opacity-40 transition-colors flex items-center justify-center gap-2"
-            >
-              <IconRefresh size={16} /> {t('mobile.scanner.scanAgain')}
-            </button>
+                    {paginasB64.length > 1 && (
+                      <span className="text-primary-200 text-sm font-normal">
+                        ({t('mobile.scanner.pageCount', { count: paginasB64.length })})
+                      </span>
+                    )}
+                  </span>
+                </button>
+                <button
+                  onClick={descartar}
+                  className="w-full py-4 rounded-2xl bg-slate-700 text-slate-300 font-medium
+                             active:bg-slate-600 transition-colors flex items-center justify-center gap-2"
+                >
+                  <IconRefresh size={16} /> {t('mobile.scanner.scanAgain')}
+                </button>
+              </>
+            )}
           </>
         )}
 

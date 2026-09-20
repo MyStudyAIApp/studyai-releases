@@ -1431,7 +1431,6 @@
       "preparing": "Preparing the smart scanner…",
       "firstTimeOnly": "This only happens the first time",
       "scannedDoc": "Scanned document",
-      "willUploadPdf": "It will be uploaded as a PDF with extracted text",
       "saving": "Saving...",
       "addToNotebook": "Add to my notebook",
       "saveToLibrary": "Save to library",
@@ -1440,7 +1439,19 @@
       "sensitive": "Don't scan sensitive personal data (ID numbers, other people's names, etc.)",
       "scanDocument": "Scan document",
       "edgesInfo": "The scanner detects the edges of the sheet automatically and crops just the document.",
-      "downloadFailed": "Couldn't download the scanner"
+      "downloadFailed": "Couldn't download the scanner",
+      "progressResizing": "Preparing page {{actual}} of {{total}}...",
+      "progressUploading": "Uploading page {{actual}} of {{total}}...",
+      "notifyMe": "Notify me when done",
+      "notifyMeHint": "You can keep using the app meanwhile",
+      "willNotify": "We'll keep working. We'll let you know when it's done.",
+      "pageCount": "{{count}} pages",
+      "partial": "{{done}} of {{total}} pages were saved. Try again with the rest.",
+      "notifChannel": "Finished scans",
+      "notifOkTitle": "Your notes are ready",
+      "notifOkBody": "{{count}} pages were added to your notebook.",
+      "notifPartialTitle": "Scan unfinished",
+      "notifPartialBody": "{{done}} of {{total}} pages were saved. Open the app to finish."
     },
     "examsTab": "Exams",
     "exams": {

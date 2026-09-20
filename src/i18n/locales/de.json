@@ -1431,7 +1431,6 @@
       "preparing": "Bereite den intelligenten Scanner vor…",
       "firstTimeOnly": "Passiert nur beim ersten Mal",
       "scannedDoc": "Gescanntes Dokument",
-      "willUploadPdf": "Wird als PDF mit extrahiertem Text hochgeladen",
       "saving": "Speichern...",
       "addToNotebook": "Zu meinem Notizbuch hinzufügen",
       "saveToLibrary": "In Bibliothek speichern",
@@ -1440,7 +1439,19 @@
       "sensitive": "Scanne keine sensiblen persönlichen Daten (Personalausweis, Namen Dritter, etc.)",
       "scanDocument": "Dokument scannen",
       "edgesInfo": "Der Scanner erkennt die Ränder des Blattes automatisch und schneidet nur das Dokument zu.",
-      "downloadFailed": "Der Scanner konnte nicht heruntergeladen werden"
+      "downloadFailed": "Der Scanner konnte nicht heruntergeladen werden",
+      "progressResizing": "Seite {{actual}} von {{total}} wird vorbereitet...",
+      "progressUploading": "Seite {{actual}} von {{total}} wird hochgeladen...",
+      "notifyMe": "Benachrichtige mich",
+      "notifyMeHint": "Du kannst die App währenddessen weiter nutzen",
+      "willNotify": "Wir arbeiten weiter. Wir melden uns, wenn es fertig ist.",
+      "pageCount": "{{count}} Seiten",
+      "partial": "{{done}} von {{total}} Seiten wurden gespeichert. Versuche es mit den restlichen erneut.",
+      "notifChannel": "Abgeschlossene Scans",
+      "notifOkTitle": "Deine Notizen sind fertig",
+      "notifOkBody": "{{count}} Seiten wurden deinem Heft hinzugefügt.",
+      "notifPartialTitle": "Scan unvollständig",
+      "notifPartialBody": "{{done}} von {{total}} Seiten wurden gespeichert. Öffne die App, um fortzufahren."
     },
     "examsTab": "Prüfungen",
     "exams": {

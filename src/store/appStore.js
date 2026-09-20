@@ -249,13 +249,20 @@ export async function api(method, path, body = null, signal = null) {
 // ha fallado (paso de verdad con los escaneos: el movil esperaba indefinidamente).
 const UPLOAD_TIMEOUT_MS = 120_000
 
-export async function apiUpload(path, formData, signal = null) {
+// El escaneo del cuaderno transcribe con IA antes de responder: el servidor se
+// da 240 s (web_main.notebook_append). Si el cliente corta antes, el usuario ve
+// un error rojo MIENTRAS el servidor guarda la pagina igual — que es justo lo
+// que reporto un usuario el 2026-09-20. El tope del cliente tiene que ir POR
+// ENCIMA del del servidor, nunca por debajo.
+export const UPLOAD_TIMEOUT_OCR_MS = 300_000
+
+export async function apiUpload(path, formData, signal = null, timeoutMs = UPLOAD_TIMEOUT_MS) {
   const authHeader = await getAuthHeader()
   const localHeader = await getLocalAuthHeader()
   const url = `${API_BASE}${path}`
   let res
   const ctrl = new AbortController()
-  const porTiempo = setTimeout(() => ctrl.abort(), UPLOAD_TIMEOUT_MS)
+  const porTiempo = setTimeout(() => ctrl.abort(), timeoutMs)
   // Respeta también el signal que venga de fuera (p. ej. cancelar a mano)
   if (signal) signal.addEventListener('abort', () => ctrl.abort(), { once: true })
   try {
@@ -268,7 +275,12 @@ export async function apiUpload(path, formData, signal = null) {
     })
   } catch (netErr) {
     if (netErr?.name === 'AbortError' && !signal?.aborted) {
-      throw new Error(i18n.t('net.timeout'))
+      // Marcado, no adivinado por el texto traducido: quien reintenta necesita
+      // distinguir "se agoto la espera" (el servidor PUEDE haberlo guardado, no
+      // se puede reenviar a ciegas) de "no habia red" (se puede reintentar).
+      const e = new Error(i18n.t('net.timeout'))
+      e.timedOut = true
+      throw e
     }
     throw new Error(`${i18n.t('net.offline', { host: new URL(url).hostname })} — ${netErr.message}`)
   } finally {
