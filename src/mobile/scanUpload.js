@@ -191,6 +191,11 @@ export async function subirEscaneo(paginas, campos) {
       form.append('content_type', campos.contentType || 'handwritten')
       form.append('file', new File([b64ABlob(data)], `${campos.nombre}.jpg`, { type: 'image/jpeg' }))
       if (docId) form.append('document_id', docId)
+      // La foto de la camara no se conserva en el servidor: solo su texto.
+      // No es un archivo que el alumno tenga en el movil y pueda volver a
+      // subir, asi que guardarla 10 dias no le aporta nada y nos deja sus
+      // apuntes en custodia. Igual que ya hacia "Mi cuaderno".
+      if (!campos.modoCuaderno) form.append('store_original', 'false')
 
       const destino = campos.modoCuaderno ? '/notebooks/append' : '/documents/upload-image'
       const resp = await conReintento(() => apiUpload(destino, form, null, UPLOAD_TIMEOUT_OCR_MS))
