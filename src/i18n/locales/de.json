@@ -1451,7 +1451,8 @@
       "notifOkTitle": "Deine Notizen sind fertig",
       "notifOkBody": "{{count}} Seiten wurden deinem Heft hinzugefügt.",
       "notifPartialTitle": "Scan unvollständig",
-      "notifPartialBody": "{{done}} von {{total}} Seiten wurden gespeichert. Öffne die App, um fortzufahren."
+      "notifPartialBody": "{{done}} von {{total}} Seiten wurden gespeichert. Öffne die App, um fortzufahren.",
+      "queued": "{{count}} Seiten zur Warteschlange hinzugefügt. Wir melden uns, wenn es fertig ist."
     },
     "examsTab": "Prüfungen",
     "exams": {

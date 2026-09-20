@@ -1,4 +1,3 @@
-import { Filesystem, Directory } from '@capacitor/filesystem'
 import i18n from '../i18n'
 import { apiUpload, UPLOAD_TIMEOUT_OCR_MS } from '../store/appStore'
 
@@ -17,22 +16,21 @@ import { apiUpload, UPLOAD_TIMEOUT_OCR_MS } from '../store/appStore'
 export const LADO_MAX = 2600
 const CALIDAD = 0.9
 
-const RZ_PREFIX = 'pending_scan_rz_'
-
 // ── Estado del trabajo, FUERA de React ────────────────────────────────────
 // Vive aqui a proposito: con "Avisame" el alumno navega a otra pantalla y el
 // componente se desmonta. Si el bucle viviera dentro, se quedaria a medias y
 // perderia las paginas que faltan.
 let trabajo = null
+let contadorLote = 0
 const oyentes = new Set()
 
 function avisar() {
-  for (const cb of oyentes) { try { cb(trabajo) } catch { /* un oyente roto no para la subida */ } }
+  for (const cb of oyentes) { try { cb(trabajo && { ...trabajo }) } catch { /* un oyente roto no para la subida */ } }
 }
 
 export function suscribir(cb) {
   oyentes.add(cb)
-  cb(trabajo)
+  cb(trabajo && { ...trabajo })
   return () => oyentes.delete(cb)
 }
 
@@ -60,11 +58,18 @@ function cargarImagen(src) {
   })
 }
 
+function b64ABlob(b64) {
+  const bin = atob(b64)
+  const bytes = new Uint8Array(bin.length)
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
+  return new Blob([bytes], { type: 'image/jpeg' })
+}
+
 /**
  * Reescala un JPEG en base64 al lado maximo y devuelve un Blob.
  *
  * Si algo falla se devuelve la imagen TAL CUAL, no un error: es una
- * optimizacion, y quedarse sin escaneo por no poder encogerlo seria peor que
+ * optimizacion, y quedarse sin escaneo por no poder encogerla seria peor que
  * tardar mas. El servidor la reescala igualmente.
  */
 export async function reescalar(b64) {
@@ -90,28 +95,6 @@ export async function reescalar(b64) {
   }
 }
 
-function b64ABlob(b64) {
-  const bin = atob(b64)
-  const bytes = new Uint8Array(bin.length)
-  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
-  return new Blob([bytes], { type: 'image/jpeg' })
-}
-
-function blobAB64(blob) {
-  return new Promise((resolve, reject) => {
-    const fr = new FileReader()
-    fr.onload = () => resolve(String(fr.result).split(',')[1])
-    fr.onerror = () => reject(new Error('no se pudo leer la pagina reescalada'))
-    fr.readAsDataURL(blob)
-  })
-}
-
-async function limpiarReescaladas(total) {
-  for (let i = 0; i < total; i++) {
-    try { await Filesystem.deleteFile({ path: `${RZ_PREFIX}${i}.jpg`, directory: Directory.Data }) } catch { /* no existia */ }
-  }
-}
-
 /**
  * Reintenta una pagina ante un fallo transitorio (un blip de red, una carrera
  * con el refresco del token), que es de lo que mas hay en un movil en clase.
@@ -134,96 +117,104 @@ async function conReintento(fn, intentos = 2, esperaMs = 1500) {
   throw ultimo
 }
 
-// ── El trabajo ────────────────────────────────────────────────────────────
+// ── La cola ───────────────────────────────────────────────────────────────
 
 /**
- * Reescala y sube las paginas de un escaneo, UNA PETICION POR PAGINA.
+ * Encola las paginas de un escaneo y las procesa UNA A UNA: reescalar, subir,
+ * siguiente.
  *
- * Por que una por pagina y no todas juntas:
- *  - Se puede decir por donde va ("subiendo 2 de 4"), que es lo que pedia el
+ * Por que una peticion por pagina y no todas juntas:
+ *  - Se puede decir por donde va ("Subiendo 2 de 4"), que es lo que pedia el
  *    usuario que reporto la lentitud: la espera opaca era la queja de fondo.
  *  - Si falla la pagina 3, las 1 y 2 YA estan guardadas. Antes, un fallo al
  *    final tiraba el escaneo entero.
  *  - No hace falta tocar el endpoint: /notebooks/append ya funde las paginas
- *    del mismo dia en una sola entrada (notebooks.append_entry).
+ *    del mismo dia en una sola entrada (notebooks.append_entry), y para
+ *    "Escanear apuntes" estan document_id y store_original.
+ *
+ * Por que reescalar y subir INTERCALADOS y no en dos fases:
+ *  - Deja encolar un escaneo nuevo mientras hay otro en marcha: se añaden sus
+ *    paginas al final y la barra crece sola. Con dos fases globales habria que
+ *    decidir que hacer con lo que llega a mitad de la segunda.
+ *  - Solo hay UNA pagina reescalada viva a la vez, en memoria. Antes se
+ *    escribian todas a disco para no llenar la RAM, y esas copias de sus
+ *    apuntes se quedaban en el movil si algo fallaba.
  *
  * @param paginas  array de JPEG en base64, una por pagina escaneada
  * @param campos   {topicId, subjectId, contentType, nombre, modoCuaderno}
+ * @returns true si se ha encolado sobre un trabajo que ya estaba en marcha
  */
-export async function subirEscaneo(paginas, campos) {
-  const total = paginas.length
+export function encolarEscaneo(paginas, campos) {
+  // Cada escaneo es un LOTE. Importa porque en "Escanear apuntes" las paginas
+  // de un mismo lote van al mismo documento (document_id), y las de un lote
+  // distinto NO: son otro escaneo, aunque se suban seguidas.
+  const lote = { id: ++contadorLote, campos, docId: null }
+  const nuevas = paginas.map(b64 => ({ b64, lote }))
+
+  if (hayTrabajoVivo()) {
+    trabajo.cola.push(...nuevas)
+    trabajo.total += nuevas.length
+    avisar()
+    return true
+  }
+
   trabajo = {
-    total, fase: 'reescalando', actual: 0,
-    guardadas: 0, terminado: false, segundoPlano: false,
-    error: null, primerResultado: null,
+    cola: nuevas,
+    total: nuevas.length,
+    fase: 'reescalando',
+    actual: 0,
+    guardadas: 0,
+    terminado: false,
+    segundoPlano: false,
+    error: null,
+    primerResultado: null,
   }
   avisar()
+  procesar()   // sin await: quien llama no debe quedarse atado al bucle
+  return false
+}
 
+async function procesar() {
   try {
-    // ── Fase 1: reescalar ─────────────────────────────────────────────────
-    // A disco segun se van haciendo, no todas en memoria: 25 paginas a 600 KB
-    // son 15 MB, y un movil modesto con eso ya va justo.
-    for (let i = 0; i < total; i++) {
-      trabajo.actual = i + 1; avisar()
-      const blob = await reescalar(paginas[i])
-      await Filesystem.writeFile({
-        path: `${RZ_PREFIX}${i}.jpg`,
-        data: await blobAB64(blob),
-        directory: Directory.Data,
-      })
-    }
+    while (trabajo.cola.length) {
+      const { b64, lote } = trabajo.cola.shift()
+      trabajo.actual = trabajo.guardadas + 1
 
-    // ── Fase 2: subir ─────────────────────────────────────────────────────
-    trabajo.fase = 'subiendo'; trabajo.actual = 0; avisar()
+      trabajo.fase = 'reescalando'; avisar()
+      const blob = await reescalar(b64)
 
-    // En Apuntes, las paginas 2..N se pegan al documento que creo la primera.
-    // Sin esto, un escaneo de 5 paginas daria 5 documentos sueltos. El cuaderno
-    // no lo necesita: /notebooks/append ya funde por fecha.
-    let docId = null
-
-    for (let i = 0; i < total; i++) {
-      trabajo.actual = i + 1; avisar()
-
-      const { data } = await Filesystem.readFile({ path: `${RZ_PREFIX}${i}.jpg`, directory: Directory.Data })
+      trabajo.fase = 'subiendo'; avisar()
+      const c = lote.campos
       const form = new FormData()
-      if (campos.topicId) form.append('topic_id', campos.topicId)
-      else if (campos.subjectId) form.append('subject_id', campos.subjectId)
-      form.append('content_type', campos.contentType || 'handwritten')
-      form.append('file', new File([b64ABlob(data)], `${campos.nombre}.jpg`, { type: 'image/jpeg' }))
-      if (docId) form.append('document_id', docId)
-      // La foto de la camara no se conserva en el servidor: solo su texto.
-      // No es un archivo que el alumno tenga en el movil y pueda volver a
-      // subir, asi que guardarla 10 dias no le aporta nada y nos deja sus
-      // apuntes en custodia. Igual que ya hacia "Mi cuaderno".
-      if (!campos.modoCuaderno) form.append('store_original', 'false')
+      if (c.topicId) form.append('topic_id', c.topicId)
+      else if (c.subjectId) form.append('subject_id', c.subjectId)
+      form.append('content_type', c.contentType || 'handwritten')
+      form.append('file', new File([blob], `${c.nombre}.jpg`, { type: 'image/jpeg' }))
+      if (lote.docId) form.append('document_id', lote.docId)
+      // La foto de la camara no se conserva en el servidor: solo su texto. No
+      // es un archivo que el alumno tenga en el movil y pueda volver a subir,
+      // asi que guardarla 10 dias no le aporta nada y nos deja sus apuntes en
+      // custodia. Igual que ya hacia "Mi cuaderno".
+      if (!c.modoCuaderno) form.append('store_original', 'false')
 
-      const destino = campos.modoCuaderno ? '/notebooks/append' : '/documents/upload-image'
+      const destino = c.modoCuaderno ? '/notebooks/append' : '/documents/upload-image'
       const resp = await conReintento(() => apiUpload(destino, form, null, UPLOAD_TIMEOUT_OCR_MS))
 
-      if (!campos.modoCuaderno && !docId) docId = resp?.id || null
-      trabajo.guardadas = i + 1
-      if (i === 0) trabajo.primerResultado = resp
+      if (!c.modoCuaderno && !lote.docId) lote.docId = resp?.id || null
+      trabajo.guardadas += 1
+      if (!trabajo.primerResultado) trabajo.primerResultado = resp
       avisar()
     }
-
   } catch (e) {
     // Lo que ya se subio SIGUE guardado en el servidor. Se informa de cuanto
     // entro en vez de dar el escaneo entero por perdido.
     trabajo.error = e?.message || String(e)
     console.error('SCAN_UPLOAD_ERROR', trabajo.error, e?.status, e?.timedOut)
   } finally {
-    // SIEMPRE, tambien si fallo. Son copias de los apuntes del alumno: si se
-    // borran solo cuando todo sale bien, un fallo las deja en el movil para
-    // siempre. Las originales SI se conservan aparte (pending_scan_page_N),
-    // que son las que permiten reintentar el escaneo; estas son derivadas y
-    // se vuelven a generar en el siguiente intento.
-    await limpiarReescaladas(total).catch(() => {})
     trabajo.terminado = true
     avisar()
     if (trabajo.segundoPlano) await notificarFin(trabajo)
   }
-
-  return trabajo
 }
 
 /**

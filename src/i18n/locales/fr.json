@@ -1451,7 +1451,8 @@
       "notifOkTitle": "Vos notes sont prêtes",
       "notifOkBody": "{{count}} pages ont été ajoutées à votre cahier.",
       "notifPartialTitle": "Scan incomplet",
-      "notifPartialBody": "{{done}} pages sur {{total}} ont été enregistrées. Ouvrez l'application pour terminer."
+      "notifPartialBody": "{{done}} pages sur {{total}} ont été enregistrées. Ouvrez l'application pour terminer.",
+      "queued": "{{count}} pages ajoutées à la file. Nous vous préviendrons une fois terminé."
     },
     "examsTab": "Examens",
     "exams": {

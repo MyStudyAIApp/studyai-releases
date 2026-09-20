@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { verFuncion } from '../lib/betaFlags'
 import { api, useAppStore } from '../store/appStore'
 import { useDocumentScan } from './useDocumentScan'
-import { subirEscaneo, suscribir, pasarASegundoPlano, olvidarTrabajo } from './scanUpload'
+import { encolarEscaneo, suscribir, pasarASegundoPlano, olvidarTrabajo, hayTrabajoVivo } from './scanUpload'
 import { useTranslation } from 'react-i18next'
 import {
   IconArrowLeft, IconCamera, IconPackage, IconCircleCheck, IconPencil, IconBooks,
@@ -116,6 +116,11 @@ export default function MobileScannerPage() {
   useEffect(() => {
     (async () => {
       try {
+        // Si hay un trabajo EN MARCHA, esas paginas pendientes son las suyas:
+        // se estan subiendo ahora mismo. Ofrecerlas para recuperar haria que
+        // el alumno las subiese OTRA VEZ, pagandolas dos veces del cupo.
+        if (hayTrabajoVivo()) return
+
         const { value } = await Preferences.get({ key: PENDING_META_KEY })
         if (!value) return   // el `finally` marca que ya se ha revisado
         const meta = JSON.parse(value)
@@ -274,10 +279,19 @@ export default function MobileScannerPage() {
     // No se espera aqui a proposito: si el alumno pulsa "Avisame" y navega
     // fuera, este componente se desmonta pero el trabajo sigue vivo en
     // scanUpload y acaba igual.
-    subirEscaneo(paginasB64, {
+    const encolado = encolarEscaneo(paginasB64, {
       topicId, subjectId, modoCuaderno, nombre,
       contentType: contentType || 'handwritten',
     })
+
+    // Si ya habia otro escaneo en marcha, estas paginas se han puesto a la
+    // cola: no tiene sentido dejarle mirando una barra que no es la suya.
+    // Se le manda al inicio, donde la tarjeta de progreso las cuenta todas.
+    if (encolado) {
+      pasarASegundoPlano()
+      addToast(t('mobile.scanner.queued', { count: paginasB64.length }), 'info', 5000)
+      navigate('/')
+    }
   }
 
   const avisarme = () => {
@@ -407,11 +421,10 @@ export default function MobileScannerPage() {
                   <div
                     className="bg-primary-500 h-2 rounded-full transition-all duration-300"
                     style={{
-                      // Dos fases en una sola barra: reescalar es la primera
-                      // mitad y subir la segunda. Dos barras separadas darian
-                      // la sensacion de empezar de cero a mitad de camino.
-                      width: `${((progreso.fase === 'subiendo' ? 0.5 : 0) +
-                                 (progreso.actual / Math.max(progreso.total, 1)) * 0.5) * 100}%`,
+                      // Progreso sobre el TOTAL de la cola: cada pagina
+                      // cuenta media al reescalarse y entera al subirse.
+                      width: `${((progreso.guardadas + (progreso.fase === 'subiendo' ? 0.5 : 0)) /
+                                 Math.max(progreso.total, 1)) * 100}%`,
                     }}
                   />
                 </div>

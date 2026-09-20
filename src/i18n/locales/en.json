@@ -1451,7 +1451,8 @@
       "notifOkTitle": "Your notes are ready",
       "notifOkBody": "{{count}} pages were added to your notebook.",
       "notifPartialTitle": "Scan unfinished",
-      "notifPartialBody": "{{done}} of {{total}} pages were saved. Open the app to finish."
+      "notifPartialBody": "{{done}} of {{total}} pages were saved. Open the app to finish.",
+      "queued": "{{count}} pages added to the queue. We will let you know when it is done."
     },
     "examsTab": "Exams",
     "exams": {

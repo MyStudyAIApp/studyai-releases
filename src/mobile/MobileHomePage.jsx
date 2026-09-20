@@ -5,6 +5,7 @@ import { api, useAppStore } from '../store/appStore'
 import MobileTabBar from './MobileTabBar'
 import Logo from '../components/UI/Logo'
 import PlanBadge from '../components/UI/PlanBadge'
+import ScanProgressCard from './ScanProgressCard'
 import {
   IconAlertTriangle, IconBooks, IconCamera, IconMicrophone2, IconCalculator,
   IconHeadphones, IconNotebook,
@@ -107,6 +108,10 @@ export default function MobileHomePage() {
           </button>
         </div>
       )}
+
+      {/* Como va el escaneo que dejo en segundo plano con "Avisame".
+          Se pinta sola solo si hay trabajo; si no, no ocupa nada. */}
+      <ScanProgressCard />
 
       {/* Acciones principales */}
       <div className="flex-1 flex flex-col gap-4 justify-center">

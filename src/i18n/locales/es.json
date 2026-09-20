@@ -1451,7 +1451,8 @@
       "notifOkTitle": "Tus apuntes ya están listos",
       "notifOkBody": "Se han añadido {{count}} páginas a tu cuaderno.",
       "notifPartialTitle": "Escaneo a medias",
-      "notifPartialBody": "Se guardaron {{done}} de {{total}} páginas. Abre la app para terminar."
+      "notifPartialBody": "Se guardaron {{done}} de {{total}} páginas. Abre la app para terminar.",
+      "queued": "Añadidas {{count}} páginas a la cola. Te avisamos al terminar."
     },
     "examsTab": "Exámenes",
     "exams": {
