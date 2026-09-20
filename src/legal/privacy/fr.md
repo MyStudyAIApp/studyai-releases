@@ -1,6 +1,6 @@
 ## Politique de confidentialité de mystudyai.eu
 Bienvenue sur la politique de confidentialité de mystudyai.eu. La présente politique vous aidera à comprendre quelles données nous recueillons, pourquoi nous les recueillons et quels sont vos droits à cet égard.
-Dernière mise à jour :  4 septembre 2026
+Dernière mise à jour :  20 septembre 2026
 
 ## Table des matières
 - Résumé
@@ -102,7 +102,7 @@ Supabase est un service d'hébergement et de backend fourni par Supabase, Inc.
 ### DeepInfra
 Société : Deep Infra, Inc. (États-Unis)
 Lieu de traitement : États-Unis et autres pays
-DeepInfra est un service d’inférence IA utilisé pour deux tâches précises : transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper) et lire les photographies que l’Utilisateur numérise via les fonctions « Numériser des notes », « Mon cahier » et « Résoudre un exercice ». L’audio ou l’image est transmis au service, qui renvoie le texte transcrit et, dans le cas de « Résoudre un exercice », la solution détaillée. La photographie n’est conservée ni par le service ni par l’Application : seul le texte obtenu est enregistré. Ni l’audio, ni les images, ni les transcriptions ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription audio sur l’appareil lui-même, sans rien transmettre.
+DeepInfra est un service d’inférence IA utilisé pour deux tâches précises : transcrire en texte les enregistrements audio réalisés par l’Utilisateur dans cette Application (modèle Whisper) et lire les photographies que l’Utilisateur numérise via les fonctions « Numériser des notes », « Mon cahier » et « Résoudre un exercice ». L’audio ou l’image est transmis au service, qui renvoie le texte transcrit et, dans le cas de « Résoudre un exercice », la solution détaillée. La photographie n’est pas conservée par le service d’inférence : celui-ci ne renvoie que le texte. Dans « Mon cahier » et « Résoudre un exercice », l’image n’est pas non plus enregistrée sur nos serveurs, seul le texte obtenu l’est ; dans « Numériser des notes », la photographie d’origine est conservée 10 jours puis supprimée automatiquement (voir « Conservation des données – fichiers d’origine »). Dans les applications mobiles, la photographie est en outre enregistrée temporairement sur l’appareil de l’Utilisateur pendant la durée de la numérisation, afin de ne pas la perdre en cas d’échec de la connexion, et elle est supprimée dès que la numérisation a été enregistrée ; si l’envoi échoue, elle est conservée pour pouvoir réessayer et l’Utilisateur peut la supprimer depuis cet écran. Ni l’audio, ni les images, ni les transcriptions ne sont utilisés à des fins de profilage ou de publicité. Le service n’est utilisé que dans la version web et les applications mobiles : l’application de bureau effectue la transcription audio sur l’appareil lui-même, sans rien transmettre.
 
 ### Données personnelles traitées :
 - Enregistrements audio transmis par l’Utilisateur pour transcription
@@ -176,7 +176,7 @@ Service d'identification fourni par Google Ireland Limited (Irlande) qui permet 
 - Google Ireland Limited (Irlande)
 
 ### Notifications
-Cette Application peut envoyer des avis sur l'appareil de l'Utilisateur : rappels d'examen et avertissements préalables à la suppression automatique de ses fichiers. Ces avis sont facultatifs et ne sont envoyés que si l'Utilisateur les active expressément depuis l'Application. Il peut les désactiver à tout moment depuis les paramètres de l'Application ou ceux de son navigateur ou de son système d'exploitation, ce qui supprime l'abonnement.
+Cette Application peut envoyer des avis sur l'appareil de l'Utilisateur : rappels d'examen, avertissements préalables à la suppression automatique de ses fichiers et l'avis indiquant qu'une numérisation laissée en arrière-plan par l'Utilisateur est terminée. Ce dernier est généré par l'application sur l'appareil lui-même : il ne transite ni par nos serveurs ni par les services de notification décrits ci-dessous. Ces avis sont facultatifs et ne sont envoyés que si l'Utilisateur les active expressément depuis l'Application. Il peut les désactiver à tout moment depuis les paramètres de l'Application ou ceux de son navigateur ou de son système d'exploitation, ce qui supprime l'abonnement.
 
 ### Notifications web (Web Push)
 Lorsque l'Utilisateur active les avis, son navigateur génère une adresse de livraison (endpoint) et des clés de chiffrement que cette Application conserve afin de pouvoir lui faire parvenir le message. La livraison matérielle est assurée par le service de notifications du navigateur utilisé par l'Utilisateur — Google (Chrome et navigateurs dérivés), Mozilla (Firefox) ou Apple (Safari) —, qui par nature connaît le moment de la livraison. Le contenu de l'avis circule chiffré de bout en bout et ces services ne peuvent pas le lire.

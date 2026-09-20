@@ -201,13 +201,18 @@ export async function subirEscaneo(paginas, campos) {
       avisar()
     }
 
-    await limpiarReescaladas(total)
   } catch (e) {
     // Lo que ya se subio SIGUE guardado en el servidor. Se informa de cuanto
     // entro en vez de dar el escaneo entero por perdido.
     trabajo.error = e?.message || String(e)
     console.error('SCAN_UPLOAD_ERROR', trabajo.error, e?.status, e?.timedOut)
   } finally {
+    // SIEMPRE, tambien si fallo. Son copias de los apuntes del alumno: si se
+    // borran solo cuando todo sale bien, un fallo las deja en el movil para
+    // siempre. Las originales SI se conservan aparte (pending_scan_page_N),
+    // que son las que permiten reintentar el escaneo; estas son derivadas y
+    // se vuelven a generar en el siguiente intento.
+    await limpiarReescaladas(total).catch(() => {})
     trabajo.terminado = true
     avisar()
     if (trabajo.segundoPlano) await notificarFin(trabajo)

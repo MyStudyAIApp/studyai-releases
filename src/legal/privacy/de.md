@@ -1,6 +1,6 @@
 ## Datenschutzerklärung von mystudyai.eu
 Willkommen bei der Datenschutzrichtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Daten wir erheben, warum wir sie erheben und welche Rechte Sie diesbezüglich haben.
-Letzte Aktualisierung:  4. September 2026
+Letzte Aktualisierung:  20. September 2026
 
 ## Inhaltsverzeichnis
 - Zusammenfassung
@@ -102,7 +102,7 @@ Supabase ist ein Hosting- und Backend-Dienst von Supabase, Inc.
 ### DeepInfra
 Unternehmen: Deep Infra, Inc. (Vereinigte Staaten)
 Ort der Verarbeitung: USA und weitere Länder
-DeepInfra ist ein KI-Inferenzdienst, der für zwei konkrete Aufgaben eingesetzt wird: die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell) und die Fotos zu lesen, die der Nutzer über die Funktionen „Notizen scannen“, „Mein Heft“ und „Aufgabe lösen“ einscannt. Die Audiodaten bzw. das Bild werden an den Dienst übermittelt, der den transkribierten Text und im Fall von „Aufgabe lösen“ auch die schrittweise Lösung zurückgibt. Das Foto wird weder vom Dienst noch von der Anwendung aufbewahrt: gespeichert wird ausschließlich der resultierende Text. Weder die Audiodaten noch die Bilder noch die Transkriptionen werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert Audio lokal auf dem Gerät, ohne Daten zu übermitteln.
+DeepInfra ist ein KI-Inferenzdienst, der für zwei konkrete Aufgaben eingesetzt wird: die vom Nutzer in dieser Anwendung erstellten Audioaufnahmen in Text umzuwandeln (Whisper-Modell) und die Fotos zu lesen, die der Nutzer über die Funktionen „Notizen scannen“, „Mein Heft“ und „Aufgabe lösen“ einscannt. Die Audiodaten bzw. das Bild werden an den Dienst übermittelt, der den transkribierten Text und im Fall von „Aufgabe lösen“ auch die schrittweise Lösung zurückgibt. Das Foto wird vom Inferenzdienst nicht aufbewahrt: er gibt ausschließlich den Text zurück. Bei „Mein Heft“ und „Aufgabe lösen“ wird das Bild auch nicht auf unseren Servern gespeichert, sondern nur der resultierende Text; bei „Notizen scannen“ wird das Originalfoto 10 Tage aufbewahrt und danach automatisch gelöscht (siehe „Datenaufbewahrung – Originaldateien“). In den mobilen Anwendungen wird das Foto zusätzlich vorübergehend auf dem Gerät des Nutzers selbst gespeichert, solange der Scan läuft, damit er bei einem Verbindungsfehler nicht verloren geht; es wird gelöscht, sobald der Scan gespeichert wurde. Schlägt der Upload fehl, bleibt es für einen erneuten Versuch erhalten, und der Nutzer kann es auf demselben Bildschirm verwerfen. Weder die Audiodaten noch die Bilder noch die Transkriptionen werden zur Profilerstellung oder zu Werbezwecken verwendet. Der Dienst wird nur in der Webversion und in den mobilen Anwendungen eingesetzt: die Desktop-Anwendung transkribiert Audio lokal auf dem Gerät, ohne Daten zu übermitteln.
 
 ### Verarbeitete personenbezogene Daten:
 - Vom Nutzer zur Transkription übermittelte Audioaufnahmen
@@ -176,7 +176,7 @@ Identifizierungsdienst von Google Ireland Limited (Irland), mit dem der Nutzer s
 - Google Ireland Limited (Irland)
 
 ### Benachrichtigungen
-Diese Anwendung kann Hinweise an das Gerät des Nutzers senden: Prüfungserinnerungen und Vorabhinweise vor der automatischen Löschung seiner Dateien. Die Hinweise sind optional und werden nur gesendet, wenn der Nutzer sie in der Anwendung ausdrücklich aktiviert. Er kann sie jederzeit in den Einstellungen der Anwendung oder denen seines Browsers bzw. Betriebssystems deaktivieren; dabei wird das Abonnement gelöscht.
+Diese Anwendung kann Hinweise an das Gerät des Nutzers senden: Prüfungserinnerungen, Vorabhinweise vor der automatischen Löschung seiner Dateien sowie den Hinweis, dass ein vom Nutzer im Hintergrund laufender Scan abgeschlossen ist. Letzteren erzeugt die Anwendung auf dem Gerät selbst: Er läuft weder über unsere Server noch über die unten beschriebenen Benachrichtigungsdienste. Die Hinweise sind optional und werden nur gesendet, wenn der Nutzer sie in der Anwendung ausdrücklich aktiviert. Er kann sie jederzeit in den Einstellungen der Anwendung oder denen seines Browsers bzw. Betriebssystems deaktivieren; dabei wird das Abonnement gelöscht.
 
 ### Web-Benachrichtigungen (Web Push)
 Aktiviert der Nutzer die Hinweise, erzeugt sein Browser eine Zustelladresse (Endpoint) sowie Verschlüsselungsschlüssel, die diese Anwendung speichert, um die Nachricht zustellen zu können. Die eigentliche Zustellung übernimmt der Benachrichtigungsdienst des vom Nutzer verwendeten Browsers — Google (Chrome und abgeleitete Browser), Mozilla (Firefox) oder Apple (Safari) —, der naturgemäß den Zeitpunkt der Zustellung kennt. Der Inhalt des Hinweises wird Ende-zu-Ende verschlüsselt übertragen und ist für diese Dienste nicht lesbar.

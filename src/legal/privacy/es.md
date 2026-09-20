@@ -1,6 +1,6 @@
 ## Política de privacidad de mystudyai.eu
 Bienvenido a la política de privacidad de mystudyai.eu. Esta política le ayudará a entender qué datos recogemos, por qué los recogemos y qué derechos tiene usted al respecto
-Última revisión:  4 septiembre 2026
+Última revisión:  20 septiembre 2026
 
 ## Índice
 - Resumen
@@ -108,7 +108,7 @@ Supabase es un servicio de hosting y backend prestado por Supabase, Inc.
 Empresa: Deep Infra, Inc. (Estados Unidos)
 Lugar de tratamiento: EE.UU. y otros países
 Datos Personales tratados: grabaciones de audio, transcripciones, datos de uso y dirección IP
-DeepInfra es un servicio de inferencia de IA utilizado para dos tareas concretas: transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper) y leer las fotografías que el Usuario escanea en las funciones «Escanear apuntes», «Mi cuaderno» y «Resolver ejercicio». El audio o la imagen se envían al servicio, que devuelve el texto transcrito y, en el caso de «Resolver ejercicio», también la solución paso a paso. La fotografía no se conserva, ni en el servicio ni en la Aplicación: únicamente se guarda el texto resultante. Ni el audio, ni las imágenes, ni las transcripciones se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe el audio en el propio dispositivo, sin enviar nada.
+DeepInfra es un servicio de inferencia de IA utilizado para dos tareas concretas: transcribir a texto las grabaciones de audio que el Usuario realiza en esta Aplicación (modelo Whisper) y leer las fotografías que el Usuario escanea en las funciones «Escanear apuntes», «Mi cuaderno» y «Resolver ejercicio». El audio o la imagen se envían al servicio, que devuelve el texto transcrito y, en el caso de «Resolver ejercicio», también la solución paso a paso. La fotografía no la conserva el servicio de inferencia: únicamente devuelve el texto. En «Mi cuaderno» y «Resolver ejercicio» la imagen tampoco se guarda en nuestros servidores, solo el texto resultante; en «Escanear apuntes» la foto original se conserva 10 días y después se elimina automáticamente (véase «Conservación de datos – archivos originales»). En las aplicaciones móviles la foto se guarda además temporalmente en el propio dispositivo del Usuario mientras dura el escaneo, para no perderlo si falla la conexión, y se borra en cuanto el escaneo se ha guardado; si la subida falla, se conserva para poder reintentarla y el Usuario puede descartarla desde la propia pantalla. Ni el audio, ni las imágenes, ni las transcripciones se emplean para elaborar perfiles ni con fines publicitarios. Solo se utiliza en la versión web y en las aplicaciones móviles: la aplicación de escritorio transcribe el audio en el propio dispositivo, sin enviar nada.
 
 ### Datos Personales tratados:
 - Grabaciones de audio enviadas por el Usuario para su transcripción
@@ -196,7 +196,7 @@ Servicio de identificación prestado por Google Ireland Limited (Irlanda) que pe
 - Google Ireland Limited (Irlanda)
 
 ### Notificaciones
-Esta Aplicación puede enviar avisos al dispositivo del Usuario: recordatorios de examen y avisos previos a la eliminación automática de sus archivos. Los avisos son opcionales y solo se envían si el Usuario los activa expresamente desde la propia Aplicación. Puede desactivarlos en cualquier momento desde los ajustes de la Aplicación o desde los del navegador o el sistema operativo, y al hacerlo la suscripción se elimina.
+Esta Aplicación puede enviar avisos al dispositivo del Usuario: recordatorios de examen, avisos previos a la eliminación automática de sus archivos y el aviso de que un escaneo que el Usuario dejó trabajando en segundo plano ya ha terminado. Este último lo genera la propia aplicación en el dispositivo: no pasa por nuestros servidores ni por los servicios de notificación descritos más abajo. Los avisos son opcionales y solo se envían si el Usuario los activa expresamente desde la propia Aplicación. Puede desactivarlos en cualquier momento desde los ajustes de la Aplicación o desde los del navegador o el sistema operativo, y al hacerlo la suscripción se elimina.
 
 ### Notificaciones web (Web Push)
 Cuando el Usuario activa los avisos, su navegador genera una dirección de entrega (endpoint) y unas claves de cifrado que esta Aplicación conserva para poder hacerle llegar el mensaje. La entrega material la realiza el servicio de notificaciones del navegador que utilice el Usuario — Google (Chrome y navegadores derivados), Mozilla (Firefox) o Apple (Safari) —, que por su propia naturaleza conoce el momento de la entrega. El contenido del aviso viaja cifrado de extremo a extremo y esos servicios no pueden leerlo.
