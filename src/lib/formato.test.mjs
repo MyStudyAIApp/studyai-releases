@@ -32,6 +32,16 @@ const casos = {
     assert.equal(textoAHtml(f), `<div>${f}</div>`)
   },
 
+  'en el editor las formulas salen dibujadas y vuelven a su texto'() {
+    const pintar = (tex, bloque) => `[${bloque ? 'B' : 'L'}:${tex}]`
+    const html = textoAHtml('area $a*b$ y **x** $$\\frac{"1"}{2}$$', pintar)
+    assert.equal(html, '<div>area <span contenteditable="false" data-tex="$a*b$">[L:a*b]</span>'
+      + ' y <b>x</b> <span contenteditable="false" data-tex="$$\\frac{&quot;1&quot;}{2}$$">[B:\\frac{"1"}{2}]</span></div>')
+    const caja = { nodeType: 1, tagName: 'SPAN', childNodes: [txt('basura katex')],
+                   getAttribute: () => '$a*b$' }
+    assert.equal(htmlATexto(el('DIV', el('DIV', txt('area '), caja))), 'area $a*b$')
+  },
+
   'lo que el alumno escriba como etiqueta NO se convierte en etiqueta'() {
     // Solo <u> esta permitido; cualquier otra cosa se queda como texto visible.
     assert.equal(textoAHtml('mira <script>alert(1)</script>'),

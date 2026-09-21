@@ -7,6 +7,7 @@ import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
 import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
+import katex from 'katex'
 import { api, apiUpload, useAppStore, UPLOAD_TIMEOUT_OCR_MS } from '../store/appStore'
 import { prepararTexto, resolverDuda, contarDudas, transformarUrl } from '../lib/dudas'
 import { textoAHtml, htmlATexto } from '../lib/formato'
@@ -525,9 +526,9 @@ export default function NotebookPage() {
  * Se usa `contentEditable` con `document.execCommand`, que es lo que trae el
  * navegador: sin librerias de editor y funciona igual dentro de las apps.
  *
- * Lo que NO se ve con formato mientras se edita son las formulas ($...$) y las
- * palabras dudosas ((?)) -- ahi sigue viendose el texto tal cual. Para eso
- * esta el boton del ojo, que lo pinta todo de verdad.
+ * Las formulas ($...$) se ven dibujadas; doble clic las pasa a texto para
+ * corregirlas. Las palabras dudosas ((?)) siguen como texto: para eso esta el
+ * boton del ojo, que lo pinta todo de verdad.
  */
 function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
   const ref = useRef(null)
@@ -541,7 +542,8 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
   // Solo al montar. Si el HTML se reescribiera en cada render, se perderia el
   // sitio del cursor.
   useEffect(() => {
-    if (ref.current) ref.current.innerHTML = textoAHtml(texto)
+    if (ref.current) ref.current.innerHTML = textoAHtml(texto, (tex, bloque) =>
+      katex.renderToString(tex, { displayMode: bloque, throwOnError: false }))
   }, [])
 
   const leer = () => (ref.current ? htmlATexto(ref.current) : valor)
@@ -626,6 +628,12 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
         suppressContentEditableWarning
         onInput={() => setValor(leer())}
         onPaste={pegar}
+        // Doble clic en una formula dibujada la devuelve a texto ($...$) para
+        // poder corregirla a mano.
+        onDoubleClick={ev => {
+          const f = ev.target.closest?.('[data-tex]')
+          if (f) { f.replaceWith(document.createTextNode(f.dataset.tex)); setValor(leer()) }
+        }}
         hidden={previa}
         className="w-full min-h-[10rem] max-h-[70vh] overflow-y-auto bg-slate-900 border
                    border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-100
