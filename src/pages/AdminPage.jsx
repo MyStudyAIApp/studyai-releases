@@ -311,6 +311,12 @@ export default function AdminPage() {
         res = await fetch(`${WEB_API}/admin/stats`, { headers: { ...authHeader, ...twoFAHeader() } })
       }
       if (!res.ok) {
+        // 401 por el pase de 2FA caducado (14 dias): pedir el codigo, no cerrar sesion.
+        if (res.status === 401 && twoFAToken && (await res.clone().text()).includes('X-Admin-2FA')) {
+          localStorage.removeItem('admin_2fa_token')
+          setTwoFAToken(null)
+          return
+        }
         if (res.status === 401) { handleUnauthorized(); throw new Error('Sesión caducada, vuelve a iniciar sesión.') }
         if (res.status === 403) throw new Error('No autorizado')
         throw new Error(`HTTP ${res.status}`)
