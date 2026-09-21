@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import {
   IconArrowLeft, IconCamera, IconPackage, IconCircleCheck, IconPencil, IconBooks,
   IconFolder, IconLoader2, IconRefresh, IconFileText, IconAlertTriangle,
-  IconWriting, IconNotebook, IconBell,
+  IconWriting, IconNotebook, IconBell, IconPlus,
 } from '@tabler/icons-react'
 
 // Dónde se persiste el escaneo ANTES de intentar subirlo, en almacenamiento
@@ -84,6 +84,23 @@ export default function MobileScannerPage() {
   useEffect(() => {
     api('GET', '/subjects').then(res => setSubjects(res.items || [])).catch(() => {})
   }, [])
+
+  // Crear asignatura o tema desde aqui mismo: sin esto, un alumno sin
+  // asignaturas no podia usar el modo apuntes (lo exige y no habia donde
+  // crearla). Mismo flujo que en NotebookPage.
+  const crear = async (tituloKey, ruta, alCrear) => {
+    const nombre = window.prompt(t(tituloKey))
+    if (!nombre?.trim()) return
+    try {
+      alCrear(await api('POST', ruta, { name: nombre.trim(), ...(ruta === '/subjects' && { color: '#6366f1' }) }))
+    } catch {
+      addToast(t('notebook.saveChangesError'), 'error')
+    }
+  }
+  const crearAsignatura = () => crear('notebook.newSubject', '/subjects',
+    s => { setSubjects(prev => [...prev, s]); setSubjectId(s.id) })
+  const crearTema = () => crear('notebook.newTopic', `/subjects/${subjectId}/topics`,
+    tp => { setTopics(prev => [...prev, tp]); setTopicId(tp.id) })
 
   // Al elegir asignatura, cargar sus temas (si tiene alguno)
   useEffect(() => {
@@ -372,24 +389,27 @@ export default function MobileScannerPage() {
               />
             </div>
 
-            {subjects.length > 0 && (
-              <div className="bg-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3 border border-slate-700">
-                <IconBooks size={16} className="text-slate-400 shrink-0" />
-                <select
-                  value={subjectId}
-                  onChange={e => setSubjectId(e.target.value)}
-                  disabled={loading}
-                  className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
-                >
-                  <option value="" className="bg-slate-800">{t('common.noSubject')}</option>
-                  {subjects.map(s => (
-                    <option key={s.id} value={s.id} className="bg-slate-800">{s.name}</option>
-                  ))}
-                </select>
-              </div>
-            )}
+            <div className="bg-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3 border border-slate-700">
+              <IconBooks size={16} className="text-slate-400 shrink-0" />
+              <select
+                value={subjectId}
+                onChange={e => setSubjectId(e.target.value)}
+                disabled={loading}
+                className="flex-1 bg-transparent text-slate-100 outline-none text-sm"
+              >
+                <option value="" className="bg-slate-800">{t('common.noSubject')}</option>
+                {subjects.map(s => (
+                  <option key={s.id} value={s.id} className="bg-slate-800">{s.name}</option>
+                ))}
+              </select>
+              <button type="button" onClick={crearAsignatura} disabled={loading}
+                      title={t('notebook.newSubject')} aria-label={t('notebook.newSubject')}
+                      className="p-1 text-slate-400 hover:text-primary-300 disabled:opacity-40">
+                <IconPlus size={18} />
+              </button>
+            </div>
 
-            {subjectId && topics.length > 0 && (
+            {subjectId && (
               <div className="bg-slate-800 rounded-2xl px-4 py-3 flex items-center gap-3 border border-slate-700">
                 <IconFolder size={16} className="text-slate-400 shrink-0" />
                 <select
@@ -403,6 +423,11 @@ export default function MobileScannerPage() {
                     <option key={topic.id} value={topic.id} className="bg-slate-800">{topic.name}</option>
                   ))}
                 </select>
+                <button type="button" onClick={crearTema} disabled={loading}
+                        title={t('notebook.newTopic')} aria-label={t('notebook.newTopic')}
+                        className="p-1 text-slate-400 hover:text-primary-300 disabled:opacity-40">
+                  <IconPlus size={18} />
+                </button>
               </div>
             )}
 
