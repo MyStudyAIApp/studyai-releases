@@ -638,6 +638,18 @@ export default function AdminPage() {
               bottom={`${renderCpu.cpu_peak} / ${renderCpu.cpu_cap} CPU`}
             />
           )}
+          {/* Con la app abierta: la sesion se renueva sola ~cada hora, asi que
+              "ultima hora" es lo mas parecido a "ahora mismo". Mirarlo junto a
+              la CPU para saber con cuantos usuarios empieza a ir justo. */}
+          {stats.active_users && (
+            <div className="flex flex-col items-center justify-center text-center gap-1">
+              <p className="text-3xl font-bold text-slate-100">{stats.active_users.last_hour}</p>
+              <p className="text-xs text-slate-400">Activos (última hora)</p>
+              <p className="text-[11px] text-slate-500">
+                12 h: {stats.active_users.last_12h} · 24 h: {stats.active_users.last_24h}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 

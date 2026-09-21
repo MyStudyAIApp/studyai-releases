@@ -17,7 +17,7 @@ import {
   IconBooks, IconCalendar, IconChevronDown, IconChevronRight,
   IconPrinter, IconFileTypeDoc, IconCheck, IconX,
   IconPencil, IconBold, IconItalic, IconUnderline, IconStrikethrough,
-  IconH1, IconH2, IconList, IconEye, IconEyeOff, IconDeviceFloppy,
+  IconH1, IconH2, IconList, IconDeviceFloppy,
 } from '@tabler/icons-react'
 
 /**
@@ -527,13 +527,13 @@ export default function NotebookPage() {
  * navegador: sin librerias de editor y funciona igual dentro de las apps.
  *
  * Las formulas ($...$) se ven dibujadas; doble clic las pasa a texto para
- * corregirlas. Las palabras dudosas ((?)) siguen como texto: para eso esta el
- * boton del ojo, que lo pinta todo de verdad.
+ * corregirlas. Las palabras dudosas ((?)) siguen como texto y vuelven a salir
+ * en ambar al guardar. (Habia un boton de vista previa; se quito el 21/9 al
+ * dibujar las formulas, ya no aportaba casi nada.)
  */
 function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
   const ref = useRef(null)
-  const [previa, setPrevia] = useState(false)
-  // Solo para la vista previa y para saber si hay algo que guardar. El texto
+  // Solo para saber si hay algo que guardar. El texto
   // que manda es SIEMPRE el que se lee del editor al pulsar Guardar: llevar el
   // contenido en un estado de React y devolverselo al div en cada tecla le
   // mueve el cursor al alumno mientras escribe.
@@ -586,42 +586,15 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
             // a la nada. Con preventDefault el foco no se mueve.
             onMouseDown={ev => { ev.preventDefault(); accion() }}
             title={titulo}
-            disabled={guardando || previa}
+            disabled={guardando}
             className="p-1.5 rounded-lg text-slate-400 hover:text-primary-300 hover:bg-slate-700
                        disabled:opacity-30 transition-colors"
           >
             <Icono size={16} />
           </button>
         ))}
-        <button
-          type="button"
-          onClick={() => { setValor(leer()); setPrevia(p => !p) }}
-          title={previa ? i18n.t('notebook.backToEdit') : i18n.t('notebook.preview')}
-          className="ml-auto p-1.5 rounded-lg text-slate-400 hover:text-primary-300 hover:bg-slate-700
-                     transition-colors"
-        >
-          {previa ? <IconEyeOff size={16} /> : <IconEye size={16} />}
-        </button>
       </div>
 
-      {previa && (
-        <div className="text-sm text-slate-300 leading-relaxed prose-studyai bg-slate-900/60
-                        border border-slate-700 rounded-xl px-3 py-2 min-h-[8rem] mb-2">
-          <ReactMarkdown
-            remarkPlugins={[remarkMath, remarkGfm]}
-            rehypePlugins={[rehypeKatex]}
-            urlTransform={u => transformarUrl(u, defaultUrlTransform)}
-            components={{ a: ({ href, children }) =>
-              String(href || '') === 'u:' ? <u>{children}</u> : <span>{children}</span> }}
-          >
-            {prepararTexto(valor)}
-          </ReactMarkdown>
-        </div>
-      )}
-
-      {/* El editor no se desmonta al ver la vista previa, solo se esconde: si
-          se desmontara, el efecto de montaje volveria a escribir el HTML y se
-          perderia lo que el alumno lleve escrito. */}
       <div
         ref={ref}
         contentEditable={!guardando}
@@ -634,7 +607,6 @@ function EditorApunte({ texto, guardando, onGuardar, onCancelar }) {
           const f = ev.target.closest?.('[data-tex]')
           if (f) { f.replaceWith(document.createTextNode(f.dataset.tex)); setValor(leer()) }
         }}
-        hidden={previa}
         className="w-full min-h-[10rem] max-h-[70vh] overflow-y-auto bg-slate-900 border
                    border-slate-600 rounded-xl px-3 py-2 text-sm text-slate-100
                    leading-relaxed focus:border-primary-500 focus:outline-none

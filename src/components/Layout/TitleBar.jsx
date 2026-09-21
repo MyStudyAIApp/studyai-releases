@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { version } from '../../../package.json'
 import Logo from '../UI/Logo'
 import PlanBadge from '../UI/PlanBadge'
 import { useAuth } from '../../contexts/AuthContext'
@@ -20,7 +19,6 @@ export default function TitleBar() {
       <div className="flex items-center gap-2 flex-1 min-w-0">
         <Logo size="md" />
         <PlanBadge />
-        <span className="badge-blue text-[10px]">v{version}</span>
       </div>
 
       {/* Cuenta activa — para distinguir a simple vista si se ha entrado con
