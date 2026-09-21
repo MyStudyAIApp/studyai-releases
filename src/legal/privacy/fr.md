@@ -242,6 +242,9 @@ Dans la fonction « Résoudre un exercice », l'énoncé et la solution de chaqu
 ### Conservation des données – journaux d'utilisation
 Les journaux de consommation des services d'intelligence artificielle, qui sous-tendent les quotas d'utilisation et la facturation, sont conservés 24 mois à compter de chaque opération. Les journaux indiquant quelles fonctionnalités de l'Application sont utilisées sont conservés 12 mois. Une fois le délai écoulé, ils sont supprimés automatiquement. Les deux sont supprimés plus tôt si l'Utilisateur ferme son compte.
 
+### Question « Comment nous as-tu connus ? »
+Lors de ta première connexion, la chouette de MyStudy te demande comment tu nous as connus. C'est **facultatif** : tu peux fermer sans répondre. Nous conservons l'option choisie (et, si tu choisis « Autre », le texte saisi, jusqu'à 100 caractères) avec ton compte, uniquement pour savoir quels canaux nous amènent des utilisateurs. Base juridique : notre intérêt légitime à connaître l'efficacité de notre communication. Elle est supprimée avec ton compte.
+
 ### Transferts internationaux de données
 Certains des prestataires énumérés dans le présent document (notamment DeepInfra, Sentry, Cloudflare, Microsoft Azure et RevenueCat) traitent des données aux États-Unis. Selon le prestataire, ces transferts reposent sur le cadre de protection des données UE–États-Unis (EU-U.S. Data Privacy Framework) ou sur les Clauses Contractuelles Types approuvées par la Commission européenne, garantissant un niveau de protection équivalent à celui exigé par le RGPD. L'Utilisateur peut demander davantage d'informations sur les garanties applicables à chaque prestataire via les coordonnées indiquées dans le présent document.
 

@@ -113,6 +113,11 @@ const FEATURE_LABELS = {
   exam_reminders_created: '📌 Recordatorios de examen',
 }
 
+const ORIGEN_ES = {
+  instagram: 'Instagram', tiktok: 'TikTok', google: 'Google', play_store: 'Play Store',
+  friend: 'Un amigo', teacher: 'Profesor o clase', other: 'Otro', skip: 'No contestó',
+}
+
 function featureLabel(key) {
   return FEATURE_LABELS[key] || key
 }
@@ -652,6 +657,26 @@ export default function AdminPage() {
           )}
         </div>
       </div>
+
+      {/* Respuestas al "¿como nos has conocido?" del buho */}
+      {stats.heard_from?.length > 0 && (
+        <div className="card space-y-2">
+          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Cómo nos han conocido</h2>
+          {stats.heard_from.map(({ source, count }) => (
+            <div key={source} className="flex justify-between text-sm">
+              <span className={source === 'skip' ? 'text-slate-500' : 'text-slate-200'}>
+                {ORIGEN_ES[source] || source}
+              </span>
+              <span className="text-slate-100 font-semibold">{count}</span>
+            </div>
+          ))}
+          {stats.heard_from_other?.length > 0 && (
+            <p className="text-[11px] text-slate-500 pt-1">
+              Lo escrito en "Otro": {stats.heard_from_other.join(' · ')}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Cuotas de los proveedores externos, cada una en SU unidad y SU periodo */}
       {provider_quotas?.length > 0 && (

@@ -7,6 +7,7 @@ import { useAppStore, IS_WEB, IS_MOBILE, api } from '../../store/appStore'
 import BackendBanner from './BackendBanner'
 import QuotaExceededModal from '../UI/QuotaExceededModal'
 import AnnouncementModal from '../UI/AnnouncementModal'
+import OwlWelcome from '../UI/OwlWelcome'
 import { useAuth } from '../../contexts/AuthContext'
 
 export default function Layout() {
@@ -48,6 +49,7 @@ export default function Layout() {
       {isMobileWeb && <MobileBottomNav />}
       <QuotaExceededModal />
       <AnnouncementModal />
+      <OwlWelcome />
     </div>
   )
 }

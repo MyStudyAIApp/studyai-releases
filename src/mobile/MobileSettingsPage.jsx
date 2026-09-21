@@ -12,6 +12,7 @@ import Billing from '../lib/billingPlugin'
 import MobileTabBar from './MobileTabBar'
 import FeedbackModal from '../components/UI/FeedbackModal'
 import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
+import { OwlToggle } from '../components/UI/OwlWelcome'
 import { IconSettings, IconLoader2, IconCircleCheck, IconDeviceFloppy, IconMessageCircle, IconLogout, IconCrown } from '@tabler/icons-react'
 
 const DAY_OPTIONS = [1, 2, 3, 5, 7, 14]
@@ -319,6 +320,7 @@ export default function MobileSettingsPage() {
             </ul>
             <div className="pt-3 border-t border-slate-700/40">
               <EmailWarningsToggle />
+              <OwlToggle className="mt-2" />
             </div>
           </div>
         </section>

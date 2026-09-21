@@ -17,6 +17,7 @@ import MobileExamsPage from './MobileExamsPage'
 import MobileSettingsPage from './MobileSettingsPage'
 import QuotaExceededModal from '../components/UI/QuotaExceededModal'
 import AnnouncementModal from '../components/UI/AnnouncementModal'
+import OwlWelcome from '../components/UI/OwlWelcome'
 
 function Protected({ children }) {
   const { user, loading } = useAuth()
@@ -70,6 +71,7 @@ export default function MobileApp() {
       </div>
       <QuotaExceededModal />
       <AnnouncementModal />
+      <OwlWelcome />
     </div>
   )
 }

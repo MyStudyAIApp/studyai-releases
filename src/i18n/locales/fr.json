@@ -2208,5 +2208,24 @@
   },
   "connections": {
     "title": "Connexions avec d'autres sujets"
+  },
+  "owl": {
+    "question": "Salut ! Je suis la chouette de MyStudy. Comment nous as-tu connus ?",
+    "thanks": "Merci ! Si tu as la moindre question, je suis là.",
+    "otherPlaceholder": "Dis-nous où…",
+    "send": "Envoyer",
+    "src": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "google": "Google",
+      "play_store": "Play Store",
+      "friend": "Un ami",
+      "teacher": "Professeur ou cours",
+      "other": "Autre"
+    },
+    "close": "Fermer",
+    "help": "Une question sur l’utilisation de MyStudy ? Écris-nous, on t’aide :",
+    "open": "Parler à la chouette",
+    "showSetting": "Afficher la chouette"
   }
 }

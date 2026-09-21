@@ -231,6 +231,9 @@ In the "Solve exercise" feature, the statement and solution of each solved exerc
 ### Data retention – usage logs
 The logs of artificial intelligence service consumption, which underpin usage quotas and billing, are kept for 24 months from each operation. The logs of which Application features are used are kept for 12 months. Once the period has elapsed they are deleted automatically. Both are deleted sooner if the User closes their account.
 
+### "How did you hear about us?" survey
+The first time you sign in, the MyStudy owl asks how you heard about us. It is **optional**: you can close it without answering. We store the option you choose (and, if you choose "Other", the text you type, up to 100 characters) with your account, only to learn which channels bring us users. Legal basis: our legitimate interest in knowing how effective our outreach is. It is deleted with your account.
+
 ### International data transfers
 Some of the providers listed in this document (including DeepInfra, Sentry, Cloudflare, Microsoft Azure and RevenueCat) process data in the United States. Depending on the provider, these transfers rely on the EU-U.S. Data Privacy Framework or on the Standard Contractual Clauses approved by the European Commission, ensuring a level of protection equivalent to that required by the GDPR. Users may request further information on the safeguards applicable to each provider using the contact details provided in this document.
 

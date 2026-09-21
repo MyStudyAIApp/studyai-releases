@@ -241,6 +241,9 @@ Bei der Funktion „Übung lösen" werden die Aufgabenstellung und die Lösung j
 ### Datenspeicherung – Nutzungsprotokolle
 Die Protokolle über die Inanspruchnahme der KI-Dienste, auf denen die Nutzungskontingente und die Abrechnung beruhen, werden 24 Monate ab dem jeweiligen Vorgang aufbewahrt. Die Protokolle darüber, welche Funktionen der Anwendung genutzt werden, werden 12 Monate aufbewahrt. Nach Ablauf der Frist werden sie automatisch gelöscht. Beide werden früher gelöscht, wenn der Nutzer sein Konto schließt.
 
+### Umfrage „Wie hast du von uns erfahren?“
+Beim ersten Anmelden fragt dich die MyStudy-Eule, wie du von uns erfahren hast. Das ist **freiwillig**: Du kannst das Fenster ohne Antwort schließen. Wir speichern die gewählte Option (und bei „Anderes“ den eingegebenen Text, bis zu 100 Zeichen) zu deinem Konto, nur um zu erfahren, über welche Kanäle Nutzer zu uns kommen. Rechtsgrundlage: unser berechtigtes Interesse, die Wirksamkeit unserer Bekanntmachung zu kennen. Die Angabe wird mit deinem Konto gelöscht.
+
 ### Internationale Datenübermittlungen
 Einige der in diesem Dokument aufgeführten Anbieter (unter anderem DeepInfra, Sentry, Cloudflare, Microsoft Azure und RevenueCat) verarbeiten Daten in den Vereinigten Staaten. Diese Übermittlungen stützen sich je nach Anbieter auf das EU-U.S. Data Privacy Framework oder auf die von der Europäischen Kommission genehmigten Standardvertragsklauseln und gewährleisten ein Schutzniveau, das dem von der DSGVO geforderten entspricht. Der Nutzer kann über die in diesem Dokument angegebenen Kontaktdaten weitere Informationen zu den für den jeweiligen Anbieter geltenden Garantien anfordern.
 

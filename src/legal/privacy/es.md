@@ -261,6 +261,9 @@ En la función "Resolver ejercicio", el enunciado y la solución de cada ejercic
 ### Conservación de datos – registros de uso
 Los registros de consumo de los servicios de inteligencia artificial, que sostienen las cuotas de uso y la facturación, se conservan 24 meses desde cada operación. Los registros de qué funciones de la Aplicación se utilizan se conservan 12 meses. Cumplido el plazo se eliminan automáticamente. Ambos se borran antes si el Usuario cierra su cuenta.
 
+### Encuesta «¿Cómo nos has conocido?»
+La primera vez que entras, el búho de MyStudy te pregunta cómo nos has conocido. Es **opcional**: puedes cerrarlo sin contestar. Guardamos la opción elegida (y, si eliges «Otro», el texto que escribas, hasta 100 caracteres) junto a tu cuenta, solo para saber qué canales nos traen usuarios. Base jurídica: nuestro interés legítimo en conocer la eficacia de la difusión. Se borra con tu cuenta.
+
 ### Transferencias internacionales de datos
 Algunos de los proveedores enumerados en este documento (entre otros, DeepInfra, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.
 

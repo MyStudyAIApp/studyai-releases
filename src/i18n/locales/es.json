@@ -2209,5 +2209,24 @@
   },
   "connections": {
     "title": "Conexiones con otros temas"
+  },
+  "owl": {
+    "question": "¡Hola! Soy el búho de MyStudy. ¿Cómo nos has conocido?",
+    "thanks": "¡Gracias! Si tienes cualquier duda, aquí estoy.",
+    "otherPlaceholder": "Cuéntanos dónde…",
+    "send": "Enviar",
+    "src": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "google": "Google",
+      "play_store": "Play Store",
+      "friend": "Un amigo",
+      "teacher": "Profesor o clase",
+      "other": "Otro"
+    },
+    "close": "Cerrar",
+    "help": "¿Tienes alguna duda sobre cómo usar MyStudy? Escríbenos y te ayudamos:",
+    "open": "Hablar con el búho",
+    "showSetting": "Mostrar el búho"
   }
 }

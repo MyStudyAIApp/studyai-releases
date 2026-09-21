@@ -26,6 +26,7 @@ import FeedbackModal from '../components/UI/FeedbackModal'
 import Modal from '../components/UI/Modal'
 import CanariasPromptModal from '../components/UI/CanariasPromptModal'
 import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
+import { OwlToggle } from '../components/UI/OwlWelcome'
 import { useBillingRegion } from '../hooks/useBillingRegion'
 import { subscribeToPush, unsubscribeFromPush, isPushSubscribed, isPushSupported } from '../services/pushNotifications'
 import { THEMES, getTheme, applyTheme } from '../services/themeService'
@@ -1415,6 +1416,7 @@ export default function SettingsPage() {
         </ul>
         <div className="mt-4 pt-3 border-t border-slate-700/40">
           <EmailWarningsToggle />
+          <OwlToggle className="mt-2" />
         </div>
       </CollapsibleCard>
 

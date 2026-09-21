@@ -2208,5 +2208,24 @@
   },
   "connections": {
     "title": "Verbindungen zu anderen Themen"
+  },
+  "owl": {
+    "question": "Hallo! Ich bin die MyStudy-Eule. Wie hast du von uns erfahren?",
+    "thanks": "Danke! Wenn du Fragen hast, bin ich da.",
+    "otherPlaceholder": "Erzähl uns, wo…",
+    "send": "Senden",
+    "src": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "google": "Google",
+      "play_store": "Play Store",
+      "friend": "Ein Freund",
+      "teacher": "Lehrkraft oder Kurs",
+      "other": "Anderes"
+    },
+    "close": "Schließen",
+    "help": "Fragen zur Nutzung von MyStudy? Schreib uns, wir helfen dir:",
+    "open": "Mit der Eule sprechen",
+    "showSetting": "Eule anzeigen"
   }
 }

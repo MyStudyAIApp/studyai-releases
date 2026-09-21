@@ -2208,5 +2208,24 @@
   },
   "connections": {
     "title": "Connections with other topics"
+  },
+  "owl": {
+    "question": "Hi! I am the MyStudy owl. How did you hear about us?",
+    "thanks": "Thanks! If you have any questions, I am here.",
+    "otherPlaceholder": "Tell us where…",
+    "send": "Send",
+    "src": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "google": "Google",
+      "play_store": "Play Store",
+      "friend": "A friend",
+      "teacher": "Teacher or class",
+      "other": "Other"
+    },
+    "close": "Close",
+    "help": "Any questions about using MyStudy? Write to us and we will help:",
+    "open": "Talk to the owl",
+    "showSetting": "Show the owl"
   }
 }
