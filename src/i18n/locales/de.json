@@ -1691,7 +1691,7 @@
     },
     "cuaderno-4": {
       "title": "Mit dem Stift bearbeiten",
-      "body": "Das Stiftsymbol neben dem Datum öffnet die Notiz zum Umschreiben. Du hast Fett, Kursiv, Unterstrichen, Durchgestrichen, Überschriften und Listen – und du siehst es angewendet, während du schreibst, nicht mit seltsamen Symbolen. Das Auge (oben rechts) zeigt, wie es mit den gezeichneten Formeln aussieht."
+      "body": "Das Stiftsymbol neben dem Datum öffnet die Notiz zum Umschreiben. Du hast Fett, Kursiv, Unterstrichen, Durchgestrichen, Überschriften und Listen – und du siehst es angewendet, während du schreibst, nicht mit seltsamen Symbolen. Formeln werden gezeichnet; mit Doppelklick werden sie wieder zu Text, um sie zu korrigieren."
     },
     "cuaderno-5": {
       "title": "Drucken, Word und Lernen",
@@ -2224,8 +2224,13 @@
       "other": "Anderes"
     },
     "close": "Schließen",
-    "help": "Fragen zur Nutzung von MyStudy? Schreib uns, wir helfen dir:",
+    "help": "Fragen zur Nutzung von MyStudy? Frag mich:",
     "open": "Mit der Eule sprechen",
-    "showSetting": "Eule anzeigen"
+    "showSetting": "Eule anzeigen",
+    "chatPlaceholder": "Schreib deine Frage…",
+    "thinking": "Ich überlege…",
+    "limit": "Für heute hast du alle Fragen gestellt. Morgen bin ich wieder da, oder schreib uns an",
+    "chatError": "Ich konnte gerade nicht antworten. Schreib uns an",
+    "left": "Heute noch {{n}} Fragen"
   }
 }

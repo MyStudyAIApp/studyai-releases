@@ -1691,7 +1691,7 @@
     },
     "cuaderno-4": {
       "title": "Éditer avec le stylo",
-      "body": "L'icône du stylo, à côté de la date, ouvre la note pour la réécrire. Tu as le gras, l'italique, le souligné, le barré, les titres et les listes — et tu le vois appliqué pendant que tu écris, pas avec des symboles bizarres. L'œil (en haut à droite) montre le rendu avec les formules dessinées."
+      "body": "L'icône du stylo, à côté de la date, ouvre la note pour la réécrire. Tu as le gras, l'italique, le souligné, le barré, les titres et les listes — et tu le vois appliqué pendant que tu écris, pas avec des symboles bizarres. Les formules sont dessinées ; double-clique dessus pour les repasser en texte et les corriger."
     },
     "cuaderno-5": {
       "title": "Imprimer, Word et étudier",
@@ -2224,8 +2224,13 @@
       "other": "Autre"
     },
     "close": "Fermer",
-    "help": "Une question sur l’utilisation de MyStudy ? Écris-nous, on t’aide :",
+    "help": "Une question sur l’utilisation de MyStudy ? Demande-moi :",
     "open": "Parler à la chouette",
-    "showSetting": "Afficher la chouette"
+    "showSetting": "Afficher la chouette",
+    "chatPlaceholder": "Écris ta question…",
+    "thinking": "Je réfléchis…",
+    "limit": "Tu as posé toutes tes questions pour aujourd’hui. Je reviens demain, ou écris-nous à",
+    "chatError": "Je n’ai pas pu répondre. Écris-nous à",
+    "left": "Encore {{n}} questions aujourd’hui"
   }
 }

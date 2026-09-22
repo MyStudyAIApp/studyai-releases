@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IconX, IconSend } from '@tabler/icons-react'
 import { api } from '../../store/appStore'
@@ -37,13 +37,37 @@ export function OwlToggle({ className = '' }) {
   )
 }
 
-export default function OwlWelcome() {
-  const { t } = useTranslation()
+export default function OwlWelcome({ encimaDeTabBar = false }) {
+  const { t, i18n } = useTranslation()
   const { user } = useAuth()
   const [fase, setFase] = useState(null)      // null | 'pregunta' | 'otro' | 'gracias' | 'ayuda'
   const [preguntado, setPreguntado] = useState(true)
   const [detalle, setDetalle] = useState('')
   const [oculto, setOculto] = useState(leerOculto)
+  // Chat de dudas de uso (fase 'ayuda'). Se pierde al recargar: son dudas
+  // sueltas, no hace falta historial.
+  const [chat, setChat] = useState([])
+  const [pregunta, setPregunta] = useState('')
+  const [pensando, setPensando] = useState(false)
+  const [quedan, setQuedan] = useState(null)
+  const finChat = useRef(null)
+
+  useEffect(() => { finChat.current?.scrollIntoView({ block: 'end' }) }, [chat, pensando])
+
+  const preguntar = async (e) => {
+    e.preventDefault()
+    const q = pregunta.trim()
+    if (!q || pensando) return
+    const mensajes = [...chat, { role: 'user', content: q }]
+    setChat(mensajes); setPregunta(''); setPensando(true)
+    try {
+      const r = await api('POST', '/me/help-chat', { messages: mensajes, lang: i18n.language })
+      if (r.limit_reached) { setQuedan(0); setChat(c => [...c, { role: 'aviso', content: t('owl.limit') }]) }
+      else { setQuedan(r.left); setChat(c => [...c, { role: 'assistant', content: r.response }]) }
+    } catch {
+      setChat(c => [...c, { role: 'aviso', content: t('owl.chatError') }])
+    } finally { setPensando(false) }
+  }
 
   useEffect(() => {
     const alCambiar = () => setOculto(leerOculto())
@@ -85,18 +109,15 @@ export default function OwlWelcome() {
   // cabeza. Azul claro a proposito, distinto del fondo oscuro de la web, para
   // que se vea que es una conversacion y no un aviso mas.
   return (
-    <div className="fixed right-3 bottom-24 md:bottom-4 z-50 flex flex-col items-end gap-3 no-print">
+    <div className={`fixed right-3 ${encimaDeTabBar ? 'bottom-24 md:bottom-4' : 'bottom-4'} z-50 flex flex-col items-end gap-3 no-print`}>
       {fase && (
-        <div className="relative w-[min(18rem,calc(100vw-1.5rem))] bg-sky-100 text-slate-900
-                        rounded-2xl shadow-2xl p-3.5 mr-1">
+        <div className={`relative ${fase === 'ayuda' ? 'w-[min(22rem,calc(100vw-1.5rem))]' : 'w-[min(18rem,calc(100vw-1.5rem))]'} bg-sky-100 text-slate-900
+                        rounded-2xl shadow-2xl p-3.5 mr-1`}>
           <span className="absolute right-5 -bottom-2 w-4 h-4 bg-sky-100 rotate-45 rounded-sm" aria-hidden />
 
           <div className="relative flex items-start gap-2">
             <p className="flex-1 text-sm leading-snug font-medium">
               {texto}
-              {fase === 'ayuda' && (
-                <> <a href={`mailto:${SOPORTE}`} className="text-sky-700 underline">{SOPORTE}</a></>
-              )}
             </p>
             {fase !== 'gracias' && (
               <button onClick={cerrar} aria-label={t('owl.close')}
@@ -117,6 +138,43 @@ export default function OwlWelcome() {
                   {t(`owl.src.${o}`)}
                 </button>
               ))}
+            </div>
+          )}
+
+          {fase === 'ayuda' && (
+            <div className="relative mt-3">
+              {chat.length > 0 && (
+                <div className="max-h-[50vh] overflow-y-auto flex flex-col gap-2 mb-3 pr-1">
+                  {chat.map((m, i) => (
+                    <div key={i}
+                         className={`text-sm leading-snug rounded-xl px-3 py-2 whitespace-pre-wrap ${
+                           m.role === 'user' ? 'self-end bg-sky-600 text-white max-w-[85%]'
+                                             : 'self-start bg-white text-slate-900 max-w-[95%]'}`}>
+                      {m.content}
+                      {m.role === 'aviso' && (
+                        <> <a href={`mailto:${SOPORTE}`} className="text-sky-700 underline">{SOPORTE}</a></>
+                      )}
+                    </div>
+                  ))}
+                  {pensando && <div className="self-start text-xs text-slate-500 px-1">{t('owl.thinking')}</div>}
+                  <div ref={finChat} />
+                </div>
+              )}
+              {quedan !== 0 && (
+                <form className="flex gap-2" onSubmit={preguntar}>
+                  <input autoFocus value={pregunta} maxLength={500} onChange={e => setPregunta(e.target.value)}
+                         placeholder={t('owl.chatPlaceholder')}
+                         className="flex-1 min-w-0 bg-white border border-sky-300 rounded-xl px-3 py-1.5
+                                    text-sm text-slate-900 placeholder-slate-400 focus:border-sky-600 focus:outline-none" />
+                  <button type="submit" aria-label={t('owl.send')} disabled={pensando || !pregunta.trim()}
+                          className="p-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white disabled:opacity-40">
+                    <IconSend size={16} />
+                  </button>
+                </form>
+              )}
+              {quedan > 0 && quedan <= 3 && (
+                <p className="text-[11px] text-slate-500 mt-1.5">{t('owl.left', { n: quedan })}</p>
+              )}
             </div>
           )}
 

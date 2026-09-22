@@ -1698,7 +1698,7 @@
     },
     "cuaderno-4": {
       "title": "Edit with the pen",
-      "body": "The pen icon, next to the date, opens the note for editing. You have bold, italics, underline, strikethrough, headings, and lists — and you see the formatting applied as you type, not with odd symbols. The eye (top right) shows how it looks with formulas rendered."
+      "body": "The pen icon, next to the date, opens the note for editing. You have bold, italics, underline, strikethrough, headings, and lists — and you see the formatting applied as you type, not with odd symbols. Formulas are drawn; double-click one to turn it back into text and fix it."
     },
     "cuaderno-5": {
       "title": "Print, Word, and study",
@@ -2224,8 +2224,13 @@
       "other": "Other"
     },
     "close": "Close",
-    "help": "Any questions about using MyStudy? Write to us and we will help:",
+    "help": "Any questions about using MyStudy? Ask me:",
     "open": "Talk to the owl",
-    "showSetting": "Show the owl"
+    "showSetting": "Show the owl",
+    "chatPlaceholder": "Type your question…",
+    "thinking": "Thinking…",
+    "limit": "You've used all your questions for today. I'll be here tomorrow, or write to us at",
+    "chatError": "I couldn't answer right now. Write to us at",
+    "left": "{{n}} questions left today"
   }
 }

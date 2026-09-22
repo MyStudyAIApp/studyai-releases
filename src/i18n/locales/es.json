@@ -1691,7 +1691,7 @@
     },
     "cuaderno-4": {
       "title": "Editar con el bolígrafo",
-      "body": "El icono del bolígrafo, junto a la fecha, abre el apunte para reescribirlo. Tienes negrita, cursiva, subrayado, tachado, títulos y listas — y lo ves aplicado mientras escribes, no con símbolos raros. El ojo (arriba a la derecha) enseña cómo queda con las fórmulas pintadas."
+      "body": "El icono del bolígrafo, junto a la fecha, abre el apunte para reescribirlo. Tienes negrita, cursiva, subrayado, tachado, títulos y listas — y lo ves aplicado mientras escribes, no con símbolos raros. Las fórmulas salen dibujadas; con doble clic las vuelves a texto para corregirlas."
     },
     "cuaderno-5": {
       "title": "Imprimir, Word y estudiar",
@@ -1879,7 +1879,6 @@
       "h2": "Título mediano",
       "list": "Lista"
     },
-    "preview": "Ver cómo queda con las fórmulas",
     "editorHint1": "Escribe, borra o cambia lo que quieras. Cuando escanees una página nueva se añadirá",
     "editorBelow": "debajo",
     "editorHint2": ", sin tocar esto.",
@@ -2225,8 +2224,13 @@
       "other": "Otro"
     },
     "close": "Cerrar",
-    "help": "¿Tienes alguna duda sobre cómo usar MyStudy? Escríbenos y te ayudamos:",
+    "help": "¿Tienes alguna duda sobre cómo usar MyStudy? Pregúntame:",
     "open": "Hablar con el búho",
-    "showSetting": "Mostrar el búho"
+    "showSetting": "Mostrar el búho",
+    "chatPlaceholder": "Escribe tu duda…",
+    "thinking": "Pensando…",
+    "limit": "Por hoy ya has hecho todas tus preguntas. Mañana sigo aquí, o escríbenos a",
+    "chatError": "No he podido contestar ahora. Escríbenos a",
+    "left": "Te quedan {{n}} preguntas hoy"
   }
 }
