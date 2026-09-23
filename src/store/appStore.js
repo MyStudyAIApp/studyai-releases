@@ -31,6 +31,12 @@ export async function detectIsFullMobileApp() {
 // decidir con datos si merece la pena mantener el escritorio nativo.
 const CLIENT_PLATFORM = IS_ELECTRON ? 'desktop' : IS_MOBILE ? 'mobile' : 'web'
 
+// App concreta (cabecera X-Client-App), para distinguir Scan de App en el
+// servidor. En el móvil se sabe tras la detección asíncrona del paquete; las
+// peticiones previas salen como 'scan', igual que el criterio de arriba.
+let CLIENT_APP = IS_ELECTRON ? 'desktop' : IS_MOBILE ? 'scan' : 'web'
+if (IS_MOBILE) detectIsFullMobileApp().then(full => { if (full) CLIENT_APP = 'app' })
+
 // Idioma de respuesta de la IA por defecto: detecta el idioma del navegador/sistema
 // (mismo criterio que ya usa i18next para la interfaz) entre los soportados;
 // si no coincide con ninguno, cae a español. El usuario siempre puede cambiarlo
@@ -225,7 +231,7 @@ export async function api(method, path, body = null, signal = null) {
   const localHeader = await getLocalAuthHeader()
   const opts = {
     method,
-    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
+    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, 'X-Client-App': CLIENT_APP, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
     signal,
   }
   if (body) opts.body = JSON.stringify(body)
@@ -269,7 +275,7 @@ export async function apiUpload(path, formData, signal = null, timeoutMs = UPLOA
     // No poner Content-Type aquí — el navegador lo añade solo con el boundary del FormData
     res = await fetch(url, {
       method: 'POST',
-      headers: { 'X-Client-Platform': CLIENT_PLATFORM, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
+      headers: { 'X-Client-Platform': CLIENT_PLATFORM, 'X-Client-App': CLIENT_APP, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
       body: formData,
       signal: ctrl.signal,
     })
@@ -299,7 +305,7 @@ export async function apiStream(path, body, onChunk, signal = null) {
   const localHeader = await getLocalAuthHeader()
   const res = await fetch(`${API_BASE}${path}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
+    headers: { 'Content-Type': 'application/json', 'X-Client-Platform': CLIENT_PLATFORM, 'X-Client-App': CLIENT_APP, 'Accept-Language': i18n.language || 'es', ...authHeader, ...localHeader },
     body: JSON.stringify(body),
     signal,
   })
