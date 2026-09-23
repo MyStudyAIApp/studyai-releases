@@ -1,6 +1,6 @@
 ## Política de privacidad de mystudyai.eu
 Bienvenido a la política de privacidad de mystudyai.eu. Esta política le ayudará a entender qué datos recogemos, por qué los recogemos y qué derechos tiene usted al respecto
-Última revisión:  20 septiembre 2026
+Última revisión:  24 septiembre 2026
 
 ## Índice
 - Resumen
@@ -75,7 +75,7 @@ Los Datos relativos al Usuario son recogidos para permitir al Titular prestar su
 ### Comunicación
 
 ### Resend
-Servicio de envio de emails transaccionales (confirmacion de cuenta, restablecer contrasena, avisos). Envio desde la UE (eu-west-1), con metadatos y logs de la cuenta alojados en EEUU.
+Servicio de envio de emails transaccionales (confirmacion de cuenta, restablecer contrasena, avisos) y de los correos de bienvenida descritos en «Avisos de estudio y correos de bienvenida». Envio desde la UE (eu-west-1), con metadatos y logs de la cuenta alojados en EEUU.
 
 ### Amazon SES (AWS)
 Subencargado indirecto de Resend: el envio de emails transaccionales pasa por Amazon SES (eu-west-1, Irlanda) por debajo.
@@ -196,7 +196,7 @@ Servicio de identificación prestado por Google Ireland Limited (Irlanda) que pe
 - Google Ireland Limited (Irlanda)
 
 ### Notificaciones
-Esta Aplicación puede enviar avisos al dispositivo del Usuario: recordatorios de examen, avisos previos a la eliminación automática de sus archivos y el aviso de que un escaneo que el Usuario dejó trabajando en segundo plano ya ha terminado. Este último lo genera la propia aplicación en el dispositivo: no pasa por nuestros servidores ni por los servicios de notificación descritos más abajo. Los avisos son opcionales y solo se envían si el Usuario los activa expresamente desde la propia Aplicación. Puede desactivarlos en cualquier momento desde los ajustes de la Aplicación o desde los del navegador o el sistema operativo, y al hacerlo la suscripción se elimina.
+Esta Aplicación puede enviar avisos al dispositivo del Usuario: recordatorios de examen, avisos previos a la eliminación automática de sus archivos, el aviso de que un escaneo que el Usuario dejó trabajando en segundo plano ya ha terminado y los avisos de estudio descritos en «Avisos de estudio y correos de bienvenida». En las aplicaciones móviles estos avisos los programa y los muestra la propia aplicación en el dispositivo: no pasan por nuestros servidores ni por los servicios de notificación descritos más abajo. Los avisos solo se muestran si el Usuario concede el permiso de notificaciones de su dispositivo o los activa expresamente desde la propia Aplicación. Puede desactivarlos en cualquier momento, uno a uno desde los ajustes de la Aplicación o todos a la vez desde los del navegador o el sistema operativo; en el caso de los avisos web, al hacerlo la suscripción se elimina.
 
 ### Notificaciones web (Web Push)
 Cuando el Usuario activa los avisos, su navegador genera una dirección de entrega (endpoint) y unas claves de cifrado que esta Aplicación conserva para poder hacerle llegar el mensaje. La entrega material la realiza el servicio de notificaciones del navegador que utilice el Usuario — Google (Chrome y navegadores derivados), Mozilla (Firefox) o Apple (Safari) —, que por su propia naturaleza conoce el momento de la entrega. El contenido del aviso viaja cifrado de extremo a extremo y esos servicios no pueden leerlo.
@@ -266,6 +266,13 @@ La primera vez que entras, el búho de MyStudy te pregunta cómo nos has conocid
 
 ### Chat de ayuda del búho
 Al tocar el búho puedes escribirle dudas sobre cómo usar MyStudy. Tu pregunta y las anteriores de esa misma conversación (como máximo las 8 últimas) se envían a DeepInfra, o a Mistral AI si aquel falla, para generar la respuesta, a partir únicamente de una guía de uso de la Aplicación. No guardamos el texto de la conversación: se pierde al cerrar o recargar la página. Solo guardamos, junto a tu cuenta, cuántas preguntas has hecho hoy, para aplicar el límite de 10 al día. No escribas en el chat datos personales ni sensibles. Base jurídica: la ejecución del contrato (ayudarte a usar el servicio). El contador se borra con tu cuenta.
+
+### Avisos de estudio y correos de bienvenida
+Para ayudarte a sacar partido del servicio que ya usas, MyStudy puede:
+- **Mostrar avisos en tu móvil** (solo en las aplicaciones): un examen apuntado que se acerca, un examen de práctica que dejaste a medias, una asignatura con fichas pendientes de repaso y, si llevas 7 días sin abrir la aplicación, un único recordatorio. Como máximo un aviso al día y dos a la semana, nunca entre las 21:00 y las 9:00. Se generan en tu propio dispositivo a partir de tus datos de estudio: no se envía nada a terceros.
+- **Enviarte como máximo dos correos de bienvenida**, al día siguiente de registrarte y a los 7 días, solo si todavía no has empezado a usar la aplicación, con consejos para empezar. Después no te enviaremos más correos de este tipo. Se envían a través de Resend (ver «Comunicación»).
+
+No usamos píxeles ni rastreadores en los correos: no sabemos si los abres. Base jurídica: para los avisos del móvil, tu consentimiento, que das al permitir las notificaciones y puedes retirar cuando quieras; para los correos, nuestro interés legítimo en que aproveches el servicio que has contratado, amparado en el art. 21.2 de la Ley 34/2002 (LSSI), que permite escribir a quien ya es usuario sobre el mismo servicio. Al registrarte puedes marcar que no quieres recibirlos, y puedes oponerte después cuando quieras, sin coste: cada correo incluye un enlace para darte de baja con un solo clic, y en los ajustes de la aplicación puedes desactivar los correos y cada tipo de aviso por separado. Esto no afecta a los correos imprescindibles del servicio (confirmación de cuenta, cambio de contraseña, avisos de borrado o de pagos).
 
 ### Transferencias internacionales de datos
 Algunos de los proveedores enumerados en este documento (entre otros, DeepInfra, Sentry, Cloudflare, Microsoft Azure y RevenueCat) tratan datos en Estados Unidos. Estas transferencias se amparan, según el proveedor, en el Marco de Privacidad de Datos UE-EE.UU. (EU-U.S. Data Privacy Framework) o en las Cláusulas Contractuales Tipo aprobadas por la Comisión Europea, garantizando un nivel de protección equivalente al exigido por el RGPD. El Usuario puede solicitar más información sobre las salvaguardas aplicables a cada proveedor a través de los datos de contacto indicados en este documento.

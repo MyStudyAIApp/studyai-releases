@@ -1,6 +1,6 @@
 ## Politique de confidentialité de mystudyai.eu
 Bienvenue sur la politique de confidentialité de mystudyai.eu. La présente politique vous aidera à comprendre quelles données nous recueillons, pourquoi nous les recueillons et quels sont vos droits à cet égard.
-Dernière mise à jour :  20 septembre 2026
+Dernière mise à jour :  24 septembre 2026
 
 ## Table des matières
 - Résumé
@@ -75,7 +75,7 @@ Les Données relatives à l’Utilisateur sont collectées afin de permettre au 
 ### Communication
 
 ### Resend
-Service d'envoi d'e-mails transactionnels (confirmation de compte, réinitialisation du mot de passe, notifications). Envoi depuis l'UE (eu-west-1), avec métadonnées et journaux de compte hébergés aux États-Unis.
+Service d'envoi d'e-mails transactionnels (confirmation de compte, réinitialisation du mot de passe, notifications) et des e-mails de bienvenue décrits dans « Rappels d'étude et e-mails de bienvenue ». Envoi depuis l'UE (eu-west-1), avec métadonnées et journaux de compte hébergés aux États-Unis.
 
 ### Amazon SES (AWS)
 Sous-traitant indirect de Resend : l'envoi des e-mails transactionnels transite par Amazon SES (eu-west-1, Irlande) en arrière-plan.
@@ -176,7 +176,7 @@ Service d'identification fourni par Google Ireland Limited (Irlande) qui permet 
 - Google Ireland Limited (Irlande)
 
 ### Notifications
-Cette Application peut envoyer des avis sur l'appareil de l'Utilisateur : rappels d'examen, avertissements préalables à la suppression automatique de ses fichiers et l'avis indiquant qu'une numérisation laissée en arrière-plan par l'Utilisateur est terminée. Ce dernier est généré par l'application sur l'appareil lui-même : il ne transite ni par nos serveurs ni par les services de notification décrits ci-dessous. Ces avis sont facultatifs et ne sont envoyés que si l'Utilisateur les active expressément depuis l'Application. Il peut les désactiver à tout moment depuis les paramètres de l'Application ou ceux de son navigateur ou de son système d'exploitation, ce qui supprime l'abonnement.
+Cette Application peut envoyer des avis sur l'appareil de l'Utilisateur : rappels d'examen, avertissements avant la suppression automatique de ses fichiers, l'avis indiquant qu'un scan que l'Utilisateur a laissé tourner en arrière-plan est terminé et les rappels d'étude décrits dans « Rappels d'étude et e-mails de bienvenue ». Dans les applications mobiles, ces avis sont programmés et affichés par l'application elle-même sur l'appareil : ils ne passent ni par nos serveurs ni par les services de notification décrits ci-dessous. Les avis ne s'affichent que si l'Utilisateur accorde l'autorisation de notifications de son appareil ou les active expressément depuis l'Application. Il peut les désactiver à tout moment, un par un depuis les réglages de l'Application ou tous à la fois depuis ceux de son navigateur ou de son système d'exploitation ; pour les avis web, l'abonnement est alors supprimé.
 
 ### Notifications web (Web Push)
 Lorsque l'Utilisateur active les avis, son navigateur génère une adresse de livraison (endpoint) et des clés de chiffrement que cette Application conserve afin de pouvoir lui faire parvenir le message. La livraison matérielle est assurée par le service de notifications du navigateur utilisé par l'Utilisateur — Google (Chrome et navigateurs dérivés), Mozilla (Firefox) ou Apple (Safari) —, qui par nature connaît le moment de la livraison. Le contenu de l'avis circule chiffré de bout en bout et ces services ne peuvent pas le lire.
@@ -247,6 +247,13 @@ Lors de ta première connexion, la chouette de MyStudy te demande comment tu nou
 
 ### Chat d’aide de la chouette
 En touchant la chouette, tu peux lui poser des questions sur l’utilisation de MyStudy. Ta question et les précédentes de la même conversation (au maximum les 8 dernières) sont envoyées à DeepInfra, ou à Mistral AI en cas de panne, pour générer la réponse, uniquement à partir d’un guide d’utilisation de l’Application. Nous ne conservons pas le texte de la conversation : il est perdu quand tu fermes ou recharges la page. Nous conservons seulement, avec ton compte, le nombre de questions posées aujourd’hui, pour appliquer la limite de 10 par jour. N’écris pas de données personnelles ou sensibles dans le chat. Base juridique : l’exécution du contrat (t’aider à utiliser le service). Le compteur est supprimé avec ton compte.
+
+### Rappels d'étude et e-mails de bienvenue
+Pour t'aider à tirer parti du service que tu utilises déjà, MyStudy peut :
+- **Afficher des avis sur ton téléphone** (applications mobiles uniquement) : un examen enregistré qui approche, un examen d'entraînement laissé en cours, une matière avec des fiches à réviser et, si tu n'as pas ouvert l'application depuis 7 jours, un seul rappel. Au maximum un avis par jour et deux par semaine, jamais entre 21 h et 9 h. Ils sont générés sur ton propre appareil à partir de tes données d'étude : rien n'est envoyé à des tiers.
+- **T'envoyer au maximum deux e-mails de bienvenue**, le lendemain de ton inscription et au bout de 7 jours, seulement si tu n'as pas encore commencé à utiliser l'application, avec des conseils pour démarrer. Ensuite, nous ne t'enverrons plus d'e-mails de ce type. Ils sont envoyés via Resend (voir « Communication »).
+
+Nous n'utilisons ni pixels ni traceurs dans les e-mails : nous ne savons pas si tu les ouvres. Base juridique : pour les avis sur le téléphone, ton consentement, que tu donnes en autorisant les notifications et que tu peux retirer à tout moment ; pour les e-mails, notre intérêt légitime à ce que tu profites du service auquel tu as souscrit, fondé sur l'art. 21.2 de la loi espagnole 34/2002 (LSSI), qui permet d'écrire aux utilisateurs existants au sujet du même service. Lors de ton inscription, tu peux cocher que tu ne souhaites pas les recevoir, et tu peux t'y opposer ensuite à tout moment, gratuitement : chaque e-mail contient un lien de désinscription en un clic, et dans les réglages de l'application tu peux désactiver les e-mails et chaque type d'avis séparément. Cela ne concerne pas les e-mails indispensables au service (confirmation de compte, changement de mot de passe, avis de suppression ou de paiement).
 
 ### Transferts internationaux de données
 Certains des prestataires énumérés dans le présent document (notamment DeepInfra, Sentry, Cloudflare, Microsoft Azure et RevenueCat) traitent des données aux États-Unis. Selon le prestataire, ces transferts reposent sur le cadre de protection des données UE–États-Unis (EU-U.S. Data Privacy Framework) ou sur les Clauses Contractuelles Types approuvées par la Commission européenne, garantissant un niveau de protection équivalent à celui exigé par le RGPD. L'Utilisateur peut demander davantage d'informations sur les garanties applicables à chaque prestataire via les coordonnées indiquées dans le présent document.

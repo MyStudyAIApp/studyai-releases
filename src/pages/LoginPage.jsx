@@ -69,6 +69,7 @@ export default function LoginPage() {
   const [error, setError]       = useState(null)
   const [resetSent, setResetSent] = useState(false)
   const [acceptedTerms, setAcceptedTerms]   = useState(false)
+  const [noWelcomeEmails, setNoWelcomeEmails] = useState(false)
   // Región fiscal (solo compras web vía Stripe): se guarda en localStorage y
   // useBillingRegion la sincroniza a profiles.settings en cuanto haya sesión
   // -- signUp() todavía no la tiene, la confirmación por email es posterior.
@@ -165,7 +166,7 @@ export default function LoginPage() {
         setError(t('auth.err.mustAccept'))
         return
       }
-      marcarAceptacion()
+      marcarAceptacion(noWelcomeEmails)
     }
     if (IS_WEB) {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -273,7 +274,7 @@ export default function LoginPage() {
         if (error) throw error
         // La cuenta ya existe; la fecha se escribe en cuanto haya sesion, que
         // en el alta por email es despues de confirmar el correo.
-        marcarAceptacion()
+        marcarAceptacion(noWelcomeEmails)
         setMode('sent')  // mostrar mensaje "revisa tu email"
       }
     } catch (err) {
@@ -559,6 +560,19 @@ export default function LoginPage() {
                 <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">{t('auth.privacy')}</Link>
                 {t('auth.ageConfirm')}
               </span>
+            </label>
+          )}
+
+          {/* Consejos por correo: opcional, sin marcar (art. 21.2 LSSI) */}
+          {mode === 'register' && (
+            <label className="flex items-start gap-2 text-xs text-slate-400 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={noWelcomeEmails}
+                onChange={e => setNoWelcomeEmails(e.target.checked)}
+                className="mt-0.5 accent-primary-500"
+              />
+              <span>{t('auth.noWelcomeEmails')}</span>
             </label>
           )}
 

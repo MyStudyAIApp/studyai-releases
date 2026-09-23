@@ -1,6 +1,6 @@
 ## Datenschutzerklärung von mystudyai.eu
 Willkommen bei der Datenschutzrichtlinie von mystudyai.eu. Diese Richtlinie hilft Ihnen zu verstehen, welche Daten wir erheben, warum wir sie erheben und welche Rechte Sie diesbezüglich haben.
-Letzte Aktualisierung:  20. September 2026
+Letzte Aktualisierung:  24. September 2026
 
 ## Inhaltsverzeichnis
 - Zusammenfassung
@@ -75,7 +75,7 @@ Personenbezogene Daten über den Nutzer werden erhoben, damit der Anbieter den D
 ### Kommunikation
 
 ### Resend
-Dienst für den Versand transaktionaler E-Mails (Kontobestätigung, Passwort zurücksetzen, Benachrichtigungen). Versand aus der EU (eu-west-1); Metadaten und Konto-Logs werden in den USA gespeichert.
+Dienst für den Versand transaktionaler E-Mails (Kontobestätigung, Passwort zurücksetzen, Benachrichtigungen) sowie der unter „Lernhinweise und Willkommens-E-Mails“ beschriebenen Willkommens-E-Mails. Versand aus der EU (eu-west-1); Metadaten und Konto-Logs werden in den USA gespeichert.
 
 ### Amazon SES (AWS)
 Indirekter Unterauftragsverarbeiter von Resend: Der Versand transaktionaler E-Mails läuft im Hintergrund über Amazon SES (eu-west-1, Irland).
@@ -176,7 +176,7 @@ Identifizierungsdienst von Google Ireland Limited (Irland), mit dem der Nutzer s
 - Google Ireland Limited (Irland)
 
 ### Benachrichtigungen
-Diese Anwendung kann Hinweise an das Gerät des Nutzers senden: Prüfungserinnerungen, Vorabhinweise vor der automatischen Löschung seiner Dateien sowie den Hinweis, dass ein vom Nutzer im Hintergrund laufender Scan abgeschlossen ist. Letzteren erzeugt die Anwendung auf dem Gerät selbst: Er läuft weder über unsere Server noch über die unten beschriebenen Benachrichtigungsdienste. Die Hinweise sind optional und werden nur gesendet, wenn der Nutzer sie in der Anwendung ausdrücklich aktiviert. Er kann sie jederzeit in den Einstellungen der Anwendung oder denen seines Browsers bzw. Betriebssystems deaktivieren; dabei wird das Abonnement gelöscht.
+Diese Anwendung kann Hinweise an das Gerät des Nutzers senden: Prüfungserinnerungen, Vorabhinweise vor der automatischen Löschung seiner Dateien, den Hinweis, dass ein vom Nutzer im Hintergrund laufender Scan abgeschlossen ist, sowie die unter „Lernhinweise und Willkommens-E-Mails“ beschriebenen Lernhinweise. In den mobilen Anwendungen werden diese Hinweise von der Anwendung selbst auf dem Gerät geplant und angezeigt: Sie laufen weder über unsere Server noch über die unten beschriebenen Benachrichtigungsdienste. Die Hinweise werden nur angezeigt, wenn der Nutzer die Benachrichtigungsberechtigung seines Geräts erteilt oder sie in der Anwendung ausdrücklich aktiviert. Er kann sie jederzeit deaktivieren, einzeln in den Einstellungen der Anwendung oder alle auf einmal in denen seines Browsers bzw. Betriebssystems; bei Web-Hinweisen wird dabei das Abonnement gelöscht.
 
 ### Web-Benachrichtigungen (Web Push)
 Aktiviert der Nutzer die Hinweise, erzeugt sein Browser eine Zustelladresse (Endpoint) sowie Verschlüsselungsschlüssel, die diese Anwendung speichert, um die Nachricht zustellen zu können. Die eigentliche Zustellung übernimmt der Benachrichtigungsdienst des vom Nutzer verwendeten Browsers — Google (Chrome und abgeleitete Browser), Mozilla (Firefox) oder Apple (Safari) —, der naturgemäß den Zeitpunkt der Zustellung kennt. Der Inhalt des Hinweises wird Ende-zu-Ende verschlüsselt übertragen und ist für diese Dienste nicht lesbar.
@@ -246,6 +246,13 @@ Beim ersten Anmelden fragt dich die MyStudy-Eule, wie du von uns erfahren hast. 
 
 ### Hilfe-Chat der Eule
 Wenn du die Eule antippst, kannst du ihr Fragen zur Nutzung von MyStudy stellen. Deine Frage und die vorherigen aus demselben Gespräch (höchstens die letzten 8) werden an DeepInfra – oder an Mistral AI, falls DeepInfra ausfällt – gesendet, um die Antwort zu erzeugen, und zwar ausschließlich auf Grundlage einer Bedienungsanleitung der Anwendung. Den Text des Gesprächs speichern wir nicht: Er geht verloren, wenn du die Seite schließt oder neu lädst. Wir speichern zu deinem Konto nur, wie viele Fragen du heute gestellt hast, um das Limit von 10 pro Tag anzuwenden. Gib im Chat keine personenbezogenen oder sensiblen Daten ein. Rechtsgrundlage: Vertragserfüllung (dir bei der Nutzung des Dienstes zu helfen). Der Zähler wird mit deinem Konto gelöscht.
+
+### Lernhinweise und Willkommens-E-Mails
+Damit du den Dienst, den du bereits nutzt, gut ausschöpfen kannst, kann MyStudy:
+- **Hinweise auf deinem Handy anzeigen** (nur in den mobilen Anwendungen): eine eingetragene Prüfung, die näher rückt, eine Übungsprüfung, die du nicht beendet hast, ein Fach mit Karteikarten, die zur Wiederholung fällig sind, und – wenn du die Anwendung 7 Tage nicht geöffnet hast – eine einzige Erinnerung. Höchstens ein Hinweis pro Tag und zwei pro Woche, nie zwischen 21:00 und 9:00 Uhr. Sie werden auf deinem eigenen Gerät aus deinen Lerndaten erzeugt: An Dritte wird nichts gesendet.
+- **Dir höchstens zwei Willkommens-E-Mails senden**, am Tag nach der Registrierung und nach 7 Tagen, nur wenn du die Anwendung noch nicht zu nutzen begonnen hast, mit Tipps für den Einstieg. Danach senden wir dir keine E-Mails dieser Art mehr. Sie werden über Resend versendet (siehe „Kommunikation“).
+
+Wir verwenden in E-Mails keine Pixel oder Tracker: Wir wissen nicht, ob du sie öffnest. Rechtsgrundlage: für die Hinweise auf dem Handy deine Einwilligung, die du durch das Erlauben von Benachrichtigungen erteilst und jederzeit widerrufen kannst; für die E-Mails unser berechtigtes Interesse daran, dass du den gebuchten Dienst gut nutzt, gestützt auf Art. 21.2 des spanischen Gesetzes 34/2002 (LSSI), der es erlaubt, bestehenden Nutzern über denselben Dienst zu schreiben. Bei der Registrierung kannst du ankreuzen, dass du sie nicht erhalten möchtest, und du kannst später jederzeit kostenlos widersprechen: Jede E-Mail enthält einen Abmeldelink mit einem Klick, und in den Einstellungen der Anwendung kannst du die E-Mails und jede Art von Hinweis einzeln deaktivieren. Davon unberührt bleiben die für den Dienst notwendigen E-Mails (Kontobestätigung, Passwortänderung, Lösch- oder Zahlungshinweise).
 
 ### Internationale Datenübermittlungen
 Einige der in diesem Dokument aufgeführten Anbieter (unter anderem DeepInfra, Sentry, Cloudflare, Microsoft Azure und RevenueCat) verarbeiten Daten in den Vereinigten Staaten. Diese Übermittlungen stützen sich je nach Anbieter auf das EU-U.S. Data Privacy Framework oder auf die von der Europäischen Kommission genehmigten Standardvertragsklauseln und gewährleisten ein Schutzniveau, das dem von der DSGVO geforderten entspricht. Der Nutzer kann über die in diesem Dokument angegebenen Kontaktdaten weitere Informationen zu den für den jeweiligen Anbieter geltenden Garantien anfordern.

@@ -97,8 +97,8 @@ export function AuthProvider({ children }) {
   // El usuario acepta en la pantalla de aviso: se guarda la constancia y se
   // le deja pasar. Si falla el guardado NO se le deja entrar: el sentido de
   // esa pantalla es que quede el rastro, no que la vea.
-  const acceptTerms = async () => {
-    await guardarAceptacion(user?.id)
+  const acceptTerms = async (sinCorreos = false) => {
+    await guardarAceptacion(user?.id, sinCorreos)
     setNeedsTerms(false)
   }
 

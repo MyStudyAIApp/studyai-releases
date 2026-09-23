@@ -20,13 +20,14 @@ export default function AcceptTermsPage() {
   const { t } = useTranslation()
   const { acceptTerms, signOut, user } = useAuth()
   const [marcado, setMarcado] = useState(false)
+  const [sinCorreos, setSinCorreos] = useState(false)
   const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState(null)
 
   const confirmar = async () => {
     setGuardando(true); setError(null)
     try {
-      await acceptTerms()
+      await acceptTerms(sinCorreos)
     } catch {
       // Sin constancia guardada no se pasa: reintentar o salir.
       setError(t('auth.err.generic'))
@@ -56,6 +57,16 @@ export default function AcceptTermsPage() {
             <Link to="/privacidad" className="text-primary-400 hover:text-primary-300 underline">{t('auth.privacy')}</Link>
             {t('auth.ageConfirm')}
           </span>
+        </label>
+
+        <label className="flex items-start gap-2 text-sm text-slate-400 cursor-pointer mb-5">
+          <input
+            type="checkbox"
+            checked={sinCorreos}
+            onChange={e => setSinCorreos(e.target.checked)}
+            className="mt-1 accent-primary-500"
+          />
+          <span>{t('auth.noWelcomeEmails')}</span>
         </label>
 
         {error && (

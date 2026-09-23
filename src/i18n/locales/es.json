@@ -1326,6 +1326,7 @@
     "terms": "Términos y Condiciones",
     "privacy": "Política de Privacidad",
     "ageConfirm": ", y confirmo que tengo al menos 16 años o cuento con la autorización de mis padres o tutores.",
+    "noWelcomeEmails": "No quiero recibir consejos para empezar por correo.",
     "gateTitle": "Un último paso",
     "gateBody": "Has creado tu cuenta con {{email}}. Antes de entrar necesitamos que aceptes las condiciones y confirmes tu edad.",
     "gateContinue": "Aceptar y entrar",
