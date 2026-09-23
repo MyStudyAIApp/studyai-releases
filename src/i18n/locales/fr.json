@@ -1326,7 +1326,6 @@
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité",
     "ageConfirm": ", et je confirme avoir au moins 16 ans ou disposer de l'autorisation de mes parents ou tuteurs.",
-    "noWelcomeEmails": "Je ne souhaite pas recevoir de conseils de démarrage par e-mail.",
     "gateTitle": "Une dernière étape",
     "gateBody": "Tu as créé ton compte avec {{email}}. Avant d'entrer, nous avons besoin que tu acceptes les conditions et que tu confirmes ton âge.",
     "gateContinue": "Accepter et continuer",

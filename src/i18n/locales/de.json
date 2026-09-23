@@ -1326,7 +1326,6 @@
     "terms": "Nutzungsbedingungen",
     "privacy": "Datenschutzerklärung",
     "ageConfirm": " und bestätige, dass ich mindestens 16 Jahre alt bin oder die Zustimmung meiner Eltern bzw. gesetzlichen Vertreter habe.",
-    "noWelcomeEmails": "Ich möchte keine Einstiegstipps per E-Mail erhalten.",
     "gateTitle": "Ein letzter Schritt",
     "gateBody": "Du hast dein Konto mit {{email}} erstellt. Bevor es losgeht, musst du die Bedingungen akzeptieren und dein Alter bestätigen.",
     "gateContinue": "Akzeptieren und fortfahren",

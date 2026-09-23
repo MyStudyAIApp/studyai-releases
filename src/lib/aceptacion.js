@@ -20,20 +20,8 @@ const CLAVE = 'studyai_aceptacion_pendiente'
 // cambien los textos legales, para saber quién aceptó cuál.
 export const TERMS_VERSION = '2026-09-24'
 
-// sinCorreos: la casilla "no quiero consejos por correo" del registro. Hace
-// falta ofrecerla al registrarse para poder enviar los correos de bienvenida
-// (art. 21.2 LSSI); welcome_optout_offered_at deja constancia de que se ofreció.
-export function marcarAceptacion(sinCorreos = false) {
-  try { localStorage.setItem(CLAVE, JSON.stringify({ sinCorreos: !!sinCorreos })) } catch {}
-}
-
-function leerMarca() {
-  try {
-    const v = localStorage.getItem(CLAVE)
-    if (!v) return null
-    if (v === '1') return { sinCorreos: false }  // marca de antes de la casilla
-    return JSON.parse(v)
-  } catch { return null }
+export function marcarAceptacion() {
+  try { localStorage.setItem(CLAVE, '1') } catch {}
 }
 
 /**
@@ -43,13 +31,14 @@ function leerMarca() {
  */
 export async function registrarAceptacionSiProcede(userId) {
   if (!userId) return
-  const marca = leerMarca()
-  if (!marca) return
+  let pendiente = false
+  try { pendiente = !!localStorage.getItem(CLAVE) } catch {}
+  if (!pendiente) return
 
   try {
     const { data } = await supabase
       .from('profiles')
-      .select('terms_accepted_at, age_declared_at, welcome_optout_offered_at')
+      .select('terms_accepted_at, age_declared_at')
       .eq('id', userId)
       .maybeSingle()
 
@@ -60,10 +49,6 @@ export async function registrarAceptacionSiProcede(userId) {
       campos.terms_version = TERMS_VERSION
     }
     if (data && !data.age_declared_at)   campos.age_declared_at   = ahora
-    if (data && !data.welcome_optout_offered_at) {
-      campos.welcome_optout_offered_at = ahora
-      campos.welcome_email_opt_out = !!marca.sinCorreos
-    }
 
     if (Object.keys(campos).length) {
       await supabase.from('profiles').update(campos).eq('id', userId)
@@ -124,14 +109,13 @@ export async function necesitaAceptacion(user) {
 }
 
 /** Escribe la constancia cuando el usuario acepta en la pantalla de aviso. */
-export async function guardarAceptacion(userId, sinCorreos = false) {
+export async function guardarAceptacion(userId) {
   if (!userId) throw new Error('sin usuario')
   const ahora = new Date().toISOString()
   const { error } = await supabase
     .from('profiles')
     .update({
       terms_accepted_at: ahora, age_declared_at: ahora, terms_version: TERMS_VERSION,
-      welcome_optout_offered_at: ahora, welcome_email_opt_out: !!sinCorreos,
     })
     .eq('id', userId)
   if (error) throw error

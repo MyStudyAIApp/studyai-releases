@@ -1326,7 +1326,6 @@
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
     "ageConfirm": ", and I confirm that I am at least 16 years old or have my parents' or guardians' authorisation.",
-    "noWelcomeEmails": "I don't want to receive getting-started tips by email.",
     "gateTitle": "One last step",
     "gateBody": "You have created your account with {{email}}. Before you go in, we need you to accept the terms and confirm your age.",
     "gateContinue": "Accept and continue",
