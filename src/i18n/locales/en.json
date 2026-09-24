@@ -48,7 +48,8 @@
       "writeUs": "Write to us",
       "toExtend": "to extend it.",
       "freeCycleLong": "Free plan usage · this cycle"
-    }
+    },
+    "tutorials": "Tutorials"
   },
   "backend": {
     "starting": "Starting services... The first time this may take up to 1 minute.",
@@ -1670,7 +1671,7 @@
     },
     "library-plan": {
       "title": "Joint study plan",
-      "body": "Set an exam date and your available weekly study hours (Settings → Study availability), and the AI schedules the topics day by day. If you set a date, it also creates a reminder in your Calendar automatically."
+      "body": "Set an exam date and your available weekly study hours (Settings → Study availability), and the topics are scheduled day by day. If you set a date, it also creates a reminder in your Calendar automatically."
     },
     "library-podcast": {
       "title": "Notes podcast",
@@ -1826,7 +1827,7 @@
     },
     "settings-1": {
       "title": "Appearance and languages",
-      "body": "Change the visual theme, voice and reading speed for text-to-speech, the interface language (Español/English/Deutsch/Français), and the language the AI uses for summaries/flashcards/exams — these are two separate settings."
+      "body": "Change the visual theme, voice and reading speed for text-to-speech, the interface language (Español/English/Deutsch/Français), and the language your summaries, flashcards and quizzes are written in — these are two separate settings."
     },
     "settings-2": {
       "title": "Study availability",
@@ -1838,15 +1839,15 @@
     },
     "settings-plan": {
       "title": "Plan and billing",
-      "body": "Here you’ll see your plan (Free, Trial, or Pro) and your monthly usage: generations, podcasts, transcription minutes, and scanned pages are tracked separately. You can upgrade to Pro, buy extra credits if you run out, or manage your subscription and invoices."
+      "body": "Here you’ll see your plan (Free, Trial, or Pro) and your usage in the current cycle: generations, podcasts, transcription minutes, and scanned pages are tracked separately. You can upgrade to Pro, buy extra credits if you run out, or manage your subscription and invoices."
     },
     "settings-retencion": {
       "title": "What’s saved and what’s auto-deleted",
-      "body": "Original files you upload (PDF or photo) and solved exercises are deleted after 10 days — download them if you want to keep them. Your summaries, flashcards, and exams are saved forever. With \"Course Archive,\" you can save or restore a full backup of an entire course."
+      "body": "Original files you upload (PDF or photo) and solved exercises are deleted after 10 days — download them if you want to keep them. Your summaries, flashcards, and quizzes are kept for as long as you use your account. With \"Course Archive,\" you can save or restore a full backup of an entire course."
     },
     "settings-4": {
       "title": "Your account and data",
-      "body": "Change your name or password, manage backups (on desktop, including Whisper settings for local transcription), or delete your account if needed."
+      "body": "Change your name or password, or delete your account if needed."
     }
   },
   "notebook": {

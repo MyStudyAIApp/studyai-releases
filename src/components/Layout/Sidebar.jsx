@@ -8,7 +8,7 @@ import { verFuncion } from '../../lib/betaFlags'
 import {
   IconHome, IconBooks, IconNotebook, IconBrain, IconFileText, IconWorld, IconMicrophone2,
   IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings, IconCloud,
-  IconLogout,
+  IconLogout, IconBook, IconChevronDown,
 } from '@tabler/icons-react'
 import ProgressBar from '../UI/ProgressBar'
 import IconBadge from '../UI/IconBadge'
@@ -57,6 +57,20 @@ export default function Sidebar() {
     ...(!IS_WEB ? [{ to: '/sync', Icon: IconCloud, color: 'blue', label: t('sidebar.sync') }] : []),
   ]
 
+  // Tutoriales: desplegable debajo de Ajustes, uno por sección, con el mismo
+  // icono que su entrada del menú. Cada uno lanza el recorrido de esa pantalla.
+  const SECCION = { '/home': 'home', '/library': 'library', '/cuaderno': 'cuaderno', '/study': 'study',
+    '/exam': 'exam', '/tutor': 'tutor', '/languages': 'languages', '/lecture': 'lecture', '/solve': 'solve',
+    '/compare': 'compare', '/stats': 'stats', '/calendar': 'calendar', '/settings': 'settings' }
+  const tutoriales = navItems.filter(n => SECCION[n.to])
+  const [tutorialesAbierto, setTutorialesAbierto] = useState(false)
+  // El cartel de bienvenida ("Ver tutoriales") abre este desplegable.
+  useEffect(() => {
+    const abrir = () => setTutorialesAbierto(true)
+    window.addEventListener('studyai:open-tutorials', abrir)
+    return () => window.removeEventListener('studyai:open-tutorials', abrir)
+  }, [])
+
   return (
     <aside className="w-16 lg:w-56 bg-slate-950 border-r border-slate-800 flex flex-col shrink-0 transition-all duration-200">
       {/* Status dot */}
@@ -72,7 +86,7 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-3 space-y-0.5 px-2">
+      <nav className="flex-1 py-3 space-y-0.5 px-2 overflow-y-auto">
         {navItems.map(({ to, Icon, color, emoji, label }) => (
           <NavLink
             key={to}
@@ -101,6 +115,39 @@ export default function Sidebar() {
             </span>
           </NavLink>
         ))}
+
+        <button
+          onClick={() => setTutorialesAbierto(a => !a)}
+          title={t('sidebar.tutorials')}
+          className="w-full flex items-center gap-3 px-2 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-100 transition-all duration-150"
+        >
+          <IconBadge icon={IconBook} color="slate" size="sm" />
+          <span className="hidden lg:block truncate flex-1 text-left">{t('sidebar.tutorials')}</span>
+          <IconChevronDown size={14} className={`hidden lg:block shrink-0 transition-transform duration-200 ${tutorialesAbierto ? 'rotate-180' : ''}`} />
+        </button>
+        {/* Se despliega deslizando (grid 0fr → 1fr anima la altura real) y
+            cada entrada aparece en cascada, un poco después de la anterior. */}
+        <div className={`grid transition-[grid-template-rows] duration-500 ease-out ${tutorialesAbierto ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+          <div className="overflow-hidden">
+            <div className="lg:ml-4 lg:pl-2 lg:border-l border-slate-800 space-y-0.5 py-0.5">
+              {tutoriales.map(({ to, Icon, emoji, color, label }, i) => (
+                <button
+                  key={to}
+                  title={label}
+                  tabIndex={tutorialesAbierto ? 0 : -1}
+                  onClick={() => window.dispatchEvent(new CustomEvent('studyai:show-onboarding', { detail: { section: SECCION[to] } }))}
+                  style={{ transitionDelay: tutorialesAbierto ? `${i * 35}ms` : '0ms' }}
+                  className={`w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-slate-800 hover:text-slate-100
+                              transition-all duration-300 ease-out
+                              ${tutorialesAbierto ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-3'}`}
+                >
+                  <IconBadge icon={Icon} emoji={emoji} color={color} size="sm" />
+                  <span className="hidden lg:block truncate">{label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </nav>
 
       {/* Uso del plan Free en el ciclo vigente (ya no son 30 días rodantes:

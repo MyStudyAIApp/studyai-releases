@@ -48,7 +48,8 @@
       "writeUs": "Écris-nous",
       "toExtend": "pour l'étendre.",
       "freeCycleLong": "Utilisation du forfait Free · ce cycle"
-    }
+    },
+    "tutorials": "Tutoriels"
   },
   "backend": {
     "starting": "Démarrage des services... La première fois, cela peut prendre jusqu'à 1 minute.",
@@ -1663,7 +1664,7 @@
     },
     "library-plan": {
       "title": "Plan d'étude conjoint",
-      "body": "Fixe une date d'examen et tes heures hebdomadaires disponibles (Paramètres → Disponibilité d'étude) et l'IA répartit les thèmes jour après jour. Si tu fixes une date, l'avis est également créé automatiquement dans ton Calendrier."
+      "body": "Fixe une date d'examen et tes heures hebdomadaires disponibles (Paramètres → Disponibilité d'étude) et les thèmes sont répartis jour après jour. Si tu fixes une date, l'avis est également créé automatiquement dans ton Calendrier."
     },
     "library-podcast": {
       "title": "Podcast de tes notes",
@@ -1819,7 +1820,7 @@
     },
     "settings-1": {
       "title": "Apparence et langues",
-      "body": "Change le thème visuel, les voix et la vitesse de lecture à voix haute, la langue de l'interface (Español/English/Deutsch/Français) et la langue dans laquelle l'IA rédige les résumés/fiches/examens — ce sont deux réglages indépendants."
+      "body": "Change le thème visuel, les voix et la vitesse de lecture à voix haute, la langue de l'interface (Español/English/Deutsch/Français) et la langue dans laquelle sont rédigés tes résumés, fiches et contrôles — ce sont deux réglages indépendants."
     },
     "settings-2": {
       "title": "Disponibilité d'étude",
@@ -1831,15 +1832,15 @@
     },
     "settings-plan": {
       "title": "Plan et facturation",
-      "body": "Ici, tu vois ton plan (Free, Essai ou Pro) et ce que tu as dépensé ce mois-ci : générations, podcasts, minutes de transcription et pages scannées sont séparés. Tu peux passer à Pro, acheter des bonus si tu manques de quelque chose, ou gérer ton abonnement et tes factures."
+      "body": "Ici, tu vois ton plan (Free, Essai ou Pro) et ta consommation sur la période en cours : générations, podcasts, minutes de transcription et pages scannées sont séparés. Tu peux passer à Pro, acheter des bonus si tu manques de quelque chose, ou gérer ton abonnement et tes factures."
     },
     "settings-retencion": {
       "title": "Ce qui est conservé et ce qui est supprimé automatiquement",
-      "body": "Les fichiers originaux que tu télécharges (PDF ou photo) et les exercices résolus sont supprimés après 10 jours — si tu en veux un, télécharge-le avant. Tes résumés, fiches et examens sont toujours conservés. Et avec \"Archive du cours\", tu sauvegardes ou restaures une copie complète d'un cours entier."
+      "body": "Les fichiers originaux que tu télécharges (PDF ou photo) et les exercices résolus sont supprimés après 10 jours — si tu en veux un, télécharge-le avant. Tes résumés, fiches et contrôles sont conservés tant que tu utilises ton compte. Et avec \"Archive du cours\", tu sauvegardes ou restaures une copie complète d'un cours entier."
     },
     "settings-4": {
       "title": "Ton compte et tes données",
-      "body": "Change ton nom ou ton mot de passe, gère les sauvegardes (sur ordinateur, avec les paramètres de Whisper pour la transcription locale) ou supprime ton compte si tu en as besoin."
+      "body": "Change ton nom ou ton mot de passe, ou supprime ton compte si tu en as besoin."
     }
   },
   "tutorialUi": {

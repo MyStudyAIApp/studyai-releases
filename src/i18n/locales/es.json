@@ -48,7 +48,8 @@
       "writeUs": "Escríbenos",
       "toExtend": "para ampliarlo.",
       "freeCycleLong": "Uso del plan Free · este ciclo"
-    }
+    },
+    "tutorials": "Tutoriales"
   },
   "backend": {
     "starting": "Iniciando servicios... La primera vez puede tardar hasta 1 minuto.",
@@ -1663,7 +1664,7 @@
     },
     "library-plan": {
       "title": "Plan de estudio conjunto",
-      "body": "Ponle fecha de examen y tus horas semanales disponibles (Ajustes → Disponibilidad de estudio) y la IA reparte los temas día a día. Si le pones fecha, se crea también el aviso en tu Calendario automáticamente."
+      "body": "Ponle fecha de examen y tus horas semanales disponibles (Ajustes → Disponibilidad de estudio) y se reparten los temas día a día. Si le pones fecha, se crea también el aviso en tu Calendario automáticamente."
     },
     "library-podcast": {
       "title": "Podcast de tus apuntes",
@@ -1819,7 +1820,7 @@
     },
     "settings-1": {
       "title": "Apariencia e idiomas",
-      "body": "Cambia el tema visual, las voces y velocidad de lectura en voz alta, el idioma de la interfaz (Español/English/Deutsch/Français) y el idioma en el que la IA redacta resúmenes/fichas/exámenes — son dos ajustes independientes."
+      "body": "Cambia el tema visual, las voces y velocidad de lectura en voz alta, el idioma de la interfaz (Español/English/Deutsch/Français) y el idioma en el que se redactan tus resúmenes, fichas y exámenes — son dos ajustes independientes."
     },
     "settings-2": {
       "title": "Disponibilidad de estudio",
@@ -1831,15 +1832,15 @@
     },
     "settings-plan": {
       "title": "Plan y facturación",
-      "body": "Aquí ves tu plan (Free, Prueba o Pro) y lo que llevas gastado del mes: generaciones, podcasts, minutos de transcripción y páginas escaneadas van por separado. Puedes pasarte a Pro, comprar bonos sueltos si te quedas corto en algo, o gestionar tu suscripción y tus facturas."
+      "body": "Aquí ves tu plan (Free, Prueba o Pro) y lo que llevas gastado en tu ciclo actual: generaciones, podcasts, minutos de transcripción y páginas escaneadas van por separado. Puedes pasarte a Pro, comprar bonos sueltos si te quedas corto en algo, o gestionar tu suscripción y tus facturas."
     },
     "settings-retencion": {
       "title": "Qué se guarda y qué se borra solo",
-      "body": "Los archivos originales que subes (PDF o foto) y los ejercicios resueltos se borran a los 10 días — si quieres uno, descárgalo antes. Tus resúmenes, fichas y exámenes se conservan siempre. Y con \"Archivo del curso\" guardas o restauras una copia completa de un curso entero."
+      "body": "Los archivos originales que subes (PDF o foto) y los ejercicios resueltos se borran a los 10 días — si quieres uno, descárgalo antes. Tus resúmenes, fichas y exámenes se conservan mientras uses tu cuenta. Y con \"Archivo del curso\" guardas o restauras una copia completa de un curso entero."
     },
     "settings-4": {
       "title": "Tu cuenta y datos",
-      "body": "Cambia tu nombre o contraseña, gestiona copias de seguridad (en escritorio, junto con la configuración de Whisper para transcripción local) o borra tu cuenta si lo necesitas."
+      "body": "Cambia tu nombre o contraseña, o borra tu cuenta si lo necesitas."
     }
   },
   "tutorialUi": {

@@ -48,7 +48,8 @@
       "writeUs": "Schreib uns",
       "toExtend": "um es zu erweitern.",
       "freeCycleLong": "Nutzung des Free Plans · dieser Zyklus"
-    }
+    },
+    "tutorials": "Tutorials"
   },
   "backend": {
     "starting": "Dienste werden gestartet... Beim ersten Mal kann dies bis zu 1 Minute dauern.",
@@ -1663,7 +1664,7 @@
     },
     "library-plan": {
       "title": "Gemeinsamer Lernplan",
-      "body": "Gib ein Prüfungsdatum und deine wöchentlich verfügbaren Stunden ein (Einstellungen → Lernverfügbarkeit) und die KI verteilt die Themen Tag für Tag. Wenn du ein Datum eingibst, wird auch automatisch eine Erinnerung in deinem Kalender erstellt."
+      "body": "Gib ein Prüfungsdatum und deine wöchentlich verfügbaren Stunden ein (Einstellungen → Lernverfügbarkeit), und die Themen werden Tag für Tag verteilt. Wenn du ein Datum eingibst, wird auch automatisch eine Erinnerung in deinem Kalender erstellt."
     },
     "library-podcast": {
       "title": "Podcast deiner Notizen",
@@ -1819,7 +1820,7 @@
     },
     "settings-1": {
       "title": "Aussehen und Sprachen",
-      "body": "Ändere das visuelle Thema, die Stimmen und Lesegeschwindigkeit beim Vorlesen, die Sprache der Benutzeroberfläche (Español/English/Deutsch/Français) und die Sprache, in der die KI Zusammenfassungen/Karteikarten/Prüfungen erstellt — das sind zwei unabhängige Einstellungen."
+      "body": "Ändere das visuelle Thema, die Stimmen und Lesegeschwindigkeit beim Vorlesen, die Sprache der Benutzeroberfläche (Español/English/Deutsch/Français) und die Sprache, in der deine Zusammenfassungen, Karteikarten und Tests erstellt werden — das sind zwei unabhängige Einstellungen."
     },
     "settings-2": {
       "title": "Lernverfügbarkeit",
@@ -1831,15 +1832,15 @@
     },
     "settings-plan": {
       "title": "Plan und Abrechnung",
-      "body": "Hier siehst du deinen Plan (Free, Test oder Pro) und deine monatlichen Ausgaben: Generierungen, Podcasts, Transkriptionsminuten und gescannte Seiten werden separat aufgeführt. Du kannst auf Pro upgraden, einzelne Boni kaufen, wenn dir etwas fehlt, oder dein Abonnement und deine Rechnungen verwalten."
+      "body": "Hier siehst du deinen Plan (Free, Test oder Pro) und deinen Verbrauch im aktuellen Zeitraum: Generierungen, Podcasts, Transkriptionsminuten und gescannte Seiten werden separat aufgeführt. Du kannst auf Pro upgraden, einzelne Boni kaufen, wenn dir etwas fehlt, oder dein Abonnement und deine Rechnungen verwalten."
     },
     "settings-retencion": {
       "title": "Was gespeichert und was automatisch gelöscht wird",
-      "body": "Die von dir hochgeladenen Originaldateien (PDF oder Foto) und die gelösten Übungen werden nach 10 Tagen gelöscht — wenn du eine benötigst, lade sie vorher herunter. Deine Zusammenfassungen, Karteikarten und Prüfungen werden immer aufbewahrt. Und mit „Kursarchiv“ speicherst oder stellst du eine vollständige Kopie eines ganzen Kurses wieder her."
+      "body": "Die von dir hochgeladenen Originaldateien (PDF oder Foto) und die gelösten Übungen werden nach 10 Tagen gelöscht — wenn du eine benötigst, lade sie vorher herunter. Deine Zusammenfassungen, Karteikarten und Tests bleiben erhalten, solange du dein Konto nutzt. Und mit „Kursarchiv“ speicherst oder stellst du eine vollständige Kopie eines ganzen Kurses wieder her."
     },
     "settings-4": {
       "title": "Dein Konto und deine Daten",
-      "body": "Ändere deinen Namen oder dein Passwort, verwalte Backups (auf dem Desktop, zusammen mit den Whisper-Einstellungen für die lokale Transkription) oder lösche dein Konto, wenn du es brauchst."
+      "body": "Ändere deinen Namen oder dein Passwort oder lösche dein Konto, wenn du es brauchst."
     }
   },
   "tutorialUi": {

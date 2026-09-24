@@ -1501,7 +1501,10 @@ export default function SettingsPage() {
       <FeedbackModal open={showFeedback} onClose={() => setShowFeedback(false)} platform={IS_WEB ? 'web' : 'desktop'} />
 
       {/* ── Tutoriales detallados por sección ──────────────────────────── */}
-      <div ref={tutorialsRef}>
+      {/* En la web y el escritorio viven en la barra lateral (desplegable bajo
+          Ajustes). Aquí solo quedan para MyStudy App, que no tiene barra
+          lateral, hasta que se rediseñe la versión móvil. */}
+      {window.Capacitor?.isNativePlatform?.() && <div ref={tutorialsRef}>
       <CollapsibleCard
         title={t('settings.tutorials.cardTitle')}
         subtitle={t('settings.tutorials.cardSubtitle')}
@@ -1523,7 +1526,7 @@ export default function SettingsPage() {
           ))}
         </div>
       </CollapsibleCard>
-      </div>
+      </div>}
 
       {/* ── Acerca de ────────────────────────────────────────────────── */}
       <CollapsibleCard title={t('settings.about.title')} defaultOpen={false}>

@@ -5,6 +5,7 @@ import {
   IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings, IconNotebook,
 } from '@tabler/icons-react'
 import IconBadge from '../UI/IconBadge'
+import { IS_ELECTRON } from '../../store/appStore'
 import { useTranslation } from 'react-i18next'
 
 // Mismo icono/color que en la barra lateral (Sidebar.jsx) y en el selector de
@@ -104,7 +105,7 @@ const ALL_STEPS = [
     body: 'En un documento escaneado, el texto respeta lo que subrayaste a mano, y las palabras que no se leyeron con seguridad salen en ámbar: tócalas para corregirlas o confirmarlas. Es lo mismo que hace Mi cuaderno, así que no tienes que aprenderlo dos veces.',
   },
   {
-    id: 'library-sync', section: 'library', route: '/library', target: null,
+    id: 'library-sync', section: 'library', route: '/library', target: null, soloEscritorio: true,
     icon: '☁️', title: 'Sincronización con la nube (escritorio)',
     body: 'En la app de escritorio, cada documento muestra un icono: ámbar si solo está en este ordenador (pulsa para subirlo), verde si ya está también en la nube.',
   },
@@ -440,7 +441,8 @@ function CardContent({ stepIdx, total, current, isFirst, isLast, finishLabel, on
 // Recorrido detallado de una única sección (lanzado desde Ajustes → Tutoriales).
 
 export default function OnboardingTutorial({ onFinish, section }) {
-  const STEPS = ALL_STEPS.filter(s => s.section === section)
+  // soloEscritorio: pasos que hablan de la app de escritorio (fuera en web/app)
+  const STEPS = ALL_STEPS.filter(s => s.section === section && !(s.soloEscritorio && !IS_ELECTRON))
   const TOTAL = STEPS.length
 
   const [step, setStep]             = useState(0)
