@@ -589,7 +589,8 @@ export default function Home() {
               { label: '🎙️ ' + t('sidebar.usage.transcription'), b: usage.voice_budget.transcription },
               { label: '📄 ' + t('sidebar.usage.scan'), b: usage.voice_budget.scan },
               { label: '🎧 ' + t('sidebar.usage.podcasts'), b: usage.voice_budget.podcast },
-            ].map(({ label, b }) => {
+            // Escaneo solo si pasa del 50 % (su tope da para ~7.500 páginas; ver Sidebar.jsx)
+            ].filter(({ b }) => b !== usage.voice_budget.scan || (b?.spent_pct ?? 0) >= 50).map(({ label, b }) => {
               const pct = b?.spent_pct ?? 0
               return (
               <div key={label}>

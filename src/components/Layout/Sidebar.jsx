@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useAppStore, IS_WEB, api } from '../../store/appStore'
+import { useAppStore, IS_ELECTRON, api } from '../../store/appStore'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
-import { getPlanTier } from '../../lib/plan'
 import { verFuncion } from '../../lib/betaFlags'
 import {
   IconHome, IconBooks, IconNotebook, IconBrain, IconFileText, IconWorld, IconMicrophone2,
@@ -13,11 +12,17 @@ import {
 import ProgressBar from '../UI/ProgressBar'
 import IconBadge from '../UI/IconBadge'
 
-export default function Sidebar() {
+// cajon: en móvil (MyStudy App y web estrecha) la barra entra como un cajón
+// deslizante a pantalla casi completa, con los textos siempre visibles.
+// alNavegar lo cierra al elegir una sección.
+export default function Sidebar({ cajon = false, alNavegar }) {
+  // En el cajón los textos se ven siempre; en la barra fija, solo en pantalla ancha.
+  const L = cajon ? 'block' : 'hidden lg:block'
+  const TIP = cajon ? 'hidden' : 'lg:hidden'
+
   const { t } = useTranslation()
-  const { backendReady, todayStudyMinutes, dailyGoalMinutes, planTier, setPlanTier } = useAppStore()
+  const { backendReady, todayStudyMinutes, dailyGoalMinutes, setPlanTier } = useAppStore()
   const { user, signOut, loading: authLoading } = useAuth()
-  const [usage, setUsage] = useState(null)
   // user_metadata.full_name -- misma fuente que edita Ajustes, ver TitleBar.jsx.
   const displayName = user?.user_metadata?.full_name || null
 
@@ -29,10 +34,8 @@ export default function Sidebar() {
   // (causaba un 401 benigno en cada login, detectado en pruebas de QA).
   useEffect(() => {
     if (!backendReady || authLoading) return
-    api('GET', '/usage/summary').then(data => { setUsage(data); setPlanTier(data.tier) }).catch(() => {})
+    api('GET', '/usage/summary').then(data => setPlanTier(data.tier)).catch(() => {})
   }, [backendReady, authLoading])
-
-  const isFree = (planTier ?? getPlanTier(user)) === 'free'
 
   // Tutor conserva su mascota 🦉 (emoji), pero dentro de la misma insignia
   // circular que el resto — si no, se ve "plana" al lado de los iconos nuevos.
@@ -54,7 +57,7 @@ export default function Sidebar() {
     { to: '/stats',     Icon: IconChartBar,    color: 'green',  label: t('sidebar.stats') },
     { to: '/calendar',  Icon: IconCalendar,    color: 'amber',  label: t('sidebar.calendar') },
     { to: '/settings',  Icon: IconSettings,    color: 'slate',  label: t('sidebar.settings') },
-    ...(!IS_WEB ? [{ to: '/sync', Icon: IconCloud, color: 'blue', label: t('sidebar.sync') }] : []),
+    ...(IS_ELECTRON ? [{ to: '/sync', Icon: IconCloud, color: 'blue', label: t('sidebar.sync') }] : []),
   ]
 
   // Tutoriales: desplegable debajo de Ajustes, uno por sección, con el mismo
@@ -72,13 +75,13 @@ export default function Sidebar() {
   }, [])
 
   return (
-    <aside className="w-16 lg:w-56 bg-slate-950 border-r border-slate-800 flex flex-col shrink-0 transition-all duration-200">
+    <aside className={`${cajon ? 'w-72 h-full overflow-y-auto' : 'w-16 lg:w-56'} bg-slate-950 border-r border-slate-800 flex flex-col shrink-0 transition-all duration-200`}>
       {/* Status dot */}
       <div className="px-4 py-3 flex items-center gap-2 border-b border-slate-800">
         <span className={`w-2 h-2 rounded-full shrink-0 ${
           !backendReady ? 'bg-red-400 animate-pulse' : 'bg-emerald-400 animate-pulse-slow'
         }`} />
-        <span className="hidden lg:block text-xs truncate">
+        <span className={`${L} text-xs truncate`}>
           {!backendReady
             ? <span className="text-slate-400">{t('sidebar.connecting')}</span>
             : <span className="text-slate-400">{t('sidebar.aiReady')}</span>}
@@ -86,12 +89,15 @@ export default function Sidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-3 space-y-0.5 px-2 overflow-y-auto">
+      {/* En el cajón se desplaza el panel entero, no solo la lista: si no, los
+          bloques de abajo la aprietan y Tutoriales queda escondido. */}
+      <nav className={`${cajon ? 'flex-none' : 'flex-1 overflow-y-auto'} py-3 space-y-0.5 px-2`}>
         {navItems.map(({ to, Icon, color, emoji, label }) => (
           <NavLink
             key={to}
             to={to}
             end={to === '/home'}
+            onClick={alNavegar}
             className={({ isActive }) =>
               `group relative flex items-center gap-3 px-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                ${isActive
@@ -100,17 +106,17 @@ export default function Sidebar() {
             }
           >
             <IconBadge icon={Icon} emoji={emoji} color={color} size="sm" />
-            <span className="hidden lg:block truncate">{label}</span>
+            <span className={`${L} truncate`}>{label}</span>
             {/* Tooltip en modo estrecho */}
-            <span className="
+            <span className={`
               pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2
               px-2.5 py-1.5 rounded-lg
               bg-slate-800 border border-slate-600 shadow-xl
               text-xs text-slate-100 whitespace-nowrap
               opacity-0 group-hover:opacity-100
               transition-opacity duration-150
-              z-50 lg:hidden
-            ">
+              z-50 ${TIP}
+            `}>
               {label}
             </span>
           </NavLink>
@@ -122,27 +128,27 @@ export default function Sidebar() {
           className="w-full flex items-center gap-3 px-2 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-100 transition-all duration-150"
         >
           <IconBadge icon={IconBook} color="slate" size="sm" />
-          <span className="hidden lg:block truncate flex-1 text-left">{t('sidebar.tutorials')}</span>
-          <IconChevronDown size={14} className={`hidden lg:block shrink-0 transition-transform duration-200 ${tutorialesAbierto ? 'rotate-180' : ''}`} />
+          <span className={`${L} truncate flex-1 text-left`}>{t('sidebar.tutorials')}</span>
+          <IconChevronDown size={14} className={`${L} shrink-0 transition-transform duration-200 ${tutorialesAbierto ? 'rotate-180' : ''}`} />
         </button>
         {/* Se despliega deslizando (grid 0fr → 1fr anima la altura real) y
             cada entrada aparece en cascada, un poco después de la anterior. */}
         <div className={`grid transition-[grid-template-rows] duration-500 ease-out ${tutorialesAbierto ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
           <div className="overflow-hidden">
-            <div className="lg:ml-4 lg:pl-2 lg:border-l border-slate-800 space-y-0.5 py-0.5">
+            <div className={`${cajon ? 'ml-4 pl-2 border-l' : 'lg:ml-4 lg:pl-2 lg:border-l'} border-slate-800 space-y-0.5 py-0.5`}>
               {tutoriales.map(({ to, Icon, emoji, color, label }, i) => (
                 <button
                   key={to}
                   title={label}
                   tabIndex={tutorialesAbierto ? 0 : -1}
-                  onClick={() => window.dispatchEvent(new CustomEvent('studyai:show-onboarding', { detail: { section: SECCION[to] } }))}
+                  onClick={() => { alNavegar?.(); window.dispatchEvent(new CustomEvent('studyai:show-onboarding', { detail: { section: SECCION[to] } })) }}
                   style={{ transitionDelay: tutorialesAbierto ? `${i * 35}ms` : '0ms' }}
                   className={`w-full flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-xs text-slate-400 hover:bg-slate-800 hover:text-slate-100
                               transition-all duration-300 ease-out
                               ${tutorialesAbierto ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-3'}`}
                 >
                   <IconBadge icon={Icon} emoji={emoji} color={color} size="sm" />
-                  <span className="hidden lg:block truncate">{label}</span>
+                  <span className={`${L} truncate`}>{label}</span>
                 </button>
               ))}
             </div>
@@ -150,80 +156,12 @@ export default function Sidebar() {
         </div>
       </nav>
 
-      {/* Uso del plan Free en el ciclo vigente (ya no son 30 días rodantes:
-          el ciclo va de aniversario a aniversario, ver ai/quotas.py) */}
-      {isFree && usage && (
-        <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">{t('sidebar.usage.freeCycle')}</p>
-          <div className="space-y-1.5">
-            {[
-              { label: t('sidebar.usage.generations'), used: usage.generations_used, max: usage.generations_max },
-              { label: t('sidebar.usage.podcasts'), used: usage.podcasts_used, max: usage.podcasts_max },
-              { label: t('sidebar.usage.transcriptionMin'), used: usage.voice_minutes_used, max: usage.voice_minutes_max },
-              { label: t('sidebar.usage.scannedPages'), used: usage.scan_pages_used, max: usage.scan_pages_max },
-            ].map(({ label, used, max }) => (
-              <div key={label}>
-                <div className="flex items-center justify-between text-[11px] mb-0.5">
-                  <span className="text-slate-400">{label}</span>
-                  <span className={used >= max ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{used}/{max}</span>
-                </div>
-                <ProgressBar value={used} max={max} color={used >= max ? 'yellow' : 'primary'} height="h-1" />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Presupuesto de voz (transcripción + podcasts) -- SOLO Pro. Un Free
-          nunca se acerca a este tope de verdad (le para antes el límite de
-          minutos, mucho más bajo), así que mostrárselo sería ruido/confusión
-          sin ningún uso real. Nunca se muestra en euros, solo el % ya
-          calculado por el backend. */}
-      {planTier === 'pro' && usage?.voice_budget && (
-        <div className="hidden lg:block px-3 py-3 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1.5">{t('sidebar.usage.voiceCycle')}</p>
-          <div className="space-y-1.5">
-            {[
-              { label: '🎙️ ' + t('sidebar.usage.transcription'), b: usage.voice_budget.transcription },
-              { label: '📄 ' + t('sidebar.usage.scan'), b: usage.voice_budget.scan },
-              { label: '🎧 ' + t('sidebar.usage.podcasts'), b: usage.voice_budget.podcast },
-            ].map(({ label, b }) => {
-              const pct = b?.spent_pct ?? 0
-              return (
-                <div key={label}>
-                  <div className="flex items-center justify-between text-[11px] mb-0.5">
-                    <span className="text-slate-400">{label}</span>
-                    <span className={pct >= 90 ? 'text-amber-400 font-semibold' : 'text-slate-400'}>{pct}%</span>
-                  </div>
-                  <ProgressBar value={pct} max={100} color={pct >= 90 ? 'yellow' : 'primary'} height="h-1" />
-                  {b?.bono_left > 0 && (
-                    <p className="text-[10px] text-primary-400 mt-0.5">{t('sidebar.usage.bonusLeft', { n: b.bono_left, unit: b.bono_unit })}</p>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-          {/* El saldo de bono solo caduca si la cuenta deja de ser Pro, y aun
-              entonces hay 30 dias para gastarlo. Mientras exista esa cuenta
-              atras hay que decirlo aqui: un saldo pagado que desaparece sin
-              haberse mostrado nunca no es defendible. */}
-          {usage.bono_expires_at && (
-            <p className="text-[11px] text-amber-400 mt-2">
-              {t('sidebar.usage.bonusExpires', { date: new Date(usage.bono_expires_at).toLocaleDateString() })}
-            </p>
-          )}
-          {(usage.voice_budget.transcription?.spent_pct >= 90 || usage.voice_budget.scan?.spent_pct >= 90 || usage.voice_budget.podcast?.spent_pct >= 90) && (
-            <p className="text-[11px] text-amber-400 mt-2">
-              {t('sidebar.usage.voiceLow')}{' '}
-              <a href="mailto:soporte@mystudyai.eu" className="underline hover:text-amber-300">{t('sidebar.usage.writeUs')}</a> {t('sidebar.usage.toExtend')}
-            </p>
-          )}
-        </div>
-      )}
+      {/* El uso del ciclo (plan Free y presupuesto de voz Pro) vive solo en
+          Inicio: aquí duplicaba y cargaba el menú. */}
 
       {/* Objetivo diario de estudio */}
       <div className="px-3 py-3 border-t border-slate-800">
-        <div className="hidden lg:block">
+        <div className={`${L}`}>
           <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">{t('sidebar.today')}</p>
           <p className="text-sm font-semibold text-emerald-400 mb-1.5">
             {todayStudyMinutes} / {dailyGoalMinutes} min
@@ -235,7 +173,7 @@ export default function Sidebar() {
       {/* Botón Cerrar sesión */}
       {user && (
         <div className="px-2 py-2 border-t border-slate-800">
-          <p className="hidden lg:block text-[10px] text-slate-600 truncate px-2 mb-1">
+          <p className={`${L} text-[10px] text-slate-600 truncate px-2 mb-1`}>
             {displayName || user.email}
           </p>
           <button
@@ -244,16 +182,16 @@ export default function Sidebar() {
                        text-slate-500 hover:bg-red-900/30 hover:text-red-400 transition-all duration-150"
           >
             <span className="shrink-0 w-6 flex items-center justify-center"><IconLogout size={18} stroke={1.8} /></span>
-            <span className="hidden lg:block truncate">{t('sidebar.signOut')}</span>
-            <span className="
+            <span className={`${L} truncate`}>{t('sidebar.signOut')}</span>
+            <span className={`
               pointer-events-none absolute left-full ml-3 top-1/2 -translate-y-1/2
               px-2.5 py-1.5 rounded-lg
               bg-slate-800 border border-slate-600 shadow-xl
               text-xs text-slate-100 whitespace-nowrap
               opacity-0 group-hover:opacity-100
               transition-opacity duration-150
-              z-50 lg:hidden
-            ">
+              z-50 ${TIP}
+            `}>
               {t('sidebar.signOut')}
             </span>
           </button>

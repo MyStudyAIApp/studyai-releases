@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
-import MobileBottomNav from './MobileBottomNav'
 import TitleBar from './TitleBar'
 import { useAppStore, IS_WEB, IS_MOBILE, api } from '../../store/appStore'
 import BackendBanner from './BackendBanner'
@@ -36,9 +35,36 @@ export default function Layout() {
     api('GET', '/usage/summary').then(data => setPlanTier(data.tier)).catch(() => {})
   }, [backendReady, authLoading])
 
+  // En móvil el menú es un cajón lateral que se esconde (sustituye a la barra
+  // inferior): se abre con ☰ o deslizando el dedo desde el borde izquierdo, y
+  // se cierra tocando fuera, deslizando hacia la izquierda o al elegir sección.
+  const [menu, setMenu] = useState(false)
+  useEffect(() => {
+    if (!isMobileWeb) return
+    let x0 = null
+    const inicio = (e) => { const x = e.touches[0].clientX; x0 = x < 24 ? x : null }
+    const mover = (e) => { if (x0 !== null && e.touches[0].clientX - x0 > 60) { setMenu(true); x0 = null } }
+    window.addEventListener('touchstart', inicio, { passive: true })
+    window.addEventListener('touchmove', mover, { passive: true })
+    // "Ver tutoriales" (cartel de bienvenida, Ajustes) abre el cajón con el desplegable
+    const abrir = () => setMenu(true)
+    window.addEventListener('studyai:open-tutorials', abrir)
+    return () => {
+      window.removeEventListener('touchstart', inicio); window.removeEventListener('touchmove', mover)
+      window.removeEventListener('studyai:open-tutorials', abrir)
+    }
+  }, [isMobileWeb])
+  const cerrarDeslizando = (() => {
+    let x0 = null
+    return {
+      onTouchStart: (e) => { x0 = e.touches[0].clientX },
+      onTouchMove: (e) => { if (x0 !== null && x0 - e.touches[0].clientX > 60) { setMenu(false); x0 = null } },
+    }
+  })()
+
   return (
     <div className="flex flex-col h-screen h-dvh overflow-hidden">
-      <TitleBar />
+      <TitleBar onMenu={isMobileWeb ? () => setMenu(true) : null} />
       {!backendReady && <BackendBanner />}
       <div className="flex flex-1 min-h-0 overflow-hidden">
         {!isMobileWeb && <Sidebar />}
@@ -46,7 +72,16 @@ export default function Layout() {
           <Outlet />
         </main>
       </div>
-      {isMobileWeb && <MobileBottomNav />}
+      {isMobileWeb && (
+        <div className={`fixed inset-0 z-[60] ${menu ? '' : 'pointer-events-none'}`} {...cerrarDeslizando}>
+          <div onClick={() => setMenu(false)}
+               className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${menu ? 'opacity-100' : 'opacity-0'}`} />
+          <div className={`absolute inset-y-0 left-0 shadow-2xl transition-transform duration-300 ease-out ${menu ? 'translate-x-0' : '-translate-x-full'}`}
+               style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+            <Sidebar cajon alNavegar={() => setMenu(false)} />
+          </div>
+        </div>
+      )}
       <QuotaExceededModal />
       <AnnouncementModal />
       <OwlWelcome />

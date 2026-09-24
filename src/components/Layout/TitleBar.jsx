@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next'
+import { IconMenu2 } from '@tabler/icons-react'
 import Logo from '../UI/Logo'
 import PlanBadge from '../UI/PlanBadge'
 import { useAuth } from '../../contexts/AuthContext'
 
-export default function TitleBar() {
+// onMenu: en móvil, botón ☰ que abre el cajón lateral (ver Layout.jsx)
+export default function TitleBar({ onMenu }) {
   const { t } = useTranslation()
   const isElectron = !!window.electron
   const { user } = useAuth()
@@ -17,6 +19,12 @@ export default function TitleBar() {
     <div className="titlebar-drag h-10 bg-slate-950 border-b border-slate-800 flex items-center px-4 shrink-0 select-none">
       {/* Logo — izquierda */}
       <div className="flex items-center gap-2 flex-1 min-w-0">
+        {onMenu && (
+          <button onClick={onMenu} aria-label={t('sidebar.more')}
+                  className="-ml-2 mr-1 p-2 text-slate-300 active:text-white">
+            <IconMenu2 size={22} />
+          </button>
+        )}
         <Logo size="md" />
         <PlanBadge />
       </div>

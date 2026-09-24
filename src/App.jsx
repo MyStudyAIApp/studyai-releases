@@ -176,9 +176,8 @@ function AppInner() {
   function goToTutorials() {
     localStorage.setItem('onboarding_done', '1')
     setShowWelcome(false)
-    // En la web están en la barra lateral; MyStudy App aún los tiene en Ajustes.
-    if (IS_MOBILE) navigate('/settings', { state: { openTutorials: true } })
-    else window.dispatchEvent(new Event('studyai:open-tutorials'))
+    // Están en el menú lateral (en móvil, el cajón se abre solo; ver Layout.jsx)
+    window.dispatchEvent(new Event('studyai:open-tutorials'))
   }
 
   useEffect(() => {

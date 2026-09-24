@@ -38,24 +38,6 @@ import {
 } from '@tabler/icons-react'
 import IconBadge from '../components/UI/IconBadge'
 
-// Mismo icono/color que en la barra lateral (Sidebar.jsx) para cada sección —
-// si cambian los iconos de la app, hay que actualizar este mapa también.
-const TUTORIAL_SECTION_ICONS = {
-  home:      { Icon: IconHome,        color: 'blue'   },
-  library:   { Icon: IconBooks,       color: 'purple' },
-  cuaderno:  { Icon: IconNotebook,    color: 'teal'   },
-  study:     { Icon: IconBrain,       color: 'green'  },
-  exam:      { Icon: IconFileText,    color: 'amber'  },
-  tutor:     { emoji: '🦉',           color: 'purple' },
-  languages: { Icon: IconWorld,       color: 'teal'   },
-  lecture:   { Icon: IconMicrophone2, color: 'pink'   },
-  solve:     { Icon: IconCalculator,  color: 'blue'   },
-  compare:   { Icon: IconScale,       color: 'purple' },
-  stats:     { Icon: IconChartBar,    color: 'green'  },
-  calendar:  { Icon: IconCalendar,    color: 'amber'  },
-  settings:  { Icon: IconSettings,    color: 'slate'  },
-}
-
 // ollamaRecommended se carga dinámicamente desde el backend (que a su vez
 // lo obtiene de GitHub o usa la lista embebida). Ver loadOllamaStatus().
 
@@ -94,12 +76,6 @@ const PODCAST_VOICE_GROUPS = [
       { value: 'fr-FR-HenriNeural',  label: 'Henri · Homme'  },
     ],
   },
-]
-
-// ── Orden de las secciones en "Tutoriales" (mismo orden que la barra lateral) ──
-const TUTORIAL_SECTION_KEYS = [
-  'home', 'library', 'cuaderno', 'study', 'exam', 'tutor', 'languages',
-  'lecture', 'solve', 'compare', 'stats', 'calendar', 'settings',
 ]
 
 const TTS_RATES = [
@@ -463,15 +439,6 @@ export default function SettingsPage() {
   const [exporting, setExporting]               = useState(false)
   const [resetting, setResetting]               = useState(false)
   const [showFeedback, setShowFeedback]         = useState(false)
-
-  // ── Abrir/desplegar "Tutoriales detallados" al llegar desde el cartel de bienvenida ──
-  const tutorialsRef = useRef(null)
-  const [tutorialsOpen, setTutorialsOpen] = useState(!!location.state?.openTutorials)
-  useEffect(() => {
-    if (location.state?.openTutorials && tutorialsRef.current) {
-      tutorialsRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }
-  }, [])
 
   // ── Borrar cuenta (permanente) ─────────────────────────────────────────
   const [showDeleteModal, setShowDeleteModal]   = useState(false)
@@ -1500,34 +1467,6 @@ export default function SettingsPage() {
       </div>
       <FeedbackModal open={showFeedback} onClose={() => setShowFeedback(false)} platform={IS_WEB ? 'web' : 'desktop'} />
 
-      {/* ── Tutoriales detallados por sección ──────────────────────────── */}
-      {/* En la web y el escritorio viven en la barra lateral (desplegable bajo
-          Ajustes). Aquí solo quedan para MyStudy App, que no tiene barra
-          lateral, hasta que se rediseñe la versión móvil. */}
-      {window.Capacitor?.isNativePlatform?.() && <div ref={tutorialsRef}>
-      <CollapsibleCard
-        title={t('settings.tutorials.cardTitle')}
-        subtitle={t('settings.tutorials.cardSubtitle')}
-        defaultOpen={tutorialsOpen}
-      >
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {/* El cuaderno se oculta igual que en la barra lateral: si algún día
-              vuelve a estar en pruebas, su tutorial no puede quedarse a la
-              vista enseñando una pantalla que el alumno no tiene. */}
-          {TUTORIAL_SECTION_KEYS.filter(k => k !== 'cuaderno' || verFuncion('cuaderno', user)).map(key => (
-            <button
-              key={key}
-              onClick={() => window.dispatchEvent(new CustomEvent('studyai:show-onboarding', { detail: { section: key } }))}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-slate-800/60 border border-slate-700 hover:border-primary-600 hover:bg-slate-800 transition-colors text-left"
-            >
-              <IconBadge icon={TUTORIAL_SECTION_ICONS[key]?.Icon} emoji={TUTORIAL_SECTION_ICONS[key]?.emoji} color={TUTORIAL_SECTION_ICONS[key]?.color} size="sm" />
-              <span className="text-sm text-slate-200 truncate">{t(`settings.tutorials.sections.${key}.label`)}</span>
-            </button>
-          ))}
-        </div>
-      </CollapsibleCard>
-      </div>}
-
       {/* ── Acerca de ────────────────────────────────────────────────── */}
       <CollapsibleCard title={t('settings.about.title')} defaultOpen={false}>
         <p className="text-sm text-slate-400">{t('settings.about.version')}</p>
@@ -1537,10 +1476,7 @@ export default function SettingsPage() {
         {IS_ELECTRON && <UpdateChecker />}
 
         <button
-          onClick={() => {
-            setTutorialsOpen(true)
-            tutorialsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-          }}
+          onClick={() => window.dispatchEvent(new Event('studyai:open-tutorials'))}
           className="mt-2 flex items-center gap-2 px-4 py-2 rounded-xl border border-primary-700/50 bg-primary-900/20 hover:bg-primary-800/30 text-primary-300 text-sm font-medium transition-colors"
         >
           {t('settings.about.tutorial')}
