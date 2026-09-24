@@ -1,7 +1,8 @@
 import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useAppStore, api, apiUpload, IS_MOBILE, IS_WEB } from '../store/appStore'
+import { useAppStore, api, apiUpload, IS_MOBILE, IS_WEB, UPLOAD_TIMEOUT_OCR_MS } from '../store/appStore'
+import { escanearPaginas } from '../lib/escanerDocumentos'
 import Spinner from '../components/UI/Spinner'
 import Modal from '../components/UI/Modal'
 import CanariasPromptModal from '../components/UI/CanariasPromptModal'
@@ -198,7 +199,19 @@ export default function Home() {
   // archivo" los archivos. En el ordenador no hay cámara que abrir: un botón.
   const conCamara = IS_MOBILE || window.matchMedia?.('(pointer: coarse)').matches
   function openFilePicker() { fileInputRef.current.click() }
-  function openImagePicker() { imageInputRef.current.click() }
+  // En MyStudy App, "Hacer foto" abre el escáner de documentos de Google (el
+  // mismo de Scan: bordes, perspectiva y contraste). En la web, la cámara.
+  async function openImagePicker() {
+    try {
+      const paginas = await escanearPaginas()
+      if (paginas === null) return imageInputRef.current.click()
+      if (!paginas.length) return
+      paginas.escaneo = true   // varias páginas = UN documento (ver confirmImageUpload)
+      handleImagesSelected(paginas)
+    } catch {
+      imageInputRef.current.click()
+    }
+  }
 
   function handleFilesSelected(files) {
     if (!files.length) return
@@ -295,17 +308,26 @@ export default function Home() {
     if (!pendingImages?.length) return
     setUploading(true)
     let lastDocId = null
+    // Las páginas de un mismo escaneo se suman a un solo documento, como en
+    // Scan; y su foto no se guarda en el servidor (solo el texto).
+    const escaneo = !!pendingImages.escaneo
     for (const file of pendingImages) {
       const fd = new FormData()
       fd.append('file', file)
+      if (escaneo) {
+        fd.append('store_original', 'false')
+        if (lastDocId) fd.append('document_id', lastDocId)
+      }
       if (selectedTopic) fd.append('topic_id', selectedTopic)
       else if (selectedSubject) fd.append('subject_id', selectedSubject)
       fd.append('content_type', 'handwritten')  // foto suelta: más probable que sea letra manuscrita
       try {
-        const doc = await apiUpload('/documents/upload-image', fd)
-        lastDocId = doc.id
+        const doc = await apiUpload('/documents/upload-image', fd, null, UPLOAD_TIMEOUT_OCR_MS)
+        lastDocId = doc.id || lastDocId
         const chars = doc.char_count || 0
-        addToast(`"${doc.title}" — ${chars} ${t('home.photoModal.extracted')}`, 'success')
+        if (!escaneo || file === pendingImages[pendingImages.length - 1]) {
+          addToast(`"${doc.title}" — ${chars} ${t('home.photoModal.extracted')}`, 'success')
+        }
       } catch (e) {
         addToast(`${t('home.photoModal.imageError')}: ${e.message}`, 'error')
       }

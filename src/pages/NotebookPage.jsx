@@ -9,6 +9,7 @@ import rehypeKatex from 'rehype-katex'
 import 'katex/dist/katex.min.css'
 import katex from 'katex'
 import { api, apiUpload, useAppStore, UPLOAD_TIMEOUT_OCR_MS } from '../store/appStore'
+import { escanearPaginas } from '../lib/escanerDocumentos'
 import { prepararTexto, resolverDuda, contarDudas, transformarUrl } from '../lib/dudas'
 import { textoAHtml, htmlATexto } from '../lib/formato'
 import DudaModal from '../components/DudaModal'
@@ -131,25 +132,29 @@ export default function NotebookPage() {
   const subir = async (e) => {
     const file = e.target.files?.[0]
     e.target.value = ''                       // permite repetir la misma foto
-    if (!file) return
+    if (file) await subirPaginas([file])
+  }
+
+  // En MyStudy App se usa el escáner de documentos de Google (el mismo de
+  // Scan); en la web, el selector/cámara del navegador.
+  const hacerFoto = async () => {
+    try {
+      const paginas = await escanearPaginas()
+      if (paginas === null) return fileRef.current?.click()
+      if (paginas.length) await subirPaginas(paginas)
+    } catch {
+      fileRef.current?.click()
+    }
+  }
+
+  // Cada página se suma al cuaderno de hoy (el servidor las junta por fecha).
+  const subirPaginas = async (files) => {
     if (!subjectId) return addToast('Elige la asignatura antes de escanear', 'info')
 
     setSubiendo(true)
     try {
-      const form = new FormData()
-      form.append('file', file)
-      if (topicId) form.append('topic_id', topicId)
-      else form.append('subject_id', subjectId)
-      form.append('content_type', 'handwritten')
-
-      const r = await apiUpload('/notebooks/append', form, null, UPLOAD_TIMEOUT_OCR_MS)
-      addToast(
-        r.created
-          ? i18n.t('notebook.created', { name: r.title.replace('[Cuaderno] ', '') })
-          : i18n.t('notebook.added', { name: r.title.replace('[Cuaderno] ', '') }),
-        'success',
-      )
-      setEntradas(prev => ({ ...prev, [r.notebook_id]: null }))   // forzar recarga
+      for (const file of files) await subirUna(file)
+      setEntradas({})   // forzar recarga
       await cargar()
     } catch (err) {
       // 403 con quota_exceeded lo traduce el interceptor de appStore; aqui solo
@@ -158,6 +163,22 @@ export default function NotebookPage() {
     } finally {
       setSubiendo(false)
     }
+  }
+
+  const subirUna = async (file) => {
+    const form = new FormData()
+    form.append('file', file)
+    if (topicId) form.append('topic_id', topicId)
+    else form.append('subject_id', subjectId)
+    form.append('content_type', 'handwritten')
+
+    const r = await apiUpload('/notebooks/append', form, null, UPLOAD_TIMEOUT_OCR_MS)
+    addToast(
+      r.created
+        ? i18n.t('notebook.created', { name: r.title.replace('[Cuaderno] ', '') })
+        : i18n.t('notebook.added', { name: r.title.replace('[Cuaderno] ', '') }),
+      'success',
+    )
   }
 
   const recargarEntradas = async (id) => {
@@ -365,7 +386,7 @@ export default function NotebookPage() {
           className="hidden"
         />
         <button
-          onClick={() => fileRef.current?.click()}
+          onClick={hacerFoto}
           disabled={subiendo || !subjectId}
           className="w-full flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-500
                      disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold
