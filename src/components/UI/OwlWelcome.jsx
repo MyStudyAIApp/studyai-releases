@@ -4,7 +4,8 @@ import { IconX, IconSend } from '@tabler/icons-react'
 import { api } from '../../store/appStore'
 import { useAuth } from '../../contexts/AuthContext'
 
-// El buho vive siempre abajo a la derecha. La primera vez pregunta "¿como nos
+// El buho vive en el borde derecho, a media altura (abajo tapaba botones de
+// enviar/guardar en el movil), medio escondido como una lengueta. La primera vez pregunta "¿como nos
 // has conocido?" (botones y no texto libre: un toque y los datos salen limpios
 // para /admin). Cerrar con la X se guarda como 'skip' para no volver a
 // preguntar en ningun dispositivo. Despues, tocar al buho abre la ayuda.
@@ -37,7 +38,7 @@ export function OwlToggle({ className = '' }) {
   )
 }
 
-export default function OwlWelcome({ encimaDeTabBar = false }) {
+export default function OwlWelcome() {
   const { t, i18n } = useTranslation()
   const { user } = useAuth()
   const [fase, setFase] = useState(null)      // null | 'pregunta' | 'otro' | 'gracias' | 'ayuda'
@@ -51,6 +52,9 @@ export default function OwlWelcome({ encimaDeTabBar = false }) {
   const [pensando, setPensando] = useState(false)
   const [quedan, setQuedan] = useState(null)
   const finChat = useRef(null)
+  // Al montar entra deslizandose desde fuera de la pantalla hasta su sitio.
+  const [dentro, setDentro] = useState(false)
+  useEffect(() => { const id = setTimeout(() => setDentro(true), 600); return () => clearTimeout(id) }, [])
 
   useEffect(() => { finChat.current?.scrollIntoView({ block: 'end' }) }, [chat, pensando])
 
@@ -109,10 +113,10 @@ export default function OwlWelcome({ encimaDeTabBar = false }) {
   // cabeza. Azul claro a proposito, distinto del fondo oscuro de la web, para
   // que se vea que es una conversacion y no un aviso mas.
   return (
-    <div className={`fixed right-3 ${encimaDeTabBar ? 'bottom-24 md:bottom-4' : 'bottom-4'} z-50 flex flex-col items-end gap-3 no-print`}>
+    <div className="fixed right-0 z-50 flex flex-col items-end gap-3 no-print pointer-events-none" style={{ bottom: '35%' }}>
       {fase && (
         <div className={`relative ${fase === 'ayuda' ? 'w-[min(22rem,calc(100vw-1.5rem))]' : 'w-[min(18rem,calc(100vw-1.5rem))]'} bg-sky-100 text-slate-900
-                        rounded-2xl shadow-2xl p-3.5 mr-1`}>
+                        rounded-2xl shadow-2xl p-3.5 mr-3 pointer-events-auto`}>
           <span className="absolute right-5 -bottom-2 w-4 h-4 bg-sky-100 rotate-45 rounded-sm" aria-hidden />
 
           <div className="relative flex items-start gap-2">
@@ -144,7 +148,7 @@ export default function OwlWelcome({ encimaDeTabBar = false }) {
           {fase === 'ayuda' && (
             <div className="relative mt-3">
               {chat.length > 0 && (
-                <div className="max-h-[50vh] overflow-y-auto flex flex-col gap-2 mb-3 pr-1">
+                <div className="max-h-[35vh] overflow-y-auto flex flex-col gap-2 mb-3 pr-1">
                   {chat.map((m, i) => (
                     <div key={i}
                          className={`text-sm leading-snug rounded-xl px-3 py-2 whitespace-pre-wrap ${
@@ -194,10 +198,14 @@ export default function OwlWelcome({ encimaDeTabBar = false }) {
       )}
 
       <button onClick={tocarBuho} aria-label={t('owl.open')}
-              // En reposo, pequeno y medio transparente para no tapar nada; se
-              // ve entero al pasar por encima o con el bocadillo abierto.
-              className={`inline-flex items-center justify-center rounded-full bg-sky-100 shadow-2xl
-                          transition-all ${fase ? 'w-14 h-14' : 'w-10 h-10 opacity-60 hover:opacity-100'}`}
+              // En reposo, medio escondido en el borde y medio transparente;
+              // con el bocadillo abierto se desliza hacia dentro y se ve entero.
+              // Todo con transicion lenta: que se vea deslizarse, no saltar.
+              className={`pointer-events-auto inline-flex items-center justify-center rounded-full bg-sky-100 shadow-2xl
+                          transition-all duration-700 ease-in-out
+                          ${!dentro ? 'w-10 h-10 translate-x-full opacity-0'
+                            : fase ? 'w-14 h-14 mr-3 translate-x-0'
+                            : 'w-10 h-10 translate-x-1/2 opacity-60 hover:opacity-100 hover:translate-x-1/4'}`}
               style={{ fontSize: fase ? 32 : 22, lineHeight: 1 }}>
         🦉
       </button>

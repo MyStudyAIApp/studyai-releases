@@ -71,7 +71,7 @@ export default function MobileApp() {
       </div>
       <QuotaExceededModal />
       <AnnouncementModal />
-      <OwlWelcome encimaDeTabBar />
+      <OwlWelcome />
     </div>
   )
 }
