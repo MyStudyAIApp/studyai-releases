@@ -1890,7 +1890,9 @@
       "notNow": "Jetzt nicht"
     },
     "fixError": "Korrektur konnte nicht gespeichert werden",
-    "last": "letzte"
+    "last": "letzte",
+    "generalSubject": "Allgemein",
+    "sampleError": "Das Beispiel konnte nicht erstellt werden"
   },
   "solver": {
     "intro": "Lade ein Foto oder PDF hoch, oder mache ein Foto von einer Aufgabe, und wir lösen sie Schritt für Schritt für dich.",
@@ -2183,7 +2185,13 @@
   "welcome": {
     "title": "Willkommen bei MyStudy AI!",
     "body1": "Verwandle deine Notizen in Zusammenfassungen, Prüfungen, Flashcards und vieles mehr.",
-    "body2": "Wenn du eine Frage zu einem bestimmten Abschnitt hast, findest du unter Einstellungen → 📖 Detaillierte Tutorials eine geführte Tour, die sich nur auf diesen Bildschirm konzentriert."
+    "body2": "Wenn du eine Frage zu einem bestimmten Abschnitt hast, findest du unter Einstellungen → 📖 Detaillierte Tutorials eine geführte Tour, die sich nur auf diesen Bildschirm konzentriert.",
+    "scanCta": "📸 Scanne deine erste Seite",
+    "scanHint": "Fotografiere deine Notizen und erhalte sie im Handumdrehen sauber aufbereitet.",
+    "tutorials": "Tutorials ansehen",
+    "later": "Jetzt nicht",
+    "sampleCta": "✨ Mit einem Beispiel testen",
+    "sampleHint": "Keine Notizen zur Hand? Wir legen Beispielnotizen an, damit du Zusammenfassung, Karteikarten und Test ausprobieren kannst. Du kannst sie jederzeit löschen."
   },
   "emailWarn": {
     "title": "E-Mail-Benachrichtigungen 3 Tage bevor ein PDF oder eine Übung gelöscht wird",

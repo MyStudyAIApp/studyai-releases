@@ -12,17 +12,17 @@ import {
 // Barra inferior para MyStudy App (web cargada en móvil) — el Sidebar de
 // escritorio (columna fija de iconos) no cabe bien en pantallas estrechas.
 // label = clave de sidebar.* en i18n.
-// Solo las 4 secciones más usadas van fijas abajo; el resto vive en "Más".
+// Solo las 5 secciones más usadas van fijas abajo; el resto vive en "Más".
 const PRIMARY = [
   { to: '/home',    Icon: IconHome,  label: 'home' },
   { to: '/library', Icon: IconBooks, label: 'library' },
+  { to: '/cuaderno', Icon: IconNotebook, label: 'notebook' },
   { to: '/study',   Icon: IconBrain, label: 'study' },
   { to: '/exam',    Icon: IconFileText, label: 'exam' },
 ]
 
 const MORE_ITEMS = [
   // 'beta' = solo se pinta si lib/betaFlags deja ver esa funcion a este usuario
-  { to: '/cuaderno',  Icon: IconNotebook,    label: 'notebook', beta: 'cuaderno' },
   { to: '/tutor',     emoji: '🦉', label: 'tutor' },
   { to: '/languages', Icon: IconWorld,       label: 'languages' },
   { to: '/lecture',   Icon: IconMicrophone2, label: 'lecture' },

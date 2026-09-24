@@ -1890,7 +1890,9 @@
       "notNow": "Not now"
     },
     "fixError": "Couldn't save correction",
-    "last": "last"
+    "last": "last",
+    "generalSubject": "General",
+    "sampleError": "Could not create the sample"
   },
   "solver": {
     "intro": "Upload a photo, a PDF, or take a picture of an exercise and we'll solve it step-by-step.",
@@ -2183,7 +2185,13 @@
   "welcome": {
     "title": "Welcome to MyStudy AI!",
     "body1": "Turn your notes into summaries, quizzes, flashcards, and much more.",
-    "body2": "If you have a question about a specific section, in Settings → 📖 Detailed tutorials you'll find a guided tour focused only on that screen."
+    "body2": "If you have a question about a specific section, in Settings → 📖 Detailed tutorials you'll find a guided tour focused only on that screen.",
+    "scanCta": "📸 Scan your first page",
+    "scanHint": "Take a photo of your notes and get them neatly written up in moments.",
+    "tutorials": "See tutorials",
+    "later": "Not now",
+    "sampleCta": "✨ Try a sample",
+    "sampleHint": "No notes at hand? We’ll add sample notes so you can try summaries, flashcards and quizzes. Delete them anytime."
   },
   "emailWarn": {
     "title": "Email notifications 3 days before a PDF or exercise is deleted",

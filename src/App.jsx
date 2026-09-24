@@ -150,6 +150,16 @@ function AppInner() {
     localStorage.setItem('onboarding_done', '1')
     setShowWelcome(false)
   }
+  function goToScan() {
+    localStorage.setItem('onboarding_done', '1')
+    setShowWelcome(false)
+    navigate('/cuaderno')
+  }
+  function goToSample() {
+    localStorage.setItem('onboarding_done', '1')
+    setShowWelcome(false)
+    navigate('/cuaderno', { state: { ejemplo: true } })
+  }
   function goToTutorials() {
     localStorage.setItem('onboarding_done', '1')
     setShowWelcome(false)
@@ -332,7 +342,7 @@ function AppInner() {
       </Routes>
 
       {showWelcome && backendReady && !!user && (
-        <WelcomeCard onGo={goToTutorials} onClose={dismissWelcome} />
+        <WelcomeCard onScan={goToScan} onSample={goToSample} onGo={goToTutorials} onClose={dismissWelcome} />
       )}
       {!showWelcome && onboardingSection && backendReady && !!user && (
         <OnboardingTutorial

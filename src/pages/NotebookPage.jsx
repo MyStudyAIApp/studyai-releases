@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import i18n from '../i18n'
 import { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import ReactMarkdown, { defaultUrlTransform } from 'react-markdown'
 import remarkMath from 'remark-math'
 import remarkGfm from 'remark-gfm'
@@ -51,12 +51,23 @@ export default function NotebookPage() {
   const [editando, setEditando] = useState(null)
   const { addToast } = useAppStore()
   const navigate = useNavigate()
+  const location = useLocation()
+  const [creandoEjemplo, setCreandoEjemplo] = useState(false)
 
   const cargar = async () => {
     try {
       const [nb, subj] = await Promise.all([api('GET', '/notebooks'), api('GET', '/subjects')])
       setCuadernos(nb.items || [])
-      setSubjects(subj.items || [])
+      let lista = subj.items || []
+      // Usuario nuevo sin asignaturas: se le crea "General" para que pueda
+      // hacer la foto ya, sin tener que descubrir antes el "+".
+      if (lista.length === 0) {
+        try {
+          lista = [await api('POST', '/subjects', { name: i18n.t('notebook.generalSubject'), color: '#6366f1' })]
+        } catch { /* sin asignatura se queda como antes: la crea a mano */ }
+      }
+      setSubjects(lista)
+      if (lista.length === 1) setSubjectId(lista[0].id)
     } catch {
       addToast('No se pudieron cargar tus cuadernos', 'error')
     } finally {
@@ -65,6 +76,22 @@ export default function NotebookPage() {
   }
 
   useEffect(() => { cargar() }, [])
+
+  // Copia en su cuenta el cuaderno de ejemplo y lo abre. Llega aqui desde el
+  // cartel de bienvenida (state.ejemplo) o desde el cuaderno vacio.
+  const probarEjemplo = async () => {
+    setCreandoEjemplo(true)
+    try {
+      const r = await api('POST', '/notebooks/sample')
+      navigate(`/document/${r.notebook_id}`)
+    } catch {
+      addToast(i18n.t('notebook.sampleError'), 'error')
+      setCreandoEjemplo(false)
+    }
+  }
+  useEffect(() => {
+    if (location.state?.ejemplo) probarEjemplo()
+  }, [])
 
   // Los temas dependen de la asignatura elegida — mismo comportamiento que en
   // la Biblioteca y en el escaner del movil.
@@ -364,6 +391,10 @@ export default function NotebookPage() {
         <div className="text-center py-12 text-slate-500">
           <IconNotebook size={40} className="mx-auto mb-3 opacity-30" />
           <p className="text-sm">{i18n.t('notebook.empty')}</p>
+          <button onClick={probarEjemplo} disabled={creandoEjemplo}
+            className="mt-4 px-4 py-2 rounded-xl bg-slate-800 border border-slate-600 hover:border-primary-500 text-slate-200 text-sm font-semibold disabled:opacity-50">
+            {creandoEjemplo ? <IconLoader2 size={16} className="inline animate-spin" /> : i18n.t('welcome.sampleCta')}
+          </button>
         </div>
       ) : (
         Object.entries(porAsignatura).map(([asignatura, lista]) => (

@@ -1890,7 +1890,9 @@
       "notNow": "Pas maintenant"
     },
     "fixError": "Impossible d'enregistrer la correction",
-    "last": "dernier"
+    "last": "dernier",
+    "generalSubject": "Général",
+    "sampleError": "Impossible de créer l’exemple"
   },
   "solver": {
     "intro": "Télécharge une photo, un PDF, ou prends une photo d'un exercice et nous le résoudrons étape par étape.",
@@ -2183,7 +2185,13 @@
   "welcome": {
     "title": "Bienvenue sur MyStudy AI !",
     "body1": "Transforme tes notes en résumés, examens, flashcards et bien plus encore.",
-    "body2": "Si tu as une question sur une section spécifique, dans Paramètres → 📖 Tutoriels détaillés, tu trouveras un guide ciblé sur cet écran."
+    "body2": "Si tu as une question sur une section spécifique, dans Paramètres → 📖 Tutoriels détaillés, tu trouveras un guide ciblé sur cet écran.",
+    "scanCta": "📸 Scanne ta première page",
+    "scanHint": "Prends tes notes en photo et retrouve-les mises au propre en un instant.",
+    "tutorials": "Voir les tutoriels",
+    "later": "Plus tard",
+    "sampleCta": "✨ Essayer avec un exemple",
+    "sampleHint": "Pas de notes sous la main ? On t’ajoute des notes d’exemple pour tester résumé, fiches et contrôle. Tu peux les supprimer quand tu veux."
   },
   "emailWarn": {
     "title": "Notifications par e-mail 3 jours avant la suppression d'un PDF ou d'un exercice",

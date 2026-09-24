@@ -1890,7 +1890,9 @@
       "notNow": "Ahora no"
     },
     "fixError": "No se pudo guardar la corrección",
-    "last": "último"
+    "last": "último",
+    "generalSubject": "General",
+    "sampleError": "No se pudo crear el ejemplo"
   },
   "solver": {
     "intro": "Sube una foto, un PDF, o haz una foto de un ejercicio y te lo resolvemos paso a paso.",
@@ -2183,7 +2185,13 @@
   "welcome": {
     "title": "¡Bienvenido a MyStudy AI!",
     "body1": "Convierte tus apuntes en resúmenes, exámenes, flashcards y mucho más.",
-    "body2": "Cuando tengas una duda sobre una sección concreta, en Ajustes → 📖 Tutoriales detallados tienes un recorrido guiado centrado solo en esa pantalla."
+    "body2": "Cuando tengas una duda sobre una sección concreta, en Ajustes → 📖 Tutoriales detallados tienes un recorrido guiado centrado solo en esa pantalla.",
+    "scanCta": "📸 Escanea tu primera página",
+    "scanHint": "Haz una foto a tus apuntes y en un momento los tendrás pasados a limpio.",
+    "tutorials": "Ver tutoriales",
+    "later": "Ahora no",
+    "sampleCta": "✨ Prueba con un ejemplo",
+    "sampleHint": "¿Sin apuntes a mano? Te dejamos unos de ejemplo para probar resumen, fichas y examen. Puedes borrarlos cuando quieras."
   },
   "emailWarn": {
     "title": "Avisos por email 3 días antes de que se borre un PDF o un ejercicio",
