@@ -1327,7 +1327,7 @@ export default function SettingsPage() {
       </CollapsibleCard>
 
       {/* ── Avisos de examen ─────────────────────────────────────────── */}
-      <CollapsibleCard icon="🔔" title={t('settings.notifications.title')} defaultOpen={false}>
+      <CollapsibleCard icon="🔔" title={window.Capacitor?.isNativePlatform?.() ? t('avisos.ajustesTitulo') : t('settings.notifications.title')} defaultOpen={false}>
         <AvisosEstudioAjustes />
         {window.Capacitor?.isNativePlatform?.() ? null : IS_WEB && !isPushSupported() ? (
           <p className="text-sm text-slate-500">{t('settings.notifications.unsupported')}</p>

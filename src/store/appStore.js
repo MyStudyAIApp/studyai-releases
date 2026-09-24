@@ -20,7 +20,7 @@ export async function detectIsFullMobileApp() {
   try {
     const { App } = await import('@capacitor/app')
     const info = await App.getInfo()
-    return info.id === MYSTUDY_APP_FULL_ID
+    return info.id.startsWith(MYSTUDY_APP_FULL_ID)   // también la de pruebas (.debug)
   } catch {
     return false  // si falla la detección, por seguridad se trata como Scan (la versión reducida)
   }

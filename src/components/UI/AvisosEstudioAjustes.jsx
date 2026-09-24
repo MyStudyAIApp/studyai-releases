@@ -17,7 +17,6 @@ export default function AvisosEstudioAjustes() {
 
   return (
     <div className="space-y-3">
-      <p className="text-sm font-medium text-slate-200">{t('avisos.ajustesTitulo')}</p>
       {TIPOS.map(tipo => (
         <button key={tipo} onClick={() => cambiar(tipo)}
                 className="w-full flex items-center justify-between gap-3 text-left">

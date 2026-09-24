@@ -47,7 +47,8 @@ export function guardarTipo(tipo, activo) {
 
 // Lo llama el examen tipo test: al contestar la primera pregunta y al terminar.
 export function marcarExamenAMedias(doc) {
-  if (doc?.id) escribir(CLAVE_EXAMEN, { id: doc.id, titulo: doc.title || '' })
+  // Sin el prefijo interno de los cuadernos ("[Cuaderno] "), que no es para el alumno
+  if (doc?.id) escribir(CLAVE_EXAMEN, { id: doc.id, titulo: (doc.title || '').replace(/^\[[^\]]+\]\s*/, '') })
 }
 export function limpiarExamenAMedias() {
   try { localStorage.removeItem(CLAVE_EXAMEN) } catch {}
@@ -55,7 +56,9 @@ export function limpiarExamenAMedias() {
 
 async function plugin() {
   if (!window.Capacitor?.isNativePlatform?.()) return null
-  try { return (await import('@capacitor/local-notifications')).LocalNotifications } catch { return null }
+  // Envuelto en un objeto: devolver el plugin tal cual desde una async hace que
+  // JS le llame a .then() y Capacitor lanza "not implemented".
+  try { return { LN: (await import('@capacitor/local-notifications')).LocalNotifications } } catch { return null }
 }
 
 // Una sola vez por arranque: saber si abrieron la app tocando un aviso y
@@ -99,7 +102,7 @@ export function elegir(candidatos, disparados, ahora) {
 }
 
 export async function programarAvisos() {
-  const LN = await plugin()
+  const { LN } = (await plugin()) || {}
   if (!LN) return
   try {
     await escuchar(LN)
@@ -140,7 +143,8 @@ export async function programarAvisos() {
     const candidatos = []
     const examen = leer(CLAVE_EXAMEN, null)
     if (s.tipos.examen && examen) {
-      candidatos.push({ tipo: 'examen', at: aLas(hoy, 1, 17).getTime(),
+      // /exam/:id lleva al documento de ese examen, listo para hacerlo de nuevo
+      candidatos.push({ tipo: 'examen', ruta: `/exam/${examen.id}`, at: aLas(hoy, 1, 17).getTime(),
         title: i18n.t('avisos.examenTitulo'), body: i18n.t('avisos.examenTexto', { titulo: examen.titulo }) })
     }
     if (s.tipos.repaso) {
@@ -162,14 +166,20 @@ export async function programarAvisos() {
     }
 
     const elegidos = elegir(candidatos, s.disparados, ahora)
+    // Solo para probar en un móvil (se pone a mano por depuración): los avisos
+    // elegidos saltan dentro de 1, 2... minutos en vez de mañana.
+    if (localStorage.getItem('avisos_prueba') === '1') elegidos.forEach((e, i) => { e.at = ahora + (i + 1) * 60000 })
     if (elegidos.length) {
       await LN.schedule({ notifications: elegidos.map((e, i) => ({
         id: ID_BASE + i,
         title: e.title,
         body: e.body,
         schedule: { at: new Date(e.at), allowWhileIdle: true },
+        // Sin alarma exacta: si no, Android abre la pantalla "Alarmas y
+        // recordatorios" para pedir el permiso. Unos minutos de margen dan igual.
+        isExactNotification: false,
         channelId: CANAL,
-        extra: { ruta: RUTA[e.tipo] },
+        extra: { ruta: e.ruta || RUTA[e.tipo] },
       })) })
     }
     s.programados = elegidos.map((e, i) => ({ id: ID_BASE + i, at: e.at, tipo: e.tipo }))
