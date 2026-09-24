@@ -89,5 +89,11 @@
         <intent>
             <action android:name="android.speech.tts.engine.INSTALL_TTS_DATA" />
         </intent>
+        <!-- Botón "Hacer foto" (<input capture>): Capacitor pregunta si hay app
+             de cámara antes de abrirla. Sin esto, en Android 11+ la respuesta
+             es "no" y cae al selector de archivos (visto en la App el 25/9/2026). -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
     </queries>
 </manifest>
