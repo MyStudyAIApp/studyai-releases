@@ -1,5 +1,6 @@
 import i18n from '../i18n'
 import { api } from '../store/appStore'
+import { scheduleExamNotifications, cancelAllExamNotifications } from '../mobile/notificationService'
 
 // Avisos de estudio de MyStudy App (locales: se programan en el propio móvil,
 // sin servidor). Reglas acordadas el 23/9/2026:
@@ -18,7 +19,11 @@ const CLAVE_TOCADO = 'avisos_tocado'
 const CANAL = 'study-reminders'
 // Los recordatorios de fecha de examen del escáner usan 1000-8999.
 const ID_BASE = 9100
-export const TIPOS = ['repaso', 'examen', 'inactivo']
+export const TIPOS = ['calendario', 'repaso', 'examen', 'inactivo']
+// 'calendario' = fechas de examen apuntadas (1, 3 y 7 días antes, lo programa
+// mobile/notificationService). Va aparte: lo pide el propio alumno al apuntar
+// el examen, así que no cuenta para el límite ni se para por ignorados.
+const DE_ESTUDIO = ['repaso', 'examen', 'inactivo']
 const RUTA = { repaso: '/study', examen: '/exam', inactivo: '/home' }
 const DIA = 24 * 60 * 60 * 1000
 
@@ -28,7 +33,7 @@ const escribir = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)) } 
 function estado() {
   const s = leer(CLAVE, {})
   return {
-    tipos: { repaso: true, examen: true, inactivo: true, ...(s.tipos || {}) },
+    tipos: { calendario: true, repaso: true, examen: true, inactivo: true, ...(s.tipos || {}) },
     programados: s.programados || [],   // [{id, at, tipo}]
     disparados: s.disparados || [],     // marcas de tiempo de los que ya saltaron
     ignorados: s.ignorados || 0,
@@ -125,14 +130,28 @@ export async function programarAvisos() {
     if (nuestros.length) await LN.cancel({ notifications: nuestros.map(n => ({ id: n.id })) })
     s.programados = []
 
-    const algunoActivo = TIPOS.some(t => s.tipos[t])
-    if (!algunoActivo || s.ignorados >= 2) return escribir(CLAVE, s)
+    if (!TIPOS.some(t => s.tipos[t])) {
+      await cancelAllExamNotifications()
+      return escribir(CLAVE, s)
+    }
 
     let permiso = (await LN.checkPermissions()).display
     if (permiso === 'prompt' || permiso === 'prompt-with-rationale') {
       permiso = (await LN.requestPermissions()).display
     }
     if (permiso !== 'granted') return escribir(CLAVE, s)
+
+    // Fechas de examen: las lleva la App y se lo dice al servidor, para que
+    // MyStudy Scan no programe las suyas si también está instalada.
+    api('POST', '/me/avisos-app').catch(() => {})
+    if (s.tipos.calendario) {
+      const r = await api('GET', '/exams/reminders').catch(() => null)
+      if (r) await scheduleExamNotifications(r.items || [], { desdeApp: true })
+    } else {
+      await cancelAllExamNotifications()
+    }
+
+    if (!DE_ESTUDIO.some(t => s.tipos[t]) || s.ignorados >= 2) return escribir(CLAVE, s)
 
     await LN.createChannel?.({
       id: CANAL, name: i18n.t('avisos.canal'), importance: 3, vibration: true,

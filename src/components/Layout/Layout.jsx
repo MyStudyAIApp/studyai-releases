@@ -62,8 +62,10 @@ export default function Layout() {
     }
   })()
 
+  // Con viewport-fit=cover la página llega hasta abajo del todo en el móvil:
+  // el paddingBottom deja libre la barra de gestos de Android (en web vale 0).
   return (
-    <div className="flex flex-col h-screen h-dvh overflow-hidden">
+    <div className="flex flex-col h-screen h-dvh overflow-hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
       <TitleBar onMenu={isMobileWeb ? () => setMenu(true) : null} />
       {!backendReady && <BackendBanner />}
       <div className="flex flex-1 min-h-0 overflow-hidden">

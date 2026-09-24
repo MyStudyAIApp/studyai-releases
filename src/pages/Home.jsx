@@ -20,8 +20,7 @@ export default function Home() {
   const { t } = useTranslation()
   const { user } = useAuth()
   const { backendReady, addToast, planTier, setPlanTier } = useAppStore()
-  // Uso del plan (solo app móvil completa -- en escritorio/web se ve en el
-  // Sidebar, que aquí no se monta, ver Layout.jsx).
+  // Uso del ciclo: solo se enseña aquí, en Inicio (ya no en el menú lateral).
   const [usage, setUsage] = useState(null)
 
   // ── Suscripción Pro / bonos (solo app móvil completa) ──────────────────
@@ -183,7 +182,7 @@ export default function Home() {
   }, [backendReady])
 
   useEffect(() => {
-    if (!IS_MOBILE || !backendReady) return
+    if (!backendReady) return
     api('GET', '/usage/summary').then(setUsage).catch(() => {})
   }, [backendReady])
 
@@ -195,6 +194,9 @@ export default function Home() {
       .catch(() => setSubjectTopics([]))
   }, [selectedSubject, backendReady])
 
+  // Móvil (app o pantalla táctil): "Hacer foto" abre la cámara y "Elegir
+  // archivo" los archivos. En el ordenador no hay cámara que abrir: un botón.
+  const conCamara = IS_MOBILE || window.matchMedia?.('(pointer: coarse)').matches
   function openFilePicker() { fileInputRef.current.click() }
   function openImagePicker() { imageInputRef.current.click() }
 
@@ -213,10 +215,8 @@ export default function Home() {
   const handleDrop = (e) => {
     e.preventDefault()
     const allFiles = Array.from(e.dataTransfer.files)
-    const pdfs = allFiles.filter(f => f.type === 'application/pdf')
-    const images = allFiles.filter(f => f.type.startsWith('image/'))
-    if (pdfs.length) { handleFilesSelected(pdfs); return }
-    if (images.length) { handleImagesSelected(images); return }
+    const validos = allFiles.filter(f => f.type === 'application/pdf' || f.type.startsWith('image/'))
+    if (validos.length) { handleFilesSelected(validos); return }
     addToast(t('home.dragPdfOrImage'), 'warning')
   }
 
@@ -242,9 +242,12 @@ export default function Home() {
       fd.append('file', file)
       if (selectedTopic) fd.append('topic_id', selectedTopic)
       else if (selectedSubject) fd.append('subject_id', selectedSubject)
-      fd.append('content_type', 'printed')  // un PDF subido tal cual es casi siempre texto impreso
+      // Un solo botón para PDF y fotos: cada archivo va por su camino. Un PDF
+      // suele ser texto impreso; una foto suelta, letra a mano.
+      const esFoto = file.type.startsWith('image/')
+      fd.append('content_type', esFoto ? 'handwritten' : 'printed')
       try {
-        const doc = await apiUpload('/documents/upload', fd)
+        const doc = await apiUpload(esFoto ? '/documents/upload-image' : '/documents/upload', fd)
         docIds.push(doc.id)
         lastDocId = doc.id
         addToast(`"${doc.title}" ${t('common.imported')}`, 'success')
@@ -321,7 +324,7 @@ export default function Home() {
       <input
         ref={fileInputRef}
         type="file"
-        accept=".pdf"
+        accept=".pdf,image/jpeg,image/png,image/webp,image/heic"
         multiple
         className="hidden"
         onChange={e => handleFilesSelected(Array.from(e.target.files))}
@@ -329,8 +332,8 @@ export default function Home() {
       <input
         ref={imageInputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp,image/heic"
-        multiple
+        accept="image/*"
+        capture="environment"
         className="hidden"
         onChange={e => handleImagesSelected(Array.from(e.target.files))}
       />
@@ -350,19 +353,20 @@ export default function Home() {
             onClick={openFilePicker}
             className="btn-primary flex items-center gap-2"
           >
-            <IconFileText size={16} /> {t('home.uploadPdf')}
+            <IconFileText size={16} /> {conCamara ? t('home.chooseFile') : t('home.uploadNotes')}
           </button>
-          <button
-            onClick={openImagePicker}
-            className="btn-secondary flex items-center gap-2"
-          >
-            <IconCamera size={16} /> {t('home.uploadPhoto')}
-          </button>
+          {conCamara && (
+            <button
+              onClick={openImagePicker}
+              className="btn-secondary flex items-center gap-2"
+            >
+              <IconCamera size={16} /> {t('home.takePhoto')}
+            </button>
+          )}
         </div>
         <p className="flex items-center justify-center gap-1.5 text-xs text-amber-500/80 mt-4">
           <IconAlertTriangle size={14} className="shrink-0" /> {t('home.sensitiveDataWarning')}
         </p>
-        <p className="text-xs text-slate-500 mt-1.5">💡 {t('home.drawingsTip')}</p>
       </div>
 
       {/* Exámenes próximos */}
@@ -422,8 +426,15 @@ export default function Home() {
             }} className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-700">
               <input required value={examTitle} onChange={e => setExamTitle(e.target.value)}
                 placeholder={t('home.examName')} className="input flex-1 text-sm py-1.5 min-w-36" />
-              <input required type="date" value={examDate} onChange={e => setExamDate(e.target.value)}
-                className="input text-sm py-1.5" />
+              {/* Igual que "Nombre del examen": el texto va dentro del recuadro.
+                  Un input de fecha no admite placeholder, así que es de texto
+                  hasta que se toca; entonces pasa a fecha y abre el calendario. */}
+              <input required type={examDate ? 'date' : 'text'} value={examDate}
+                placeholder={t('home.examDateLabel')}
+                onChange={e => setExamDate(e.target.value)}
+                onFocus={e => { e.currentTarget.type = 'date'; try { e.currentTarget.showPicker() } catch {} }}
+                onBlur={e => { if (!e.currentTarget.value) e.currentTarget.type = 'text' }}
+                className="input flex-1 text-sm py-1.5 min-w-36 cursor-pointer" />
               <select value={examSubjectId} onChange={e => {
                   setExamSubjectId(e.target.value)
                   if (!examCustomColor) {
@@ -558,11 +569,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Uso del plan (solo app móvil completa) */}
-      {IS_MOBILE && usage && planTier === 'free' && (
-        <section className="mb-8">
+      {/* Uso del ciclo y compra (Pro / bonos): en pantalla ancha, uno al lado
+          del otro; en el móvil, uno debajo del otro. */}
+      <div className="grid md:grid-cols-2 gap-6 mb-8">
+      {/* Uso del ciclo (en todas las plataformas: ya no está en el menú lateral) */}
+      {usage && planTier === 'free' && (
+        <section className="flex flex-col">
           <h3 className="section-title">{t('sidebar.usage.freeCycleLong')}</h3>
-          <div className="card space-y-3">
+          <div className="card space-y-3 flex-1">
             {[
               { label: t('sidebar.usage.generations'), used: usage.generations_used, max: usage.generations_max },
               { label: t('sidebar.usage.podcasts'), used: usage.podcasts_used, max: usage.podcasts_max },
@@ -581,10 +595,10 @@ export default function Home() {
         </section>
       )}
 
-      {IS_MOBILE && usage?.voice_budget && planTier === 'pro' && (
-        <section className="mb-8">
+      {usage?.voice_budget && planTier === 'pro' && (
+        <section className="flex flex-col">
           <h3 className="section-title">{t('sidebar.usage.voiceCycle')}</h3>
-          <div className="card space-y-3">
+          <div className="card space-y-3 flex-1">
             {[
               { label: '🎙️ ' + t('sidebar.usage.transcription'), b: usage.voice_budget.transcription },
               { label: '📄 ' + t('sidebar.usage.scan'), b: usage.voice_budget.scan },
@@ -622,8 +636,8 @@ export default function Home() {
 
       {/* ── Suscripción Pro / bonos (solo app móvil completa) ─────────── */}
       {IS_MOBILE && planTier && planTier !== 'pro' && (
-        <section className="mb-8">
-          <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
+        <section className="flex flex-col">
+          <div className="flex-1 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
             <div className="flex items-center gap-2 mb-1">
               <IconCrown size={18} className="text-amber-400" />
               <p className="text-sm font-semibold text-amber-300">{t('billing.goPro')}</p>
@@ -646,9 +660,9 @@ export default function Home() {
       )}
 
       {IS_MOBILE && planTier === 'pro' && (
-        <section className="mb-8">
+        <section className="flex flex-col">
           <h3 className="section-title">{t('billing.extendVoice')}</h3>
-          <div className="card divide-y divide-slate-800">
+          <div className="card divide-y divide-slate-800 flex-1">
             {[
               { category: 'transcription', emoji: '🎙️', label: t('billing.bonusTranscription') },
               { category: 'podcast',       emoji: '🎧', label: t('billing.bonusPodcast') },
@@ -677,8 +691,8 @@ export default function Home() {
 
       {/* ── Suscripción Pro / bonos (web, vía Stripe) ───────────────────── */}
       {IS_WEB && planTier && planTier !== 'pro' && (
-        <section className="mb-8">
-          <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
+        <section className="flex flex-col">
+          <div className="flex-1 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-yellow-600/10 p-4">
             <div className="flex items-center gap-2 mb-1">
               <IconCrown size={18} className="text-amber-400" />
               <p className="text-sm font-semibold text-amber-300">{t('billing.goPro')}</p>
@@ -700,9 +714,9 @@ export default function Home() {
       )}
 
       {IS_WEB && planTier === 'pro' && (
-        <section className="mb-8">
+        <section className="flex flex-col">
           <h3 className="section-title">{t('billing.extendVoice')}</h3>
-          <div className="card divide-y divide-slate-800">
+          <div className="card divide-y divide-slate-800 flex-1">
             {[
               { category: 'transcription', emoji: '🎙️', label: t('billing.bonusTranscription'), price: '3€' },
               { category: 'podcast',       emoji: '🎧', label: t('billing.bonusPodcast'),           price: '7€' },
@@ -723,6 +737,7 @@ export default function Home() {
           </div>
         </section>
       )}
+      </div>
 
       {/* Enlaces legales */}
       <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 mt-10 pt-6 border-t border-slate-800">

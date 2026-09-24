@@ -1,5 +1,6 @@
 import i18n from '../i18n'
 import { Preferences } from '@capacitor/preferences'
+import { api } from '../store/appStore'
 
 const SETTINGS_KEY = 'studyai-mobile-notif-settings'
 
@@ -23,7 +24,10 @@ export async function saveNotifSettings(settings) {
   await Preferences.set({ key: SETTINGS_KEY, value: JSON.stringify(settings) })
 }
 
-export async function scheduleExamNotifications(exams) {
+// Con las dos apps instaladas, los avisos de examen los lleva MyStudy App:
+// Scan (desdeApp=false) pregunta al servidor y, si la App se ha usado hace
+// poco, cancela los suyos para que el mismo examen no avise dos veces.
+export async function scheduleExamNotifications(exams, { desdeApp = false } = {}) {
   let LocalNotifications
   try {
     const mod = await import('@capacitor/local-notifications')
@@ -33,6 +37,10 @@ export async function scheduleExamNotifications(exams) {
   }
 
   try {
+    if (!desdeApp) {
+      const me = await api('GET', '/me').catch(() => null)
+      if (me?.avisos_en_app) { await _cancelExamNotifs(LocalNotifications); return }
+    }
     const settings = await getNotifSettings()
     if (!settings.enabled) {
       await _cancelExamNotifs(LocalNotifications)
@@ -74,6 +82,9 @@ export async function scheduleExamNotifications(exams) {
             title: '📅 ' + i18n.t('mobile.exams.notifTitle'),
             body: `${exam.title} — ${label}`,
             schedule: { at: notifDate, allowWhileIdle: true },
+            // Sin alarma exacta: si no, Android abre "Alarmas y recordatorios"
+            // para pedir un permiso que estos avisos no necesitan.
+            isExactNotification: false,
             channelId: 'exam-reminders',
           })
         }

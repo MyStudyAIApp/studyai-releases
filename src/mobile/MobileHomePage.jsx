@@ -6,6 +6,7 @@ import MobileTabBar from './MobileTabBar'
 import Logo from '../components/UI/Logo'
 import PlanBadge from '../components/UI/PlanBadge'
 import ScanProgressCard from './ScanProgressCard'
+import { scheduleExamNotifications } from './notificationService'
 import {
   IconAlertTriangle, IconBooks, IconCamera, IconMicrophone2, IconCalculator,
   IconHeadphones, IconNotebook,
@@ -43,6 +44,9 @@ export default function MobileHomePage() {
     // Exámenes urgentes (≤3 días)
     api('GET', '/exams/reminders').then(res => {
       const items = res.items || []
+      // Reprograma los avisos de examen al entrar: así Scan se calla sola en
+      // cuanto el usuario empieza a usar MyStudy App (ver notificationService).
+      scheduleExamNotifications(items).catch(() => {})
       setUrgentExams(items.filter(e => {
         const n = daysUntil(e.exam_date)
         return n >= 0 && n <= 3

@@ -33,6 +33,10 @@ android {
         }
     }
     buildTypes {
+        // La de pruebas se instala al lado de la de Play, sin pisarla.
+        debug {
+            applicationIdSuffix ".debug"
+        }
         release {
             minifyEnabled true
             shrinkResources true

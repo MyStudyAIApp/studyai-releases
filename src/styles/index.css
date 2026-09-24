@@ -313,6 +313,18 @@ body {
 html, body {
   background-color: #0f172a; /* slate-900, el fondo de la app */
 }
+/* Y encima, una franja del color de la cabecera (slate-950 del tema activo)
+   justo del alto de la barra de estado: así la barra parece parte de la
+   cabecera y la app se ve más amplia. En navegador mide 0 y no se ve. */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: env(safe-area-inset-top, 0px);
+  background-color: rgb(var(--slate-950));
+  z-index: 70;
+  pointer-events: none;
+}
 .min-h-screen {
   min-height: calc(100vh - env(safe-area-inset-top, 0px));
 }
