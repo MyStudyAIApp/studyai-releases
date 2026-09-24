@@ -135,12 +135,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--solo-subir", action="store_true")
     ap.add_argument("--promocionar", action="store_true")
+    ap.add_argument("--app", choices=list(APPS), help="solo esta app (por defecto, las dos)")
     args = ap.parse_args()
     if not (args.solo_subir or args.promocionar):
         sys.exit("Elige --solo-subir o --promocionar")
 
     svc = servicio()
     for pkg, aab in APPS.items():
+        if args.app and pkg != args.app:
+            continue
         if args.solo_subir:
             subir(svc, pkg, aab)
         else:
