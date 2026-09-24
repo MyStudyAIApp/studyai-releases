@@ -27,6 +27,7 @@ import Modal from '../components/UI/Modal'
 import CanariasPromptModal from '../components/UI/CanariasPromptModal'
 import EmailWarningsToggle from '../components/UI/EmailWarningsToggle'
 import { OwlToggle } from '../components/UI/OwlWelcome'
+import AvisosEstudioAjustes from '../components/UI/AvisosEstudioAjustes'
 import { useBillingRegion } from '../hooks/useBillingRegion'
 import { subscribeToPush, unsubscribeFromPush, isPushSubscribed, isPushSupported } from '../services/pushNotifications'
 import { THEMES, getTheme, applyTheme } from '../services/themeService'
@@ -1327,7 +1328,8 @@ export default function SettingsPage() {
 
       {/* ── Avisos de examen ─────────────────────────────────────────── */}
       <CollapsibleCard icon="🔔" title={t('settings.notifications.title')} defaultOpen={false}>
-        {IS_WEB && !isPushSupported() ? (
+        <AvisosEstudioAjustes />
+        {window.Capacitor?.isNativePlatform?.() ? null : IS_WEB && !isPushSupported() ? (
           <p className="text-sm text-slate-500">{t('settings.notifications.unsupported')}</p>
         ) : (
           <>

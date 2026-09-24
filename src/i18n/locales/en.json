@@ -2240,5 +2240,22 @@
     "limit": "You've used all your questions for today. I'll be here tomorrow, or write to us at",
     "chatError": "I couldn't answer right now. Write to us at",
     "left": "{{n}} questions left today"
+  },
+  "avisos": {
+    "canal": "Study reminders",
+    "repasoTitulo": "🧠 A quick review",
+    "repasoTexto_one": "You have 1 {{asignatura}} flashcard ready to review. It only takes a moment.",
+    "repasoTexto_other": "You have {{count}} {{asignatura}} flashcards ready to review. Just a few minutes.",
+    "examenTitulo": "📝 Your quiz is waiting",
+    "examenTexto": "You left the {{titulo}} quiz halfway. Shall we finish it?",
+    "inactivoTitulo": "🦉 Your notes are still here",
+    "inactivoTexto": "Whenever suits you, let’s review for a bit together.",
+    "ajustesTitulo": "Study reminders",
+    "ajustesNota": "At most 1 reminder a day and 2 a week, never at night.",
+    "tipo": {
+      "repaso": "Flashcards to review",
+      "examen": "Unfinished quiz",
+      "inactivo": "Reminder after a week without studying"
+    }
   }
 }

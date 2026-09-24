@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import i18n from '../../i18n'
 import { useState, useEffect } from 'react'
 import { useAppStore, api } from '../../store/appStore'
+import { marcarExamenAMedias, limpiarExamenAMedias } from '../../lib/avisosEstudio'
 
 const OBJECTIVE_TYPES = ['test', 'true_false']
 const OPEN_TYPES = ['development', 'problem']
@@ -29,10 +30,12 @@ export default function TestExamView({ result, doc, onFinished }) {
 
   function handleAnswer(qIdx, value) {
     if (submitted) return
+    if (Object.keys(answers).length === 0) marcarExamenAMedias(doc)   // para el aviso de examen a medias
     setAnswers(a => ({ ...a, [qIdx]: value }))
   }
 
   function handleSubmit() {
+    limpiarExamenAMedias()
     setSubmitted(true)
     gradeAndSave()
   }

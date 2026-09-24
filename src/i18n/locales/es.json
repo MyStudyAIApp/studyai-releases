@@ -2240,5 +2240,22 @@
     "limit": "Por hoy ya has hecho todas tus preguntas. Mañana sigo aquí, o escríbenos a",
     "chatError": "No he podido contestar ahora. Escríbenos a",
     "left": "Te quedan {{n}} preguntas hoy"
+  },
+  "avisos": {
+    "canal": "Avisos de estudio",
+    "repasoTitulo": "🧠 Un repaso rápido",
+    "repasoTexto_one": "Tienes 1 ficha de {{asignatura}} lista para repasar. Es un momento.",
+    "repasoTexto_other": "Tienes {{count}} fichas de {{asignatura}} listas para repasar. Son unos minutos.",
+    "examenTitulo": "📝 Tu examen te espera",
+    "examenTexto": "Tienes a medias el examen de {{titulo}}. ¿Lo terminamos?",
+    "inactivoTitulo": "🦉 Tus apuntes siguen aquí",
+    "inactivoTexto": "Cuando te venga bien, repasamos un rato juntos.",
+    "ajustesTitulo": "Avisos de estudio",
+    "ajustesNota": "Como mucho 1 aviso al día y 2 a la semana, nunca por la noche.",
+    "tipo": {
+      "repaso": "Fichas por repasar",
+      "examen": "Examen a medias",
+      "inactivo": "Recordatorio tras una semana sin estudiar"
+    }
   }
 }

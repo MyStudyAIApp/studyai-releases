@@ -2240,5 +2240,22 @@
     "limit": "Tu as posé toutes tes questions pour aujourd’hui. Je reviens demain, ou écris-nous à",
     "chatError": "Je n’ai pas pu répondre. Écris-nous à",
     "left": "Encore {{n}} questions aujourd’hui"
+  },
+  "avisos": {
+    "canal": "Rappels d’étude",
+    "repasoTitulo": "🧠 Une petite révision",
+    "repasoTexto_one": "Tu as 1 fiche de {{asignatura}} à réviser. Ça prend un instant.",
+    "repasoTexto_other": "Tu as {{count}} fiches de {{asignatura}} à réviser. Quelques minutes suffisent.",
+    "examenTitulo": "📝 Ton contrôle t’attend",
+    "examenTexto": "Tu as laissé le contrôle de {{titulo}} à moitié. On le termine ?",
+    "inactivoTitulo": "🦉 Tes notes sont toujours là",
+    "inactivoTexto": "Quand ça t’arrange, on révise un peu ensemble.",
+    "ajustesTitulo": "Rappels d’étude",
+    "ajustesNota": "Au maximum 1 rappel par jour et 2 par semaine, jamais la nuit.",
+    "tipo": {
+      "repaso": "Fiches à réviser",
+      "examen": "Contrôle inachevé",
+      "inactivo": "Rappel après une semaine sans réviser"
+    }
   }
 }

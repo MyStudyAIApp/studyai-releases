@@ -40,6 +40,7 @@ import { fetchSettings } from './services/settingsSync'
 import { applyTheme } from './services/themeService'
 import { saveWeeklyHours } from './components/Study/WeeklyHoursWidget'
 import i18n from './i18n'
+import { programarAvisos } from './lib/avisosEstudio'
 
 // ── Candado de MyStudy Admin ──────────────────────────────────────────────────
 // La app MyStudy Admin (Capacitor aparte, solo para el dueño) navega aquí con
@@ -136,6 +137,18 @@ function AppInner() {
     if (!IS_MOBILE) return
     detectIsFullMobileApp().then(setIsFullMobileApp)
   }, [])
+
+  // Avisos de estudio (solo MyStudy App): se reprograman al abrir y cada vez
+  // que se vuelve a la app. Ver lib/avisosEstudio.js.
+  useEffect(() => {
+    if (!isFullMobileApp || !user) return
+    programarAvisos()
+    let quitar
+    import('@capacitor/app').then(({ App: Cap }) =>
+      Cap.addListener('resume', programarAvisos).then(l => { quitar = l })
+    ).catch(() => {})
+    return () => { quitar?.remove() }
+  }, [isFullMobileApp, user?.id])
 
   // Ajustes dispara este evento con la sección elegida para abrir su tutorial
   useEffect(() => {

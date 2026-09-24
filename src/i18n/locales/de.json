@@ -2240,5 +2240,22 @@
     "limit": "Für heute hast du alle Fragen gestellt. Morgen bin ich wieder da, oder schreib uns an",
     "chatError": "Ich konnte gerade nicht antworten. Schreib uns an",
     "left": "Heute noch {{n}} Fragen"
+  },
+  "avisos": {
+    "canal": "Lern-Erinnerungen",
+    "repasoTitulo": "🧠 Kurz wiederholen",
+    "repasoTexto_one": "Du hast 1 Karteikarte in {{asignatura}} zum Wiederholen. Dauert nur einen Moment.",
+    "repasoTexto_other": "Du hast {{count}} Karteikarten in {{asignatura}} zum Wiederholen. Nur ein paar Minuten.",
+    "examenTitulo": "📝 Dein Test wartet",
+    "examenTexto": "Dein Test zu {{titulo}} ist erst halb fertig. Machen wir ihn fertig?",
+    "inactivoTitulo": "🦉 Deine Notizen sind noch da",
+    "inactivoTexto": "Wenn es dir passt, wiederholen wir ein bisschen zusammen.",
+    "ajustesTitulo": "Lern-Erinnerungen",
+    "ajustesNota": "Höchstens 1 Erinnerung am Tag und 2 pro Woche, nie nachts.",
+    "tipo": {
+      "repaso": "Karteikarten zum Wiederholen",
+      "examen": "Unfertiger Test",
+      "inactivo": "Erinnerung nach einer Woche ohne Lernen"
+    }
   }
 }
