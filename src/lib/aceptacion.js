@@ -18,7 +18,7 @@ const CLAVE = 'studyai_aceptacion_pendiente'
 
 // Versión de Condiciones y Privacidad que acepta el usuario. Cambiarla cuando
 // cambien los textos legales, para saber quién aceptó cuál.
-export const TERMS_VERSION = '2026-09-24'
+export const TERMS_VERSION = '2026-09-25'
 
 export function marcarAceptacion() {
   try { localStorage.setItem(CLAVE, '1') } catch {}
