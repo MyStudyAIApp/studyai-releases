@@ -23,5 +23,6 @@ export function pushSettings(partial) {
 }
 
 export async function fetchSettings() {
-  try { return await api('GET', '/me/settings') } catch { return {} }
+  // null si falla: así quien llama no confunde "sin ajustes" con "no se pudo leer"
+  try { return (await api('GET', '/me/settings')) || {} } catch { return null }
 }

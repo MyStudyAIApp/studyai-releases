@@ -36,7 +36,7 @@ import UpdateNotification from './components/UpdateNotification'
 import AppUpdater from './components/AppUpdater'
 import WhisperSetup from './components/WhisperSetup'
 import { pullFromCloud } from './services/syncService'
-import { fetchSettings } from './services/settingsSync'
+import { fetchSettings, pushSettings } from './services/settingsSync'
 import { applyTheme } from './services/themeService'
 import { saveWeeklyHours } from './components/Study/WeeklyHoursWidget'
 import i18n from './i18n'
@@ -119,6 +119,13 @@ function AppInner() {
   useEffect(() => {
     if (!backendReady || !user) return
     fetchSettings().then(s => {
+      // Si nunca eligió idioma en Ajustes, se guarda el que está viendo (el del
+      // navegador/móvil), para escribirle en su idioma (correos). No pisa nada:
+      // solo se escribe cuando la nube no tiene ninguno.
+      if (s && !s.interfaceLang) {
+        const lang = (i18n.language || '').slice(0, 2)
+        if (['es', 'en', 'de', 'fr'].includes(lang)) pushSettings({ interfaceLang: lang })
+      }
       if (!s || Object.keys(s).length === 0) return
       applySyncedSettings(s)
       if (s.theme) applyTheme(s.theme)
