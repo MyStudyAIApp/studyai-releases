@@ -264,6 +264,9 @@ Los registros de consumo de los servicios de inteligencia artificial, que sostie
 ### Encuesta «¿Cómo nos has conocido?»
 La primera vez que entras, el búho de MyStudy te pregunta cómo nos has conocido. Es **opcional**: puedes cerrarlo sin contestar. Guardamos la opción elegida (y, si eliges «Otro», el texto que escribas, hasta 100 caracteres) junto a tu cuenta, solo para saber qué canales nos traen usuarios. Base jurídica: nuestro interés legítimo en conocer la eficacia de la difusión. Se borra con tu cuenta.
 
+### Enlace por el que llegas
+Si llegas a la web por un enlace con una etiqueta (por ejemplo `mystudyai.eu/?de=tiktok`) o desde otra web, el navegador guarda esa etiqueta y el nombre de esa web en el almacenamiento local de tu dispositivo (no es una cookie de terceros ni se comparte con nadie). Si te registras, la guardamos junto a tu cuenta y la borramos del dispositivo; solo se guarda en cuentas recién creadas. No se usa para seguirte ni para publicidad: solo para contar por qué canales llegan las altas. Base jurídica: nuestro interés legítimo en conocer la eficacia de la difusión. Se borra con tu cuenta.
+
 ### Chat de ayuda del búho
 Al tocar el búho puedes escribirle dudas sobre cómo usar MyStudy. Tu pregunta y las anteriores de esa misma conversación (como máximo las 8 últimas) se envían a DeepInfra, o a Mistral AI si aquel falla, para generar la respuesta, a partir únicamente de una guía de uso de la Aplicación. No guardamos el texto de la conversación: se pierde al cerrar o recargar la página. Solo guardamos, junto a tu cuenta, cuántas preguntas has hecho hoy, para aplicar el límite de 10 al día. No escribas en el chat datos personales ni sensibles. Base jurídica: la ejecución del contrato (ayudarte a usar el servicio). El contador se borra con tu cuenta.
 

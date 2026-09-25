@@ -678,6 +678,20 @@ export default function AdminPage() {
         </div>
       )}
 
+      {/* Enlace o web por la que llegaron las altas (?de= / referrer) */}
+      {stats.signup_sources?.length > 0 && (
+        <div className="card space-y-2">
+          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Por dónde llegaron al registrarse</h2>
+          {stats.signup_sources.map(({ source, count }) => (
+            <div key={source} className="flex justify-between text-sm">
+              <span className="text-slate-200">{source}</span>
+              <span className="text-slate-100 font-semibold">{count}</span>
+            </div>
+          ))}
+          <p className="text-[11px] text-slate-500 pt-1">Desde el 25/9/2026, solo altas por la web. Para distinguir enlaces, añadir ?de=nombre (p. ej. mystudyai.eu/?de=tiktok).</p>
+        </div>
+      )}
+
       {/* Cuotas de los proveedores externos, cada una en SU unidad y SU periodo */}
       {provider_quotas?.length > 0 && (
         <div className="card space-y-3">

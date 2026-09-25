@@ -245,6 +245,9 @@ The logs of artificial intelligence service consumption, which underpin usage qu
 ### "How did you hear about us?" survey
 The first time you sign in, the MyStudy owl asks how you heard about us. It is **optional**: you can close it without answering. We store the option you choose (and, if you choose "Other", the text you type, up to 100 characters) with your account, only to learn which channels bring us users. Legal basis: our legitimate interest in knowing how effective our outreach is. It is deleted with your account.
 
+### Link you arrived from
+If you reach the website through a tagged link (for example `mystudyai.eu/?de=tiktok`) or from another website, your browser stores that tag and the name of that website in your device's local storage (it is not a third-party cookie and is not shared with anyone). If you sign up, we store it with your account and remove it from the device; it is only stored for newly created accounts. It is not used to track you or for advertising: only to count which channels bring sign-ups. Legal basis: our legitimate interest in knowing how effective our outreach is. It is deleted with your account.
+
 ### Owl help chat
 When you tap the owl you can ask it questions about how to use MyStudy. Your question and the previous ones in that same conversation (at most the last 8) are sent to DeepInfra, or to Mistral AI if it fails, to generate the answer, based solely on a user guide for the Application. We do not store the text of the conversation: it is lost when you close or reload the page. We only store, with your account, how many questions you have asked today, to apply the limit of 10 per day. Do not type personal or sensitive data into the chat. Legal basis: performance of the contract (helping you use the service). The counter is deleted with your account.
 

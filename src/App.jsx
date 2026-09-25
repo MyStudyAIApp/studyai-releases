@@ -104,6 +104,14 @@ function AppInner() {
   const { backendReady, setBackendReady, setBackendError, addToast, setTodayStudyMinutes, applySyncedSettings } = useAppStore()
   const { user, isPasswordRecovery, needsTerms } = useAuth()  // ahora sí podemos usarlo (estamos dentro del AuthProvider)
 
+  // Origen de la visita recordado en main.jsx: se manda una vez tras entrar
+  useEffect(() => {
+    if (!user) return
+    let origen = null
+    try { origen = localStorage.getItem('origen'); localStorage.removeItem('origen') } catch {}
+    if (origen) api('POST', '/me/origen', JSON.parse(origen)).catch(() => {})
+  }, [user?.id])
+
   // ── Ajustes sincronizados entre plataformas (voz, tema, idioma, horas...) ──
   // Al iniciar sesión (una vez por sesión de app, no en cada render) se traen
   // del perfil de la nube y se aplican encima de lo que hubiera local — la

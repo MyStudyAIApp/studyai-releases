@@ -20,6 +20,22 @@ import { getTheme, applyTheme } from './services/themeService'
 // haya un parpadeo con los colores por defecto al cargar.
 applyTheme(getTheme())
 
+// Origen de la visita (?de= o utm_source del enlace, y la web de la que viene)
+// para saber por dónde llegan las altas. En localStorage (no en la pestaña)
+// porque el alta por correo se confirma desde el enlace del email, en otra
+// pestaña. Al iniciar sesión App.jsx lo manda a /me/origen y lo borra; el
+// servidor solo lo guarda si la cuenta tiene menos de un día.
+try {
+  if (!localStorage.getItem('origen')) {
+    const q = new URLSearchParams(location.search)
+    const de = q.get('de') || q.get('utm_source')
+    let ref = null
+    try { ref = new URL(document.referrer).hostname } catch {}
+    if (ref === location.hostname) ref = null
+    if (de || ref) localStorage.setItem('origen', JSON.stringify({ de, ref }))
+  }
+} catch {}
+
 // ── Polyfill URL.parse ────────────────────────────────────────────────────────
 // URL.parse() es un método estático nuevo (Chrome 126+).
 // Electron 28 trae Chrome 120 → no existe → pdfjs-dist 4.x crashea al usarlo.
