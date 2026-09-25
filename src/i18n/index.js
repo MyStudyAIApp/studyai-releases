@@ -12,10 +12,14 @@ i18n
   .use(initReactI18next)
   .init({
     resources: { es: { translation: es }, en: { translation: en }, de: { translation: de }, fr: { translation: fr } },
-    fallbackLng: 'es',
+    // Idioma del móvil que no tenemos (polaco, italiano...) -> inglés, que es
+    // lo que más gente entiende; antes caía al español. Las lenguas de España
+    // van al español, no al inglés (ver convertDetectedLanguage).
+    fallbackLng: 'en',
     supportedLngs: ['es', 'en', 'de', 'fr'],
     detection: {
       order: ['localStorage', 'navigator'],
+      convertDetectedLanguage: (l) => (/^(ca|gl|eu|ast)(-|$)/i.test(l) ? 'es' : l),
       caches: ['localStorage'],
       lookupLocalStorage: 'studyai_lang',
     },
