@@ -6,6 +6,7 @@ import MobileTabBar from './MobileTabBar'
 import Logo from '../components/UI/Logo'
 import PlanBadge from '../components/UI/PlanBadge'
 import ScanProgressCard from './ScanProgressCard'
+import OtraAppBoton from '../components/UI/OtraAppBoton'
 import { scheduleExamNotifications } from './notificationService'
 import {
   IconAlertTriangle, IconBooks, IconCamera, IconMicrophone2, IconCalculator,
@@ -63,7 +64,10 @@ export default function MobileHomePage() {
     <div className="min-h-screen bg-slate-900 flex flex-col px-5 pt-14 pb-24">
       {/* Cabecera */}
       <div className="mb-6">
-        <h1 className="flex items-center gap-2"><Logo size="xl" /><PlanBadge /></h1>
+        <div className="flex items-center justify-between gap-2">
+          <h1 className="flex items-center gap-2"><Logo size="xl" /><PlanBadge /></h1>
+          <OtraAppBoton destino="app" grande />
+        </div>
         <p className="text-slate-400 mt-0.5 text-sm truncate">{displayName || user?.email}</p>
       </div>
 

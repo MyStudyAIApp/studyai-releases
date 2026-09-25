@@ -3,6 +3,10 @@ import { IconMenu2 } from '@tabler/icons-react'
 import Logo from '../UI/Logo'
 import PlanBadge from '../UI/PlanBadge'
 import { useAuth } from '../../contexts/AuthContext'
+import { IS_MOBILE } from '../../store/appStore'
+import OtraAppBoton from '../UI/OtraAppBoton'
+
+const ES_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 
 // onMenu: en móvil, botón ☰ que abre el cajón lateral (ver Layout.jsx)
 export default function TitleBar({ onMenu }) {
@@ -41,6 +45,10 @@ export default function TitleBar({ onMenu }) {
 
       {/* Controles — derecha */}
       <div className="titlebar-no-drag flex items-center">
+        {/* Apps de Android: en la App, la otra (Scan); en la web, las dos
+            para que se sepa que existen (en iPhone no, no hay app de iOS) */}
+        {IS_MOBILE && <OtraAppBoton destino="scan" />}
+        {!isElectron && !IS_MOBILE && !ES_IOS && <><OtraAppBoton destino="app" /><OtraAppBoton destino="scan" /></>}
         {isElectron && (
           <>
             <button

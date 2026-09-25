@@ -75,6 +75,9 @@
          instalados ni abrir la pantalla donde se instalan voces. La lectura en
          voz alta la hace el propio dispositivo desde el 23/8/2026. -->
     <queries>
+        <!-- Icono de la otra app en la cabecera: sin declararla, en Android 11+
+             no se puede abrir aunque esté instalada (cae a Play). -->
+        <package android:name="eu.mystudyai.twa" />
         <!-- Enumerar los motores de voz instalados -->
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE" />

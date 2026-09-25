@@ -2263,5 +2263,8 @@
       "inactivo": "Rappel après une semaine sans réviser",
       "calendario": "Dates d'examen du calendrier (1, 3 et 7 jours avant)"
     }
+  },
+  "otraApp": {
+    "descargar": "{{nombre}} : télécharge-la sur ton Android"
   }
 }

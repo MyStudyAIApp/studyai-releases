@@ -2263,5 +2263,8 @@
       "inactivo": "Recordatorio tras una semana sin estudiar",
       "calendario": "Fechas de examen del calendario (1, 3 y 7 días antes)"
     }
+  },
+  "otraApp": {
+    "descargar": "{{nombre}}: descárgala en tu Android"
   }
 }

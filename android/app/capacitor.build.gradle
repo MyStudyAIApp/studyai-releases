@@ -13,6 +13,7 @@ dependencies {
     implementation project(':capacitor-community-text-to-speech')
     implementation project(':capacitor-mlkit-document-scanner')
     implementation project(':capacitor-app')
+    implementation project(':capacitor-app-launcher')
     implementation project(':capacitor-browser')
     implementation project(':capacitor-camera')
     implementation project(':capacitor-filesystem')

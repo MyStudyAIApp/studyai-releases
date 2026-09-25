@@ -2263,5 +2263,8 @@
       "inactivo": "Reminder after a week without studying",
       "calendario": "Exam dates from your calendar (1, 3 and 7 days before)"
     }
+  },
+  "otraApp": {
+    "descargar": "{{nombre}}: get it on your Android"
   }
 }

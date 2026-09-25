@@ -2263,5 +2263,8 @@
       "inactivo": "Erinnerung nach einer Woche ohne Lernen",
       "calendario": "Prüfungstermine aus dem Kalender (1, 3 und 7 Tage vorher)"
     }
+  },
+  "otraApp": {
+    "descargar": "{{nombre}}: auf deinem Android laden"
   }
 }
