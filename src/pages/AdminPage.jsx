@@ -678,6 +678,25 @@ export default function AdminPage() {
         </div>
       )}
 
+      {/* Correo del dia 1: a cuantos se ha mandado y cuantos usaron la app despues */}
+      {stats.correo_d1 && (
+        <div className="card space-y-1">
+          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Correo del día 1</h2>
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-200">Enviados</span>
+            <span className="text-slate-100 font-semibold">{stats.correo_d1.enviados}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-slate-200">Usaron la app en los 3 días siguientes</span>
+            <span className="text-slate-100 font-semibold">
+              {stats.correo_d1.usaron}
+              {stats.correo_d1.enviados > 0 && ` (${Math.round(100 * stats.correo_d1.usaron / stats.correo_d1.enviados)} %)`}
+            </span>
+          </div>
+          <p className="text-[11px] text-slate-500 pt-1">Solo a altas sin nada usado a las 20 h. Sin contar tus pruebas.</p>
+        </div>
+      )}
+
       {/* Enlace o web por la que llegaron las altas (?de= / referrer) */}
       {stats.signup_sources?.length > 0 && (
         <div className="card space-y-2">
