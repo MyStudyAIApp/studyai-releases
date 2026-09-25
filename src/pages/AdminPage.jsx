@@ -679,23 +679,24 @@ export default function AdminPage() {
       )}
 
       {/* Correo del dia 1: a cuantos se ha mandado y cuantos usaron la app despues */}
-      {stats.correo_d1 && (
-        <div className="card space-y-1">
-          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">Correo del día 1</h2>
+      {[['correo_d1', 'Correo del día 1', 'altas sin nada usado a las 20 h'],
+        ['correo_d7', 'Correo del día 7', 'altas sin nada usado a los 6,5 días']].map(([clave, titulo, nota]) => stats[clave] && (
+        <div key={clave} className="card space-y-1">
+          <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{titulo}</h2>
           <div className="flex justify-between text-sm">
             <span className="text-slate-200">Enviados</span>
-            <span className="text-slate-100 font-semibold">{stats.correo_d1.enviados}</span>
+            <span className="text-slate-100 font-semibold">{stats[clave].enviados}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-slate-200">Usaron la app en los 3 días siguientes</span>
             <span className="text-slate-100 font-semibold">
-              {stats.correo_d1.usaron}
-              {stats.correo_d1.enviados > 0 && ` (${Math.round(100 * stats.correo_d1.usaron / stats.correo_d1.enviados)} %)`}
+              {stats[clave].usaron}
+              {stats[clave].enviados > 0 && ` (${Math.round(100 * stats[clave].usaron / stats[clave].enviados)} %)`}
             </span>
           </div>
-          <p className="text-[11px] text-slate-500 pt-1">Solo a altas sin nada usado a las 20 h. Sin contar tus pruebas.</p>
+          <p className="text-[11px] text-slate-500 pt-1">Solo a {nota}. Sin contar tus pruebas.</p>
         </div>
-      )}
+      ))}
 
       {/* Enlace o web por la que llegaron las altas (?de= / referrer) */}
       {stats.signup_sources?.length > 0 && (
