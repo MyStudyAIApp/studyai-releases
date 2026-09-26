@@ -2126,7 +2126,10 @@
     "clickFlip": "Haz clic para voltear",
     "question": "Pregunta",
     "clickAnswer": "Click para ver respuesta",
-    "answer": "Respuesta"
+    "answer": "Respuesta",
+    "knew": "La sabía",
+    "didntKnow": "No la sabía",
+    "repeat": "Repaso"
   },
   "adaptive": {
     "done": "¡Examen adaptativo completado!",

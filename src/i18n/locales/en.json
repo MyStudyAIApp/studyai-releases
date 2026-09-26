@@ -2126,7 +2126,10 @@
     "clickFlip": "Click to flip",
     "question": "Question",
     "clickAnswer": "Click to see answer",
-    "answer": "Answer"
+    "answer": "Answer",
+    "knew": "I knew it",
+    "didntKnow": "I didn't know it",
+    "repeat": "Review"
   },
   "adaptive": {
     "done": "Adaptive quiz completed!",

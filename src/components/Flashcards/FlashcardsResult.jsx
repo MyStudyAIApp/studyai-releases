@@ -11,7 +11,17 @@ export default function FlashcardsResult({ result, doc }) {
   const [saved, setSaved] = useState(false)
   const [current, setCurrent] = useState(0)
   const [flipped, setFlipped] = useState(false)
-  const [mode, setMode] = useState('browse') // browse | study
+  const [mode, setMode] = useState('study') // browse | study
+  const [marks, setMarks] = useState({}) // id -> 'knew' | 'no'
+  // Las tarjetas nuevas ya llegan guardadas (con id): basta con marcar si la sabías.
+  const autoSaved = cards.length > 0 && cards.every(c => c.id)
+
+  function mark(knew) {
+    const c = cards[current]
+    setMarks(m => ({ ...m, [c.id]: knew ? 'knew' : 'no' }))
+    api('POST', `/flashcards/${c.id}/review`, { rating: knew ? 4 : 1 }).catch(() => {})
+    if (current < cards.length - 1) { setCurrent(current + 1); setFlipped(false) }
+  }
 
   async function saveDeck() {
     setSaving(true)
@@ -40,7 +50,7 @@ export default function FlashcardsResult({ result, doc }) {
           >
             {mode === 'browse' ? `🧠 ${i18n.t('flashcards.studyMode')}` : `📋 ${i18n.t('flashcards.viewAll')}`}
           </button>
-          {!saved && (
+          {!saved && !autoSaved && (
             <button onClick={saveDeck} disabled={saving} className="btn-primary btn-sm">
               {saving ? '⏳' : '💾'} Guardar deck
             </button>
@@ -53,7 +63,10 @@ export default function FlashcardsResult({ result, doc }) {
         /* Study mode — one card at a time with flip */
         <div className="space-y-4">
           <div className="flex items-center justify-between text-sm text-slate-400">
-            <span>{current + 1} / {cards.length}</span>
+            <span>
+              {current + 1} / {cards.length}
+              {card.repeat && <span className="badge-green ml-2">{i18n.t('flashcards.repeat')}</span>}
+            </span>
             <span>{i18n.t('flashcards.clickFlip')}</span>
           </div>
 
@@ -78,6 +91,14 @@ export default function FlashcardsResult({ result, doc }) {
               </div>
             </div>
           </div>
+
+          {/* ¿La sabías? -- las falladas vuelven en la siguiente tanda */}
+          {card.id && flipped && !marks[card.id] && (
+            <div className="flex gap-2">
+              <button onClick={() => mark(false)} className="btn-secondary flex-1 !border-red-500/50 !text-red-300">✗ {i18n.t('flashcards.didntKnow')}</button>
+              <button onClick={() => mark(true)} className="btn-secondary flex-1 !border-green-500/50 !text-green-300">✓ {i18n.t('flashcards.knew')}</button>
+            </div>
+          )}
 
           {/* Navigation */}
           <div className="flex gap-2">

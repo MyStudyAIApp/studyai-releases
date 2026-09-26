@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   IconFileText, IconFolder, IconBrain, IconBook, IconCalculator,
@@ -80,6 +80,16 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction,
   const [timedTypes, setTimedTypes] = useState({ test: true, true_false: true, development: true, problem: true })
   const [timedMinutes, setTimedMinutes] = useState(numQuestions * 2)
 
+  // Tarjetas no tiene ventanita: desde Estudiar → Tarjetas se crean directamente.
+  const autoRan = useRef(false)
+  useEffect(() => {
+    if (initialModal === 'cards' && !autoRan.current) {
+      autoRan.current = true
+      setModal(null)
+      onGenerate('flashcards', baseParams())
+    }
+  }, [])
+
   useEffect(() => {
     if (modal === 'timed') setTimedMinutes(Math.max(10, numQuestions * 2))
   }, [modal])
@@ -160,7 +170,7 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction,
       {MAIN.map(m => (
         <button
           key={m.id}
-          onClick={() => !generating && setModal(m.id)}
+          onClick={() => !generating && (m.id === 'cards' ? run('flashcards') : setModal(m.id))}
           disabled={generating}
           className={`w-full flex items-center gap-3 px-4 py-4 rounded-2xl text-left transition-all
             ${busyGroup === m.id ? 'bg-primary-700 border border-primary-500 text-white' : 'bg-slate-700/50 hover:bg-slate-700 border border-transparent hover:border-primary-500 text-slate-100'}
@@ -271,16 +281,6 @@ export default function ActionPanel({ doc, onGenerate, generating, activeAction,
           <button onClick={confirmSummary} className="btn-primary w-full">
             {t('actionPanel.summaryModal.confirm')}
           </button>
-        </div>
-      </Modal>
-
-      {/* Modal: tarjetas */}
-      <Modal open={modal === 'cards'} onClose={() => setModal(null)} title={t('actionPanel.main.cards')} size="sm">
-        <div className="space-y-3">
-          {numQuestionsField}
-          {CARD_ITEMS.map(item => (
-            <OptionButton key={item.id} item={item} color="green" onClick={() => run(item.id)} t={t} />
-          ))}
         </div>
       </Modal>
 
