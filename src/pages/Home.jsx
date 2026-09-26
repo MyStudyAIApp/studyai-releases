@@ -577,7 +577,7 @@ export default function Home() {
         <h3 className="section-title">{t('home.quickActions')}</h3>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
-            { Icon: IconFileText, color: 'purple', label: t('home.newExam'),      to: '/exam' },
+            { Icon: IconFileText, color: 'purple', label: t('home.newExam'),      to: '/crear/exam' },
             { Icon: IconBrain,    color: 'green',  label: t('home.studyCards'),   to: '/study' },
             { Icon: IconChartBar, color: 'blue',   label: t('home.myProgress'),   to: '/stats' },
             { Icon: IconScale,    color: 'amber',  label: t('home.comparePdfs'), to: '/compare' },

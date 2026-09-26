@@ -132,7 +132,8 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
 
     let html = ''
 
-    if (activeAction === 'summary') {
+    // Con partes añadidas se imprime lo que se ve en pantalla, para que salgan todas
+    if (activeAction === 'summary' && !Object.keys(r.extras || {}).length) {
       html = buildPrintHtml(r, title)  // buildPrintHtml ya escapa docTitle internamente
     } else {
       const safeTitle = escapeHtml(title)
@@ -363,6 +364,21 @@ export default function ResultPanel({ result, streamedText, generating, genProgr
                   zoom={showZoomControl ? zoom : undefined}
                   onZoomChange={showZoomControl ? setZoom : undefined}
                 />
+                {/* Partes añadidas al resumen (esquema, glosario...) en el mismo resultado */}
+                {Object.entries(normalizedResult.extras || {}).map(([type, data]) => {
+                  const ExtraView = VIEW_MAP[type]
+                  // Parte vacía (p. ej. apuntes sin fórmulas ni fechas): no se muestra
+                  const items = data?.terms || data?.formulas || data?.events || data?.connections || data?.groups
+                  // Una línea del tiempo con un solo hito no aporta nada al resumen
+                  const min = type === 'timeline' ? 2 : 1
+                  if (!ExtraView || !data || (Array.isArray(items) && items.length < min)) return null
+                  return (
+                    <section key={type} className="mt-8 pt-6 border-t border-slate-800">
+                      <h2 className="text-lg font-semibold text-slate-100 mb-3">{label(type)}</h2>
+                      <ExtraView result={normalizeResult({ ...data, type })} doc={doc} />
+                    </section>
+                  )
+                })}
               </div>
             )}
           </div>

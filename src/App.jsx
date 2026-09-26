@@ -11,6 +11,8 @@ import DocumentPage from './pages/DocumentPage'
 import TopicPage from './pages/TopicPage'
 import StudySession from './pages/StudySession'
 import ExamPage from './pages/ExamPage'
+import StudyPlanPage from './pages/StudyPlanPage'
+import StudyPickerPage from './pages/StudyPickerPage'
 import StatsPage from './pages/StatsPage'
 import SettingsPage from './pages/SettingsPage'
 import ComparePage from './pages/ComparePage'
@@ -357,6 +359,8 @@ function AppInner() {
           <Route path="/topic/:id"    element={<TopicPage />} />
           <Route path="/study/:subjectId?" element={<StudySession />} />
           <Route path="/exam/:documentId?" element={<ExamPage />} />
+          <Route path="/plan"        element={<StudyPlanPage />} />
+          <Route path="/crear/:tipo" element={<StudyPickerPage />} />
           <Route path="/stats"       element={<StatsPage />} />
           <Route path="/compare"     element={<ComparePage />} />
           <Route path="/lecture"     element={<LecturePage />} />

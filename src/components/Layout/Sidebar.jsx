@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useAppStore, IS_ELECTRON, api } from '../../store/appStore'
 import { useAuth } from '../../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +7,7 @@ import { verFuncion } from '../../lib/betaFlags'
 import {
   IconHome, IconBooks, IconNotebook, IconBrain, IconFileText, IconWorld, IconMicrophone2,
   IconCalculator, IconScale, IconChartBar, IconCalendar, IconSettings, IconCloud,
-  IconLogout, IconBook, IconChevronDown,
+  IconLogout, IconBook, IconChevronDown, IconCalendarEvent, IconSparkles, IconCards, IconClipboardCheck,
 } from '@tabler/icons-react'
 import ProgressBar from '../UI/ProgressBar'
 import IconBadge from '../UI/IconBadge'
@@ -47,8 +47,15 @@ export default function Sidebar({ cajon = false, alNavegar }) {
     ...(verFuncion('cuaderno', user)
       ? [{ to: '/cuaderno', Icon: IconNotebook, color: 'teal', label: t('sidebar.notebook') }]
       : []),
+    // Estudiar: se despliega con lo que se puede generar; cada opción deja
+    // elegir uno o varios apuntes (pages/StudyPickerPage.jsx).
+    { group: 'study', Icon: IconSparkles, color: 'amber', label: t('sidebar.studyGroup'), children: [
+      { to: '/crear/summary', Icon: IconFileText,       color: 'purple', label: t('actionPanel.main.summary') },
+      { to: '/crear/cards',   Icon: IconCards,          color: 'green',  label: t('actionPanel.main.cards') },
+      { to: '/crear/exam',    Icon: IconClipboardCheck, color: 'amber',  label: t('actionPanel.main.exam') },
+    ] },
+    { to: '/plan',      Icon: IconCalendarEvent, color: 'pink', label: t('sidebar.studyPlan') },
     { to: '/study',     Icon: IconBrain,       color: 'green',  label: t('sidebar.study') },
-    { to: '/exam',      Icon: IconFileText,    color: 'amber',  label: t('sidebar.exam') },
     { to: '/tutor',     emoji: '🦉', color: 'purple', label: t('sidebar.tutor') },
     { to: '/languages', Icon: IconWorld,       color: 'teal',   label: t('sidebar.languages') },
     { to: '/lecture',   Icon: IconMicrophone2, color: 'pink',   label: t('sidebar.lecture') },
@@ -67,6 +74,8 @@ export default function Sidebar({ cajon = false, alNavegar }) {
     '/compare': 'compare', '/stats': 'stats', '/calendar': 'calendar', '/settings': 'settings' }
   const tutoriales = navItems.filter(n => SECCION[n.to])
   const [tutorialesAbierto, setTutorialesAbierto] = useState(false)
+  const location = useLocation()
+  const [estudiarAbierto, setEstudiarAbierto] = useState(() => /^\/crear/.test(location.pathname))
   // El cartel de bienvenida ("Ver tutoriales") abre este desplegable.
   useEffect(() => {
     const abrir = () => setTutorialesAbierto(true)
@@ -92,7 +101,37 @@ export default function Sidebar({ cajon = false, alNavegar }) {
       {/* En el cajón se desplaza el panel entero, no solo la lista: si no, los
           bloques de abajo la aprietan y Tutoriales queda escondido. */}
       <nav className={`${cajon ? 'flex-none' : 'flex-1 overflow-y-auto'} py-3 space-y-0.5 px-2`}>
-        {navItems.map(({ to, Icon, color, emoji, label }) => (
+        {navItems.map(({ to, Icon, color, emoji, label, group, children }) => group ? (
+          <div key={group}>
+            <button
+              onClick={() => setEstudiarAbierto(a => !a)}
+              title={label}
+              className="w-full flex items-center gap-3 px-2 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-100 transition-all duration-150"
+            >
+              <IconBadge icon={Icon} color={color} size="sm" />
+              <span className={`${L} truncate flex-1 text-left`}>{label}</span>
+              <IconChevronDown size={14} className={`${L} shrink-0 transition-transform duration-200 ${estudiarAbierto ? 'rotate-180' : ''}`} />
+            </button>
+            {estudiarAbierto && (
+              <div className={`${cajon ? 'ml-4 pl-2 border-l' : 'lg:ml-4 lg:pl-2 lg:border-l'} border-slate-800 space-y-0.5 py-0.5`}>
+                {children.map(c => (
+                  <NavLink
+                    key={c.to}
+                    to={c.to}
+                    onClick={alNavegar}
+                    title={c.label}
+                    className={({ isActive }) =>
+                      `flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-all duration-150
+                       ${isActive ? 'bg-primary-600/20 text-primary-300' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100'}`}
+                  >
+                    <IconBadge icon={c.Icon} color={c.color} size="sm" />
+                    <span className={`${L} truncate`}>{c.label}</span>
+                  </NavLink>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
           <NavLink
             key={to}
             to={to}

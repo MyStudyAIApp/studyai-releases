@@ -153,7 +153,9 @@ export default function DocumentPage() {
   const location = useLocation()
   const [showPodcastModal, setShowPodcastModal] = useState(() => !!location.state?.openPodcast)
   const [mobilePanel, setMobilePanel] = useState('pdf')  // 'pdf' | 'result'
-  const [showActionSheet, setShowActionSheet] = useState(false)
+  // Desde la sección Estudiar se llega con la opción elegida: se abre su ventanita
+  const [openPanel] = useState(() => location.state?.openPanel || null)
+  const [showActionSheet, setShowActionSheet] = useState(() => !!location.state?.openPanel)
   // Mismo criterio que Layout.jsx: la app Capacitor completa (IS_MOBILE) es
   // siempre "estrecha", sin importar el ancho de ventana; web solo cuando la
   // pantalla es realmente estrecha.
@@ -493,6 +495,7 @@ export default function DocumentPage() {
                   }}
                   generating={generating}
                   activeAction={activeAction}
+                  initialModal={openPanel}
                 />
               </div>
             </div>
@@ -542,6 +545,7 @@ export default function DocumentPage() {
           onGenerate={generate}
           generating={generating}
           activeAction={activeAction}
+          initialModal={openPanel}
         />
       </div>
 

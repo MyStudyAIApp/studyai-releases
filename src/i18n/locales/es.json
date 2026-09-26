@@ -49,7 +49,9 @@
       "toExtend": "para ampliarlo.",
       "freeCycleLong": "Uso del plan Free · este ciclo"
     },
-    "tutorials": "Tutoriales"
+    "tutorials": "Tutoriales",
+    "studyPlan": "Plan de estudio",
+    "studyGroup": "Estudiar"
   },
   "backend": {
     "starting": "Iniciando servicios... La primera vez puede tardar hasta 1 minuto.",
@@ -476,6 +478,23 @@
       "type_problem": "Problemas",
       "minutes": "Tiempo (minutos)",
       "confirm": "Generar simulacro"
+    },
+    "main": {
+      "summary": "Resumen",
+      "summaryDesc": "Tus apuntes resumidos; añade esquema, glosario y más si quieres",
+      "cards": "Tarjetas",
+      "cardsDesc": "Tarjetas de repaso pregunta/respuesta",
+      "exam": "Examen",
+      "examDesc": "Test, desarrollo, problemas, huecos, adaptativo o simulacro"
+    },
+    "settings": "Ajustes",
+    "summaryModal": {
+      "title": "Tu resumen",
+      "length": "Largo",
+      "short": "Corto",
+      "long": "Extendido",
+      "add": "Añadir al resumen (opcional)",
+      "confirm": "Generar resumen"
     }
   },
   "exam": {
@@ -2266,5 +2285,26 @@
   },
   "otraApp": {
     "descargar": "{{nombre}}: descárgala en tu Android"
+  },
+  "studyPlanPage": {
+    "title": "Plan de estudio",
+    "new": "Nuevo plan",
+    "yourPlans": "Tus planes",
+    "pickDocs": "Elige los apuntes que entran en el examen. Puede ser uno o varios.",
+    "noDocs": "Aún no tienes apuntes. Sube o escanea alguno en la Biblioteca.",
+    "examOn": "Examen el {{date}}",
+    "noDate": "Sin fecha de examen",
+    "days_one": "{{count}} día",
+    "days_other": "{{count}} días",
+    "generate_one": "Crear plan con {{count}} documento",
+    "generate_other": "Crear plan con {{count}} documentos",
+    "delete": "Borrar plan",
+    "confirmDelete": "¿Borrar el plan «{{title}}»? Tus apuntes no se tocan."
+  },
+  "studyPicker": {
+    "pick": "Marca uno o varios apuntes. Con varios se hace sobre todos juntos.",
+    "search": "Buscar apuntes",
+    "continue": "Continuar ({{count}})",
+    "max": "Máximo 10 documentos"
   }
 }

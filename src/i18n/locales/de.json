@@ -49,7 +49,9 @@
       "toExtend": "um es zu erweitern.",
       "freeCycleLong": "Nutzung des Free Plans · dieser Zyklus"
     },
-    "tutorials": "Tutorials"
+    "tutorials": "Tutorials",
+    "studyPlan": "Lernplan",
+    "studyGroup": "Lernen"
   },
   "backend": {
     "starting": "Dienste werden gestartet... Beim ersten Mal kann dies bis zu 1 Minute dauern.",
@@ -476,6 +478,23 @@
       "type_problem": "Aufgaben",
       "minutes": "Zeit (Minuten)",
       "confirm": "Probeprüfung generieren"
+    },
+    "main": {
+      "summary": "Zusammenfassung",
+      "summaryDesc": "Deine Notizen zusammengefasst; füge Gliederung, Glossar und mehr hinzu",
+      "cards": "Karten",
+      "cardsDesc": "Lernkarten mit Frage und Antwort",
+      "exam": "Prüfung",
+      "examDesc": "Multiple Choice, offene Fragen, Aufgaben, Lückentext, adaptiv oder Probeprüfung"
+    },
+    "settings": "Einstellungen",
+    "summaryModal": {
+      "title": "Deine Zusammenfassung",
+      "length": "Länge",
+      "short": "Kurz",
+      "long": "Ausführlich",
+      "add": "Zur Zusammenfassung hinzufügen (optional)",
+      "confirm": "Zusammenfassung erstellen"
     }
   },
   "exam": {
@@ -2266,5 +2285,26 @@
   },
   "otraApp": {
     "descargar": "{{nombre}}: auf deinem Android laden"
+  },
+  "studyPlanPage": {
+    "title": "Lernplan",
+    "new": "Neuer Plan",
+    "yourPlans": "Deine Pläne",
+    "pickDocs": "Wähle die Notizen, die in der Prüfung drankommen. Eine oder mehrere.",
+    "noDocs": "Du hast noch keine Notizen. Lade welche in der Bibliothek hoch oder scanne sie.",
+    "examOn": "Prüfung am {{date}}",
+    "noDate": "Kein Prüfungsdatum",
+    "days_one": "{{count}} Tag",
+    "days_other": "{{count}} Tage",
+    "generate_one": "Plan mit {{count}} Dokument erstellen",
+    "generate_other": "Plan mit {{count}} Dokumenten erstellen",
+    "delete": "Plan löschen",
+    "confirmDelete": "Den Plan „{{title}}“ löschen? Deine Notizen bleiben erhalten."
+  },
+  "studyPicker": {
+    "pick": "Wähle eine oder mehrere Notizen. Bei mehreren wird alles zusammen verwendet.",
+    "search": "Notizen suchen",
+    "continue": "Weiter ({{count}})",
+    "max": "Höchstens 10 Dokumente"
   }
 }

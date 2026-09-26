@@ -49,7 +49,9 @@
       "toExtend": "pour l'étendre.",
       "freeCycleLong": "Utilisation du forfait Free · ce cycle"
     },
-    "tutorials": "Tutoriels"
+    "tutorials": "Tutoriels",
+    "studyPlan": "Plan de révision",
+    "studyGroup": "Réviser"
   },
   "backend": {
     "starting": "Démarrage des services... La première fois, cela peut prendre jusqu'à 1 minute.",
@@ -476,6 +478,23 @@
       "type_problem": "Exercices",
       "minutes": "Temps (minutes)",
       "confirm": "Générer l'examen blanc"
+    },
+    "main": {
+      "summary": "Résumé",
+      "summaryDesc": "Tes notes résumées ; ajoute un plan, un glossaire et plus si tu veux",
+      "cards": "Fiches",
+      "cardsDesc": "Fiches de révision question/réponse",
+      "exam": "Examen",
+      "examDesc": "QCM, questions ouvertes, problèmes, textes à trous, adaptatif ou examen blanc"
+    },
+    "settings": "Réglages",
+    "summaryModal": {
+      "title": "Ton résumé",
+      "length": "Longueur",
+      "short": "Court",
+      "long": "Détaillé",
+      "add": "Ajouter au résumé (facultatif)",
+      "confirm": "Générer le résumé"
     }
   },
   "exam": {
@@ -2266,5 +2285,26 @@
   },
   "otraApp": {
     "descargar": "{{nombre}} : télécharge-la sur ton Android"
+  },
+  "studyPlanPage": {
+    "title": "Plan de révision",
+    "new": "Nouveau plan",
+    "yourPlans": "Tes plans",
+    "pickDocs": "Choisis les notes qui tombent à l’examen. Une ou plusieurs.",
+    "noDocs": "Tu n’as pas encore de notes. Importe-les ou scanne-les dans la Bibliothèque.",
+    "examOn": "Examen le {{date}}",
+    "noDate": "Pas de date d’examen",
+    "days_one": "{{count}} jour",
+    "days_other": "{{count}} jours",
+    "generate_one": "Créer le plan avec {{count}} document",
+    "generate_other": "Créer le plan avec {{count}} documents",
+    "delete": "Supprimer le plan",
+    "confirmDelete": "Supprimer le plan « {{title}} » ? Tes notes sont conservées."
+  },
+  "studyPicker": {
+    "pick": "Choisis une ou plusieurs notes. Avec plusieurs, tout est traité ensemble.",
+    "search": "Chercher des notes",
+    "continue": "Continuer ({{count}})",
+    "max": "10 documents maximum"
   }
 }

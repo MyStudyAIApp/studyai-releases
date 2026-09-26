@@ -49,7 +49,9 @@
       "toExtend": "to extend it.",
       "freeCycleLong": "Free plan usage · this cycle"
     },
-    "tutorials": "Tutorials"
+    "tutorials": "Tutorials",
+    "studyPlan": "Study plan",
+    "studyGroup": "Study"
   },
   "backend": {
     "starting": "Starting services... The first time this may take up to 1 minute.",
@@ -476,6 +478,23 @@
       "type_problem": "Problems",
       "minutes": "Time (minutes)",
       "confirm": "Generate mock exam"
+    },
+    "main": {
+      "summary": "Summary",
+      "summaryDesc": "Your notes summarised; add an outline, glossary and more if you like",
+      "cards": "Cards",
+      "cardsDesc": "Question/answer review flashcards",
+      "exam": "Exam",
+      "examDesc": "Multiple choice, open questions, problems, fill-in-the-blanks, adaptive or mock exam"
+    },
+    "settings": "Settings",
+    "summaryModal": {
+      "title": "Your summary",
+      "length": "Length",
+      "short": "Short",
+      "long": "Extended",
+      "add": "Add to the summary (optional)",
+      "confirm": "Generate summary"
     }
   },
   "exam": {
@@ -2266,5 +2285,26 @@
   },
   "otraApp": {
     "descargar": "{{nombre}}: get it on your Android"
+  },
+  "studyPlanPage": {
+    "title": "Study plan",
+    "new": "New plan",
+    "yourPlans": "Your plans",
+    "pickDocs": "Choose the notes your exam covers. One or several.",
+    "noDocs": "You have no notes yet. Upload or scan some in the Library.",
+    "examOn": "Exam on {{date}}",
+    "noDate": "No exam date",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days",
+    "generate_one": "Create plan with {{count}} document",
+    "generate_other": "Create plan with {{count}} documents",
+    "delete": "Delete plan",
+    "confirmDelete": "Delete the plan “{{title}}”? Your notes are kept."
+  },
+  "studyPicker": {
+    "pick": "Pick one or more notes. With several, it covers all of them together.",
+    "search": "Search notes",
+    "continue": "Continue ({{count}})",
+    "max": "10 documents max"
   }
 }
